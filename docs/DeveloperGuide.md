@@ -341,11 +341,23 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
+1. The application should work on any **mainstream OS** as long as it has **Java `17` or above installed**.
+2. The application should be able to handle **up to 1000 persons** without noticeable performance degradation during typical usage.
+3. A user with **above-average typing speed for regular English text** (i.e., not coding) should be able to accomplish most tasks **faster using commands than using the mouse**.
+4. Any successful command (e.g., `add`, `delete`) should cause the **GUI to update without noticeable delay** (less than **1 second**).
+5. The application **should not crash or terminate** under normal usage scenarios (e.g., listing, adding, or deleting contacts).
+6. The application should **not lose user data during normal operation**.
+7. The application should **continue operating normally when invalid input is provided**.
+8. When performing operations such as **bulk delete** or **filter**, the system should process the request **without freezing the GUI**.
+9. **All user data should be stored locally.**
+10. The data should be stored locally in a **human-editable text file** so that advanced users can manually manipulate the data if necessary.
+11. The GUI should **work well** (i.e., should not cause resolution-related inconveniences) for:
+   - screen resolutions **1920 × 1080 and higher**
+   - screen scales **100% and 125%**
+12. The GUI should remain **usable** (i.e., all functions can still be used even if the user experience is not optimal) for:
+   - screen resolutions **1280 × 720 and higher**
+   - screen scales **150%**
+*More to be added.*
 
 ### Glossary
 
