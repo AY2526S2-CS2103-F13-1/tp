@@ -10,7 +10,7 @@
         "teh-hock-jian": "Teh Hock Jian",
         "teh-huan-xi-kester": "Teh Huan Xi Kester",
         "julian-lim": "Julian Lim",
-        "jean-doe": "Jean Doe",
+        "hwang-jihun": "Hwang Jihun",
         "james-doe": "James Doe"
       },
       "headingKeywords": {}
@@ -136,6 +136,14 @@
       "headingKeywords": {}
     },
     {
+      "src": "team/hwangjihun.md",
+      "title": "Jihun's Project Portfolio Page",
+      "headings": {
+        "project-blockbook": "Project: BlockBook"
+      },
+      "headingKeywords": {}
+    },
+    {
       "src": "team/hxckjian.md",
       "title": "Hock Jian's Project Portfolio Page",
       "headings": {
@@ -147,14 +155,6 @@
       "src": "team/jj910.md",
       "headings": {
         "project-blockbook": "Project: BlockBook"
-      },
-      "headingKeywords": {}
-    },
-    {
-      "src": "team/johndoe.md",
-      "title": "John Doe's Project Portfolio Page",
-      "headings": {
-        "project-addressbook-level-3": "Project: AddressBook Level 3"
       },
       "headingKeywords": {}
     },
