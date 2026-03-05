@@ -280,7 +280,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: BlockBook makes it easy for Minecraft gamers to connect with other players by saving contacts of players they meet on servers. With a familiar command line interface, adding, organising and finding is a breeze.
 
 
 ### User stories
