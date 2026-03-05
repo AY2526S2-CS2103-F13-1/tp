@@ -42,6 +42,7 @@
       "headings": {
         "ab-3-developer-guide": "AB-3 Developer Guide",
         "acknowledgements": "Acknowledgements",
+        "list-here-sources-of-all-reused-adapted-ideas-code-documentation-and-third-party-libraries-include-links-to-the-original-source-as-well-the-ui-mockup-was-generated-with-chatgpt-using-the-following-input": "{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }\nThe UI mockup was Generated with ChatGPT using the following input",
         "setting-up-getting-started": "Setting up, getting started",
         "design": "Design",
         "architecture": "Architecture",
