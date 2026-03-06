@@ -545,9 +545,17 @@ Use case ends.
 *{More to be added}*
 
 ### Glossary
-
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+- **Minecraft**:  A sandbox game developed and published by Mojang Studios. See more [here](https://www.minecraft.net/en-us).
+  - **Gamertag**: A Minecraft player’s in-game username.
+  - **Modpack**: A collection of Minecraft modifications bundled together for gameplay.
+  - **Server**: A multiplayer Minecraft world hosted online where players interact.
+- **Discord**: A popular instant messaging and VoIP social platform popular among gamers that allows communication through voice calls, video calls, text messaging, and media.
+Communication can be private or in virtual communities called "servers". See more [here](https://discord.com/).
+- **CLI**: Command Line Interface, a way to interact with a computer program by typing commands into a console or terminal.
+- **GUI**: Graphical User Interface, a way to interact with a computer program through graphical elements like windows, buttons, and icons.
+- **Mainstream OS**: The common personal computer operating systems that BlockBook should be able to run on — Windows, Linux and MacOS
+- **Alias**: A shortened version of a command that performs the same function.
+  - For example: `l` can be an alias for `list`, and `d` can be an alias for `delete`.
 
 --------------------------------------------------------------------------------------------------------------------
 
