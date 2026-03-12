@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
@@ -24,6 +25,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    public static final String HOMEPAGE_URL = "https://ay2526s2-cs2103-f13-1.github.io/tp";
+    public static final String USERGUIDE_URL = HOMEPAGE_URL + "/UserGuide.html";
+    public static final String DEVELOPERGUIDE_URL = HOMEPAGE_URL + "/DeveloperGuide.html";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -39,7 +43,11 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
-    private MenuItem helpMenuItem;
+    private MenuItem websiteMenuItem;
+    @FXML
+    private MenuItem userGuideMenuItem;
+    @FXML
+    private MenuItem developerGuideMenuItem;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -73,7 +81,9 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     private void setAccelerators() {
-        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(websiteMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(userGuideMenuItem, KeyCombination.valueOf("F2"));
+        setAccelerator(developerGuideMenuItem, KeyCombination.valueOf("F3"));
     }
 
     /**
@@ -136,15 +146,27 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Opens the help window or focuses on it if it's already opened.
+     * Opens the BlockBook Main Website.
      */
     @FXML
-    public void handleHelp() {
-        if (!helpWindow.isShowing()) {
-            helpWindow.show();
-        } else {
-            helpWindow.focus();
-        }
+    public void openWebsite() {
+        MainApp.hostServices.showDocument(HOMEPAGE_URL);
+    }
+
+    /**
+     * Opens the BlockBook User Guide.
+     */
+    @FXML
+    public void openUserGuide() {
+        MainApp.hostServices.showDocument(USERGUIDE_URL);
+    }
+
+    /**
+     * Opens the BlockBook Developer Guide.
+     */
+    @FXML
+    public void openDeveloperGuide() {
+        MainApp.hostServices.showDocument(DEVELOPERGUIDE_URL);
     }
 
     void show() {
@@ -179,7 +201,7 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
             if (commandResult.isShowHelp()) {
-                handleHelp();
+                openUserGuide();
             }
 
             if (commandResult.isExit()) {

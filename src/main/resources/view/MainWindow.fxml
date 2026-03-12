@@ -29,9 +29,9 @@
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="websiteMenuItem" mnemonicParsing="false" onAction="#handleMainWebsite" text="BlockBook Website" />
-            <MenuItem fx:id="userGuideMenuItem" mnemonicParsing="false" onAction="#handleUserGuide" text="User Guide" />
-            <MenuItem fx:id="developerGuideMenuItem" mnemonicParsing="false" onAction="#handleDeveloperGuide" text="Developer Guide" />
+            <MenuItem fx:id="websiteMenuItem" mnemonicParsing="false" onAction="#openWebsite" text="BlockBook Website" />
+            <MenuItem fx:id="userGuideMenuItem" mnemonicParsing="false" onAction="#openUserGuide" text="User Guide" />
+            <MenuItem fx:id="developerGuideMenuItem" mnemonicParsing="false" onAction="#openDeveloperGuide" text="Developer Guide" />
           </Menu>
         </MenuBar>
 
