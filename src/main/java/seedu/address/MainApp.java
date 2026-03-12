@@ -169,13 +169,13 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         ui = new UiManager(logic, getHostServices());
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting BlockBook " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping AddressBook ] =============================");
+        logger.info("============================ [ Stopping BlockBook ] =============================");
         try {
             storage.saveUserPrefs(model.getUserPrefs());
         } catch (IOException e) {
