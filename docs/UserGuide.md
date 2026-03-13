@@ -11,8 +11,7 @@ BlockBook is a **desktop app for managing contacts, optimized for use via a  Lin
 BlockBook makes it easy to manage the contacts of other gamers you meet on servers, allowing you to manage contacts through not just names, but other gaming attributes too.
 
 <!-- * Table of Contents -->
-<page-nav><page-nav />
-<page-nav-print><page-nav-print />
+<page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
 
