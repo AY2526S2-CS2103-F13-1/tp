@@ -46,15 +46,15 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String name} into a {@code Name}.
+     * Parses a {@code String gamerTag} into a {@code GamerTag}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code name} is invalid.
+     * @throws ParseException if the given {@code gamerTag} is invalid.
      */
     public static GamerTag parseGamerTag(String gamerTag) throws ParseException {
         requireNonNull(gamerTag);
         String trimmedGamerTag = gamerTag.trim();
-        if (!Name.isValidName(trimmedGamerTag)) {
+        if (!GamerTag.isValidGamerTag(trimmedGamerTag)) {
             throw new ParseException(GamerTag.MESSAGE_CONSTRAINTS);
         }
         return new GamerTag(trimmedGamerTag);
