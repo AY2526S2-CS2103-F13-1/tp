@@ -15,15 +15,16 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.AddressBook;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.model.BlockBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyBlockBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.AddressBookStorage;
-import seedu.address.storage.JsonAddressBookStorage;
+import seedu.address.storage.BlockBookStorage;
+import seedu.address.storage.JsonBlockBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
@@ -35,7 +36,6 @@ import seedu.address.ui.UiManager;
  * Runs the application.
  */
 public class MainApp extends Application {
-
     public static final Version VERSION = new Version(0, 2, 2, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
@@ -46,9 +46,11 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
 
+    protected String storageInitMessage = "Gamer Contacts successfully loaded.";
+
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing BlockBook ]===========================");
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());
@@ -57,14 +59,13 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        BlockBookStorage blockBookStorage = new JsonBlockBookStorage(userPrefs.getBlockBookFilePath());
+        storage = new StorageManager(blockBookStorage, userPrefsStorage);
 
         model = initModelManager(storage, userPrefs);
 
         logic = new LogicManager(model, storage);
 
-        ui = new UiManager(logic);
     }
 
     /**
@@ -73,21 +74,33 @@ public class MainApp extends Application {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        logger.info("Using data file : " + storage.getAddressBookFilePath());
+        logger.info("Using data file : " + storage.getBlockBookFilePath());
 
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        Optional<ReadOnlyBlockBook> addressBookOptional;
+        ReadOnlyBlockBook initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
+            addressBookOptional = storage.readBlockBook();
             if (!addressBookOptional.isPresent()) {
-                logger.info("Creating a new data file " + storage.getAddressBookFilePath()
+                logger.info("Creating a new data file " + storage.getBlockBookFilePath()
                         + " populated with a sample AddressBook.");
+
+                // Shows content on resultDisplay
+                CommandResult message = new CommandResult(
+                        "No save file found! Starting with an empty Gamer Contact list!", false, false);
+                storageInitMessage = message.getFeedbackToUser();
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataLoadingException e) {
-            logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
-                    + " Will be starting with an empty AddressBook.");
-            initialData = new AddressBook();
+            logger.warning("Data file at " + storage.getBlockBookFilePath() + " could not be loaded."
+                    + " Will be starting with an empty Gamer Contact list instead!");
+
+            // Shows content on resultDisplay
+            CommandResult message = new CommandResult(
+                    "Data file at " + storage.getBlockBookFilePath() + " could not be loaded."
+                            + "\nWill be starting with an empty Gamer Contact list instead!", false, false);
+            storageInitMessage = message.getFeedbackToUser();
+
+            initialData = new BlockBook();
         }
 
         return new ModelManager(initialData, userPrefs);
@@ -170,13 +183,17 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        ui = new UiManager(logic, getHostServices());
+        logger.info("Starting BlockBook " + MainApp.VERSION);
         ui.start(primaryStage);
+
+        // Placement in start() sure that ui is instantiated before message is shown
+        ui.showMessage(storageInitMessage);
     }
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping AddressBook ] =============================");
+        logger.info("============================ [ Stopping BlockBook ] =============================");
         try {
             storage.saveUserPrefs(model.getUserPrefs());
         } catch (IOException e) {

@@ -9,7 +9,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
+import seedu.address.model.gamer.Gamer;
 
 /**
  * Deletes a person identified using it's displayed index from the address book.
@@ -34,7 +34,7 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Gamer> lastShownList = model.getFilteredPersonList();
 
         if (lastShownList.isEmpty()) {
             throw new CommandException(Messages.MESSAGE_EMPTY_CONTACT_LIST);
@@ -44,9 +44,9 @@ public class DeleteCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
         }
 
-        Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.deletePerson(personToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
+        Gamer gamerToDelete = lastShownList.get(targetIndex.getZeroBased());
+        model.deletePerson(gamerToDelete);
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(gamerToDelete)));
     }
 
     @Override

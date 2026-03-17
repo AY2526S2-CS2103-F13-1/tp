@@ -1,0 +1,33 @@
+{
+  "_comment": "BlockBook save file which contains the same Gamer values as in TypicalGamers#getTypicalBlockBook()",
+  "gamers": [
+    {
+      "name": "Alice Pauline",
+      "gamerTag": "Herobrine1"
+    },
+    {
+      "name": "Benson Meier",
+      "gamerTag": "Herobrine2"
+    },
+    {
+      "name": "Carl Kurz",
+      "gamerTag": "Herobrine3"
+    },
+    {
+      "name": "Daniel Meier",
+      "gamerTag": "Herobrine4"
+    },
+    {
+      "name": "Elle Meyer",
+      "gamerTag": "Herobrine4"
+    },
+    {
+      "name": "Fiona Kunz",
+      "gamerTag": "Herobrine4"
+    },
+    {
+      "name": "George Best",
+      "gamerTag": "Herobrine4"
+    }
+  ]
+}

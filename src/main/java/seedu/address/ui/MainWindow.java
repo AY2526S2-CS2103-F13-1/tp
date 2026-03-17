@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -24,11 +25,15 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static final String HOMEPAGE_URL = "https://ay2526s2-cs2103-f13-1.github.io/tp";
+    private static final String USERGUIDE_URL = HOMEPAGE_URL + "/UserGuide.html";
+    private static final String DEVELOPERGUIDE_URL = HOMEPAGE_URL + "/DeveloperGuide.html";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
     private Stage primaryStage;
     private Logic logic;
+    private HostServices hostServices;
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
@@ -39,7 +44,11 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
-    private MenuItem helpMenuItem;
+    private MenuItem websiteMenuItem;
+    @FXML
+    private MenuItem userGuideMenuItem;
+    @FXML
+    private MenuItem developerGuideMenuItem;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -53,12 +62,13 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
      */
-    public MainWindow(Stage primaryStage, Logic logic) {
+    public MainWindow(Stage primaryStage, Logic logic, HostServices hostServices) {
         super(FXML, primaryStage);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.hostServices = hostServices;
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
@@ -73,7 +83,9 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     private void setAccelerators() {
-        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(websiteMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(userGuideMenuItem, KeyCombination.valueOf("F2"));
+        setAccelerator(developerGuideMenuItem, KeyCombination.valueOf("F3"));
     }
 
     /**
@@ -116,7 +128,7 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getBlockBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
@@ -136,15 +148,27 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Opens the help window or focuses on it if it's already opened.
+     * Opens the BlockBook Main Website.
      */
     @FXML
-    public void handleHelp() {
-        if (!helpWindow.isShowing()) {
-            helpWindow.show();
-        } else {
-            helpWindow.focus();
-        }
+    public void openWebsite() {
+        hostServices.showDocument(HOMEPAGE_URL);
+    }
+
+    /**
+     * Opens the BlockBook User Guide.
+     */
+    @FXML
+    public void openUserGuide() {
+        hostServices.showDocument(USERGUIDE_URL);
+    }
+
+    /**
+     * Opens the BlockBook Developer Guide.
+     */
+    @FXML
+    public void openDeveloperGuide() {
+        hostServices.showDocument(DEVELOPERGUIDE_URL);
     }
 
     void show() {
@@ -179,7 +203,8 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
             if (commandResult.isShowHelp()) {
-                handleHelp();
+                openUserGuide();
+                resultDisplay.setFeedbackToUser("Opened user guide in browser.");
             }
 
             if (commandResult.isExit()) {
@@ -192,5 +217,9 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }
+    }
+
+    public void showMessage(String text) { // Ensure this is public
+        resultDisplay.setFeedbackToUser(text);
     }
 }
