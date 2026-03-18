@@ -33,7 +33,7 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to BlockBook.
+   * `add name/John Doe gamertag/JD910` : Adds a contact named `John Doe` to BlockBook with the gamertag `JD910`.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -52,16 +52,16 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 **Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+  e.g. in `add name/NAME`, `NAME` is a parameter which can be used as `add name/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  e.g `name/NAME [t/TAG]` can be used as `name/John Doe t/friend` or as `name/John Doe`.
 
 * Items with `â€¦`â€‹ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]â€¦â€‹` can be used as `Â ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+  e.g. if the command specifies `name/NAME gamertag/GAMERTAG`, `gamertag/GAMERTAG name/NAME` is also acceptable.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
@@ -80,7 +80,7 @@ Format: `help`
 
 Adds a Gamer to BlockBook.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]â€¦â€‹`
+Format: `add name/NAME gamertag/GAMERTAG e/EMAIL a/ADDRESS [t/TAG]â€¦â€‹`
 
 <box type="tip" seamless>
 
@@ -88,8 +88,8 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]â€¦â€‹`
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add name/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add name/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 ### Listing all gamers : `list`
 
@@ -101,7 +101,7 @@ Format: `list`
 
 Edits an existing Gamer stored in BlockBook.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]â€¦â€‹`
+Format: `edit INDEX [name/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]â€¦â€‹`
 
 * Edits the Gamer at the specified `INDEX`. The index refers to the index number shown in the displayed Gamer list. The index **must be a positive integer** 1, 2, 3, â€¦â€‹
 * At least one of the optional fields must be provided.
@@ -112,7 +112,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]â€¦â€
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st Gamer to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd Gamer to be `Betsy Crower` and clears all existing tags.
+*  `edit 2 name/Betsy Crower t/` Edits the name of the 2nd Gamer to be `Betsy Crower` and clears all existing tags.
 
 ### Locating gamers by name: `find`
 
@@ -197,10 +197,10 @@ _Details coming soon ..._
 
 | Action     | Format, Examples                                                                                                                                                      |
 |------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]â€¦â€‹` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
+| **Add**    | `add name/NAME gamertag/GAMERTAG e/EMAIL a/ADDRESS [t/TAG]â€¦â€‹` <br> e.g., `add name/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
 | **Clear**  | `clear`                                                                                                                                                               |
 | **Delete** | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
-| **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]â€¦â€‹`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
+| **Edit**   | `edit INDEX [name/NAME] [gamertag/GAMERTAG] [e/EMAIL] [a/ADDRESS] [t/TAG]â€¦â€‹`<br> e.g.,`edit 2 name/James Lee e/jameslee@example.com`                                           |
 | **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
 | **List**   | `list`                                                                                                                                                                |
 | **Help**   | `help`                                                                                                                                                                |
