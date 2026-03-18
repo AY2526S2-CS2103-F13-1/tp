@@ -1,4 +1,4 @@
----
+﻿---
   layout: default.md
   title: "Developer Guide"
   pageNav: 3
@@ -31,7 +31,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/blockbook/Main.java) and [`MainApp`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/blockbook/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -63,13 +63,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/blockbook/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `gamerListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `GamerListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/blockbook/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -80,7 +80,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/blockbook/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -99,7 +99,7 @@ How the `Logic` component works:
 
 1. When `Logic` is called upon to execute a command, it is passed to an `BlockBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
 1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a gamer).<br>
+1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
@@ -112,7 +112,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/blockbook/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
@@ -120,8 +120,8 @@ How the parsing works:
 The `Model` component,
 
 * stores contact data i.e., all `Gamer` objects (which are contained in a `UniqueGamerList` object).
-  * stores the currently 'selected' `Gamer` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<gamer>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* stores a `UserPrefs` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPrefs` objects.
+  * stores the currently 'selected' `Gamer` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Gamer>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores a `UserPref` object that represents the userâ€™s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
 <box type="info" seamless>
@@ -135,13 +135,13 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/blockbook/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
 * can save both contact data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `BlockBookStorage` and `UserPrefsStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* inherits from both `BlockBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
@@ -160,9 +160,9 @@ This section describes some noteworthy details on how certain features are imple
 
 The proposed undo/redo mechanism will be facilitated by `VersionedBlockBook`. It will extend `BlockBook` with an undo/redo history, stored internally as an `blockBookStateList` and `currentStatePointer`. Additionally, it should implement the following operations:
 
-* `VersionedBlockBook#commit()` — Saves the current BlockBook state in its history.
-* `VersionedBlockBook#undo()` — Restores the previous BlockBook state from its history.
-* `VersionedBlockBook#redo()` — Restores a previously undone BlockBook state from its history.
+* `VersionedBlockBook#commit()`â€‰â€”â€‰Saves the current BlockBook state in its history.
+* `VersionedBlockBook#undo()`â€‰â€”â€‰Restores the previous BlockBook state from its history.
+* `VersionedBlockBook#redo()`â€‰â€”â€‰Restores a previously undone BlockBook state from its history.
 
 These operations should be exposed in the `Model` interface as `Model#commitBlockBook()`, `Model#undoBlockBook()` and `Model#redoBlockBook()` respectively.
 
@@ -284,7 +284,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                     | I want to …​                                            | So that I can…​                                                        |
+| Priority | As a â€¦â€‹                     | I want to â€¦â€‹                                            | So that I canâ€¦â€‹                                                        |
 |----------|-----------------------------|---------------------------------------------------------|------------------------------------------------------------------------|
 | `* * *`  | general user                | add a new contact                                       | link multiple contact methods to a gamer                              |
 | `* * *`  | general user                | delete a gamer                                         | remove contact entries that I no longer need                           |
@@ -300,9 +300,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | general user                | see clear error messages when I enter invalid commands  | correct my mistakes quickly                                            |
 | `* *`    | general user                | add contacts to a favourites list                       | access my favourite contacts easier                                    |
 | `* *`    | general user                | list out my favourite contacts                          | find my favourite contacts                                             |
-| `* *`    | general user                | add a personal note to a contact's profile              | preserve context information about a contact                           |
+| `* *`    | general user                | add a Gameral note to a contact's profile              | preserve context information about a contact                           |
 | `* *`    | general user                | create a social group                                   | create groups with contacts with a context                             |
-| `* *`    | general user                | add contact to social group                             | find the contact’s I want to play with based on context                |
+| `* *`    | general user                | add contact to social group                             | find the contactâ€™s I want to play with based on context                |
 | `*`      | general user                | use autocomplete when typing in CLI                     | type faster and easier when I forget the command                       |
 | `*`      | general user                | add profile picture to contact                          | recognise contacts more easily via visual                              |
 | `*`      | minecraft gamer             | see quality sprite styles that align with minecraft     | have a good interface experience                                       |
@@ -333,7 +333,7 @@ Use case ends.
 
 - 3a2. User enters new data.
 
-- Steps 3a1–3a2 are repeated until the data entered is correct.
+- Steps 3a1â€“3a2 are repeated until the data entered is correct.
 
 - Use case resumes from step 4.
 
@@ -382,7 +382,7 @@ Use case ends.
 
 - 3a1. BB displays an error and requests a valid gamertag.
 - 3a2. User enters a new gamertag.
-- Steps 3a1–3a2 are repeated until a match is found.
+- Steps 3a1â€“3a2 are repeated until a match is found.
 - Use case resumes from step 4.
 
 4a. The contact is already marked as a favourite.
@@ -411,14 +411,14 @@ Use case ends.
 
 - 3a1. BB displays an error and requests correct data.
 - 3a2. User enters new data.
-- Steps 3a1–3a2 are repeated until the data entered is correct.
+- Steps 3a1â€“3a2 are repeated until the data entered is correct.
 - Use case resumes from step 4.
 
 5a. BB detects that the provided image is invalid or cannot be accessed.
 
 - 5a1. BB displays an error and requests a valid image.
 - 5a2. User provides new image data.
-- Steps 5a1–5a2 are repeated until the data entered is correct.
+- Steps 5a1â€“5a2 are repeated until the data entered is correct.
 - Use case resumes from step 6.
 
 *a. At any time, User chooses to cancel.
@@ -445,7 +445,7 @@ Use case ends.
 
 - 3a1. BB displays an error and requests a valid gamertag.
 - 3a2. User enters a new gamertag.
-- Steps 3a1–3a2 are repeated until a match is found.
+- Steps 3a1â€“3a2 are repeated until a match is found.
 - Use case resumes from step 4.
 
 5a. User enters a note that exceeds the maximum character limit.
@@ -497,14 +497,14 @@ Use case ends.
 
 - 3a1. BB displays an error and requests a valid gamertag.
 - 3a2. User enters a new gamertag.
-- Steps 3a1–3a2 are repeated until a match is found.
+- Steps 3a1â€“3a2 are repeated until a match is found.
 - Use case resumes from step 4.
 
 5a. BB cannot identify the attribute to edit.
 
 - 5a1. BB displays an error and requests a valid attribute name.
 - 5a2. User enters a new attribute name.
-- Steps 5a1–5a2 are repeated until a valid attribute is entered.
+- Steps 5a1â€“5a2 are repeated until a valid attribute is entered.
 - Use case resumes from step 6.
 
 7a. BB detects that the new gamertag is already in use by another contact.
@@ -539,17 +539,17 @@ Use case ends.
 9. **All user data should be stored locally.**
 10. The data should be stored locally in a **human-editable text file** so that advanced users can manually manipulate the data if necessary.
 11. The GUI should **work well** (i.e., should not cause resolution-related inconveniences) for:
-   - screen resolutions **1920 × 1080 and higher**
+   - screen resolutions **1920 Ã— 1080 and higher**
    - screen scales **100% and 125%**
 12. The GUI should remain **usable** (i.e., all functions can still be used even if the user experience is not optimal) for:
-   - screen resolutions **1280 × 720 and higher**
+   - screen resolutions **1280 Ã— 720 and higher**
    - screen scales **150%**
 
 *{More to be added}*
 
 ### Glossary
 - **Minecraft**: A sandbox game developed and published by Mojang Studios. See more [here](https://www.minecraft.net/en-us).
-    - **Gamertag**: A Minecraft player’s in-game username.
+    - **Gamertag**: A Minecraft playerâ€™s in-game username.
     - **Modpack**: A collection of Minecraft modifications bundled together for gameplay.
     - **Server**: A multiplayer Minecraft world hosted online where players interact.
 - **Discord**: An instant messaging and VoIP social platform popular among gamers that allows communication through voice calls, video calls, text messaging, and media.
@@ -557,7 +557,7 @@ Use case ends.
 - **Contact**: A gamer that a user has saved in BlockBook, representing a Minecraft player they have met on servers. A contact typically includes details such as the player's gamertag, server name, and other attributes.
 - **CLI**: Command Line Interface, a way to interact with a computer program by typing commands into a console or terminal.
 - **GUI**: Graphical User Interface, a way to interact with a computer program through graphical elements like windows, buttons, and icons.
-- **Mainstream OS**: The common personal computer operating systems that BlockBook should be able to run on — Windows, Linux and MacOS.
+- **Mainstream OS**: The common Gameral computer operating systems that BlockBook should be able to run on â€” Windows, Linux and MacOS.
 - **Alias**: A shortened version of a command that performs the same function.
     - For example: `l` can be an alias for `list`, and `d` can be an alias for `delete`.
 
@@ -589,7 +589,7 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+1. _{ more test cases â€¦â€‹ }_
 
 ### Deleting a gamer
 
@@ -606,7 +606,7 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+1. _{ more test cases â€¦â€‹ }_
 
 ### Saving data
 
@@ -614,4 +614,7 @@ testers are expected to do more *exploratory* testing.
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
-1. _{ more test cases …​ }_
+1. _{ more test cases â€¦â€‹ }_
+
+
+

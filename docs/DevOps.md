@@ -1,4 +1,4 @@
----
+﻿---
   layout: default.md
   title: "DevOps guide"
   pageNav: 3
@@ -32,8 +32,8 @@ Given below are how to use Gradle for some important project tasks.
   **`checkstyleTest`**: Runs the code style check for the test code base.
 
 * **`test`**: Runs all tests.
-  * `./gradlew test` — Runs all tests
-  * `./gradlew clean test` — Cleans the project and runs tests
+  * `./gradlew test`â€‰â€”â€‰Runs all tests
+  * `./gradlew clean test`â€‰â€”â€‰Cleans the project and runs tests
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -76,7 +76,8 @@ Any warnings or errors will be printed out to the console.
 
 Here are the steps to create a new release.
 
-1. Update the version number in [`MainApp.java`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/address/MainApp.java).
+1. Update the version number in [`MainApp.java`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/blockbook/MainApp.java).
 1. Generate a fat JAR file using Gradle (i.e., `gradlew shadowJar`).
 1. Tag the repo with the version number. e.g. `v0.1`
 1. [Create a new release using GitHub](https://help.github.com/articles/creating-releases/). Upload the JAR file you created.
+

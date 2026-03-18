@@ -1,4 +1,4 @@
-@startuml
+﻿@startuml
 !include style.puml
 skinparam arrowThickness 1.1
 skinparam arrowColor STORAGE_COLOR
@@ -14,11 +14,11 @@ Class JsonUserPrefsStorage
 Class "<<interface>>\nStorage" as Storage
 Class StorageManager
 
-package "AddressBook Storage" #F4F6F6{
-Class "<<interface>>\nAddressBookStorage" as AddressBookStorage
-Class JsonAddressBookStorage
-Class JsonSerializableAddressBook
-Class JsonAdaptedPerson
+package "BlockBook Storage" #F4F6F6{
+Class "<<interface>>\nBlockBookStorage" as BlockBookStorage
+Class JsonBlockBookStorage
+Class JsonSerializableBlockBook
+Class JsonAdaptedGamer
 Class JsonAdaptedTag
 }
 
@@ -29,15 +29,16 @@ HiddenOutside ..> Storage
 
 StorageManager .up.|> Storage
 StorageManager -up-> "1" UserPrefsStorage
-StorageManager -up-> "1" AddressBookStorage
+StorageManager -up-> "1" BlockBookStorage
 
 Storage -left-|> UserPrefsStorage
-Storage -right-|> AddressBookStorage
+Storage -right-|> BlockBookStorage
 
 JsonUserPrefsStorage .up.|> UserPrefsStorage
-JsonAddressBookStorage .up.|> AddressBookStorage
-JsonAddressBookStorage ..> JsonSerializableAddressBook
-JsonSerializableAddressBook --> "*" JsonAdaptedPerson
-JsonAdaptedPerson --> "*" JsonAdaptedTag
+JsonBlockBookStorage .up.|> BlockBookStorage
+JsonBlockBookStorage ..> JsonSerializableBlockBook
+JsonSerializableBlockBook --> "*" JsonAdaptedGamer
+JsonAdaptedGamer --> "*" JsonAdaptedTag
 
 @enduml
+

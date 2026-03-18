@@ -5,6 +5,6 @@
 
 ### Project: BlockBook
 
-BlockBook is an address book application based on AddressBook - Level 3.
+BlockBook is an address book application based on AddressBook Level-3.
 
 Given below are my contributions to the project. (To be updated!)
