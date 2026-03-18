@@ -25,8 +25,8 @@
     },
     {
       "src": "DevOps.md",
-      "title": "DevOps guide",
       "headings": {
+        "layout-default-md-title-and-quot-devops-guide-and-quot-pagenav-3": "---\nlayout: default.md\ntitle: &quot;DevOps guide&quot;\npageNav: 3",
         "devops-guide": "DevOps guide",
         "build-automation": "Build automation",
         "continuous-integration-ci": "Continuous integration (CI)",
@@ -38,8 +38,8 @@
     },
     {
       "src": "DeveloperGuide.md",
-      "title": "Developer Guide",
       "headings": {
+        "layout-default-md-title-and-quot-developer-guide-and-quot-pagenav-3": "---\nlayout: default.md\ntitle: &quot;Developer Guide&quot;\npageNav: 3",
         "blockbook-developer-guide": "BlockBook Developer Guide",
         "acknowledgements": "Acknowledgements",
         "setting-up-and-getting-started": "Setting up and getting started",
@@ -62,7 +62,7 @@
         "glossary": "Glossary",
         "appendix-instructions-for-manual-testing": "Appendix: Instructions for manual testing",
         "launch-and-shutdown": "Launch and shutdown",
-        "deleting-a-person": "Deleting a person",
+        "deleting-a-gamer": "Deleting a Gamer",
         "saving-data": "Saving data"
       },
       "headingKeywords": {}
@@ -105,17 +105,17 @@
     },
     {
       "src": "UserGuide.md",
-      "title": "User Guide",
       "headings": {
+        "layout-default-md-title-and-quot-user-guide-and-quot-pagenav-3": "---\nlayout: default.md\ntitle: &quot;User Guide&quot;\npageNav: 3",
         "blockbook-user-guide": "BlockBook User Guide",
         "quick-start": "Quick start",
         "features": "Features",
         "viewing-help-help": "Viewing help : help",
-        "adding-a-person-add": "Adding a person: add",
-        "listing-all-persons-list": "Listing all persons : list",
-        "editing-a-person-edit": "Editing a person : edit",
-        "locating-persons-by-name-find": "Locating persons by name: find",
-        "deleting-a-person-delete": "Deleting a person : delete",
+        "adding-a-gamer-add": "Adding a Gamer: add",
+        "listing-all-gamers-list": "Listing all gamers : list",
+        "editing-a-gamer-edit": "Editing a Gamer : edit",
+        "locating-gamers-by-name-find": "Locating gamers by name: find",
+        "deleting-a-gamer-delete": "Deleting a Gamer : delete",
         "clearing-all-entries-clear": "Clearing all entries : clear",
         "exiting-the-program-exit": "Exiting the program : exit",
         "saving-the-data": "Saving the data",
