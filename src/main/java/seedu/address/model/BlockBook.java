@@ -30,7 +30,7 @@ public class BlockBook implements ReadOnlyBlockBook {
     public BlockBook() {}
 
     /**
-     * Creates an AddressBook using the Gamers in the {@code toBeCopied}
+     * Creates an BlockBook using the Gamers in the {@code toBeCopied}
      */
     public BlockBook(ReadOnlyBlockBook toBeCopied) {
         this();
@@ -48,7 +48,7 @@ public class BlockBook implements ReadOnlyBlockBook {
     }
 
     /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code BlockBook} with {@code newData}.
      */
     public void resetData(ReadOnlyBlockBook newData) {
         requireNonNull(newData);

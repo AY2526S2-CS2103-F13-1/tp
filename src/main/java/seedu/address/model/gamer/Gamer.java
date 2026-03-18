@@ -7,7 +7,7 @@ import java.util.Objects;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
- * Represents a Person in the address book.
+ * Represents a Gamer in BlockBook.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Gamer {
@@ -55,8 +55,8 @@ public class Gamer {
 
 
     /**
-     * Returns true if both persons have the same gamer tag.
-     * This defines a weaker notion of equality between two persons.
+     * Returns true if both gamers have the same name.
+     * This defines a weaker notion of equality between two gamers.
      */
     public boolean isSameGamer(Gamer otherGamer) {
         if (otherGamer == this) {
@@ -68,8 +68,8 @@ public class Gamer {
     }
 
     /**
-     * Returns true if both persons have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
+     * Returns true if both gamers have the same identity and data fields.
+     * This defines a stronger notion of equality between two gamers.
      */
     @Override
     public boolean equals(Object other) {

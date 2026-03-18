@@ -19,7 +19,7 @@ public interface BlockBookStorage {
     Path getBlockBookFilePath();
 
     /**
-     * Returns AddressBook data as a {@link ReadOnlyBlockBook}.
+     * Returns BlockBook data as a {@link ReadOnlyBlockBook}.
      * Returns {@code Optional.empty()} if storage file is not found.
      *
      * @throws DataLoadingException if loading the data from storage failed.

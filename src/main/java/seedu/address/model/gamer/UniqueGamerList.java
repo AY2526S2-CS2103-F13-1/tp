@@ -29,7 +29,7 @@ public class UniqueGamerList implements Iterable<Gamer> {
             FXCollections.unmodifiableObservableList(internalList);
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent gamer as the given argument.
      */
     public boolean contains(Gamer toCheck) {
         requireNonNull(toCheck);
@@ -37,8 +37,8 @@ public class UniqueGamerList implements Iterable<Gamer> {
     }
 
     /**
-     * Adds a person to the list.
-     * The person must not already exist in the list.
+     * Adds a gamer to the list.
+     * The gamer must not already exist in the list.
      */
     public void add(Gamer toAdd) {
         requireNonNull(toAdd);
@@ -49,9 +49,9 @@ public class UniqueGamerList implements Iterable<Gamer> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedPerson}.
+     * Replaces the gamer {@code target} in the list with {@code editedGamer}.
      * {@code target} must exist in the list.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
+     * The gamer identity of {@code editedGamer} must not be the same as another existing gamer in the list.
      */
     public void setGamer(Gamer target, Gamer editedGamer) {
         requireAllNonNull(target, editedGamer);
@@ -69,8 +69,8 @@ public class UniqueGamerList implements Iterable<Gamer> {
     }
 
     /**
-     * Removes the equivalent person from the list.
-     * The person must exist in the list.
+     * Removes the equivalent gamer from the list.
+     * The gamer must exist in the list.
      */
     public void remove(Gamer toRemove) {
         requireNonNull(toRemove);
@@ -85,8 +85,8 @@ public class UniqueGamerList implements Iterable<Gamer> {
     }
 
     /**
-     * Replaces the contents of this list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
+     * Replaces the contents of this list with {@code gamers}.
+     * {@code gamers} must not contain duplicate gamers.
      */
     public void setGamers(List<Gamer> gamers) {
         requireAllNonNull(gamers);
@@ -135,7 +135,7 @@ public class UniqueGamerList implements Iterable<Gamer> {
     }
 
     /**
-     * Returns true if {@code persons} contains only unique persons.
+     * Returns true if {@code gamers} contains only unique gamers.
      */
     private boolean personsAreUnique(List<Gamer> gamers) {
         for (int i = 0; i < gamers.size() - 1; i++) {

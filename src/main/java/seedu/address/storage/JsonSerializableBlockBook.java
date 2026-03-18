@@ -14,7 +14,7 @@ import seedu.address.model.ReadOnlyBlockBook;
 import seedu.address.model.gamer.Gamer;
 
 /**
- * An Immutable AddressBook that is serializable to JSON format.
+ * An Immutable BlockBook that is serializable to JSON format.
  */
 @JsonRootName(value = "gamers")
 class JsonSerializableBlockBook {
@@ -24,7 +24,7 @@ class JsonSerializableBlockBook {
     private final List<JsonAdaptedGamer> gamers = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonSerializableAddressBook} with the given gamers.
+     * Constructs a {@code JsonSerializableBlockBook} with the given gamers.
      */
     @JsonCreator
     public JsonSerializableBlockBook(@JsonProperty("gamers") List<JsonAdaptedGamer> gamers) {
@@ -32,16 +32,16 @@ class JsonSerializableBlockBook {
     }
 
     /**
-     * Converts a given {@code ReadOnlyAddressBook} into this class for Jackson use.
+     * Converts a given {@code ReadOnlyBlockBook} into this class for Jackson use.
      *
-     * @param source future changes to this will not affect the created {@code JsonSerializableAddressBook}.
+     * @param source future changes to this will not affect the created {@code JsonSerializableBlockBook}.
      */
     public JsonSerializableBlockBook(ReadOnlyBlockBook source) {
         gamers.addAll(source.getGamerList().stream().map(JsonAdaptedGamer::new).collect(Collectors.toList()));
     }
 
     /**
-     * Converts this address book into the model's {@code AddressBook} object.
+     * Converts this block book into the model's {@code BlockBook} object.
      *
      * @throws IllegalValueException if there were any data constraints violated.
      */

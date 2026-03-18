@@ -21,7 +21,7 @@ class JsonAdaptedGamer {
     //private final String email;
 
     /**
-     * Constructs a {@code JsonAdaptedPerson} with the given person details.
+     * Constructs a {@code JsonAdaptedGamer} with the given gamer details.
      */
     @JsonCreator
     public JsonAdaptedGamer(@JsonProperty("name") String name, @JsonProperty("gamerTag") String gamerTag) {
@@ -32,7 +32,7 @@ class JsonAdaptedGamer {
     }
 
     /**
-     * Converts a given {@code Person} into this class for Jackson use.
+     * Converts a given {@code Gamer} into this class for Jackson use.
      */
     public JsonAdaptedGamer(Gamer source) {
         name = source.getName().fullName;
@@ -42,9 +42,9 @@ class JsonAdaptedGamer {
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
+     * Converts this Jackson-friendly adapted gamer object into the model's {@code Gamer} object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person.
+     * @throws IllegalValueException if there were any data constraints violated in the adapted gamer.
      */
     public Gamer toModelType() throws IllegalValueException {
         if (name == null) {
