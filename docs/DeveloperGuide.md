@@ -67,7 +67,7 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/AY2
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `gamerListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -76,7 +76,7 @@ The `UI` component,
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+* depends on some classes in the `Model` component, as it displays `Gamer` object residing in the `Model`.
 
 ### Logic component
 
@@ -97,9 +97,9 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
+1. When `Logic` is called upon to execute a command, it is passed to an `BlockBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
 1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
+1. The command can communicate with the `Model` when it is executed (e.g. to delete a gamer).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
@@ -108,7 +108,7 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <puml src="diagrams/ParserClasses.puml" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
+* When called upon to parse a user command, the `BlockBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `BlockBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
@@ -119,14 +119,14 @@ How the parsing works:
 
 The `Model` component,
 
-* stores contact data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-  * stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
+* stores contact data i.e., all `Gamer` objects (which are contained in a `UniqueGamerList` object).
+  * stores the currently 'selected' `Gamer` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<gamer>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores a `UserPrefs` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPrefs` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
 <box type="info" seamless>
 
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
+**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `BlockBook`, which `Gamer` references. This allows `BlockBook` to only require one `Tag` object per unique tag, instead of each `Gamer` needing their own `Tag` objects.<br>
 
 <puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
 
@@ -141,12 +141,12 @@ The `Model` component,
 
 The `Storage` component,
 * can save both contact data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* inherits from both `BlockBookStorage` and `UserPrefsStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
 
-Classes used by multiple components are in the `seedu.address.commons` package.
+Classes used by multiple components are in the `seedu.blockbook.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -158,42 +158,42 @@ This section describes some noteworthy details on how certain features are imple
 
 #### Proposed Implementation
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+The proposed undo/redo mechanism will be facilitated by `VersionedBlockBook`. It will extend `BlockBook` with an undo/redo history, stored internally as an `blockBookStateList` and `currentStatePointer`. Additionally, it should implement the following operations:
 
-* `VersionedAddressBook#commit()` — Saves the current BlockBook state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous BlockBook state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone BlockBook state from its history.
+* `VersionedBlockBook#commit()` — Saves the current BlockBook state in its history.
+* `VersionedBlockBook#undo()` — Restores the previous BlockBook state from its history.
+* `VersionedBlockBook#redo()` — Restores a previously undone BlockBook state from its history.
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+These operations should be exposed in the `Model` interface as `Model#commitBlockBook()`, `Model#undoBlockBook()` and `Model#redoBlockBook()` respectively.
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial BlockBook state, and the `currentStatePointer` pointing to that single BlockBook state.
+Step 1. The user launches the application for the first time. The `VersionedBlockBook` will be initialized with the initial BlockBook state, and the `currentStatePointer` pointing to that single BlockBook state.
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th person in BlockBook. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of BlockBook after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete 5` command to delete the 5th gamer in BlockBook. The `delete` command calls `Model#commitBlockBook()`, causing the modified state of BlockBook after the `delete 5` command executes to be saved in the `blockBookStateList`, and the `currentStatePointer` is shifted to the newly inserted BlockBook state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified BlockBook state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David …​` to add a new gamer. The `add` command also calls `Model#commitBlockBook()`, causing another modified BlockBook state to be saved into the `blockBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
 <box type="info" seamless>
 
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the BlockBook state will not be saved into the `addressBookStateList`.
+**Note:** If a command fails its execution, it will not call `Model#commitBlockBook()`, so the BlockBook state will not be saved into the `blockBookStateList`.
 
 </box>
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous BlockBook state, and restores BlockBook to that state.
+Step 4. The user now decides that adding the gamer was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoBlockBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous BlockBook state, and restores BlockBook to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
+**Note:** If the `currentStatePointer` is at index 0, pointing to the initial BlockBook state, then there are no previous BlockBook states to restore. The `undo` command uses `Model#canUndoBlockBook()` to check if this is the case. If so, it will return an error to the user rather
 than attempting to perform the undo.
 
 </box>
@@ -212,19 +212,19 @@ Similarly, how an undo operation goes through the `Model` component is shown bel
 
 <puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
 
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores BlockBook to that state.
+The `redo` command does the opposite — it calls `Model#redoBlockBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores BlockBook to that state.
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest BlockBook state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+**Note:** If the `currentStatePointer` is at index `blockBookStateList.size() - 1`, pointing to the latest BlockBook state, then there are no undone BlockBook states to restore. The `redo` command uses `Model#canRedoBlockBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
 </box>
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify BlockBook, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+Step 5. The user then decides to execute the command `list`. Commands that do not modify BlockBook, such as `list`, will usually not call `Model#commitBlockBook()`, `Model#undoBlockBook()` or `Model#redoBlockBook()`. Thus, the `blockBookStateList` remains unchanged.
 
 <puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all BlockBook states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitBlockBook()`. Since the `currentStatePointer` is not pointing at the end of the `blockBookStateList`, all BlockBook states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
 
 <puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
@@ -242,7 +242,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+  * Pros: Will use less memory (e.g. for `delete`, just save the gamer being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
@@ -286,11 +286,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 | Priority | As a …​                     | I want to …​                                            | So that I can…​                                                        |
 |----------|-----------------------------|---------------------------------------------------------|------------------------------------------------------------------------|
-| `* * *`  | general user                | add a new contact                                       | link multiple contact methods to a person                              |
-| `* * *`  | general user                | delete a person                                         | remove contact entries that I no longer need                           |
+| `* * *`  | general user                | add a new contact                                       | link multiple contact methods to a gamer                              |
+| `* * *`  | general user                | delete a gamer                                         | remove contact entries that I no longer need                           |
 | `* * *`  | general user                | list out my contacts                                    | see my contacts that I saved previously                                |
 | `* * *`  | general user                | view a contact’s profile with their full details        | access comprehensive details when needed                               |
-| `* *`    | general user                | find a person by name                                   | locate details of persons without having to go through the entire list |
+| `* *`    | general user                | find a gamer by name                                   | locate details of gamers without having to go through the entire list |
 | `* *`    | new user                    | see usage instructions                                  | figure out how to use the app easily                                   |
 | `* *`    | general user                | update contact details                                  | keep track of my contacts' latest information                          |
 | `* *`    | general user                | avoid adding duplicate contacts                         | not store the same contact twice by accident                           |
@@ -310,6 +310,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Use cases
 
 (For all use cases below, the **System** is the `BlockBook (BB)` and the **Actor** is the `user`, unless specified otherwise)
+As these represent the expected behaviour of the final iteration, some use cases might not reflect the current functionality of the app.
 
 **UC01 - Add Contact**
 
@@ -528,7 +529,7 @@ Use case ends.
 ### Non-Functional Requirements
 
 1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2. Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+2. Should be able to hold up to 1000 gamers without a noticeable sluggishness in performance for typical usage.
 3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4. Any successful command (e.g., `add`, `delete`) should cause the **GUI to update without noticeable delay** (less than **1 second**).
 5. The application **should not crash or terminate** under normal usage scenarios (e.g., listing, adding, or deleting contacts).
@@ -553,7 +554,7 @@ Use case ends.
     - **Server**: A multiplayer Minecraft world hosted online where players interact.
 - **Discord**: An instant messaging and VoIP social platform popular among gamers that allows communication through voice calls, video calls, text messaging, and media.
   Communication can be private or in virtual communities called "servers". See more [here](https://discord.com/).
-- **Contact**: A person that a user has saved in BlockBook, representing a Minecraft player they have met on servers. A contact typically includes details such as the player's gamertag, server name, and other attributes.
+- **Contact**: A gamer that a user has saved in BlockBook, representing a Minecraft player they have met on servers. A contact typically includes details such as the player's gamertag, server name, and other attributes.
 - **CLI**: Command Line Interface, a way to interact with a computer program by typing commands into a console or terminal.
 - **GUI**: Graphical User Interface, a way to interact with a computer program through graphical elements like windows, buttons, and icons.
 - **Mainstream OS**: The common personal computer operating systems that BlockBook should be able to run on — Windows, Linux and MacOS.
@@ -590,17 +591,17 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Deleting a person
+### Deleting a gamer
 
-1. Deleting a person while all persons are being shown
+1. Deleting a gamer while all gamers are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
 
    1. Test case: `delete 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
    1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+      Expected: No gamer is deleted. Error details shown in the status message. Status bar remains the same.
 
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
