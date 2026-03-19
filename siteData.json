@@ -25,8 +25,8 @@
     },
     {
       "src": "DevOps.md",
+      "title": "DevOps guide",
       "headings": {
-        "layout-default-md-title-and-quot-devops-guide-and-quot-pagenav-3": "---\nlayout: default.md\ntitle: &quot;DevOps guide&quot;\npageNav: 3",
         "devops-guide": "DevOps guide",
         "build-automation": "Build automation",
         "continuous-integration-ci": "Continuous integration (CI)",
@@ -38,8 +38,8 @@
     },
     {
       "src": "DeveloperGuide.md",
+      "title": "Developer Guide",
       "headings": {
-        "layout-default-md-title-and-quot-developer-guide-and-quot-pagenav-3": "---\nlayout: default.md\ntitle: &quot;Developer Guide&quot;\npageNav: 3",
         "blockbook-developer-guide": "BlockBook Developer Guide",
         "acknowledgements": "Acknowledgements",
         "setting-up-and-getting-started": "Setting up and getting started",
@@ -105,8 +105,8 @@
     },
     {
       "src": "UserGuide.md",
+      "title": "User Guide",
       "headings": {
-        "layout-default-md-title-and-quot-user-guide-and-quot-pagenav-3": "---\nlayout: default.md\ntitle: &quot;User Guide&quot;\npageNav: 3",
         "blockbook-user-guide": "BlockBook User Guide",
         "quick-start": "Quick start",
         "features": "Features",
