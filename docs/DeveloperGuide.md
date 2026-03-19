@@ -176,7 +176,7 @@ Step 2. The user executes `delete 5` command to delete the 5th gamer in BlockBoo
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new gamer. The `add` command also calls `Model#commitBlockBook()`, causing another modified BlockBook state to be saved into the `blockBookStateList`.
+Step 3. The user executes `add name/David …` to add a new gamer. The `add` command also calls `Model#commitBlockBook()`, causing another modified BlockBook state to be saved into the `blockBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
