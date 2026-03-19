@@ -62,7 +62,7 @@
         "glossary": "Glossary",
         "appendix-instructions-for-manual-testing": "Appendix: Instructions for manual testing",
         "launch-and-shutdown": "Launch and shutdown",
-        "deleting-a-gamer": "Deleting a Gamer",
+        "deleting-a-gamer": "Deleting a gamer",
         "saving-data": "Saving data"
       },
       "headingKeywords": {}
@@ -111,9 +111,9 @@
         "quick-start": "Quick start",
         "features": "Features",
         "viewing-help-help": "Viewing help : help",
-        "adding-a-gamer-add": "Adding a Gamer: add",
+        "adding-a-gamer-add": "Adding a gamer: add",
         "listing-all-gamers-list": "Listing all gamers : list",
-        "editing-a-gamer-edit": "Editing a Gamer : edit",
+        "editing-a-gamer-edit": "Editing a gamer : edit",
         "locating-gamers-by-name-find": "Locating gamers by name: find",
         "deleting-a-gamer-delete": "Deleting a Gamer : delete",
         "clearing-all-entries-clear": "Clearing all entries : clear",
@@ -168,6 +168,7 @@
     },
     {
       "src": "team/yingwen178.md",
+      "title": "YingWen's Project Portfolio Page",
       "headings": {
         "project-blockbook": "Project: BlockBook"
       },
