@@ -76,9 +76,9 @@ Opens this User Guide in a browser window.
 Format: `help`
 
 
-### Adding a Gamer: `add`
+### Adding a gamer: `add`
 
-Adds a Gamer to BlockBook.
+Adds a gamer to BlockBook.
 
 Format: `add name/NAME gamertag/GAMERTAG`
 
@@ -99,7 +99,7 @@ Format: `list`
 
 ### Editing a gamer : `edit`
 
-Edits an existing Gamer stored in BlockBook.
+Edits an existing gamer stored in BlockBook.
 **TAKE NOTE!** This command does not allow the editing of fields that do not exist, such as `p/`, `e/`, `a/` etc. These fields are a work in progress.
 
 Format: `edit INDEX [name/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
@@ -107,13 +107,13 @@ Format: `edit INDEX [name/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
 * Edits the gamer at the specified `INDEX`. The index refers to the index number shown in the displayed gamer list. The index **must be a positive integer** 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the Gamer will be removed i.e adding of tags is not cumulative.
+* When editing tags, the existing tags of the gamer will be removed i.e adding of tags is not cumulative.
 * You can remove all the gamer's tags by typing `t/` without
     specifying any tags after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st Gamer to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 name/Betsy Crower t/` Edits the name of the 2nd Gamer to be `Betsy Crower` and clears all existing tags.
+*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st gamer to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 2 name/Betsy Crower t/` Edits the name of the 2nd gamer to be `Betsy Crower` and clears all existing tags.
 
 ### Locating gamers by name: `find`
 
@@ -135,17 +135,17 @@ Examples:
 
 ### Deleting a Gamer : `delete`
 
-Deletes the specified Gamer from BlockBook.
+Deletes the specified gamer from BlockBook.
 
 Format: `delete INDEX`
 
-* Deletes the Gamer at the specified `INDEX`.
-* The index refers to the index number shown in the displayed Gamer list.
+* Deletes the gamer at the specified `INDEX`.
+* The index refers to the index number shown in the displayed gamer list.
 * The index **must be a positive integer** 1, 2, 3, ...
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd Gamer shown in the list.
-* `find Betsy` followed by `delete 1` deletes the 1st Gamer in the results of the `find` command.
+* `list` followed by `delete 2` deletes the 2nd gamer shown in the list.
+* `find Betsy` followed by `delete 1` deletes the 1st gamer in the results of the `find` command.
 
 ### Clearing all entries : `clear`
 
