@@ -1,6 +1,6 @@
 ---
   layout: default.md
-    title: "YingWen's Project Portfolio Page"
+  title: "YingWen's Project Portfolio Page"
 ---
 
 ### Project: BlockBook
