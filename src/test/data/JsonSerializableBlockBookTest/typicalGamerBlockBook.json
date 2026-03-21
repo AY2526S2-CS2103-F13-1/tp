@@ -3,31 +3,87 @@
   "gamers": [
     {
       "name": "Alice Pauline",
-      "gamerTag": "Herobrine"
+      "gamerTag": "Herobrine",
+      "phone": "85355255",
+      "email": "amy@gmail.com",
+      "group": "Raid Team",
+      "server": "127.0.0.1:8080",
+      "favourite": "fav",
+      "country": "Singapore",
+      "region": "ASIA",
+      "note": "test_note"
     },
     {
       "name": "Benson Meier",
-      "gamerTag": "Herobrine2"
+      "gamerTag": "Herobrine2",
+      "phone": "85355255",
+      "email": "amy@gmail.com",
+      "group": "Raid Team",
+      "server": "127.0.0.1:8080",
+      "favourite": "fav",
+      "country": "Singapore",
+      "region": "ASIA",
+      "note": "test_note"
     },
     {
       "name": "Carl Kurz",
-      "gamerTag": "Herobrine3"
+      "gamerTag": "Herobrine3",
+      "phone": "85355255",
+      "email": "amy@gmail.com",
+      "group": "Raid Team",
+      "server": "127.0.0.1:8080",
+      "favourite": "fav",
+      "country": "Singapore",
+      "region": "ASIA",
+      "note": "test_note"
     },
     {
       "name": "Daniel Meier",
-      "gamerTag": "Herobrine4"
+      "gamerTag": "Herobrine4",
+      "phone": "85355255",
+      "email": "amy@gmail.com",
+      "group": "Raid Team",
+      "server": "127.0.0.1:8080",
+      "favourite": "fav",
+      "country": "Singapore",
+      "region": "ASIA",
+      "note": "test_note"
     },
     {
       "name": "Elle Meyer",
-      "gamerTag": "Herobrine5"
+      "gamerTag": "Herobrine5",
+      "phone": "85355255",
+      "email": "amy@gmail.com",
+      "group": "Raid Team",
+      "server": "127.0.0.1:8080",
+      "favourite": "fav",
+      "country": "Singapore",
+      "region": "ASIA",
+      "note": "test_note"
     },
     {
       "name": "Fiona Kunz",
-      "gamerTag": "Herobrine6"
+      "gamerTag": "Herobrine6",
+      "phone": "85355255",
+      "email": "amy@gmail.com",
+      "group": "Raid Team",
+      "server": "127.0.0.1:8080",
+      "favourite": "fav",
+      "country": "Singapore",
+      "region": "ASIA",
+      "note": "test_note"
     },
     {
       "name": "George Best",
-      "gamerTag": "Herobrine7"
+      "gamerTag": "Herobrine7",
+      "phone": "85355255",
+      "email": "amy@gmail.com",
+      "group": "Raid Team",
+      "server": "127.0.0.1:8080",
+      "favourite": "fav",
+      "country": "Singapore",
+      "region": "ASIA",
+      "note": "test_note"
     }
   ]
 }
