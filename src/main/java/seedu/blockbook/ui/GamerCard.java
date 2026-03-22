@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.blockbook.logic.Messages;
 import seedu.blockbook.model.gamer.Gamer;
 
 /**
@@ -32,13 +33,21 @@ public class GamerCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label region;
-    @FXML
     private Label phone;
     @FXML
-    private Label address;
-    @FXML
     private Label email;
+    @FXML
+    private Label group;
+    @FXML
+    private Label server;
+    @FXML
+    private Label favourite;
+    @FXML
+    private Label country;
+    @FXML
+    private Label region;
+    @FXML
+    private Label note;
 
     /**
      * Creates a {@code GamerCard} with the given {@code Gamer} and index to display.
@@ -47,8 +56,17 @@ public class GamerCard extends UiPart<Region> {
         super(FXML);
         this.gamer = gamer;
         id.setText(displayedIndex + ". ");
-        name.setText(gamer.getName().fullName);
-        gamerTag.setText("Gamertag: " + gamer.getGamerTag().fullGamerTag);
+        gamerTag.setText("GamerTag: " + gamer.getGamerTag().fullGamerTag);
+        name.setText("Name: " + Messages.formatNullable(gamer.getName()));
+        phone.setText("Phone: " + Messages.formatNullable(gamer.getPhone()));
+        email.setText("Email: " + Messages.formatNullable(gamer.getEmail()));
+        group.setText("Group: " + Messages.formatNullable(gamer.getGroup()));
+        server.setText("Server: " + Messages.formatNullable(gamer.getServer()));
+        country.setText("Country: " + Messages.formatNullable(gamer.getCountry()));
+        region.setText("Region: " + Messages.formatNullable(gamer.getRegion()));
+        note.setText("Note: " + Messages.formatNullable(gamer.getNote()));
+        favourite.setText("Favourite: " + gamer.getFavourite().toString());
+
         // region.setText(gamer.getRegion().fullRegion);
         // phone.setText(gamer.getPhone().value);
         // email.setText(gamer.getEmail().value);

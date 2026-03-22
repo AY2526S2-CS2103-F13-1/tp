@@ -2,11 +2,16 @@ package seedu.blockbook.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_COUNTRY;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_FAVOURITE;
+import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GAMERTAG;
+import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_REGION;
+import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_SERVER;
 
 import seedu.blockbook.commons.core.index.Index;
 import seedu.blockbook.logic.commands.EditCommand;
@@ -25,9 +30,21 @@ public class EditCommandParser implements Parser<EditCommand> {
      */
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
+        // ArgumentMultimap argMultimap =
+        //         ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE,
+        //         PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
-
+                ArgumentTokenizer.tokenize(args,
+                        PREFIX_GAMERTAG,
+                        PREFIX_NAME,
+                        PREFIX_PHONE,
+                        PREFIX_EMAIL,
+                        PREFIX_GROUP,
+                        PREFIX_SERVER,
+                        PREFIX_FAVOURITE,
+                        PREFIX_COUNTRY,
+                        PREFIX_REGION,
+                        PREFIX_NOTE);
         Index index;
 
         try {
@@ -36,7 +53,17 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
+        argMultimap.verifyNoDuplicatePrefixesFor(
+                PREFIX_GAMERTAG,
+                PREFIX_NAME,
+                PREFIX_PHONE,
+                PREFIX_EMAIL,
+                PREFIX_SERVER,
+                PREFIX_FAVOURITE,
+                PREFIX_COUNTRY,
+                PREFIX_REGION,
+                PREFIX_NOTE
+        );
 
         EditGamerDescriptor editGamerDescriptor = new EditGamerDescriptor();
 

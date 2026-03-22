@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import seedu.blockbook.commons.core.GuiSettings;
+import seedu.blockbook.logic.Messages;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.model.BlockBook;
 import seedu.blockbook.model.Model;
@@ -39,7 +40,7 @@ public class AddCommandTest {
         CommandResult commandResult = new AddCommand(validGamer).execute(modelStub);
 
         String expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS,
-                validGamer.getName() + ", " + validGamer.getGamerTag());
+                Messages.format(validGamer));
         assertEquals(expectedMessage, commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validGamer), modelStub.gamersAdded);
     }

@@ -7,6 +7,7 @@ import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import seedu.blockbook.logic.Messages;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.ModelManager;
 import seedu.blockbook.model.UserPrefs;
@@ -33,7 +34,7 @@ public class AddCommandIntegrationTest {
         expectedModel.addGamer(validGamer);
 
         String expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS,
-                validGamer.getName() + ", " + validGamer.getGamerTag());
+                Messages.format(validGamer));
 
         assertCommandSuccess(new AddCommand(validGamer), model, expectedMessage, expectedModel);
     }

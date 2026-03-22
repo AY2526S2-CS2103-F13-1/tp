@@ -5,10 +5,18 @@ import static java.util.Objects.requireNonNull;
 import seedu.blockbook.commons.core.index.Index;
 import seedu.blockbook.commons.util.StringUtil;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
+import seedu.blockbook.model.gamer.Country;
 import seedu.blockbook.model.gamer.Email;
+import seedu.blockbook.model.gamer.Favourite;
 import seedu.blockbook.model.gamer.GamerTag;
+import seedu.blockbook.model.gamer.Group;
 import seedu.blockbook.model.gamer.Name;
+import seedu.blockbook.model.gamer.Note;
 import seedu.blockbook.model.gamer.Phone;
+import seedu.blockbook.model.gamer.Region;
+import seedu.blockbook.model.gamer.Server;
+
+
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -110,6 +118,96 @@ public class ParserUtil {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
         return new Email(trimmedEmail);
+    }
+
+    /**
+     * Parses a {@code String group} into a {@code Group}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code group} is invalid.
+     */
+    public static Group parseGroup(String group) throws ParseException {
+        requireNonNull(group);
+        String trimmedGroup = group.trim();
+        if (!Group.isValidGroup(trimmedGroup)) {
+            throw new ParseException(Group.MESSAGE_CONSTRAINTS);
+        }
+        return new Group(trimmedGroup);
+    }
+
+    /**
+     * Parses a {@code String server} into a {@code Server}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code server} is invalid.
+     */
+    public static Server parseServer(String server) throws ParseException {
+        requireNonNull(server);
+        String trimmedServer = server.trim();
+        if (!Server.isValidServer(trimmedServer)) {
+            throw new ParseException(Server.MESSAGE_CONSTRAINTS);
+        }
+        return new Server(trimmedServer);
+    }
+
+    /**
+     * Parses a {@code String favourite} into a {@code Favourite}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code favourite} is invalid.
+     */
+    public static Favourite parseFavourite(String favourite) throws ParseException {
+        requireNonNull(favourite);
+        String trimmedFavourite = favourite.trim();
+        if (!Favourite.isValidFavourite(trimmedFavourite)) {
+            throw new ParseException(Favourite.MESSAGE_CONSTRAINTS);
+        }
+        return new Favourite(trimmedFavourite);
+    }
+
+    /**
+     * Parses a {@code String country} into a {@code Country}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code country} is invalid.
+     */
+    public static Country parseCountry(String country) throws ParseException {
+        requireNonNull(country);
+        String trimmedCountry = country.trim();
+        if (!Country.isValidCountry(trimmedCountry)) {
+            throw new ParseException(Country.MESSAGE_CONSTRAINTS);
+        }
+        return new Country(trimmedCountry);
+    }
+
+    /**
+     * Parses a {@code String region} into a {@code Region}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code region} is invalid.
+     */
+    public static Region parseRegion(String region) throws ParseException {
+        requireNonNull(region);
+        String trimmedRegion = region.trim();
+        if (!Region.isValidRegion(trimmedRegion)) {
+            throw new ParseException(Region.MESSAGE_CONSTRAINTS);
+        }
+        return new Region(trimmedRegion);
+    }
+
+    /**
+     * Parses a {@code String note} into a {@code Note}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code note} is invalid.
+     */
+    public static Note parseNote(String note) throws ParseException {
+        requireNonNull(note);
+        String trimmedNote = note.trim();
+        if (!Note.isValidNote(trimmedNote)) {
+            throw new ParseException(Note.MESSAGE_CONSTRAINTS);
+        }
+        return new Note(trimmedNote);
     }
 
 }

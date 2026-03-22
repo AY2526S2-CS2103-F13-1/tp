@@ -11,9 +11,11 @@ public class Phone {
 
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Phone numbers should only contain numbers, and it should be at least 3 digits long";
-    public static final String VALIDATION_REGEX = "\\d{3,}";
-    public final String value;
+            "Phone number should only contain numbers, spaces, hyphens, plus sign (+), parentheses, "
+                    + "and be at most 30 characters.";
+    // public static final String VALIDATION_REGEX = "\\d{3,}";
+    public static final String VALIDATION_REGEX = "^(?=.*\\d)[0-9+()\\- ]{1,30}$";
+    public final String fullPhone;
 
     /**
      * Constructs a {@code Phone}.
@@ -23,7 +25,7 @@ public class Phone {
     public Phone(String phone) {
         requireNonNull(phone);
         checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
-        value = phone;
+        fullPhone = phone;
     }
 
     /**
@@ -35,7 +37,7 @@ public class Phone {
 
     @Override
     public String toString() {
-        return value;
+        return fullPhone;
     }
 
     @Override
@@ -50,12 +52,12 @@ public class Phone {
         }
 
         Phone otherPhone = (Phone) other;
-        return value.equals(otherPhone.value);
+        return fullPhone.equals(otherPhone.fullPhone);
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return fullPhone.hashCode();
     }
 
 }

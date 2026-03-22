@@ -31,7 +31,7 @@ public class Email {
     private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)*" + DOMAIN_LAST_PART_REGEX;
     public static final String VALIDATION_REGEX = LOCAL_PART_REGEX + "@" + DOMAIN_REGEX;
 
-    public final String value;
+    public final String fullEmail;
 
     /**
      * Constructs an {@code Email}.
@@ -41,7 +41,7 @@ public class Email {
     public Email(String email) {
         requireNonNull(email);
         checkArgument(isValidEmail(email), MESSAGE_CONSTRAINTS);
-        value = email;
+        fullEmail = email;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Email {
 
     @Override
     public String toString() {
-        return value;
+        return fullEmail;
     }
 
     @Override
@@ -68,12 +68,12 @@ public class Email {
         }
 
         Email otherEmail = (Email) other;
-        return value.equals(otherEmail.value);
+        return fullEmail.equals(otherEmail.fullEmail);
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return fullEmail.hashCode();
     }
 
 }

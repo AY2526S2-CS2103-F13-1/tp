@@ -40,16 +40,34 @@ public class Messages {
      */
     public static String format(Gamer gamer) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(gamer.getName())
-                .append("; GamerTag: ")
-                .append(gamer.getGamerTag());
-        // .append("; Email: ")
-        // .append(gamer.getEmail())
-        // .append("; Address: ")
-        // .append(gamer.getAddress())
-        // .append("; Tags: ");
-        // gamer.getTags().forEach(builder::append);
+        builder.append("Gamertag: ")
+                .append(formatNullable(gamer.getGamerTag()))
+                .append(" Name: ")
+                .append(formatNullable(gamer.getName()))
+                .append(" Phone: ")
+                .append(formatNullable(gamer.getPhone()))
+                .append(" Email: ")
+                .append(formatNullable(gamer.getEmail()))
+                .append(" Group: ")
+                .append(formatNullable(gamer.getGroup()))
+                .append(" Server: ")
+                .append(formatNullable(gamer.getServer()))
+                .append(" Favourite: ")
+                .append(formatNullable(gamer.getFavourite()))
+                .append(" Country: ")
+                .append(formatNullable(gamer.getCountry()))
+                .append(" Region: ")
+                .append(formatNullable(gamer.getRegion()))
+                .append(" Note: ")
+                .append(formatNullable(gamer.getNote()));
         return builder.toString();
+    }
+
+    /**
+     * Returns "N/A" if the field is null, otherwise returns its string form.
+     */
+    public static String formatNullable(Object field) {
+        return field == null ? "N/A" : field.toString();
     }
 
 }

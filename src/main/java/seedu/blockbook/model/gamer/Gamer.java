@@ -15,8 +15,14 @@ public class Gamer {
     // Identity fields
     private final Name name;
     private final GamerTag gamerTag;
-    // private final Phone phone;
-    // private final Email email;
+    private final Phone phone;
+    private final Email email;
+    private final Group group;
+    private final Server server;
+    private final Favourite favourite;
+    private final Country country;
+    private final Region region;
+    private final Note note;
 
     // Data fields
     // private final Region region;
@@ -24,13 +30,20 @@ public class Gamer {
     /**
      * Every field must be present and not null.
      */
-    public Gamer(Name name, GamerTag gamerTag) {
-        requireAllNonNull(name, gamerTag);
+    public Gamer(Name name, GamerTag gamerTag, Phone phone, Email email,
+                 Group group, Server server, Favourite favourite,
+                 Country country, Region region, Note note) {
+        requireAllNonNull(gamerTag);
         this.name = name;
         this.gamerTag = gamerTag;
-        //this.region = region;
-        //this.phone = phone;
-        //this.email = email;
+        this.phone = phone;
+        this.email = email;
+        this.group = group;
+        this.server = server;
+        this.favourite = favourite;
+        this.country = country;
+        this.region = region;
+        this.note = note;
     }
 
     public Name getName() {
@@ -41,17 +54,37 @@ public class Gamer {
         return gamerTag;
     }
 
-    // public Region getRegion() {
-    // return region;
-    // }
+    public Phone getPhone() {
+        return phone;
+    }
 
-    // public Phone getPhone() {
-    // return phone;
-    // }
+    public Email getEmail() {
+        return email;
+    }
 
-    // public Email getEmail() {
-    // return email;
-    // }
+    public Group getGroup() {
+        return group;
+    }
+
+    public Server getServer() {
+        return server;
+    }
+
+    public Favourite getFavourite() {
+        return favourite;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public Note getNote() {
+        return note;
+    }
 
 
     /**
@@ -83,16 +116,29 @@ public class Gamer {
         }
 
         Gamer otherGamer = (Gamer) other;
-        return name.equals(otherGamer.name)
-                && gamerTag.equals(otherGamer.gamerTag);
+        // return name.equals(otherGamer.name)
+        //        && gamerTag.equals(otherGamer.gamerTag);
+
         //        && phone.equals(otherGamer.phone)
         //        && email.equals(otherGamer.email);
+        // prevent nullpointerexception
+        return Objects.equals(name, otherGamer.name)
+                && Objects.equals(gamerTag, otherGamer.gamerTag)
+                && Objects.equals(phone, otherGamer.phone)
+                && Objects.equals(email, otherGamer.email)
+                && Objects.equals(group, otherGamer.group)
+                && Objects.equals(server, otherGamer.server)
+                && Objects.equals(favourite, otherGamer.favourite)
+                && Objects.equals(country, otherGamer.country)
+                && Objects.equals(region, otherGamer.region)
+                && Objects.equals(note, otherGamer.note);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, gamerTag);
+        // return Objects.hash(name, gamerTag);
+        return Objects.hash(name, gamerTag, phone, email, group, server, favourite, country, region, note);
     }
 
     @Override
@@ -100,9 +146,14 @@ public class Gamer {
         return new ToStringBuilder(this)
                 .add("name", name)
                 .add("gamertag", gamerTag)
-                // .add("region", region)
-                // .add("phone", phone)
-                // .add("email", email)
+                .add("phone", phone)
+                .add("email", email)
+                .add("group", group)
+                .add("server", server)
+                .add("favourite", favourite)
+                .add("country", country)
+                .add("region", region)
+                .add("note", note)
                 .toString();
     }
 

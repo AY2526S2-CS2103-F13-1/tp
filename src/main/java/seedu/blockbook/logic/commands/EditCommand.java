@@ -1,11 +1,16 @@
 package seedu.blockbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_COUNTRY;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_FAVOURITE;
+import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GAMERTAG;
+import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_REGION;
+import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_SERVER;
 import static seedu.blockbook.model.Model.PREDICATE_SHOW_ALL_GAMERS;
 
 import java.util.List;
@@ -18,12 +23,17 @@ import seedu.blockbook.commons.util.ToStringBuilder;
 import seedu.blockbook.logic.Messages;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.model.Model;
+import seedu.blockbook.model.gamer.Country;
 import seedu.blockbook.model.gamer.Email;
+import seedu.blockbook.model.gamer.Favourite;
 import seedu.blockbook.model.gamer.Gamer;
 import seedu.blockbook.model.gamer.GamerTag;
+import seedu.blockbook.model.gamer.Group;
 import seedu.blockbook.model.gamer.Name;
+import seedu.blockbook.model.gamer.Note;
 import seedu.blockbook.model.gamer.Phone;
 import seedu.blockbook.model.gamer.Region;
+import seedu.blockbook.model.gamer.Server;
 
 /**
  * Edits the details of an existing gamer in the BlockBook.
@@ -36,11 +46,16 @@ public class EditCommand extends Command {
             + "by the index number used in the displayed gamer list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
+            + "[" + PREFIX_GAMERTAG + "GAMERTAG] "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_GROUP + "GROUP] "
+            + "[" + PREFIX_SERVER + "SERVER] "
+            + "[" + PREFIX_FAVOURITE + "FAVOURITE] "
+            + "[" + PREFIX_COUNTRY + "COUNTRY] "
+            + "[" + PREFIX_REGION + "REGION] "
+            + "[" + PREFIX_NOTE + "NOTE]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -92,16 +107,40 @@ public class EditCommand extends Command {
     private static Gamer createEditedGamer(Gamer gamerToEdit, EditGamerDescriptor editGamerDescriptor) {
         assert gamerToEdit != null;
 
-        Name updatedName = editGamerDescriptor.getName().orElse(gamerToEdit.getName());
+        //        Name updatedName = editGamerDescriptor.getName().orElse(gamerToEdit.getName());
         // Phone updatedPhone = editGamerDescriptor.getPhone().orElse(gamerToEdit.getPhone());
         // Email updatedEmail = editGamerDescriptor.getEmail().orElse(gamerToEdit.getEmail());
         // Address updatedAddress = editGamerDescriptor.getAddress().orElse(gamerToEdit.getAddress());
         // Set<Tag> updatedTags = editGamerDescriptor.getTags().orElse(gamerToEdit.getTags());
 
-        Region updatedRegion = new Region("Singapore");
+        //        Region updatedRegion = new Region("Singapore");
+        //        GamerTag updatedGamerTag = new GamerTag("Herobrine");
+        //
+        //        return new Gamer(updatedName, updatedGamerTag);
+        Name updatedName = new Name("Steve");
         GamerTag updatedGamerTag = new GamerTag("Herobrine");
+        Phone updatedPhone = new Phone("91234567");
+        Email updatedEmail = new Email("steve@example.com");
+        Group updatedGroup = new Group("Raid Team");
+        Server updatedServer = new Server("127.0.0.1:8080");
+        Favourite updatedFavourite = new Favourite("fav");
+        Country updatedCountry = new Country("Singapore");
+        Region updatedRegion = new Region("ASIA");
+        Note updatedNote = new Note("test_note");
 
-        return new Gamer(updatedName, updatedGamerTag);
+        return new Gamer(
+                updatedName,
+                updatedGamerTag,
+                updatedPhone,
+                updatedEmail,
+                updatedGroup,
+                updatedServer,
+                updatedFavourite,
+                updatedCountry,
+                updatedRegion,
+                updatedNote
+        );
+
     }
 
     @Override

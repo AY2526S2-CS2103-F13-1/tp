@@ -10,7 +10,7 @@ import static seedu.blockbook.commons.util.AppUtil.checkArgument;
 public class GamerTag {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Gamertags should only contain, letters, numbers and underscore, and be at most 50 characters.";
+            "Gamertags should only contain, letters, numbers and underscores, and be at most 50 characters.";
 
     /**
      * Gamertags should only be max 50 chars long, A-Z, a-z, numbers, no spaces,
@@ -21,7 +21,7 @@ public class GamerTag {
     public final String fullGamerTag;
 
     /**
-     * Constructs a {@code Name}.
+     * Constructs a {@code GamerTag}.
      *
      * @param gamerTag A valid name.
      */

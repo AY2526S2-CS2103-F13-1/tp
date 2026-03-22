@@ -5,37 +5,37 @@ import static seedu.blockbook.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Gamer's region in the BlockBook.
- * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidRegion(String)}
  */
 public class Region {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Region should only contain alphanumeric characters and spaces, and it should not be blank";
-
-    /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+            "Region must be one of the supported values: NA, SA, EU, AFRICA, ASIA, OCEANIA, or ME.";
 
     public final String fullRegion;
 
     /**
-     * Constructs a {@code Name}.
+     * Constructs a {@code Region}.
      *
      * @param region A valid region.
      */
     public Region(String region) {
         requireNonNull(region);
-        checkArgument(isValidName(region), MESSAGE_CONSTRAINTS);
-        fullRegion = region;
+        checkArgument(isValidRegion(region), MESSAGE_CONSTRAINTS);
+        fullRegion = region.toUpperCase();
     }
 
     /**
      * Returns true if a given string is a valid region.
      */
-    public static boolean isValidName(String test) {
-        return test.matches(VALIDATION_REGEX);
+    public static boolean isValidRegion(String test) {
+        requireNonNull(test);
+        try {
+            RegionType.valueOf(test.toUpperCase());
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
 
@@ -55,8 +55,8 @@ public class Region {
             return false;
         }
 
-        Region otherName = (Region) other;
-        return fullRegion.equals(otherName.fullRegion);
+        Region otherRegion = (Region) other;
+        return fullRegion.equals(otherRegion.fullRegion);
     }
 
     @Override
