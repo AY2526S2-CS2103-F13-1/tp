@@ -44,7 +44,6 @@ public class ParserUtil {
      * @throws ParseException if any index is invalid (not non-zero unsigned integer).
      */
     public static ArrayList<Index> parseMultipleIndexes(String oneBasedIndexes) throws ParseException {
-        // Game plan: Split the string by the spaces, then iteratively call parseIndex
         String trimmedIndex = oneBasedIndexes.trim();
         String[] indexList = trimmedIndex.split(" +");
         ArrayList<Index> output = new ArrayList<>();
