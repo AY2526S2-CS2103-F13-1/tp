@@ -2,11 +2,11 @@ package seedu.blockbook.logic.parser;
 
 import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.ArrayList;
+
 import seedu.blockbook.commons.core.index.Index;
 import seedu.blockbook.logic.commands.DeleteCommand;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
-
-import java.util.ArrayList;
 
 /**
  * Parses input arguments and creates a new DeleteCommand object

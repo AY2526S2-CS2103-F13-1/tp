@@ -2,6 +2,8 @@ package seedu.blockbook.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+
 import seedu.blockbook.commons.core.index.Index;
 import seedu.blockbook.commons.util.StringUtil;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
@@ -15,8 +17,6 @@ import seedu.blockbook.model.gamer.Note;
 import seedu.blockbook.model.gamer.Phone;
 import seedu.blockbook.model.gamer.Region;
 import seedu.blockbook.model.gamer.Server;
-
-import java.util.ArrayList;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
