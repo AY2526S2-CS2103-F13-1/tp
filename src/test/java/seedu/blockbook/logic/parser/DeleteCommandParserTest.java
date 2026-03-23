@@ -3,7 +3,9 @@ package seedu.blockbook.logic.parser;
 import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.blockbook.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.blockbook.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.blockbook.testutil.TypicalIndexes.*;
+import static seedu.blockbook.testutil.TypicalIndexes.INDEX_FIRST_GAMER;
+import static seedu.blockbook.testutil.TypicalIndexes.INDEX_SECOND_GAMER;
+import static seedu.blockbook.testutil.TypicalIndexes.INDEX_THIRD_GAMER;
 
 import java.util.ArrayList;
 
