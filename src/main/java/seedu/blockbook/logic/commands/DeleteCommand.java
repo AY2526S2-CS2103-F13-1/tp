@@ -19,16 +19,16 @@ public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the gamer contacts identified by the index number used in the displayed gamer list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + ": Deletes the gamer contacts identified by the index numbers used in the displayed gamer list.\n"
+            + "Parameters: INDEX (must be a positive integer) [INDEX] ...\n"
+            + "Example: " + COMMAND_WORD + " 1, " + COMMAND_WORD + " 1 2 3";
 
-    public static final String MESSAGE_DELETE_GAMER_SUCCESS = "Contact deleted: %1$s";
+    public static final String MESSAGE_DELETE_GAMER_SUCCESS = "Contact(s) deleted: %1$s";
 
-    private final Index targetIndex;
+    private final List<Index> targetIndexes;
 
-    public DeleteCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
+    public DeleteCommand(List<Index> indexList) {
+        this.targetIndexes = indexList;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class DeleteCommand extends Command {
 
         validateDeleteIndex(lastShownList);
 
-        int index = targetIndex.getZeroBased();
+        int index = targetIndexes.get(0).getZeroBased();
         assert index < lastShownList.size();
 
         Gamer gamerToDelete = lastShownList.get(index);
@@ -57,7 +57,7 @@ public class DeleteCommand extends Command {
             throw new CommandException(Messages.MESSAGE_EMPTY_CONTACT_LIST);
         }
 
-        int index = targetIndex.getZeroBased();
+        int index = targetIndexes.get(0).getZeroBased();
         if (index >= gamerList.size()) {
             throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
         }
@@ -75,13 +75,13 @@ public class DeleteCommand extends Command {
         }
 
         DeleteCommand otherDeleteCommand = (DeleteCommand) other;
-        return targetIndex.equals(otherDeleteCommand.targetIndex);
+        return targetIndexes.equals(otherDeleteCommand.targetIndexes);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("targetIndex", targetIndex)
+                .add("targetIndex", targetIndexes)
                 .toString();
     }
 }
