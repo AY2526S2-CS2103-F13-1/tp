@@ -36,14 +36,28 @@ public class DeleteCommand extends Command {
         requireNonNull(model);
         List<Gamer> lastShownList = model.getFilteredGamerList();
 
+        // Reverse sort list to ensure deleting from the back of the list to preserve index validity
+        targetIndexes.sort((o1, o2) -> o2.getOneBased() - o1.getOneBased());
+
         validateDeleteIndex(lastShownList);
 
-        int index = targetIndexes.get(0).getZeroBased();
-        assert index < lastShownList.size();
+        int lastIndex = -1;
+        String deletedGamerNames = "";
+        for (Index index : targetIndexes) {
+            int indexNumber = index.getZeroBased();
+            if (lastIndex == indexNumber) {
+                continue;
+            }
+            lastIndex = indexNumber;
+            assert indexNumber < lastShownList.size();
 
-        Gamer gamerToDelete = lastShownList.get(index);
-        model.deleteGamer(gamerToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_GAMER_SUCCESS, Messages.format(gamerToDelete)));
+            Gamer gamerToDelete = lastShownList.get(indexNumber);
+            model.deleteGamer(gamerToDelete);
+            deletedGamerNames = gamerToDelete.getGamerTag() + ", " + deletedGamerNames;
+        }
+        deletedGamerNames = deletedGamerNames.substring(0, deletedGamerNames.length() - 2);;
+
+        return new CommandResult(String.format(MESSAGE_DELETE_GAMER_SUCCESS, deletedGamerNames));
     }
 
     /**
