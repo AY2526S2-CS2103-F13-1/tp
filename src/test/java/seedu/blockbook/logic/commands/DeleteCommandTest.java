@@ -10,6 +10,8 @@ import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
 import static seedu.blockbook.testutil.TypicalIndexes.INDEX_FIRST_GAMER;
 import static seedu.blockbook.testutil.TypicalIndexes.INDEX_SECOND_GAMER;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.blockbook.commons.core.index.Index;
@@ -30,10 +32,12 @@ public class DeleteCommandTest {
     @Test
     public void execute_validIndexUnfilteredList_success() {
         Gamer gamerToDelete = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
-        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_GAMER);
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(INDEX_FIRST_GAMER);
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_GAMER_SUCCESS,
-                Messages.format(gamerToDelete));
+                gamerToDelete.getGamerTag());
 
         ModelManager expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
         expectedModel.deleteGamer(gamerToDelete);
@@ -44,7 +48,9 @@ public class DeleteCommandTest {
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredGamerList().size() + 1);
-        DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(outOfBoundIndex);
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
 
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
     }
@@ -54,10 +60,12 @@ public class DeleteCommandTest {
         showGamerAtIndex(model, INDEX_FIRST_GAMER);
 
         Gamer gamerToDelete = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
-        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_GAMER);
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(INDEX_FIRST_GAMER);
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_GAMER_SUCCESS,
-                Messages.format(gamerToDelete));
+                gamerToDelete.getGamerTag());
 
         Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
         expectedModel.deleteGamer(gamerToDelete);
@@ -74,21 +82,28 @@ public class DeleteCommandTest {
         // ensures that outOfBoundIndex is still in bounds of BlockBook list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getBlockBook().getGamerList().size());
 
-        DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(outOfBoundIndex);
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
 
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
     }
 
     @Test
     public void equals() {
-        DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_GAMER);
-        DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_GAMER);
+        ArrayList<Index> indexListFirstGamer = new ArrayList<>();
+        indexListFirstGamer.add(INDEX_FIRST_GAMER);
+        DeleteCommand deleteFirstCommand = new DeleteCommand(indexListFirstGamer);
+
+        ArrayList<Index> indexListSecondGamer = new ArrayList<>();
+        indexListSecondGamer.add(INDEX_SECOND_GAMER);
+        DeleteCommand deleteSecondCommand = new DeleteCommand(indexListSecondGamer);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_GAMER);
+        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(indexListFirstGamer);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
@@ -104,8 +119,12 @@ public class DeleteCommandTest {
     @Test
     public void toStringMethod() {
         Index targetIndex = Index.fromOneBased(1);
-        DeleteCommand deleteCommand = new DeleteCommand(targetIndex);
-        String expected = DeleteCommand.class.getCanonicalName() + "{targetIndex=" + targetIndex + "}";
+
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(targetIndex);
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
+
+        String expected = DeleteCommand.class.getCanonicalName() + "{targetIndexes=" + indexList + "}";
         assertEquals(expected, deleteCommand.toString());
     }
 
@@ -122,7 +141,9 @@ public class DeleteCommandTest {
     public void execute_emptyList_throwsCommandException() {
         Model emptyModel = new ModelManager();
 
-        DeleteCommand deleteCommand = new DeleteCommand(Index.fromOneBased(1));
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(Index.fromOneBased(1));
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
 
         assertCommandFailure(deleteCommand, emptyModel,
                 Messages.MESSAGE_EMPTY_CONTACT_LIST);
@@ -133,27 +154,31 @@ public class DeleteCommandTest {
         showGamerAtIndex(model, INDEX_FIRST_GAMER);
 
         Gamer gamerToDelete = model.getFilteredGamerList().get(0);
-        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_GAMER);
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(INDEX_FIRST_GAMER);
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
 
         Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
         expectedModel.deleteGamer(gamerToDelete);
         showNoGamer(expectedModel);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_GAMER_SUCCESS,
-                Messages.format(gamerToDelete));
+                gamerToDelete.getGamerTag());
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_multipleDeletes_success() {
-        DeleteCommand deleteFirst = new DeleteCommand(INDEX_FIRST_GAMER);
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(INDEX_FIRST_GAMER);
+        DeleteCommand deleteFirst = new DeleteCommand(indexList);
         assertCommandSuccess(deleteFirst, model,
                 String.format(DeleteCommand.MESSAGE_DELETE_GAMER_SUCCESS,
-                        Messages.format(model.getFilteredGamerList().get(0))),
+                        model.getFilteredGamerList().get(0).getGamerTag()),
                 model);
 
-        DeleteCommand deleteSecond = new DeleteCommand(INDEX_FIRST_GAMER);
+        DeleteCommand deleteSecond = new DeleteCommand(indexList);
         Gamer nextGamer = model.getFilteredGamerList().get(0);
 
         Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
@@ -161,7 +186,7 @@ public class DeleteCommandTest {
 
         assertCommandSuccess(deleteSecond, model,
                 String.format(DeleteCommand.MESSAGE_DELETE_GAMER_SUCCESS,
-                        Messages.format(nextGamer)),
+                        nextGamer.getGamerTag()),
                 expectedModel);
     }
 }
