@@ -6,6 +6,8 @@ import seedu.blockbook.commons.core.index.Index;
 import seedu.blockbook.logic.commands.DeleteCommand;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
 
+import java.util.ArrayList;
+
 /**
  * Parses input arguments and creates a new DeleteCommand object
  */
@@ -18,8 +20,8 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
     public DeleteCommand parse(String args) throws ParseException {
         try {
-            Index[] index = ParserUtil.parseMultipleIndexes(args);
-            return new DeleteCommand(index);
+            ArrayList<Index> indexes = ParserUtil.parseMultipleIndexes(args);
+            return new DeleteCommand(indexes);
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
