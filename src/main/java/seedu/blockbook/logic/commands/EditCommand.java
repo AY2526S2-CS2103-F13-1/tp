@@ -1,22 +1,14 @@
 package seedu.blockbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_COUNTRY;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_FAVOURITE;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GAMERTAG;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GROUP;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_NOTE;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_REGION;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_SERVER;
 import static seedu.blockbook.model.Model.PREDICATE_SHOW_ALL_GAMERS;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
 
+import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.commons.core.index.Index;
 import seedu.blockbook.commons.util.CollectionUtil;
 import seedu.blockbook.commons.util.ToStringBuilder;
@@ -42,27 +34,18 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the gamer identified "
-            + "by the index number used in the displayed gamer list. "
-            + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_GAMERTAG + "GAMERTAG] "
-            + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_GROUP + "GROUP] "
-            + "[" + PREFIX_SERVER + "SERVER] "
-            + "[" + PREFIX_FAVOURITE + "FAVOURITE] "
-            + "[" + PREFIX_COUNTRY + "COUNTRY] "
-            + "[" + PREFIX_REGION + "REGION] "
-            + "[" + PREFIX_NOTE + "NOTE]\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits a gamer in BlockBook.\n"
+            + "Format: edit INDEX [gamertag/GAMERTAG] [name/NAME] [phone/PHONE] [email/EMAIL] "
+            + "[group/GROUP] [server/SERVER] [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]\n"
+            + "Example: edit 1 name/Herobrine gamertag/ilovesteve phone/99999 "
+            + "email/brine@gmail.com group/DestroySteve favourite/fav country/Singapore region/SEA "
+            + "note/I hate steve";
 
-    public static final String MESSAGE_EDIT_GAMER_SUCCESS = "Edited Gamer: %1$s";
+    public static final String MESSAGE_EDIT_GAMER_SUCCESS = "Contact edited: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_GAMER = "This gamer already exists in the BlockBook.";
+    public static final String MESSAGE_DUPLICATE_GAMER = "This gamertag is already used by someone in BlockBook.";
+
+    private static final Logger logger = LogsCenter.getLogger(EditCommand.class);
 
     private final Index index;
     private final EditGamerDescriptor editGamerDescriptor;
@@ -74,7 +57,6 @@ public class EditCommand extends Command {
     public EditCommand(Index index, EditGamerDescriptor editGamerDescriptor) {
         requireNonNull(index);
         requireNonNull(editGamerDescriptor);
-
         this.index = index;
         this.editGamerDescriptor = new EditGamerDescriptor(editGamerDescriptor);
     }
@@ -83,21 +65,39 @@ public class EditCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Gamer> lastShownList = model.getFilteredGamerList();
+        validateEditIndex(lastShownList);
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
-        }
+        int targetIndex = index.getZeroBased();
+        assert targetIndex < lastShownList.size();
 
-        Gamer gamerToEdit = lastShownList.get(index.getZeroBased());
+        Gamer gamerToEdit = lastShownList.get(targetIndex);
+        assert gamerToEdit != null;
         Gamer editedGamer = createEditedGamer(gamerToEdit, editGamerDescriptor);
+        assert editedGamer != null;
 
         if (!gamerToEdit.isSameGamer(editedGamer) && model.hasGamer(editedGamer)) {
+            logger.finer("Edit failed: duplicate gamertag at index " + index.getOneBased());
             throw new CommandException(MESSAGE_DUPLICATE_GAMER);
         }
 
         model.setGamer(gamerToEdit, editedGamer);
         model.updateFilteredGamerList(PREDICATE_SHOW_ALL_GAMERS);
-        return new CommandResult(String.format(MESSAGE_EDIT_GAMER_SUCCESS, Messages.format(editedGamer)));
+        logger.fine("Edited gamer at index " + index.getOneBased() + ": " + editedGamer.getGamerTag());
+        return new CommandResult(String.format(MESSAGE_EDIT_GAMER_SUCCESS, formatEditedGamer(editedGamer)));
+    }
+
+    /**
+     * Validates whether the target index refers to a valid gamer in the displayed list.
+     *
+     * @param gamerList The currently displayed list of gamers.
+     * @throws CommandException If the index is out of range.
+     */
+    private void validateEditIndex(List<Gamer> gamerList) throws CommandException {
+        int targetIndex = index.getZeroBased();
+        if (targetIndex >= gamerList.size()) {
+            logger.finer("Edit failed: index out of range (" + targetIndex + ").");
+            throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        }
     }
 
     /**
@@ -106,27 +106,18 @@ public class EditCommand extends Command {
      */
     private static Gamer createEditedGamer(Gamer gamerToEdit, EditGamerDescriptor editGamerDescriptor) {
         assert gamerToEdit != null;
+        requireNonNull(editGamerDescriptor);
 
-        //        Name updatedName = editGamerDescriptor.getName().orElse(gamerToEdit.getName());
-        // Phone updatedPhone = editGamerDescriptor.getPhone().orElse(gamerToEdit.getPhone());
-        // Email updatedEmail = editGamerDescriptor.getEmail().orElse(gamerToEdit.getEmail());
-        // Address updatedAddress = editGamerDescriptor.getAddress().orElse(gamerToEdit.getAddress());
-        // Set<Tag> updatedTags = editGamerDescriptor.getTags().orElse(gamerToEdit.getTags());
-
-        //        Region updatedRegion = new Region("Singapore");
-        //        GamerTag updatedGamerTag = new GamerTag("Herobrine");
-        //
-        //        return new Gamer(updatedName, updatedGamerTag);
-        Name updatedName = new Name("Steve");
-        GamerTag updatedGamerTag = new GamerTag("Herobrine");
-        Phone updatedPhone = new Phone("91234567");
-        Email updatedEmail = new Email("steve@example.com");
-        Group updatedGroup = new Group("Raid Team");
-        Server updatedServer = new Server("127.0.0.1:8080");
-        Favourite updatedFavourite = new Favourite("fav");
-        Country updatedCountry = new Country("Singapore");
-        Region updatedRegion = new Region("ASIA");
-        Note updatedNote = new Note("test_note");
+        Name updatedName = editGamerDescriptor.getName().orElse(gamerToEdit.getName());
+        GamerTag updatedGamerTag = editGamerDescriptor.getGamerTag().orElse(gamerToEdit.getGamerTag());
+        Phone updatedPhone = editGamerDescriptor.getPhone().orElse(gamerToEdit.getPhone());
+        Email updatedEmail = editGamerDescriptor.getEmail().orElse(gamerToEdit.getEmail());
+        Group updatedGroup = editGamerDescriptor.getGroup().orElse(gamerToEdit.getGroup());
+        Server updatedServer = editGamerDescriptor.getServer().orElse(gamerToEdit.getServer());
+        Favourite updatedFavourite = editGamerDescriptor.getFavourite().orElse(gamerToEdit.getFavourite());
+        Country updatedCountry = editGamerDescriptor.getCountry().orElse(gamerToEdit.getCountry());
+        Region updatedRegion = editGamerDescriptor.getRegion().orElse(gamerToEdit.getRegion());
+        Note updatedNote = editGamerDescriptor.getNote().orElse(gamerToEdit.getNote());
 
         return new Gamer(
                 updatedName,
@@ -140,7 +131,19 @@ public class EditCommand extends Command {
                 updatedRegion,
                 updatedNote
         );
+    }
 
+    private static String formatEditedGamer(Gamer gamer) {
+        return "Name: " + Messages.formatNullable(gamer.getName())
+                + " Gamertag: " + Messages.formatNullable(gamer.getGamerTag())
+                + " Phone: " + Messages.formatNullable(gamer.getPhone())
+                + " Email: " + Messages.formatNullable(gamer.getEmail())
+                + " Group: " + Messages.formatNullable(gamer.getGroup())
+                + " Server: " + Messages.formatNullable(gamer.getServer())
+                + " Favourite: " + Messages.formatNullable(gamer.getFavourite())
+                + " Country: " + Messages.formatNullable(gamer.getCountry())
+                + " Region: " + Messages.formatNullable(gamer.getRegion())
+                + " Note: " + Messages.formatNullable(gamer.getNote());
     }
 
     @Override
@@ -149,7 +152,6 @@ public class EditCommand extends Command {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof EditCommand)) {
             return false;
         }
@@ -173,26 +175,40 @@ public class EditCommand extends Command {
      */
     public static class EditGamerDescriptor {
         private Name name;
+        private GamerTag gamerTag;
         private Phone phone;
         private Email email;
+        private Group group;
+        private Server server;
+        private Favourite favourite;
+        private Country country;
+        private Region region;
+        private Note note;
 
         public EditGamerDescriptor() {}
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
          */
         public EditGamerDescriptor(EditGamerDescriptor toCopy) {
             setName(toCopy.name);
+            setGamerTag(toCopy.gamerTag);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
+            setGroup(toCopy.group);
+            setServer(toCopy.server);
+            setFavourite(toCopy.favourite);
+            setCountry(toCopy.country);
+            setRegion(toCopy.region);
+            setNote(toCopy.note);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email);
+            return CollectionUtil.isAnyNonNull(
+                    name, gamerTag, phone, email, group, server, favourite, country, region, note);
         }
 
         public void setName(Name name) {
@@ -201,6 +217,14 @@ public class EditCommand extends Command {
 
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
+        }
+
+        public void setGamerTag(GamerTag gamerTag) {
+            this.gamerTag = gamerTag;
+        }
+
+        public Optional<GamerTag> getGamerTag() {
+            return Optional.ofNullable(gamerTag);
         }
 
         public void setPhone(Phone phone) {
@@ -219,6 +243,53 @@ public class EditCommand extends Command {
             return Optional.ofNullable(email);
         }
 
+        public void setGroup(Group group) {
+            this.group = group;
+        }
+
+        public Optional<Group> getGroup() {
+            return Optional.ofNullable(group);
+        }
+
+        public void setServer(Server server) {
+            this.server = server;
+        }
+
+        public Optional<Server> getServer() {
+            return Optional.ofNullable(server);
+        }
+
+        public void setFavourite(Favourite favourite) {
+            this.favourite = favourite;
+        }
+
+        public Optional<Favourite> getFavourite() {
+            return Optional.ofNullable(favourite);
+        }
+
+        public void setCountry(Country country) {
+            this.country = country;
+        }
+
+        public Optional<Country> getCountry() {
+            return Optional.ofNullable(country);
+        }
+
+        public void setRegion(Region region) {
+            this.region = region;
+        }
+
+        public Optional<Region> getRegion() {
+            return Optional.ofNullable(region);
+        }
+
+        public void setNote(Note note) {
+            this.note = note;
+        }
+
+        public Optional<Note> getNote() {
+            return Optional.ofNullable(note);
+        }
 
         @Override
         public boolean equals(Object other) {
@@ -226,26 +297,37 @@ public class EditCommand extends Command {
                 return true;
             }
 
-            // instanceof handles nulls
             if (!(other instanceof EditGamerDescriptor)) {
                 return false;
             }
 
-            EditGamerDescriptor otherEditGamerDescriptor = (EditGamerDescriptor) other;
-            return Objects.equals(name, otherEditGamerDescriptor.name)
-                    && Objects.equals(phone, otherEditGamerDescriptor.phone)
-                    && Objects.equals(email, otherEditGamerDescriptor.email);
+            EditGamerDescriptor otherDescriptor = (EditGamerDescriptor) other;
+            return Objects.equals(name, otherDescriptor.name)
+                    && Objects.equals(gamerTag, otherDescriptor.gamerTag)
+                    && Objects.equals(phone, otherDescriptor.phone)
+                    && Objects.equals(email, otherDescriptor.email)
+                    && Objects.equals(group, otherDescriptor.group)
+                    && Objects.equals(server, otherDescriptor.server)
+                    && Objects.equals(favourite, otherDescriptor.favourite)
+                    && Objects.equals(country, otherDescriptor.country)
+                    && Objects.equals(region, otherDescriptor.region)
+                    && Objects.equals(note, otherDescriptor.note);
         }
 
         @Override
         public String toString() {
             return new ToStringBuilder(this)
                     .add("name", name)
+                    .add("gamerTag", gamerTag)
                     .add("phone", phone)
                     .add("email", email)
+                    .add("group", group)
+                    .add("server", server)
+                    .add("favourite", favourite)
+                    .add("country", country)
+                    .add("region", region)
+                    .add("note", note)
                     .toString();
         }
     }
 }
-
-
