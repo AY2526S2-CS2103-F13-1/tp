@@ -56,10 +56,10 @@ public class DeleteCommand extends Command {
         if (gamerList.isEmpty()) {
             throw new CommandException(Messages.MESSAGE_EMPTY_CONTACT_LIST);
         }
-
-        int index = targetIndexes.get(0).getZeroBased();
-        if (index >= gamerList.size()) {
-            throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        for  (Index index : targetIndexes) {
+            if (index.getZeroBased() >= gamerList.size()) {
+                throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+            }
         }
     }
 
