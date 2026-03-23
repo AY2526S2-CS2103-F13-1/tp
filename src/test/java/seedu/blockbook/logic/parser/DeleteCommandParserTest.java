@@ -46,8 +46,31 @@ public class DeleteCommandParserTest {
     }
 
     @Test
+    public void parse_validMultipleArgsWithExtraWhitespace_returnsDeleteCommand() {
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(INDEX_FIRST_GAMER);
+        indexList.add(INDEX_SECOND_GAMER);
+        indexList.add(INDEX_THIRD_GAMER);
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
+
+        assertParseSuccess(parser, "   1   2   3   ", deleteCommand);
+    }
+
+    @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidTokenAmongIndexes_throwsParseException() {
+        assertParseFailure(parser, "1 a 3",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_emptyArgs_throwsParseException() {
+        assertParseFailure(parser, "   ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
     }
 }
 

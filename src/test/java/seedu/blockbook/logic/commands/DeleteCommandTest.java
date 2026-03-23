@@ -9,6 +9,7 @@ import static seedu.blockbook.logic.commands.CommandTestUtil.showGamerAtIndex;
 import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
 import static seedu.blockbook.testutil.TypicalIndexes.INDEX_FIRST_GAMER;
 import static seedu.blockbook.testutil.TypicalIndexes.INDEX_SECOND_GAMER;
+import static seedu.blockbook.testutil.TypicalIndexes.INDEX_THIRD_GAMER;
 
 import java.util.ArrayList;
 
@@ -188,6 +189,82 @@ public class DeleteCommandTest {
                 String.format(DeleteCommand.MESSAGE_DELETE_GAMER_SUCCESS,
                         nextGamer.getGamerTag()),
                 expectedModel);
+    }
+
+    @Test
+    public void execute_multipleIndexesSingleCommandUnfilteredList_success() {
+        Gamer firstGamer = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
+        Gamer thirdGamer = model.getFilteredGamerList().get(INDEX_THIRD_GAMER.getZeroBased());
+
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(INDEX_FIRST_GAMER);
+        indexList.add(INDEX_THIRD_GAMER);
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
+
+        Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
+        expectedModel.deleteGamer(thirdGamer);
+        expectedModel.deleteGamer(firstGamer);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_GAMER_SUCCESS,
+                firstGamer.getGamerTag() + ", " + thirdGamer.getGamerTag());
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_unsortedMultipleIndexesSingleCommand_success() {
+        Gamer firstGamer = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
+        Gamer secondGamer = model.getFilteredGamerList().get(INDEX_SECOND_GAMER.getZeroBased());
+        Gamer thirdGamer = model.getFilteredGamerList().get(INDEX_THIRD_GAMER.getZeroBased());
+
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(INDEX_THIRD_GAMER);
+        indexList.add(INDEX_FIRST_GAMER);
+        indexList.add(INDEX_SECOND_GAMER);
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
+
+        Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
+        expectedModel.deleteGamer(thirdGamer);
+        expectedModel.deleteGamer(secondGamer);
+        expectedModel.deleteGamer(firstGamer);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_GAMER_SUCCESS,
+                firstGamer.getGamerTag() + ", " + secondGamer.getGamerTag() + ", " + thirdGamer.getGamerTag());
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_duplicateIndexesSingleCommand_deletesOnlyOncePerIndex() {
+        Gamer firstGamer = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
+        Gamer secondGamer = model.getFilteredGamerList().get(INDEX_SECOND_GAMER.getZeroBased());
+
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(INDEX_FIRST_GAMER);
+        indexList.add(INDEX_SECOND_GAMER);
+        indexList.add(INDEX_SECOND_GAMER);
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
+
+        Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
+        expectedModel.deleteGamer(secondGamer);
+        expectedModel.deleteGamer(firstGamer);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_GAMER_SUCCESS,
+                firstGamer.getGamerTag() + ", " + secondGamer.getGamerTag());
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_multipleIndexesOneInvalid_throwsCommandExceptionAndNoDeletion() {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredGamerList().size() + 1);
+
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(INDEX_FIRST_GAMER);
+        indexList.add(outOfBoundIndex);
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
     }
 }
 
