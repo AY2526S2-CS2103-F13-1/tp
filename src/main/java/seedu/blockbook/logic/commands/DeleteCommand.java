@@ -70,7 +70,7 @@ public class DeleteCommand extends Command {
         if (gamerList.isEmpty()) {
             throw new CommandException(Messages.MESSAGE_EMPTY_CONTACT_LIST);
         }
-        for  (Index index : targetIndexes) {
+        for (Index index : targetIndexes) {
             if (index.getZeroBased() >= gamerList.size()) {
                 throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
             }
