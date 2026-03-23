@@ -3,10 +3,13 @@ package seedu.blockbook.logic.parser;
 import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.blockbook.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.blockbook.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.blockbook.testutil.TypicalIndexes.INDEX_FIRST_GAMER;
+import static seedu.blockbook.testutil.TypicalIndexes.*;
+
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.blockbook.commons.core.index.Index;
 import seedu.blockbook.logic.commands.DeleteCommand;
 
 /**
@@ -22,7 +25,22 @@ public class DeleteCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsDeleteCommand() {
-        assertParseSuccess(parser, "1", new DeleteCommand(INDEX_FIRST_GAMER));
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(INDEX_FIRST_GAMER);
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
+
+        assertParseSuccess(parser, "1", deleteCommand);
+    }
+
+    @Test
+    public void parse_validMultipleArgs_returnsDeleteCommand() {
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(INDEX_FIRST_GAMER);
+        indexList.add(INDEX_SECOND_GAMER);
+        indexList.add(INDEX_THIRD_GAMER);
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
+
+        assertParseSuccess(parser, "1 2 3", deleteCommand);
     }
 
     @Test
