@@ -30,7 +30,7 @@ public class HelpCommand extends Command {
         outputString.append(ClearCommand.MESSAGE_USAGE + "\n\n");
         outputString.append(ExitCommand.MESSAGE_USAGE);
 
-        return new CommandResult(outputString.toString(), true, false);
+        return new CommandResult(outputString.toString(), false, false);
     }
 }
 
