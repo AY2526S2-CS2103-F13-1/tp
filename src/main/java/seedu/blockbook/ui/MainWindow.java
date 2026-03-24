@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -44,6 +45,9 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
+    private Menu exitMenu;
+
+    @FXML
     private MenuItem websiteMenuItem;
     @FXML
     private MenuItem userGuideMenuItem;
@@ -72,6 +76,7 @@ public class MainWindow extends UiPart<Stage> {
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
+        configureExitMenu();
 
         setAccelerators();
 
@@ -83,9 +88,18 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     private void setAccelerators() {
+        setAccelerator(exitMenu, KeyCombination.valueOf("Shortcut+Q"));
         setAccelerator(websiteMenuItem, KeyCombination.valueOf("F1"));
         setAccelerator(userGuideMenuItem, KeyCombination.valueOf("F2"));
         setAccelerator(developerGuideMenuItem, KeyCombination.valueOf("F3"));
+    }
+
+    /**
+     * Ensures clicking the top-level "Exit" menu closes the app in one click.
+     */
+    private void configureExitMenu() {
+        exitMenu.setOnAction(event -> handleExit());
+        exitMenu.setOnShowing(event -> handleExit());
     }
 
     /**
@@ -223,5 +237,3 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplay.setFeedbackToUser(text);
     }
 }
-
-
