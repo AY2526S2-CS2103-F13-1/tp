@@ -13,7 +13,7 @@ public class HelpCommand extends Command {
             + "Format: " + COMMAND_WORD;
 
     public static final String SHOWING_HELP_MESSAGE = "The user guide can be found in the help menu above. "
-            + "These are the available commands:";
+            + "These are the available commands (case-sensitive):";
 
     @Override
     public CommandResult execute(Model model) {
