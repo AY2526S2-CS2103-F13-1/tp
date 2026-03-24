@@ -2,6 +2,7 @@ package seedu.blockbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.blockbook.commons.core.index.Index;
@@ -28,13 +29,14 @@ public class DeleteCommand extends Command {
     private final List<Index> targetIndexes;
 
     public DeleteCommand(List<Index> indexList) {
-        requireNonNull(indexList);
         this.targetIndexes = new ArrayList<>(indexList);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        requireNonNull(targetIndexes);
+
         List<Gamer> lastShownList = model.getFilteredGamerList();
 
         // Reverse sort list to ensure deleting from the back of the list to preserve index validity
@@ -56,7 +58,12 @@ public class DeleteCommand extends Command {
             model.deleteGamer(gamerToDelete);
             deletedGamerNames = gamerToDelete.getGamerTag() + ", " + deletedGamerNames;
         }
-        deletedGamerNames = deletedGamerNames.substring(0, deletedGamerNames.length() - 2);;
+        if (lastIndex == -1) { // No valid indexes were found
+            throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
+        }
+        if (deletedGamerNames.length() > 2) {
+            deletedGamerNames = deletedGamerNames.substring(0, deletedGamerNames.length() - 2);
+        }
 
         return new CommandResult(String.format(MESSAGE_DELETE_GAMER_SUCCESS, deletedGamerNames));
     }
