@@ -34,16 +34,16 @@ public class ViewCommand extends Command {
             return new CommandResult(Messages.MESSAGE_GAMERTAG_NOT_FOUND);
         } else {
             Gamer specifiedGamer = model.getFilteredGamerList().get(0);
-            String formattedContact = "Name: " + specifiedGamer.getName()
+            String formattedContact = "Name: " + Messages.formatNullable(specifiedGamer.getName())
                     + " Gamertag: " + specifiedGamer.getGamerTag()
-                    + " Phone: " + specifiedGamer.getPhone()
-                    + " Email: " + specifiedGamer.getEmail()
-                    + " Group: " + specifiedGamer.getGroup()
-                    + " Server: " + specifiedGamer.getServer()
-                    + " Favourite: " + specifiedGamer.getFavourite()
-                    + " Country: " + specifiedGamer.getCountry()
-                    + " Region: " + specifiedGamer.getRegion()
-                    + " Note: " + specifiedGamer.getNote();
+                    + " Phone: " + Messages.formatNullable(specifiedGamer.getPhone())
+                    + " Email: " + Messages.formatNullable(specifiedGamer.getEmail())
+                    + " Group: " + Messages.formatNullable(specifiedGamer.getGroup())
+                    + " Server: " + Messages.formatNullable(specifiedGamer.getServer())
+                    + " Favourite: " + Messages.formatNullable(specifiedGamer.getFavourite())
+                    + " Country: " + Messages.formatNullable(specifiedGamer.getCountry())
+                    + " Region: " + Messages.formatNullable(specifiedGamer.getRegion())
+                    + " Note: " + Messages.formatNullable(specifiedGamer.getNote());
             return new CommandResult(formattedContact);
         }
 
