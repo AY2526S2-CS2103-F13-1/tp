@@ -202,7 +202,7 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
-            // Consider removing/improving in future as it is deprecated
+            // Consider removing/improving in future as help command no longer uses this
             if (commandResult.isShowHelp()) {
                 if (!helpWindow.isShowing()) {
                     helpWindow.show();
