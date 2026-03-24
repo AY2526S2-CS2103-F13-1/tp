@@ -15,6 +15,8 @@ public class HelpCommand extends Command {
     public static final String SHOWING_HELP_MESSAGE = "The user guide can be found in the help menu above. "
             + "These are the available commands (case-sensitive):";
 
+    public static final String SEPARATOR = "-------------------------------------------------------------------\n";
+
     @Override
     public CommandResult execute(Model model) {
         StringBuilder outputString = new StringBuilder();
@@ -23,10 +25,10 @@ public class HelpCommand extends Command {
         outputString.append(AddCommand.MESSAGE_USAGE + "\n\n");
         outputString.append(EditCommand.MESSAGE_USAGE + "\n\n");
         outputString.append(DeleteCommand.MESSAGE_USAGE + "\n");
-        outputString.append("-------------------------------------------------------------------------------------\n");
+        outputString.append(SEPARATOR);
         outputString.append(FindCommand.MESSAGE_USAGE + "\n\n");
         outputString.append(ListCommand.MESSAGE_USAGE + "\n");
-        outputString.append("-------------------------------------------------------------------------------------\n");
+        outputString.append(SEPARATOR);
         outputString.append(ClearCommand.MESSAGE_USAGE + "\n\n");
         outputString.append(ExitCommand.MESSAGE_USAGE);
 
