@@ -133,6 +133,20 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+### Viewing a gamer's full contact details: `view`
+Returns the full contact details of the gamer associated by a valid Gamertag in the command prompt and GUI.
+
+Format: `view gamertag/GAMERTAG`
+
+<box type="tip" seamless>
+
+**Tip:** `gamertag/` parameter is required.
+</box>
+
+
+Examples:
+* `view gamertag/SteveMaster99`
+
 ### Deleting a Gamer : `delete`
 
 Deletes the specified gamer from BlockBook.
@@ -196,13 +210,14 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action     | Format, Examples                                                                                                                                     |
-|------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Action     | Format, Examples                                                                 |
+|------------|----------------------------------------------------------------------------------|
 | **Add**    | `add name/NAME gamertag/GAMERTAG` <br> e.g., `add name/James Ho gamertag/JamieH` |
-| **Clear**  | `clear`                                                                                                                                              |
-| **Delete** | `delete INDEX`<br> e.g., `delete 3`                                                                                                                  |
-| **Edit**   | `edit INDEX [name/NAME] [gamertag/GAMERTAG]`<br> e.g.,`edit 2 name/James Lee`                      |
-| **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                           |
-| **List**   | `list`                                                                                                                                               |
-| **Help**   | `help`                                                                                                                                               |
+| **Clear**  | `clear`                                                                          |
+| **Delete** | `delete INDEX`<br> e.g., `delete 3`                                              |
+| **Edit**   | `edit INDEX [name/NAME] [gamertag/GAMERTAG]`<br> e.g.,`edit 2 name/James Lee`    |
+| **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                       |
+| **View**   | `view gamertag/GAMERTAG` <br> e.g., `view gamertag/SteveMaster99`                |
+| **List**   | `list`                                                                           |
+| **Help**   | `help`                                                                           |
 
