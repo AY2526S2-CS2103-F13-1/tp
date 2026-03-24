@@ -104,7 +104,9 @@ public class DeleteCommandTest {
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(indexListFirstGamer);
+        ArrayList<Index> indexListFirstGamerCopy = new ArrayList<>();
+        indexListFirstGamerCopy.add(INDEX_FIRST_GAMER);
+        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(indexListFirstGamerCopy);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
@@ -179,7 +181,9 @@ public class DeleteCommandTest {
                         model.getFilteredGamerList().get(0).getGamerTag()),
                 model);
 
-        DeleteCommand deleteSecond = new DeleteCommand(indexList);
+        ArrayList<Index> indexListCopy = new ArrayList<>();
+        indexListCopy.add(INDEX_FIRST_GAMER);
+        DeleteCommand deleteSecond = new DeleteCommand(indexListCopy);
         Gamer nextGamer = model.getFilteredGamerList().get(0);
 
         Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
