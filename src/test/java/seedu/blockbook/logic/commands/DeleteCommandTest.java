@@ -176,10 +176,16 @@ public class DeleteCommandTest {
         ArrayList<Index> indexList = new ArrayList<>();
         indexList.add(INDEX_FIRST_GAMER);
         DeleteCommand deleteFirst = new DeleteCommand(indexList);
+
+        Gamer gamerToDelete = model.getFilteredGamerList().get(0);
+
+        Model expectedModelAfterDeleting = new ModelManager(model.getBlockBook(), new UserPrefs());
+        expectedModelAfterDeleting.deleteGamer(gamerToDelete);
+
         assertCommandSuccess(deleteFirst, model,
                 String.format(DeleteCommand.MESSAGE_DELETE_GAMER_SUCCESS,
-                        model.getFilteredGamerList().get(0).getGamerTag()),
-                model);
+                        gamerToDelete.getGamerTag()),
+                expectedModelAfterDeleting);
 
         ArrayList<Index> indexListCopy = new ArrayList<>();
         indexListCopy.add(INDEX_FIRST_GAMER);
