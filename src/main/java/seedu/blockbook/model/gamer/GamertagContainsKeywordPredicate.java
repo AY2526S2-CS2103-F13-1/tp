@@ -6,7 +6,7 @@ import seedu.blockbook.commons.util.StringUtil;
 import seedu.blockbook.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Gamer}'s {@code Gamertag} matches any of the keyword given.
+ * Tests that a {@code Gamer}'s {@code Gamertag} matches the given keyword.
  */
 public class GamertagContainsKeywordPredicate implements Predicate<Gamer> {
     private final String keyword;
