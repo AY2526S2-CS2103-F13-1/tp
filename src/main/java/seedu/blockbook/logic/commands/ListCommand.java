@@ -14,7 +14,7 @@ public class ListCommand extends Command {
     public static final String COMMAND_WORD = "list";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Searches for the specified keywords (case-insensitive) and displays them below.\n"
+            + ": Lists all the gamers in your BlockBook.\n"
             + "Format: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = Messages.MESSAGE_GAMERS_LISTED_OVERVIEW;
