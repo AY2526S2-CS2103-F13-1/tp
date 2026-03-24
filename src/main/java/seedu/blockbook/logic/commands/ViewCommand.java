@@ -5,11 +5,12 @@ import static java.util.Objects.requireNonNull;
 import seedu.blockbook.commons.util.ToStringBuilder;
 import seedu.blockbook.logic.Messages;
 import seedu.blockbook.model.Model;
+import seedu.blockbook.model.gamer.Gamer;
 import seedu.blockbook.model.gamer.GamertagContainsKeywordsPredicate;
 
 /**
- * Finds and lists the full details of the gamer contact specified via Gamertag param.
- * Keyword matching is case insensitive.
+ * Finds and lists the full details of the gamer contact specified via Gamertag
+ * param. Keyword matching is case insensitive.
  */
 public class ViewCommand extends Command {
 
@@ -28,8 +29,24 @@ public class ViewCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredGamerList(predicate);
-        return new CommandResult(
-                String.format(Messages.MESSAGE_GAMERS_LISTED_COUNT, model.getFilteredGamerList().size()));
+        int gamerListSize = model.getFilteredGamerList().size();
+        if (gamerListSize == 0) {
+            return new CommandResult(Messages.MESSAGE_GAMERTAG_NOT_FOUND);
+        } else {
+            Gamer specifiedGamer = model.getFilteredGamerList().get(0);
+            String formattedContact = "Name: " + specifiedGamer.getName()
+                    + " Gamertag: " + specifiedGamer.getGamerTag()
+                    + " Phone: " + specifiedGamer.getPhone()
+                    + " Email: " + specifiedGamer.getEmail()
+                    + " Group: " + specifiedGamer.getGroup()
+                    + " Server: " + specifiedGamer.getServer()
+                    + " Favourite: " + specifiedGamer.getFavourite()
+                    + " Country: " + specifiedGamer.getCountry()
+                    + " Region: " + specifiedGamer.getRegion()
+                    + " Note: " + specifiedGamer.getNote();
+            return new CommandResult(formattedContact);
+        }
+
     }
 
     @Override
