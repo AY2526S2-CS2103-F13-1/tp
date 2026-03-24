@@ -39,8 +39,6 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
-        //ArgumentMultimap argMultimap =
-        //        ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_GAMERTAG);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args,
                 PREFIX_GAMERTAG,
@@ -54,16 +52,11 @@ public class AddCommandParser implements Parser<AddCommand> {
                 PREFIX_REGION,
                 PREFIX_NOTE);
 
-        //        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_GAMERTAG)
-        //                || !argMultimap.getPreamble().isEmpty()) {
-        //            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-        //        }
         if (!arePrefixesPresent(argMultimap, PREFIX_GAMERTAG)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
-        //        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_GAMERTAG);
         argMultimap.verifyNoDuplicatePrefixesFor(
                 PREFIX_GAMERTAG,
                 PREFIX_NAME,
@@ -76,9 +69,6 @@ public class AddCommandParser implements Parser<AddCommand> {
                 PREFIX_NOTE
         );
 
-        // Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        // GamerTag gamerTag = ParserUtil.parseGamerTag(argMultimap.getValue(PREFIX_GAMERTAG).get());
-        // Required
         GamerTag gamerTag = ParserUtil.parseGamerTag(
                 argMultimap.getValue(PREFIX_GAMERTAG).get());
 
@@ -141,8 +131,6 @@ public class AddCommandParser implements Parser<AddCommand> {
                 region,
                 note
         );
-
-        // Gamer gamer = new Gamer(name, gamerTag);
 
         return new AddCommand(gamer);
     }
