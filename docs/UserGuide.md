@@ -134,7 +134,7 @@ Examples:
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 ### Viewing a gamer's full contact details: `view`
-Returns the full contact details of the gamer associated by a valid Gamertag in the command prompt and GUI.
+Returns in the command prompt and GUI, the full contact details of the gamer associated given a valid Gamertag.
 
 Format: `view gamertag/GAMERTAG`
 

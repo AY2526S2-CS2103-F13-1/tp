@@ -8,10 +8,10 @@ import seedu.blockbook.commons.util.ToStringBuilder;
 /**
  * Tests that a {@code Gamer}'s {@code Gamertag} matches any of the keyword given.
  */
-public class GamertagContainsKeywordsPredicate implements Predicate<Gamer> {
+public class GamertagContainsKeywordPredicate implements Predicate<Gamer> {
     private final String keyword;
 
-    public GamertagContainsKeywordsPredicate(String keyword) {
+    public GamertagContainsKeywordPredicate(String keyword) {
         this.keyword = keyword;
     }
 
@@ -27,13 +27,13 @@ public class GamertagContainsKeywordsPredicate implements Predicate<Gamer> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof GamertagContainsKeywordsPredicate)) {
+        if (!(other instanceof GamertagContainsKeywordPredicate)) {
             return false;
         }
 
-        GamertagContainsKeywordsPredicate otherGamertagContainsKeywordsPredicate =
-                (GamertagContainsKeywordsPredicate) other;
-        return keyword.equals(otherGamertagContainsKeywordsPredicate.keyword);
+        GamertagContainsKeywordPredicate otherGamertagContainsKeywordPredicate =
+                (GamertagContainsKeywordPredicate) other;
+        return keyword.equals(otherGamertagContainsKeywordPredicate.keyword);
     }
 
     @Override

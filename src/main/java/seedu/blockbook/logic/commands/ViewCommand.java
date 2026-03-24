@@ -6,7 +6,7 @@ import seedu.blockbook.commons.util.ToStringBuilder;
 import seedu.blockbook.logic.Messages;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.gamer.Gamer;
-import seedu.blockbook.model.gamer.GamertagContainsKeywordsPredicate;
+import seedu.blockbook.model.gamer.GamertagContainsKeywordPredicate;
 
 /**
  * Finds and lists the full details of the gamer contact specified via Gamertag
@@ -19,9 +19,9 @@ public class ViewCommand extends Command {
             + " the specified keyword (case-insensitive) and displays them in the command prompt.\n"
             + "Format: view gamertag/GAMERTAG ";
 
-    private final GamertagContainsKeywordsPredicate predicate;
+    private final GamertagContainsKeywordPredicate predicate;
 
-    public ViewCommand(GamertagContainsKeywordsPredicate predicate) {
+    public ViewCommand(GamertagContainsKeywordPredicate predicate) {
         this.predicate = predicate;
     }
 

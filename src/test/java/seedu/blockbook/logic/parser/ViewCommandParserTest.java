@@ -9,7 +9,7 @@ import static seedu.blockbook.model.gamer.GamerTag.MESSAGE_CONSTRAINTS;
 import org.junit.jupiter.api.Test;
 
 import seedu.blockbook.logic.commands.ViewCommand;
-import seedu.blockbook.model.gamer.GamertagContainsKeywordsPredicate;
+import seedu.blockbook.model.gamer.GamertagContainsKeywordPredicate;
 
 public class ViewCommandParserTest {
     private ViewCommandParser parser = new ViewCommandParser();
@@ -20,7 +20,7 @@ public class ViewCommandParserTest {
     @Test
     public void parse_validArgs_returnsViewCommand() {
         ViewCommand expectedCommand =
-                new ViewCommand(new GamertagContainsKeywordsPredicate("Steve"));
+                new ViewCommand(new GamertagContainsKeywordPredicate("Steve"));
 
         assertParseSuccess(parser, " " + PREFIX_GAMERTAG + "Steve", expectedCommand);
 
@@ -54,7 +54,7 @@ public class ViewCommandParserTest {
      * Verifies that the MESSAGE_CONSTRAINTS is returned, given an invalid Gamertag
      */
     @Test
-    public void parse_emptyGamertagValue_throwsParseException() {
+    public void parse_invalidGamertagValue_throwsParseException() {
         // prefix is present, but the gamertag value is missing
         assertParseFailure(parser, " " + PREFIX_GAMERTAG + "///", MESSAGE_CONSTRAINTS);
     }

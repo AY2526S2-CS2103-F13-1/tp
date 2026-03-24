@@ -14,10 +14,10 @@ import seedu.blockbook.model.Model;
 import seedu.blockbook.model.ModelManager;
 import seedu.blockbook.model.UserPrefs;
 import seedu.blockbook.model.gamer.Gamer;
-import seedu.blockbook.model.gamer.GamertagContainsKeywordsPredicate;
+import seedu.blockbook.model.gamer.GamertagContainsKeywordPredicate;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for ViewCommand.
  */
 public class ViewCommandTest {
 
@@ -43,7 +43,7 @@ public class ViewCommandTest {
         Gamer targetGamer = model.getFilteredGamerList().get(0);
         String keyword = targetGamer.getGamerTag().toString();
 
-        GamertagContainsKeywordsPredicate predicate = new GamertagContainsKeywordsPredicate(keyword);
+        GamertagContainsKeywordPredicate predicate = new GamertagContainsKeywordPredicate(keyword);
         ViewCommand command = new ViewCommand(predicate);
 
         // Set up the expected model's filtered list
@@ -77,7 +77,7 @@ public class ViewCommandTest {
                 ? originalGamertag.toUpperCase()
                 : originalGamertag.toLowerCase();
 
-        GamertagContainsKeywordsPredicate predicate = new GamertagContainsKeywordsPredicate(invertedCaseKeyword);
+        GamertagContainsKeywordPredicate predicate = new GamertagContainsKeywordPredicate(invertedCaseKeyword);
         ViewCommand command = new ViewCommand(predicate);
 
         expectedModel.updateFilteredGamerList(predicate);
@@ -103,7 +103,7 @@ public class ViewCommandTest {
     @Test
     public void execute_gamerNotFound_showsNotFoundMessage() {
         String nonexistentKeyword = "ThisGamertagShouldNotExist123";
-        GamertagContainsKeywordsPredicate predicate = new GamertagContainsKeywordsPredicate(nonexistentKeyword);
+        GamertagContainsKeywordPredicate predicate = new GamertagContainsKeywordPredicate(nonexistentKeyword);
         ViewCommand command = new ViewCommand(predicate);
 
         // The expected model should have an empty filtered list
@@ -117,10 +117,10 @@ public class ViewCommandTest {
      */
     @Test
     public void equals() {
-        GamertagContainsKeywordsPredicate firstPredicate =
-                new GamertagContainsKeywordsPredicate("first");
-        GamertagContainsKeywordsPredicate secondPredicate =
-                new GamertagContainsKeywordsPredicate("second");
+        GamertagContainsKeywordPredicate firstPredicate =
+                new GamertagContainsKeywordPredicate("first");
+        GamertagContainsKeywordPredicate secondPredicate =
+                new GamertagContainsKeywordPredicate("second");
 
         ViewCommand viewFirstCommand = new ViewCommand(firstPredicate);
         ViewCommand viewSecondCommand = new ViewCommand(secondPredicate);
@@ -147,7 +147,7 @@ public class ViewCommandTest {
      */
     @Test
     public void toStringMethod() {
-        GamertagContainsKeywordsPredicate predicate = new GamertagContainsKeywordsPredicate("keyword");
+        GamertagContainsKeywordPredicate predicate = new GamertagContainsKeywordPredicate("keyword");
         ViewCommand viewCommand = new ViewCommand(predicate);
 
         String expected = ViewCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
