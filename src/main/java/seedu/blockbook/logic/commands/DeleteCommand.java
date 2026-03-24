@@ -69,7 +69,7 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * Validates whether the target index refers to a valid gamer in the given list.
+     * Validates whether the target indexes refer to valid gamers in the given list.
      *
      * @param gamerList The currently displayed list of gamers.
      * @throws CommandException If the list is empty or if the index is out of range.
