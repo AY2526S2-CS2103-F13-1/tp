@@ -60,7 +60,7 @@ public class DeleteCommand extends Command {
             deletedGamerNames = gamerToDelete.getGamerTag() + ", " + deletedGamerNames;
         }
         if (lastIndex == -1) { // No valid indexes were found
-            throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
+            throw new CommandException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
         }
         if (deletedGamerNames.length() > 2) {
             deletedGamerNames = deletedGamerNames.substring(0, deletedGamerNames.length() - 2);
