@@ -10,7 +10,8 @@ import seedu.blockbook.model.ModelManager;
 
 public class HelpCommandTest {
 
-    private static final String SEPARATOR = "------------------------------------------------------------------------";
+    private static final String SEPARATOR = "------------------------------------------------"
+        + "-------------------------------------";
 
     @Test
     public void execute_returnsExpectedHelpOutput() {
