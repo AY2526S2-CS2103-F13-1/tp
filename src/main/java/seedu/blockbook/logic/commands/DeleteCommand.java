@@ -28,7 +28,8 @@ public class DeleteCommand extends Command {
     private final List<Index> targetIndexes;
 
     public DeleteCommand(List<Index> indexList) {
-        this.targetIndexes = indexList;
+        requireNonNull(indexList);
+        this.targetIndexes = new ArrayList<>(indexList);
     }
 
     @Override
