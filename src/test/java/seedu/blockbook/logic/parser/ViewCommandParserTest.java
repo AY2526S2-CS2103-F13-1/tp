@@ -1,5 +1,6 @@
 package seedu.blockbook.logic.parser;
 
+import static seedu.blockbook.logic.Messages.MESSAGE_DUPLICATE_FIELDS;
 import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GAMERTAG;
 import static seedu.blockbook.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -57,5 +58,15 @@ public class ViewCommandParserTest {
     public void parse_invalidGamertagValue_throwsParseException() {
         // prefix is present, but the gamertag value is missing
         assertParseFailure(parser, " " + PREFIX_GAMERTAG + "///", MESSAGE_CONSTRAINTS);
+    }
+
+    /**
+     * Verifies that the MESSAGE_DUPLICATE_FIELDS is returned, given duplicate prefixes.
+     */
+    @Test
+    public void parse_duplicatePrefix_throwsParseException() {
+        // multiple gamertags provided
+        String userInput = " " + PREFIX_GAMERTAG + "Steve " + PREFIX_GAMERTAG + "Steve2";
+        assertParseFailure(parser, userInput, MESSAGE_DUPLICATE_FIELDS + PREFIX_GAMERTAG);
     }
 }
