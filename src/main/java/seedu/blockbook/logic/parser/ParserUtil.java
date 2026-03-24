@@ -45,7 +45,7 @@ public class ParserUtil {
      */
     public static ArrayList<Index> parseMultipleIndexes(String oneBasedIndexes) throws ParseException {
         String trimmedIndex = oneBasedIndexes.trim();
-        String[] indexList = trimmedIndex.split(" +");
+        String[] indexList = trimmedIndex.split("\\s+");
         ArrayList<Index> output = new ArrayList<>();
         for (String index : indexList) {
             if (!StringUtil.isNonZeroUnsignedInteger(index)) {
