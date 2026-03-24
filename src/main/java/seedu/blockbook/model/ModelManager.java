@@ -4,11 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.blockbook.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.blockbook.commons.core.GuiSettings;
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.model.gamer.Gamer;
@@ -21,6 +23,7 @@ public class ModelManager implements Model {
 
     private final BlockBook blockBook;
     private final UserPrefs userPrefs;
+    private final SortedList<Gamer> sortedGamers;
     private final FilteredList<Gamer> filteredGamers;
 
     /**
@@ -33,7 +36,8 @@ public class ModelManager implements Model {
 
         this.blockBook = new BlockBook(blockBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredGamers = new FilteredList<>(this.blockBook.getGamerList());
+        sortedGamers = new SortedList<>(this.blockBook.getGamerList());
+        filteredGamers = new FilteredList<>(sortedGamers);
     }
 
     public ModelManager() {
@@ -125,6 +129,12 @@ public class ModelManager implements Model {
     public void updateFilteredGamerList(Predicate<Gamer> predicate) {
         requireNonNull(predicate);
         filteredGamers.setPredicate(predicate);
+    }
+
+    @Override
+    public void sortGamerList(Comparator<Gamer> comparator) {
+        requireNonNull(comparator);
+        sortedGamers.setComparator(comparator);
     }
 
     @Override
