@@ -9,10 +9,6 @@ import seedu.blockbook.model.Model;
 import seedu.blockbook.model.ModelManager;
 
 public class HelpCommandTest {
-
-    private static final String SEPARATOR = "------------------------------------------------"
-        + "-------------------------------------";
-
     @Test
     public void execute_returnsExpectedHelpOutput() {
         Model model = new ModelManager();
@@ -22,10 +18,10 @@ public class HelpCommandTest {
                 + AddCommand.MESSAGE_USAGE + "\n\n"
                 + EditCommand.MESSAGE_USAGE + "\n\n"
                 + DeleteCommand.MESSAGE_USAGE + "\n"
-                + SEPARATOR + "\n"
+                + HelpCommand.SEPARATOR + "\n"
                 + FindCommand.MESSAGE_USAGE + "\n\n"
                 + ListCommand.MESSAGE_USAGE + "\n"
-                + SEPARATOR + "\n"
+                + HelpCommand.SEPARATOR + "\n"
                 + ClearCommand.MESSAGE_USAGE + "\n\n"
                 + ExitCommand.MESSAGE_USAGE;
 
