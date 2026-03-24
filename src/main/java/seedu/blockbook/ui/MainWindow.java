@@ -202,6 +202,15 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
+            // Consider removing/improving in future as it is deprecated
+            if (commandResult.isShowHelp()) {
+                if (!helpWindow.isShowing()) {
+                    helpWindow.show();
+                } else {
+                    helpWindow.focus();
+                }
+            }
+
             if (commandResult.isExit()) {
                 handleExit();
             }
