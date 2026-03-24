@@ -40,13 +40,14 @@ public class DeleteCommand extends Command {
         List<Gamer> lastShownList = model.getFilteredGamerList();
 
         // Reverse sort list to ensure deleting from the back of the list to preserve index validity
-        targetIndexes.sort((o1, o2) -> o2.getOneBased() - o1.getOneBased());
+        List<Index> indexList = new ArrayList<>(targetIndexes);
+        indexList.sort((o1, o2) -> o2.getOneBased() - o1.getOneBased());
 
         validateDeleteIndex(lastShownList);
 
         int lastIndex = -1;
         String deletedGamerNames = "";
-        for (Index index : targetIndexes) {
+        for (Index index : indexList) {
             int indexNumber = index.getZeroBased();
             if (lastIndex == indexNumber) {
                 continue;
