@@ -77,14 +77,12 @@ public class SortCommand extends Command {
      */
     private Comparator<Gamer> buildComparator() {
         // Favourites always come first
-        Comparator<Gamer> comparator = Comparator.comparing(
-                (Gamer g) -> {
-                    if (g.getFavourite() == null) {
-                        return 1; // non-favourite (null) goes after
-                    }
-                    return g.getFavourite().toString().equalsIgnoreCase("Yes") ? 0 : 1;
-                }
-        );
+        Comparator<Gamer> comparator = Comparator.comparing((Gamer g) -> {
+            if (g.getFavourite() == null) {
+                return 1; // non-favourite (null) goes after
+            }
+            return g.getFavourite().toString().equalsIgnoreCase("Yes") ? 0 : 1;
+        });
 
         List<String> sortAttributes = attributes.isEmpty()
                 ? List.of("gamertag") : attributes;
@@ -101,8 +99,7 @@ public class SortCommand extends Command {
      * Null values are sorted to the end.
      */
     private Comparator<Gamer> getAttributeComparator(String attribute) {
-        return Comparator.comparing(
-                (Gamer g) -> getAttributeValue(g, attribute),
+        return Comparator.comparing((Gamer g) -> getAttributeValue(g, attribute),
                 Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER)
         );
     }
