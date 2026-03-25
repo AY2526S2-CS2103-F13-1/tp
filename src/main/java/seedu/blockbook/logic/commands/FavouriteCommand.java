@@ -35,11 +35,11 @@ public class FavouriteCommand extends Command {
     public static final String MESSAGE_MARK_FAVOURITE_SUCCESS =
             "Contact updated as favourite: %1$s";
     public static final String MESSAGE_UNMARK_FAVOURITE_SUCCESS =
-            "Contact remove from favourite: %1$s";
+            "Contact removed from favourites: %1$s";
     public static final String MESSAGE_ALREADY_FAVOURITE =
             "You have already favourite the gamer: %1$s";
     public static final String MESSAGE_ALREADY_UNFAVOURITE =
-            "You have already unfavourite the gamer: %1$s";
+            "This gamer is already not a favourite: %1$s";
     public static final String MESSAGE_EMPTY_CONTACT_LIST = "No contacts to favourite. The list is empty";
 
     private static final Logger logger = LogsCenter.getLogger(FavouriteCommand.class);
@@ -72,14 +72,13 @@ public class FavouriteCommand extends Command {
         Gamer gamerToToggle = lastShownList.get(index);
         assert gamerToToggle != null;
 
+        String name = Messages.formatNullable(gamerToToggle.getName());
         boolean isCurrentlyFavourite = isCurrentlyFavourite(gamerToToggle);
         if (markFavourite && isCurrentlyFavourite) {
-            String name = Messages.formatNullable(gamerToToggle.getName());
             logger.fine("Favourite failed: already favourite (" + name + ").");
             throw new CommandException(String.format(MESSAGE_ALREADY_FAVOURITE, name));
         }
         if (!markFavourite && !isCurrentlyFavourite) {
-            String name = Messages.formatNullable(gamerToToggle.getName());
             logger.fine("Unfavourite failed: already unfavourite (" + name + ").");
             throw new CommandException(String.format(MESSAGE_ALREADY_UNFAVOURITE, name));
         }
@@ -145,14 +144,14 @@ public class FavouriteCommand extends Command {
     }
 
     private static String formatContactSummaryForMark(Gamer gamer) {
-        return String.format("Name: %s; GamerTag: %s Favourite: %s",
+        return String.format("Name: %s GamerTag: %s Favourite: %s",
                 Messages.formatNullable(gamer.getName()),
                 Messages.formatNullable(gamer.getGamerTag()),
                 Messages.formatNullable(gamer.getFavourite()));
     }
 
     private static String formatContactSummaryForUnmark(Gamer gamer) {
-        return String.format("%s; GamerTag: %s; Favourite: %s",
+        return String.format("Name: %s GamerTag: %s Favourite: %s",
                 Messages.formatNullable(gamer.getName()),
                 Messages.formatNullable(gamer.getGamerTag()),
                 Messages.formatNullable(gamer.getFavourite()));
