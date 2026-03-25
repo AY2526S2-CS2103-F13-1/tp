@@ -1,0 +1,57 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+Actor User as user USER_COLOR
+Participant ":LogicManager" as logic LOGIC_COLOR
+Participant ":BlockBookParser" as parser LOGIC_COLOR
+Participant ":AddCommandParser" as addParser LOGIC_COLOR
+Participant ":AddCommand" as addCommand LOGIC_COLOR
+Participant ":Model" as model MODEL_COLOR
+Participant ":Storage" as storage STORAGE_COLOR
+
+user -[USER_COLOR]> logic : execute("add ...")
+activate logic LOGIC_COLOR
+
+logic -[LOGIC_COLOR]> parser : parseCommand(...)
+activate parser LOGIC_COLOR
+
+parser -[LOGIC_COLOR]> addParser : parse(args)
+activate addParser LOGIC_COLOR
+
+addParser --[LOGIC_COLOR]> parser : AddCommand
+deactivate addParser
+
+parser --[LOGIC_COLOR]> logic : AddCommand
+deactivate parser
+
+logic -[LOGIC_COLOR]> addCommand : execute(model)
+activate addCommand LOGIC_COLOR
+
+addCommand -[LOGIC_COLOR]> model : hasGamer(gamer)
+activate model MODEL_COLOR
+model --[MODEL_COLOR]> addCommand
+deactivate model
+
+addCommand -[LOGIC_COLOR]> model : addGamer(gamer)
+activate model MODEL_COLOR
+model --[MODEL_COLOR]> addCommand
+deactivate model
+
+addCommand --[LOGIC_COLOR]> logic : CommandResult
+deactivate addCommand
+
+logic -[LOGIC_COLOR]> storage : saveBlockBook(BlockBook)
+activate storage STORAGE_COLOR
+
+storage -[STORAGE_COLOR]> storage : Save to file
+activate storage STORAGE_COLOR_T1
+storage --[STORAGE_COLOR]> storage
+deactivate storage
+
+storage --[STORAGE_COLOR]> logic
+deactivate storage
+
+logic --[LOGIC_COLOR]> user
+deactivate logic
+@enduml

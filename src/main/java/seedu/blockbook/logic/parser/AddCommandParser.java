@@ -39,10 +39,22 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
-        //ArgumentMultimap argMultimap =
-        //        ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_GAMERTAG);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args,
+        ArgumentMultimap argMultimap = tokenizeArguments(args);
+        validateRequiredPrefixes(argMultimap);
+        verifyNoDuplicatePrefixes(argMultimap);
+
+        Gamer gamer = buildGamer(argMultimap);
+        return new AddCommand(gamer);
+    }
+
+    /**
+     * Tokenizes the given add command arguments using the supported prefixes.
+     *
+     * @param args Raw add command arguments.
+     * @return Tokenized argument multimap.
+     */
+    private ArgumentMultimap tokenizeArguments(String args) {
+        return ArgumentTokenizer.tokenize(args,
                 PREFIX_GAMERTAG,
                 PREFIX_NAME,
                 PREFIX_PHONE,
@@ -53,81 +65,62 @@ public class AddCommandParser implements Parser<AddCommand> {
                 PREFIX_COUNTRY,
                 PREFIX_REGION,
                 PREFIX_NOTE);
+    }
 
-        //        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_GAMERTAG)
-        //                || !argMultimap.getPreamble().isEmpty()) {
-        //            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-        //        }
-        if (!arePrefixesPresent(argMultimap, PREFIX_GAMERTAG)
-                || !argMultimap.getPreamble().isEmpty()) {
+    /**
+     * Validates that all required prefixes are present and the preamble is empty.
+     *
+     * @param argMultimap Tokenized argument multimap.
+     * @throws ParseException If the add command format is invalid.
+     */
+    private void validateRequiredPrefixes(ArgumentMultimap argMultimap) throws ParseException {
+        if (!arePrefixesPresent(argMultimap, PREFIX_GAMERTAG) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
+    }
 
-        //        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_GAMERTAG);
+    /**
+     * Validates that no single-valued prefixes are repeated.
+     *
+     * @param argMultimap Tokenized argument multimap.
+     * @throws ParseException If duplicate prefixes are found.
+     */
+    private void verifyNoDuplicatePrefixes(ArgumentMultimap argMultimap) throws ParseException {
         argMultimap.verifyNoDuplicatePrefixesFor(
                 PREFIX_GAMERTAG,
                 PREFIX_NAME,
                 PREFIX_PHONE,
                 PREFIX_EMAIL,
+                PREFIX_GROUP,
                 PREFIX_SERVER,
                 PREFIX_FAVOURITE,
                 PREFIX_COUNTRY,
                 PREFIX_REGION,
                 PREFIX_NOTE
         );
+    }
 
-        // Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        // GamerTag gamerTag = ParserUtil.parseGamerTag(argMultimap.getValue(PREFIX_GAMERTAG).get());
+    /**
+     * Builds a gamer from the parsed add command arguments.
+     *
+     * @param argMultimap Tokenized argument multimap.
+     * @return Gamer built from the provided arguments.
+     * @throws ParseException If any field value is invalid.
+     */
+    private Gamer buildGamer(ArgumentMultimap argMultimap) throws ParseException {
         // Required
-        GamerTag gamerTag = ParserUtil.parseGamerTag(
-                argMultimap.getValue(PREFIX_GAMERTAG).get());
+        GamerTag gamerTag = ParserUtil.parseGamerTag(argMultimap.getValue(PREFIX_GAMERTAG).get());
 
         // Optional
-        Name name = null;
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        }
-
-        Phone phone = null;
-        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
-        }
-
-        Email email = null;
-        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        }
-
-        Group group = null;
-        if (argMultimap.getValue(PREFIX_GROUP).isPresent()) {
-            group = ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP).get());
-        }
-
-        Server server = null;
-        if (argMultimap.getValue(PREFIX_SERVER).isPresent()) {
-            server = ParserUtil.parseServer(argMultimap.getValue(PREFIX_SERVER).get());
-        }
-
-        Favourite favourite = new Favourite("unfav");
-        if (argMultimap.getValue(PREFIX_FAVOURITE).isPresent()) {
-            favourite = ParserUtil.parseFavourite(argMultimap.getValue(PREFIX_FAVOURITE).get());
-        }
-
-        Country country = null;
-        if (argMultimap.getValue(PREFIX_COUNTRY).isPresent()) {
-            country = ParserUtil.parseCountry(argMultimap.getValue(PREFIX_COUNTRY).get());
-        }
-
-        Region region = null;
-        if (argMultimap.getValue(PREFIX_REGION).isPresent()) {
-            region = ParserUtil.parseRegion(argMultimap.getValue(PREFIX_REGION).get());
-        }
-
-        Note note = null;
-        if (argMultimap.getValue(PREFIX_NOTE).isPresent()) {
-            note = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE).get());
-        }
-
+        Name name = parseOptionalName(argMultimap);
+        Phone phone = parseOptionalPhone(argMultimap);
+        Email email = parseOptionalEmail(argMultimap);
+        Group group = parseOptionalGroup(argMultimap);
+        Server server = parseOptionalServer(argMultimap);
+        Favourite favourite = parseOptionalFavourite(argMultimap);
+        Country country = parseOptionalCountry(argMultimap);
+        Region region = parseOptionalRegion(argMultimap);
+        Note note = parseOptionalNote(argMultimap);
 
         Gamer gamer = new Gamer(
                 name,
@@ -141,10 +134,70 @@ public class AddCommandParser implements Parser<AddCommand> {
                 region,
                 note
         );
+        return gamer;
+    }
 
-        // Gamer gamer = new Gamer(name, gamerTag);
+    private Name parseOptionalName(ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+            return ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+        }
+        return null;
+    }
 
-        return new AddCommand(gamer);
+    private Phone parseOptionalPhone(ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
+            return ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
+        }
+        return null;
+    }
+
+    private Email parseOptionalEmail(ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+            return ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
+        }
+        return null;
+    }
+
+    private Group parseOptionalGroup(ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_GROUP).isPresent()) {
+            return ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP).get());
+        }
+        return null;
+    }
+
+    private Server parseOptionalServer(ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_SERVER).isPresent()) {
+            return ParserUtil.parseServer(argMultimap.getValue(PREFIX_SERVER).get());
+        }
+        return null;
+    }
+
+    private Favourite parseOptionalFavourite(ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_FAVOURITE).isPresent()) {
+            return ParserUtil.parseFavourite(argMultimap.getValue(PREFIX_FAVOURITE).get());
+        }
+        return new Favourite("unfav");
+    }
+
+    private Country parseOptionalCountry(ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_COUNTRY).isPresent()) {
+            return ParserUtil.parseCountry(argMultimap.getValue(PREFIX_COUNTRY).get());
+        }
+        return null;
+    }
+
+    private Region parseOptionalRegion(ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_REGION).isPresent()) {
+            return ParserUtil.parseRegion(argMultimap.getValue(PREFIX_REGION).get());
+        }
+        return null;
+    }
+
+    private Note parseOptionalNote(ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_NOTE).isPresent()) {
+            return ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE).get());
+        }
+        return null;
     }
 
     /**
