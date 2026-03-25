@@ -66,6 +66,7 @@ public class SortCommand extends Command {
 
         // Build comparator: favourites first, then by specified attributes
         Comparator<Gamer> comparator = buildComparator();
+        assert comparator != null : "Comparator should not be null after building";
 
         model.sortGamerList(comparator);
 
@@ -86,6 +87,7 @@ public class SortCommand extends Command {
 
         List<String> sortAttributes = attributes.isEmpty()
                 ? List.of("gamertag") : attributes;
+        assert !sortAttributes.isEmpty() : "Sort attributes should never be empty";
 
         for (String attr : sortAttributes) {
             comparator = comparator.thenComparing(getAttributeComparator(attr));
@@ -99,6 +101,7 @@ public class SortCommand extends Command {
      * Null values are sorted to the end.
      */
     private Comparator<Gamer> getAttributeComparator(String attribute) {
+        assert VALID_ATTRIBUTES.contains(attribute) : "Attribute should be valid at this point: " + attribute;
         return Comparator.comparing((Gamer g) -> getAttributeValue(g, attribute),
                 Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER)
         );
@@ -108,6 +111,7 @@ public class SortCommand extends Command {
      * Gets the string value of the specified attribute from a gamer.
      */
     private String getAttributeValue(Gamer gamer, String attribute) {
+        assert gamer != null : "Gamer should not be null when getting attribute value";
         switch (attribute) {
         case "name":
             return gamer.getName() == null ? null : gamer.getName().toString();

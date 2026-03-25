@@ -51,6 +51,10 @@ public class SortCommandParser implements Parser<SortCommand> {
             throw new ParseException(SortCommand.MESSAGE_INVALID_ATTRIBUTES);
         }
 
+        assert !attributes.isEmpty() : "Attributes list should not be empty after parsing";
+        assert attributes.stream().allMatch(SortCommand.VALID_ATTRIBUTES::contains)
+                : "All parsed attributes should be valid";
+
         return new SortCommand(attributes);
     }
 }
