@@ -39,9 +39,14 @@ public class FindCommandParser implements Parser<FindCommand> {
     public FindCommand parse(String args) throws ParseException {
 
         String trimmedArgs = args.trim();
+
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        if (trimmedArgs.length() > 50) {
+            throw new ParseException("Global search KEYWORD input cannot exceed 50 characters.");
         }
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
