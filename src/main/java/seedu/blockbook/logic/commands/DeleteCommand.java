@@ -2,6 +2,7 @@ package seedu.blockbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.blockbook.commons.core.index.Index;
@@ -19,35 +20,57 @@ public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the gamer contacts identified by the index number used in the displayed gamer list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + ": Deletes the gamer contacts identified by the index numbers used in the displayed gamer list.\n"
+            + "Format: delete INDEX [INDEX]...\n"
+            + "Examples: " + COMMAND_WORD + " 1  |  " + COMMAND_WORD + " 1 2 3";
 
-    public static final String MESSAGE_DELETE_GAMER_SUCCESS = "Contact deleted: %1$s";
+    public static final String MESSAGE_DELETE_GAMER_SUCCESS = "Contact(s) deleted: %1$s";
 
-    private final Index targetIndex;
+    private final List<Index> targetIndexes;
 
-    public DeleteCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
+    public DeleteCommand(List<Index> indexList) {
+        this.targetIndexes = new ArrayList<>(indexList);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        requireNonNull(targetIndexes);
+
         List<Gamer> lastShownList = model.getFilteredGamerList();
+
+        // Reverse sort list to ensure deleting from the back of the list to preserve index validity
+        List<Index> indexList = new ArrayList<>(targetIndexes);
+        indexList.sort((o1, o2) -> o2.getOneBased() - o1.getOneBased());
 
         validateDeleteIndex(lastShownList);
 
-        int index = targetIndex.getZeroBased();
-        assert index < lastShownList.size();
+        int lastIndex = -1;
+        String deletedGamerNames = "";
+        for (Index index : indexList) {
+            int indexNumber = index.getZeroBased();
+            if (lastIndex == indexNumber) {
+                continue;
+            }
+            lastIndex = indexNumber;
+            assert indexNumber < lastShownList.size();
 
-        Gamer gamerToDelete = lastShownList.get(index);
-        model.deleteGamer(gamerToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_GAMER_SUCCESS, Messages.format(gamerToDelete)));
+            Gamer gamerToDelete = lastShownList.get(indexNumber);
+            model.deleteGamer(gamerToDelete);
+            deletedGamerNames = gamerToDelete.getGamerTag() + ", " + deletedGamerNames;
+        }
+        if (lastIndex == -1) { // No valid indexes were found
+            throw new CommandException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+        }
+        if (deletedGamerNames.length() > 2) {
+            deletedGamerNames = deletedGamerNames.substring(0, deletedGamerNames.length() - 2);
+        }
+
+        return new CommandResult(String.format(MESSAGE_DELETE_GAMER_SUCCESS, deletedGamerNames));
     }
 
     /**
-     * Validates whether the target index refers to a valid gamer in the given list.
+     * Validates whether the target indexes refer to valid gamers in the given list.
      *
      * @param gamerList The currently displayed list of gamers.
      * @throws CommandException If the list is empty or if the index is out of range.
@@ -56,10 +79,10 @@ public class DeleteCommand extends Command {
         if (gamerList.isEmpty()) {
             throw new CommandException(Messages.MESSAGE_EMPTY_CONTACT_LIST);
         }
-
-        int index = targetIndex.getZeroBased();
-        if (index >= gamerList.size()) {
-            throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        for (Index index : targetIndexes) {
+            if (index.getZeroBased() >= gamerList.size()) {
+                throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+            }
         }
     }
 
@@ -75,13 +98,13 @@ public class DeleteCommand extends Command {
         }
 
         DeleteCommand otherDeleteCommand = (DeleteCommand) other;
-        return targetIndex.equals(otherDeleteCommand.targetIndex);
+        return targetIndexes.equals(otherDeleteCommand.targetIndexes);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("targetIndex", targetIndex)
+                .add("targetIndexes", targetIndexes)
                 .toString();
     }
 }

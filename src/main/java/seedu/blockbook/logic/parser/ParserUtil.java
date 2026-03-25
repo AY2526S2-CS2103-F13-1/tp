@@ -2,6 +2,8 @@ package seedu.blockbook.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+
 import seedu.blockbook.commons.core.index.Index;
 import seedu.blockbook.commons.util.StringUtil;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
@@ -15,8 +17,6 @@ import seedu.blockbook.model.gamer.Note;
 import seedu.blockbook.model.gamer.Phone;
 import seedu.blockbook.model.gamer.Region;
 import seedu.blockbook.model.gamer.Server;
-
-
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -36,6 +36,24 @@ public class ParserUtil {
             throw new ParseException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses a series of space separated {@code oneBasedIndexes} into an {@code ArrayList} of {@code Index}
+     * and returns it. Leading and trailing whitespaces will be trimmed.
+     * @throws ParseException if any index is invalid (not non-zero unsigned integer).
+     */
+    public static ArrayList<Index> parseMultipleIndexes(String oneBasedIndexes) throws ParseException {
+        String trimmedIndex = oneBasedIndexes.trim();
+        String[] indexList = trimmedIndex.split("\\s+");
+        ArrayList<Index> output = new ArrayList<>();
+        for (String index : indexList) {
+            if (!StringUtil.isNonZeroUnsignedInteger(index)) {
+                throw new ParseException(MESSAGE_INVALID_INDEX);
+            }
+            output.add(Index.fromOneBased(Integer.parseInt(index)));
+        }
+        return output;
     }
 
     /**

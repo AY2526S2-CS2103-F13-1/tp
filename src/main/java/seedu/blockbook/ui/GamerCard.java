@@ -2,6 +2,8 @@ package seedu.blockbook.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.blockbook.logic.Messages;
@@ -13,6 +15,8 @@ import seedu.blockbook.model.gamer.Gamer;
 public class GamerCard extends UiPart<Region> {
 
     private static final String FXML = "GamerListCard.fxml";
+    private static final Image FAVOURITE_ICON = new Image(
+            GamerCard.class.getResourceAsStream("/images/nether_star.gif"));
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -35,7 +39,7 @@ public class GamerCard extends UiPart<Region> {
     @FXML
     private Label server;
     @FXML
-    private Label favourite;
+    private ImageView favouriteIcon;
     @FXML
     private Label region;
     // @FXML
@@ -57,12 +61,12 @@ public class GamerCard extends UiPart<Region> {
     public GamerCard(Gamer gamer, int displayedIndex) {
         super(FXML);
         this.gamer = gamer;
-        id.setText(displayedIndex + ". ");
-        gamerTag.setText("GamerTag: " + gamer.getGamerTag().fullGamerTag);
-        name.setText("Name: " + Messages.formatNullable(gamer.getName()));
-        server.setText("Server: " + Messages.formatNullable(gamer.getServer()));
-        favourite.setText("Favourite: " + gamer.getFavourite().toString());
-        region.setText("Region: " + Messages.formatNullable(gamer.getRegion()));
+        id.setText("#" + displayedIndex);
+        gamerTag.setText("@" + gamer.getGamerTag().fullGamerTag);
+        name.setText(Messages.formatNullable(gamer.getName()));
+        server.setText(Messages.formatNullable(gamer.getServer()));
+        region.setText(Messages.formatNullable(gamer.getRegion()));
+        updateFavouriteIcon(gamer.getFavourite().toString());
         // email.setText("Email: " + Messages.formatNullable(gamer.getEmail()));
         // phone.setText("Phone: " + Messages.formatNullable(gamer.getPhone()));
         // group.setText("Group: " + Messages.formatNullable(gamer.getGroup()));
@@ -73,6 +77,14 @@ public class GamerCard extends UiPart<Region> {
         // phone.setText(gamer.getPhone().value);
         // email.setText(gamer.getEmail().value);
     }
+
+    /**
+     * Applies the visual state for the favourite badge.
+     */
+    private void updateFavouriteIcon(String favouriteState) {
+        boolean isFavourite = "Yes".equalsIgnoreCase(favouriteState);
+        favouriteIcon.setImage(isFavourite ? FAVOURITE_ICON : null);
+        favouriteIcon.setVisible(isFavourite);
+        favouriteIcon.setManaged(isFavourite);
+    }
 }
-
-
