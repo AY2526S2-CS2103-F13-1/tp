@@ -3,7 +3,8 @@ package seedu.blockbook.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static seedu.blockbook.logic.Messages.MESSAGE_GAMERS_LISTED_COUNT;
+import static seedu.blockbook.logic.Messages.MESSAGE_GAMERS_FOUND_BY_FIND;
+import static seedu.blockbook.logic.Messages.MESSAGE_NO_GAMERS_FOUND_BY_FIND;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.blockbook.testutil.TypicalGamers.BENSON;
 import static seedu.blockbook.testutil.TypicalGamers.CARL;
@@ -86,7 +87,7 @@ public class FindCommandTest {
      */
     @Test
     public void execute_zeroKeywords_noGamerFound() {
-        String expectedMessage = String.format(MESSAGE_GAMERS_LISTED_COUNT, 0);
+        String expectedMessage = String.format(MESSAGE_NO_GAMERS_FOUND_BY_FIND, 0);
 
         // Testing with Global Search format
         AnyAttributeContainsKeywordsPredicate predicate =
@@ -103,7 +104,7 @@ public class FindCommandTest {
      */
     @Test
     public void execute_globalSearch_gamersFound() {
-        String expectedMessage = String.format(MESSAGE_GAMERS_LISTED_COUNT, 3);
+        String expectedMessage = String.format(MESSAGE_GAMERS_FOUND_BY_FIND, 3);
 
         AnyAttributeContainsKeywordsPredicate predicate =
                 new AnyAttributeContainsKeywordsPredicate("me");
@@ -121,7 +122,7 @@ public class FindCommandTest {
     @Test
     public void execute_specificSearch_gamersFound() {
         // Simulates: find name/Kurz
-        String expectedMessage = String.format(MESSAGE_GAMERS_LISTED_COUNT, 1);
+        String expectedMessage = String.format(MESSAGE_GAMERS_FOUND_BY_FIND, 1);
 
         SpecificAttributesMatchPredicate predicate = new SpecificAttributesMatchPredicate(
                 "Kurz", null, null, null, null, null, null, null, null);
@@ -137,7 +138,7 @@ public class FindCommandTest {
      */
     @Test
     public void execute_specificSearchMultipleAttributes_gamersFound() {
-        String expectedMessage = String.format(MESSAGE_GAMERS_LISTED_COUNT, 1);
+        String expectedMessage = String.format(MESSAGE_GAMERS_FOUND_BY_FIND, 1);
         SpecificAttributesMatchPredicate predicate = new SpecificAttributesMatchPredicate(
                 "Alice", null, "8535", null, null, null, null, null, null);
         FindCommand command = new FindCommand(predicate);
@@ -152,7 +153,7 @@ public class FindCommandTest {
     @Test
     public void execute_specificSearchMultipleAttributesOneFails_noGamerFound() {
         // Proves the "AND" logic works: If the name matches but the phone is wrong, it returns 0.
-        String expectedMessage = String.format(MESSAGE_GAMERS_LISTED_COUNT, 0);
+        String expectedMessage = String.format(MESSAGE_NO_GAMERS_FOUND_BY_FIND, 0);
         SpecificAttributesMatchPredicate predicate = new SpecificAttributesMatchPredicate(
                 "Alice", null, "00000000", null, null, null, null, null, null); // 00000000 doesn't exist
         FindCommand command = new FindCommand(predicate);
@@ -167,7 +168,7 @@ public class FindCommandTest {
     @Test
     public void execute_globalSearchCaseInsensitive_gamersFound() {
         // Proves that typing weird casing still finds the gamer
-        String expectedMessage = String.format(MESSAGE_GAMERS_LISTED_COUNT, 1);
+        String expectedMessage = String.format(MESSAGE_GAMERS_FOUND_BY_FIND, 1);
         AnyAttributeContainsKeywordsPredicate predicate = new AnyAttributeContainsKeywordsPredicate("kUrZ");
         FindCommand command = new FindCommand(predicate);
 
@@ -180,7 +181,7 @@ public class FindCommandTest {
      */
     @Test
     public void execute_specificSearchCaseInsensitive_gamersFound() {
-        String expectedMessage = String.format(MESSAGE_GAMERS_LISTED_COUNT, 1);
+        String expectedMessage = String.format(MESSAGE_GAMERS_FOUND_BY_FIND, 1);
         SpecificAttributesMatchPredicate predicate = new SpecificAttributesMatchPredicate(
                 "kUrZ", null, null, null, null, null, null, null, null);
         FindCommand command = new FindCommand(predicate);
