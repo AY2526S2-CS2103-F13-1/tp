@@ -26,12 +26,12 @@ public class FavouriteCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_returnsUnFavouriteCommand() {
+    public void parse_validArgs_returnsUnfavouriteCommand() {
         assertParseSuccess(unfavouriteParser, "1", new FavouriteCommand(INDEX_FIRST_GAMER, false));
     }
 
     @Test
-    public void parse_invalidArgs_unfavoriteFailure() {
+    public void parse_invalidArgs_unfavouriteFailure() {
         assertParseFailure(unfavouriteParser, "",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FavouriteCommand.MESSAGE_USAGE));
     }

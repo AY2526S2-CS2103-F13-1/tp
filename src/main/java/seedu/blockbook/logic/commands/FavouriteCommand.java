@@ -12,6 +12,7 @@ import seedu.blockbook.logic.Messages;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.gamer.Favourite;
+import seedu.blockbook.model.gamer.FavouriteStatus;
 import seedu.blockbook.model.gamer.Gamer;
 
 /**
@@ -25,11 +26,11 @@ public class FavouriteCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Updates the favourite status of the gamer identified by the index number used in the displayed "
             + "gamer list.\n"
-            + "Format: favourite INDEX\n"
-            + "Example: favourite 2\n"
+            + "Format: " + COMMAND_WORD + " INDEX\n"
+            + "Example: " + COMMAND_WORD + " 2\n"
             + COMMAND_WORD_UNFAVOURITE + ": Removes a gamer from favourites using the displayed index.\n"
-            + "Format: unfavourite INDEX\n"
-            + "Example: unfavourite 2";
+            + "Format: " + COMMAND_WORD_UNFAVOURITE + " INDEX\n"
+            + "Example: " + COMMAND_WORD_UNFAVOURITE + " 2";
 
     public static final String MESSAGE_MARK_FAVOURITE_SUCCESS =
             "Contact updated as favourite: %1$s";
@@ -40,9 +41,6 @@ public class FavouriteCommand extends Command {
     public static final String MESSAGE_ALREADY_UNFAVOURITE =
             "You have already unfavourite the gamer: %1$s";
     public static final String MESSAGE_EMPTY_CONTACT_LIST = "No contacts to favourite. The list is empty";
-
-    private static final String FAV_STATUS = "fav";
-    private static final String UNFAV_STATUS = "unfav";
 
     private static final Logger logger = LogsCenter.getLogger(FavouriteCommand.class);
 
@@ -86,7 +84,8 @@ public class FavouriteCommand extends Command {
             throw new CommandException(String.format(MESSAGE_ALREADY_UNFAVOURITE, name));
         }
 
-        Favourite updatedFavourite = new Favourite(markFavourite ? FAV_STATUS : UNFAV_STATUS);
+        FavouriteStatus updatedStatus = markFavourite ? FavouriteStatus.FAV : FavouriteStatus.UNFAV;
+        Favourite updatedFavourite = Favourite.fromStatus(updatedStatus);
         assert updatedFavourite != null;
 
         Gamer updatedGamer = createToggledGamer(gamerToToggle, updatedFavourite);
@@ -124,7 +123,7 @@ public class FavouriteCommand extends Command {
 
     private static boolean isCurrentlyFavourite(Gamer gamer) {
         Favourite favourite = gamer.getFavourite();
-        return favourite != null && FAV_STATUS.equalsIgnoreCase(favourite.fullFavourite);
+        return favourite != null && favourite.isFav();
     }
 
     private static Gamer createToggledGamer(Gamer gamerToEdit, Favourite updatedFavourite) {
