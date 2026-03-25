@@ -14,6 +14,7 @@ import seedu.blockbook.logic.commands.Command;
 import seedu.blockbook.logic.commands.DeleteCommand;
 import seedu.blockbook.logic.commands.EditCommand;
 import seedu.blockbook.logic.commands.ExitCommand;
+import seedu.blockbook.logic.commands.FavouriteCommand;
 import seedu.blockbook.logic.commands.FindCommand;
 import seedu.blockbook.logic.commands.HelpCommand;
 import seedu.blockbook.logic.commands.ListCommand;
@@ -62,6 +63,12 @@ public class BlockBookParser {
 
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
+
+        case FavouriteCommand.COMMAND_WORD:
+            return new FavouriteCommandParser(true).parse(arguments);
+
+        case FavouriteCommand.COMMAND_WORD_UNFAVOURITE:
+            return new FavouriteCommandParser(false).parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
