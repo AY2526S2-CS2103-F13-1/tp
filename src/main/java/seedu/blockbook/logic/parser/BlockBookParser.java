@@ -17,8 +17,8 @@ import seedu.blockbook.logic.commands.ExitCommand;
 import seedu.blockbook.logic.commands.FindCommand;
 import seedu.blockbook.logic.commands.HelpCommand;
 import seedu.blockbook.logic.commands.ListCommand;
-import seedu.blockbook.logic.commands.ViewCommand;
 import seedu.blockbook.logic.commands.SortCommand;
+import seedu.blockbook.logic.commands.ViewCommand;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
 
 /**
