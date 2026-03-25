@@ -1,12 +1,12 @@
 package seedu.blockbook.logic.parser;
 
+import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.logic.commands.SortCommand;

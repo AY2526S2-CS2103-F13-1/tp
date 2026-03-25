@@ -20,8 +20,6 @@ import seedu.blockbook.model.gamer.Gamer;
  */
 public class SortCommand extends Command {
 
-    private static final Logger logger = LogsCenter.getLogger(SortCommand.class);
-
     public static final String COMMAND_WORD = "sort";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -48,6 +46,8 @@ public class SortCommand extends Command {
     public static final List<String> VALID_ATTRIBUTES = List.of(
             "name", "phone", "email", "group", "server", "favourite", "country", "region", "note", "gamertag"
     );
+
+    private static final Logger logger = LogsCenter.getLogger(SortCommand.class);
 
     private final List<String> attributes;
 
