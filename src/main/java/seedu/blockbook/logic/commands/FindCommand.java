@@ -1,6 +1,7 @@
 package seedu.blockbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+
 import java.util.function.Predicate;
 
 import seedu.blockbook.commons.util.ToStringBuilder;
