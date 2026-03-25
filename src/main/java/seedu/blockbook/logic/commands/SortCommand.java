@@ -5,7 +5,9 @@ import static java.util.Objects.requireNonNull;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
+import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.commons.util.ToStringBuilder;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.model.Model;
@@ -18,19 +20,30 @@ import seedu.blockbook.model.gamer.Gamer;
  */
 public class SortCommand extends Command {
 
+    private static final Logger logger = LogsCenter.getLogger(SortCommand.class);
+
     public static final String COMMAND_WORD = "sort";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts contacts by the specified attributes. "
             + "Favourite contacts are always shown first.\n"
-            + "Parameters: [ATTRIBUTE/]...\n"
+            + "Format: " + COMMAND_WORD + " [name/] [phone/] [email/] "
+            + "[group/] [server/] [favourite/] [country/] [region/] [note/]\n"
             + "Example: " + COMMAND_WORD + " name/ phone/";
 
     public static final String MESSAGE_SORT_SUCCESS = "Sorted all contacts.";
+    public static final String MESSAGE_SORT_DEFAULT_SUCCESS = "Sorted all contacts by gamertag (default).";
     public static final String MESSAGE_EMPTY_LIST = "There are no contacts to sort!";
     public static final String MESSAGE_INVALID_ATTRIBUTES =
             "Please ensure all attributes are valid. "
             + "Possible attributes: name, phone, email, group, server, favourite, country, region, note";
+    public static final String MESSAGE_INVALID_ATTRIBUTE =
+            "'%1$s' is not a valid attribute!\n"
+            + COMMAND_WORD + ": Sorts contacts by the specified attributes. "
+            + "Favourite contacts are always shown first.\n"
+            + "Format: " + COMMAND_WORD + " [name/] [phone/] [email/] "
+            + "[group/] [server/] [favourite/] [country/] [region/] [note/]\n"
+            + "Example: " + COMMAND_WORD + " name/ phone/";
 
     public static final List<String> VALID_ATTRIBUTES = List.of(
             "name", "phone", "email", "group", "server", "favourite", "country", "region", "note", "gamertag"
@@ -52,6 +65,7 @@ public class SortCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        logger.info("Executing sort command with attributes: " + attributes);
 
         if (model.getFilteredGamerList().isEmpty()) {
             throw new CommandException(MESSAGE_EMPTY_LIST);
@@ -70,7 +84,9 @@ public class SortCommand extends Command {
 
         model.sortGamerList(comparator);
 
-        return new CommandResult(MESSAGE_SORT_SUCCESS);
+        String successMessage = attributes.isEmpty() ? MESSAGE_SORT_DEFAULT_SUCCESS : MESSAGE_SORT_SUCCESS;
+        logger.info("Sort command executed successfully");
+        return new CommandResult(successMessage);
     }
 
     /**

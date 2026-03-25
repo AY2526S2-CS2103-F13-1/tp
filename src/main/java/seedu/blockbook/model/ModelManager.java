@@ -135,6 +135,7 @@ public class ModelManager implements Model {
     public void sortGamerList(Comparator<Gamer> comparator) {
         requireNonNull(comparator);
         assert sortedGamers != null : "SortedList should have been initialized";
+        logger.info("Sorting gamer list with provided comparator");
         sortedGamers.setComparator(comparator);
     }
 
