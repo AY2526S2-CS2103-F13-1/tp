@@ -31,15 +31,15 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open this User Guide in a browser window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+    * `list` : Lists all contacts.
 
-   * `add name/John Doe gamertag/JD910` : Adds a contact named `John Doe` to BlockBook with the gamertag `JD910`.
+    * `add name/John Doe gamertag/JD910` : Adds a contact named `John Doe` to BlockBook with the gamertag `JD910`.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all contacts.
+    * `clear` : Deletes all contacts.
 
-   * `exit` : Exits the app.
+    * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -52,13 +52,13 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 **Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  * e.g. in `add name/NAME`, `NAME` is a parameter which can be used as `add name/John Doe`.
+    * e.g. in `add name/NAME`, `NAME` is a parameter which can be used as `add name/John Doe`.
 
 * Items in square brackets are optional.<br>
-  * e.g `name/NAME [t/TAG]` can be used as `name/John Doe t/friend` or as `name/John Doe`.
+    * e.g `name/NAME [t/TAG]` can be used as `name/John Doe t/friend` or as `name/John Doe`.
 
 * Items with `…` after them can be used multiple times including zero times.
-  * e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+    * e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `name/NAME gamertag/GAMERTAG`, `gamertag/GAMERTAG name/NAME` is also acceptable.
@@ -67,7 +67,7 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-</box>
+  </box>
 
 ### Viewing help : `help`
 
@@ -109,7 +109,7 @@ Format: `edit INDEX [name/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the gamer will be removed i.e adding of tags is not cumulative.
 * You can remove all the gamer's tags by typing `t/` without
-    specifying any tags after it.
+  specifying any tags after it.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st gamer to be `91234567` and `johndoe@example.com` respectively.
@@ -135,17 +135,17 @@ Examples:
 
 ### Deleting a Gamer : `delete`
 
-Deletes the specified gamer from BlockBook.
+Deletes the specified gamers from BlockBook.
 
-Format: `delete INDEX`
+Format: `delete INDEX [INDEX]...`
 
-* Deletes the gamer at the specified `INDEX`.
-* The index refers to the index number shown in the displayed gamer list.
-* The index **must be a positive integer** 1, 2, 3, ...
+* Deletes the gamers at each specified `INDEX`.
+* The indexes refer to the index numbers shown in the displayed gamer list.
+* Each index **must be a positive integer** 1, 2, 3, ...
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd gamer shown in the list.
-* `find Betsy` followed by `delete 1` deletes the 1st gamer in the results of the `find` command.
+* `find Betsy` followed by `delete 1 2` deletes the 1st and 2nd gamer in the results of the `find` command.
 
 ### Clearing all entries : `clear`
 
@@ -200,7 +200,7 @@ _Details coming soon ..._
 |------------|------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add**    | `add name/NAME gamertag/GAMERTAG` <br> e.g., `add name/James Ho gamertag/JamieH`                                                         |
 | **Clear**  | `clear`                                                                                                                                  |
-| **Delete** | `delete INDEX`<br> e.g., `delete 3`                                                                                                      |
+| **Delete** | `delete INDEX [INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                                                                             |
 | **Edit**   | `edit INDEX [name/NAME] [gamertag/GAMERTAG]`<br> e.g.,`edit 2 name/James Lee`                                                            |
 | **Find**   | `find KEYWORD`<br> e.g., `find James`<br> `find ATTRIBUTE1/KEYWORD1 [ATTRIBUTE2/KEYWORD2]...`<br> e.g., `find name/Steve gamertag/Block` |
 | **List**   | `list`                                                                                                                                   |

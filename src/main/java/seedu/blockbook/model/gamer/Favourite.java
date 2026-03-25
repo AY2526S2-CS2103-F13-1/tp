@@ -8,46 +8,54 @@ import static seedu.blockbook.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidFavourite(String)}
  */
 public class Favourite {
-
-
     public static final String MESSAGE_CONSTRAINTS =
             "Favourite must be either 'fav' or 'unfav'.";
 
     public final String fullFavourite;
 
     /**
-     * Constructs a {@code Favourite}.
+     * Constructs a Favourite.
      *
      * @param favourite A valid favourite.
      */
     public Favourite(String favourite) {
         requireNonNull(favourite);
         checkArgument(isValidFavourite(favourite), MESSAGE_CONSTRAINTS);
-        fullFavourite = favourite;
+        FavouriteStatus status = FavouriteStatus.fromStatusValue(favourite);
+        fullFavourite = status.getStatusValue();
+    }
+
+    /**
+     * Constructs a Favourite from a FavouriteStatus.
+     */
+    public static Favourite fromStatus(FavouriteStatus status) {
+        requireNonNull(status);
+        return new Favourite(status.getStatusValue());
     }
 
     /**
      * Returns true if a given string is a valid favourite.
      */
     public static boolean isValidFavourite(String test) {
-        // return test.matches(VALIDATION_REGEX);
         requireNonNull(test);
         try {
-            FavouriteStatus.valueOf(test.toUpperCase());
+            FavouriteStatus.fromStatusValue(test);
             return true;
         } catch (IllegalArgumentException e) {
             return false;
         }
     }
 
+    /**
+     * Returns true if this favourite status represents a favourited gamer.
+     */
+    public boolean isFav() {
+        return FavouriteStatus.fromStatusValue(fullFavourite) == FavouriteStatus.FAV;
+    }
+
     @Override
     public String toString() {
-        // return value;
-        // return fullFavourite.toLowerCase();
-        if (fullFavourite.equalsIgnoreCase("fav")) {
-            return "Yes";
-        }
-        return "No";
+        return isFav() ? "Yes" : "No";
     }
 
     @Override

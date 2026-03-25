@@ -1,24 +1,24 @@
 package seedu.blockbook.testutil;
 
-//import java.util.Set;
-//import java.util.stream.Collectors;
-//import java.util.stream.Stream;
-
 import seedu.blockbook.logic.commands.EditCommand.EditGamerDescriptor;
-//import seedu.blockbook.model.gamer.Address;
+import seedu.blockbook.model.gamer.Country;
 import seedu.blockbook.model.gamer.Email;
+import seedu.blockbook.model.gamer.Favourite;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.GamerTag;
+import seedu.blockbook.model.gamer.Group;
 import seedu.blockbook.model.gamer.Name;
+import seedu.blockbook.model.gamer.Note;
 import seedu.blockbook.model.gamer.Phone;
-
-//import seedu.blockbook.model.tag.Tag;
+import seedu.blockbook.model.gamer.Region;
+import seedu.blockbook.model.gamer.Server;
 
 /**
  * A utility class to help with building EditGamerDescriptor objects.
  */
 public class EditGamerDescriptorBuilder {
 
-    private EditGamerDescriptor descriptor;
+    private final EditGamerDescriptor descriptor;
 
     public EditGamerDescriptorBuilder() {
         descriptor = new EditGamerDescriptor();
@@ -29,13 +29,20 @@ public class EditGamerDescriptorBuilder {
     }
 
     /**
-     * Returns an {@code EditGamerDescriptor} with fields containing {@code gamer}'s details
+     * Returns an {@code EditGamerDescriptor} with fields containing {@code gamer}'s details.
      */
     public EditGamerDescriptorBuilder(Gamer gamer) {
         descriptor = new EditGamerDescriptor();
         descriptor.setName(gamer.getName());
-        // descriptor.setPhone(gamer.getPhone());
-        // descriptor.setEmail(gamer.getEmail());
+        descriptor.setGamerTag(gamer.getGamerTag());
+        descriptor.setPhone(gamer.getPhone());
+        descriptor.setEmail(gamer.getEmail());
+        descriptor.setGroup(gamer.getGroup());
+        descriptor.setServer(gamer.getServer());
+        descriptor.setFavourite(gamer.getFavourite());
+        descriptor.setCountry(gamer.getCountry());
+        descriptor.setRegion(gamer.getRegion());
+        descriptor.setNote(gamer.getNote());
     }
 
     /**
@@ -43,6 +50,14 @@ public class EditGamerDescriptorBuilder {
      */
     public EditGamerDescriptorBuilder withName(String name) {
         descriptor.setName(new Name(name));
+        return this;
+    }
+
+    /**
+     * Sets the {@code GamerTag} of the {@code EditGamerDescriptor} that we are building.
+     */
+    public EditGamerDescriptorBuilder withGamerTag(String gamerTag) {
+        descriptor.setGamerTag(new GamerTag(gamerTag));
         return this;
     }
 
@@ -62,9 +77,55 @@ public class EditGamerDescriptorBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Group} of the {@code EditGamerDescriptor} that we are building.
+     */
+    public EditGamerDescriptorBuilder withGroup(String group) {
+        descriptor.setGroup(new Group(group));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Server} of the {@code EditGamerDescriptor} that we are building.
+     */
+    public EditGamerDescriptorBuilder withServer(String server) {
+        descriptor.setServer(new Server(server));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Favourite} of the {@code EditGamerDescriptor} that we are building.
+     */
+    public EditGamerDescriptorBuilder withFavourite(String favourite) {
+        descriptor.setFavourite(new Favourite(favourite));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Country} of the {@code EditGamerDescriptor} that we are building.
+     */
+    public EditGamerDescriptorBuilder withCountry(String country) {
+        descriptor.setCountry(new Country(country));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Region} of the {@code EditGamerDescriptor} that we are building.
+     */
+    public EditGamerDescriptorBuilder withRegion(String region) {
+        descriptor.setRegion(new Region(region));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Note} of the {@code EditGamerDescriptor} that we are building.
+     */
+    public EditGamerDescriptorBuilder withNote(String note) {
+        descriptor.setNote(new Note(note));
+        return this;
+    }
 
     public EditGamerDescriptor build() {
         return descriptor;
     }
 }
-

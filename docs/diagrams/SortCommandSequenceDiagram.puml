@@ -1,0 +1,47 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+Actor User as user USER_COLOR
+Participant ":LogicManager" as logic LOGIC_COLOR
+Participant ":BlockBookParser" as parser LOGIC_COLOR
+Participant ":SortCommandParser" as sortParser LOGIC_COLOR
+Participant ":SortCommand" as sortCommand LOGIC_COLOR
+Participant ":Model" as model MODEL_COLOR
+
+user -[USER_COLOR]> logic : execute("sort ...")
+activate logic LOGIC_COLOR
+
+logic -[LOGIC_COLOR]> parser : parseCommand(...)
+activate parser LOGIC_COLOR
+
+parser -[LOGIC_COLOR]> sortParser : parse(args)
+activate sortParser LOGIC_COLOR
+
+sortParser --[LOGIC_COLOR]> parser : SortCommand
+deactivate sortParser
+
+parser --[LOGIC_COLOR]> logic : SortCommand
+deactivate parser
+
+logic -[LOGIC_COLOR]> sortCommand : execute(model)
+activate sortCommand LOGIC_COLOR
+
+sortCommand -[LOGIC_COLOR]> model : getFilteredGamerList()
+activate model MODEL_COLOR
+model --[MODEL_COLOR]> sortCommand
+deactivate model
+
+sortCommand -[LOGIC_COLOR]> model : sortGamerList(comparator)
+activate model MODEL_COLOR
+model --[MODEL_COLOR]> sortCommand
+deactivate model
+
+sortCommand --[LOGIC_COLOR]> logic : CommandResult
+deactivate sortCommand
+
+note right of logic : Sorting is session-based\nand does not persist to storage.
+
+logic --[LOGIC_COLOR]> user
+deactivate logic
+@enduml

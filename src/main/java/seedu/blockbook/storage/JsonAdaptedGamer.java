@@ -83,10 +83,44 @@ class JsonAdaptedGamer {
      * @throws IllegalValueException if there were any data constraints violated in the adapted gamer.
      */
     public Gamer toModelType() throws IllegalValueException {
+        validateRequiredFields();
+        validateFieldValues();
+
+        // final Name modelName = new Name(name);
+        // final GamerTag modelGamerTag = new GamerTag(gamerTag);
+        // final Phone modelPhone = new Phone(phone);
+        // final Email modelEmail = new Email(email);
+        // final Group modelGroup = new Group(group);
+        // final Server modelServer = new Server(server);
+        // final Favourite modelFavourite = new Favourite(favourite);
+        // final Country modelCountry = new Country(country);
+        // final Region modelRegion = new Region(region);
+        // final Note modelNote = new Note(note);
+
+        // Optional fields can be null when omitted by the user, so we guard object construction to avoid null failures.
+        final Name modelName = name != null ? new Name(name) : null;
+        final GamerTag modelGamerTag = new GamerTag(gamerTag);
+        final Phone modelPhone = phone != null ? new Phone(phone) : null;
+        final Email modelEmail = email != null ? new Email(email) : null;
+        final Group modelGroup = group != null ? new Group(group) : null;
+        final Server modelServer = server != null ? new Server(server) : null;
+        final Favourite modelFavourite = favourite != null ? new Favourite(favourite) : new Favourite("unfav");
+        final Country modelCountry = country != null ? new Country(country) : null;
+        final Region modelRegion = region != null ? new Region(region) : null;
+        final Note modelNote = note != null ? new Note(note) : null;
+
+        return new Gamer(modelName, modelGamerTag, modelPhone, modelEmail,
+                modelGroup, modelServer, modelFavourite, modelCountry, modelRegion, modelNote);
+    }
+
+    private void validateRequiredFields() throws IllegalValueException {
         if (gamerTag == null) {
             throw new IllegalValueException(
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, GamerTag.class.getSimpleName()));
         }
+    }
+
+    private void validateFieldValues() throws IllegalValueException {
         if (!GamerTag.isValidGamerTag(gamerTag)) {
             throw new IllegalValueException(GamerTag.MESSAGE_CONSTRAINTS);
         }
@@ -117,31 +151,5 @@ class JsonAdaptedGamer {
         if (note != null && !Note.isValidNote(note)) {
             throw new IllegalValueException(Note.MESSAGE_CONSTRAINTS);
         }
-
-        // final Name modelName = new Name(name);
-        // final GamerTag modelGamerTag = new GamerTag(gamerTag);
-        // final Phone modelPhone = new Phone(phone);
-        // final Email modelEmail = new Email(email);
-        // final Group modelGroup = new Group(group);
-        // final Server modelServer = new Server(server);
-        // final Favourite modelFavourite = new Favourite(favourite);
-        // final Country modelCountry = new Country(country);
-        // final Region modelRegion = new Region(region);
-        // final Note modelNote = new Note(note);
-
-        // Optional fields can be null when omitted by the user, so we guard object construction to avoid null failures.
-        final Name modelName = name != null ? new Name(name) : null;
-        final GamerTag modelGamerTag = new GamerTag(gamerTag);
-        final Phone modelPhone = phone != null ? new Phone(phone) : null;
-        final Email modelEmail = email != null ? new Email(email) : null;
-        final Group modelGroup = group != null ? new Group(group) : null;
-        final Server modelServer = server != null ? new Server(server) : null;
-        final Favourite modelFavourite = favourite != null ? new Favourite(favourite) : new Favourite("unfav");
-        final Country modelCountry = country != null ? new Country(country) : null;
-        final Region modelRegion = region != null ? new Region(region) : null;
-        final Note modelNote = note != null ? new Note(note) : null;
-
-        return new Gamer(modelName, modelGamerTag, modelPhone, modelEmail,
-                modelGroup, modelServer, modelFavourite, modelCountry, modelRegion, modelNote);
     }
 }
