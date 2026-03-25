@@ -3,9 +3,12 @@ package seedu.blockbook.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.blockbook.model.Model.PREDICATE_SHOW_ALL_GAMERS;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import seedu.blockbook.commons.core.LogsCenter;
@@ -112,7 +115,15 @@ public class EditCommand extends Command {
         GamerTag updatedGamerTag = editGamerDescriptor.getGamerTag().orElse(gamerToEdit.getGamerTag());
         Phone updatedPhone = editGamerDescriptor.getPhone().orElse(gamerToEdit.getPhone());
         Email updatedEmail = editGamerDescriptor.getEmail().orElse(gamerToEdit.getEmail());
-        Group updatedGroup = editGamerDescriptor.getGroup().orElse(gamerToEdit.getGroup());
+        Set<Group> updatedGroups = new HashSet<>(gamerToEdit.getGroups());
+        if (editGamerDescriptor.getGroups().isPresent()) {
+            Set<Group> parsedGroups = editGamerDescriptor.getGroups().get();
+            if (parsedGroups.isEmpty()) {
+                updatedGroups.clear(); // User typed "group/" to clear all groups
+            } else {
+                updatedGroups.addAll(parsedGroups); // User typed "group/Sniper", append to existing
+            }
+        }
         Server updatedServer = editGamerDescriptor.getServer().orElse(gamerToEdit.getServer());
         Favourite updatedFavourite = editGamerDescriptor.getFavourite().orElse(gamerToEdit.getFavourite());
         Country updatedCountry = editGamerDescriptor.getCountry().orElse(gamerToEdit.getCountry());
@@ -124,7 +135,7 @@ public class EditCommand extends Command {
                 updatedGamerTag,
                 updatedPhone,
                 updatedEmail,
-                updatedGroup,
+                updatedGroups,
                 updatedServer,
                 updatedFavourite,
                 updatedCountry,
@@ -165,14 +176,15 @@ public class EditCommand extends Command {
         private GamerTag gamerTag;
         private Phone phone;
         private Email email;
-        private Group group;
+        private Set<Group> groups;
         private Server server;
         private Favourite favourite;
         private Country country;
         private Region region;
         private Note note;
 
-        public EditGamerDescriptor() {}
+        public EditGamerDescriptor() {
+        }
 
         /**
          * Copy constructor.
@@ -182,7 +194,7 @@ public class EditCommand extends Command {
             setGamerTag(toCopy.gamerTag);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
-            setGroup(toCopy.group);
+            setGroups(toCopy.groups);
             setServer(toCopy.server);
             setFavourite(toCopy.favourite);
             setCountry(toCopy.country);
@@ -195,7 +207,7 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(
-                    name, gamerTag, phone, email, group, server, favourite, country, region, note);
+                    name, gamerTag, phone, email, groups, server, favourite, country, region, note);
         }
 
         public void setName(Name name) {
@@ -230,12 +242,12 @@ public class EditCommand extends Command {
             return Optional.ofNullable(email);
         }
 
-        public void setGroup(Group group) {
-            this.group = group;
+        public void setGroups(Set<Group> groups) {
+            this.groups = (groups != null) ? new HashSet<>(groups) : null;
         }
 
-        public Optional<Group> getGroup() {
-            return Optional.ofNullable(group);
+        public Optional<Set<Group>> getGroups() {
+            return (groups != null) ? Optional.of(Collections.unmodifiableSet(groups)) : Optional.empty();
         }
 
         public void setServer(Server server) {
@@ -293,7 +305,7 @@ public class EditCommand extends Command {
                     && Objects.equals(gamerTag, otherDescriptor.gamerTag)
                     && Objects.equals(phone, otherDescriptor.phone)
                     && Objects.equals(email, otherDescriptor.email)
-                    && Objects.equals(group, otherDescriptor.group)
+                    && Objects.equals(groups, otherDescriptor.groups)
                     && Objects.equals(server, otherDescriptor.server)
                     && Objects.equals(favourite, otherDescriptor.favourite)
                     && Objects.equals(country, otherDescriptor.country)
@@ -308,7 +320,7 @@ public class EditCommand extends Command {
                     .add("gamerTag", gamerTag)
                     .add("phone", phone)
                     .add("email", email)
-                    .add("group", group)
+                    .add("groups", groups)
                     .add("server", server)
                     .add("favourite", favourite)
                     .add("country", country)

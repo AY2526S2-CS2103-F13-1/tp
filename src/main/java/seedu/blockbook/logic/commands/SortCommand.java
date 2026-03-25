@@ -138,7 +138,7 @@ public class SortCommand extends Command {
         case "email":
             return gamer.getEmail() == null ? null : gamer.getEmail().toString();
         case "group":
-            return gamer.getGroup() == null ? null : gamer.getGroup().toString();
+            return gamer.getGroups() == null ? null : gamer.getGroups().toString();
         case "server":
             return gamer.getServer() == null ? null : gamer.getServer().toString();
         case "favourite":

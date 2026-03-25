@@ -6,7 +6,9 @@
       "gamerTag": "Herobrine",
       "phone": "85355255",
       "email": "amy@gmail.com",
-      "group": "Raid Team",
+      "groups": [
+        "Raid Team"
+      ],
       "server": "127.0.0.1:8080",
       "favourite": "fav",
       "country": "Singapore",
@@ -18,7 +20,9 @@
       "gamerTag": "Herobrine2",
       "phone": "85355255",
       "email": "amy@gmail.com",
-      "group": "Raid Team",
+      "groups": [
+        "Raid Team"
+      ],
       "server": "127.0.0.1:8080",
       "favourite": "fav",
       "country": "Singapore",
@@ -30,7 +34,9 @@
       "gamerTag": "Herobrine3",
       "phone": "85355255",
       "email": "amy@gmail.com",
-      "group": "Raid Team",
+      "groups": [
+        "Raid Team"
+      ],
       "server": "127.0.0.1:8080",
       "favourite": "fav",
       "country": "Singapore",
@@ -42,7 +48,9 @@
       "gamerTag": "Herobrine4",
       "phone": "85355255",
       "email": "amy@gmail.com",
-      "group": "Raid Team",
+      "groups": [
+        "Raid Team"
+      ],
       "server": "127.0.0.1:8080",
       "favourite": "fav",
       "country": "Singapore",
@@ -54,7 +62,9 @@
       "gamerTag": "Herobrine5",
       "phone": "85355255",
       "email": "amy@gmail.com",
-      "group": "Raid Team",
+      "groups": [
+        "Raid Team"
+      ],
       "server": "127.0.0.1:8080",
       "favourite": "fav",
       "country": "Singapore",
@@ -66,7 +76,9 @@
       "gamerTag": "Herobrine6",
       "phone": "85355255",
       "email": "amy@gmail.com",
-      "group": "Raid Team",
+      "groups": [
+        "Raid Team"
+      ],
       "server": "127.0.0.1:8080",
       "favourite": "fav",
       "country": "Singapore",
@@ -78,7 +90,9 @@
       "gamerTag": "Herobrine7",
       "phone": "85355255",
       "email": "amy@gmail.com",
-      "group": "Raid Team",
+      "groups": [
+        "Raid Team"
+      ],
       "server": "127.0.0.1:8080",
       "favourite": "fav",
       "country": "Singapore",

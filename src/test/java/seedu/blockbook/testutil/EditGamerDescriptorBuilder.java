@@ -1,5 +1,9 @@
 package seedu.blockbook.testutil;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import seedu.blockbook.logic.commands.EditCommand.EditGamerDescriptor;
 import seedu.blockbook.model.gamer.Country;
 import seedu.blockbook.model.gamer.Email;
@@ -37,7 +41,7 @@ public class EditGamerDescriptorBuilder {
         descriptor.setGamerTag(gamer.getGamerTag());
         descriptor.setPhone(gamer.getPhone());
         descriptor.setEmail(gamer.getEmail());
-        descriptor.setGroup(gamer.getGroup());
+        descriptor.setGroups(gamer.getGroups());
         descriptor.setServer(gamer.getServer());
         descriptor.setFavourite(gamer.getFavourite());
         descriptor.setCountry(gamer.getCountry());
@@ -78,10 +82,12 @@ public class EditGamerDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Group} of the {@code EditGamerDescriptor} that we are building.
+     * Parses the {@code groups} into a {@code Set<Group>} and set it to the {@code EditGamerDescriptor}
+     * that we are building.
      */
-    public EditGamerDescriptorBuilder withGroup(String group) {
-        descriptor.setGroup(new Group(group));
+    public EditGamerDescriptorBuilder withGroups(String... groups) {
+        Set<Group> groupSet = Stream.of(groups).map(Group::new).collect(Collectors.toSet());
+        descriptor.setGroups(groupSet);
         return this;
     }
 

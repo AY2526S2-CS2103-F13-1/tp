@@ -1,5 +1,11 @@
 package seedu.blockbook.storage;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -27,7 +33,7 @@ class JsonAdaptedGamer {
     private final String gamerTag;
     private final String phone;
     private final String email;
-    private final String group;
+    private final List<String> groups = new ArrayList<>();
     private final String server;
     private final String favourite;
     private final String country;
@@ -42,7 +48,7 @@ class JsonAdaptedGamer {
                             @JsonProperty("gamerTag") String gamerTag,
                             @JsonProperty("phone") String phone,
                             @JsonProperty("email") String email,
-                            @JsonProperty("group") String group,
+                            @JsonProperty("groups") List<String> groups,
                             @JsonProperty("server") String server,
                             @JsonProperty("favourite") String favourite,
                             @JsonProperty("country") String country,
@@ -52,7 +58,9 @@ class JsonAdaptedGamer {
         this.gamerTag = gamerTag;
         this.phone = phone;
         this.email = email;
-        this.group = group;
+        if (groups != null) {
+            this.groups.addAll(groups);
+        }
         this.server = server;
         this.favourite = favourite;
         this.country = country;
@@ -68,7 +76,9 @@ class JsonAdaptedGamer {
         gamerTag = source.getGamerTag() != null ? source.getGamerTag().fullGamerTag : null;
         phone = source.getPhone() != null ? source.getPhone().fullPhone : null;
         email = source.getEmail() != null ? source.getEmail().fullEmail : null;
-        group = source.getGroup() != null ? source.getGroup().fullGroup : null;
+        groups.addAll(source.getGroups().stream()
+                .map(group -> group.fullGroup)
+                .collect(Collectors.toList()));
         server = source.getServer() != null ? source.getServer().fullServer : null;
         favourite = source.getFavourite() != null ? source.getFavourite().fullFavourite : "unfav";
         country = source.getCountry() != null ? source.getCountry().fullCountry : null;
@@ -102,7 +112,14 @@ class JsonAdaptedGamer {
         final GamerTag modelGamerTag = new GamerTag(gamerTag);
         final Phone modelPhone = phone != null ? new Phone(phone) : null;
         final Email modelEmail = email != null ? new Email(email) : null;
-        final Group modelGroup = group != null ? new Group(group) : null;
+        final List<Group> gamerGroups = new ArrayList<>();
+        for (String groupName : groups) {
+            if (!Group.isValidGroup(groupName)) {
+                throw new IllegalValueException(Group.MESSAGE_CONSTRAINTS);
+            }
+            gamerGroups.add(new Group(groupName));
+        }
+        final Set<Group> modelGroups = new HashSet<>(gamerGroups);
         final Server modelServer = server != null ? new Server(server) : null;
         final Favourite modelFavourite = favourite != null ? new Favourite(favourite) : new Favourite("unfav");
         final Country modelCountry = country != null ? new Country(country) : null;
@@ -110,7 +127,7 @@ class JsonAdaptedGamer {
         final Note modelNote = note != null ? new Note(note) : null;
 
         return new Gamer(modelName, modelGamerTag, modelPhone, modelEmail,
-                modelGroup, modelServer, modelFavourite, modelCountry, modelRegion, modelNote);
+                modelGroups, modelServer, modelFavourite, modelCountry, modelRegion, modelNote);
     }
 
     private void validateRequiredFields() throws IllegalValueException {
@@ -133,9 +150,9 @@ class JsonAdaptedGamer {
         if (email != null && !Email.isValidEmail(email)) {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
         }
-        if (group != null && !Group.isValidGroup(group)) {
-            throw new IllegalValueException(Group.MESSAGE_CONSTRAINTS);
-        }
+        // if (group != null && !Group.isValidGroup(group)) {
+        //    throw new IllegalValueException(Group.MESSAGE_CONSTRAINTS);
+        // }
         if (server != null && !Server.isValidServer(server)) {
             throw new IllegalValueException(Server.MESSAGE_CONSTRAINTS);
         }

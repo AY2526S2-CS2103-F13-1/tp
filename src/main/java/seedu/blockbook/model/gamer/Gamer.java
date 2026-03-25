@@ -2,7 +2,10 @@ package seedu.blockbook.model.gamer;
 
 import static seedu.blockbook.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import seedu.blockbook.commons.util.ToStringBuilder;
 
@@ -17,7 +20,7 @@ public class Gamer {
     private final GamerTag gamerTag;
     private final Phone phone;
     private final Email email;
-    private final Group group;
+    private final Set<Group> groups = new HashSet<>();
     private final Server server;
     private final Favourite favourite;
     private final Country country;
@@ -28,14 +31,14 @@ public class Gamer {
      * Every field must be present and not null.
      */
     public Gamer(Name name, GamerTag gamerTag, Phone phone, Email email,
-                 Group group, Server server, Favourite favourite,
+                 Set<Group> groups, Server server, Favourite favourite,
                  Country country, Region region, Note note) {
         requireAllNonNull(gamerTag);
         this.name = name;
         this.gamerTag = gamerTag;
         this.phone = phone;
         this.email = email;
-        this.group = group;
+        this.groups.addAll(groups);
         this.server = server;
         this.favourite = favourite;
         this.country = country;
@@ -58,11 +61,12 @@ public class Gamer {
     public Email getEmail() {
         return email;
     }
-
-    public Group getGroup() {
-        return group;
+    /**
+     * Returns an immutable group set
+     */
+    public Set<Group> getGroups() {
+        return Collections.unmodifiableSet(groups);
     }
-
     public Server getServer() {
         return server;
     }
@@ -118,7 +122,7 @@ public class Gamer {
                 && Objects.equals(gamerTag, otherGamer.gamerTag)
                 && Objects.equals(phone, otherGamer.phone)
                 && Objects.equals(email, otherGamer.email)
-                && Objects.equals(group, otherGamer.group)
+                && Objects.equals(groups, otherGamer.groups)
                 && Objects.equals(server, otherGamer.server)
                 && Objects.equals(favourite, otherGamer.favourite)
                 && Objects.equals(country, otherGamer.country)
@@ -130,7 +134,7 @@ public class Gamer {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         // return Objects.hash(name, gamerTag);
-        return Objects.hash(name, gamerTag, phone, email, group, server, favourite, country, region, note);
+        return Objects.hash(name, gamerTag, phone, email, groups, server, favourite, country, region, note);
     }
 
     @Override
@@ -140,7 +144,7 @@ public class Gamer {
                 .add("gamertag", gamerTag)
                 .add("phone", phone)
                 .add("email", email)
-                .add("group", group)
+                .add("groups", groups)
                 .add("server", server)
                 .add("favourite", favourite)
                 .add("country", country)

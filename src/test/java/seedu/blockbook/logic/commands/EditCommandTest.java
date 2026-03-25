@@ -49,7 +49,7 @@ public class EditCommandTest {
                 .withGamerTag(VALID_GAMERTAG_BOB)
                 .withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB)
-                .withGroup(VALID_GROUP_BOB)
+                .withGroups(VALID_GROUP_BOB)
                 .withServer(VALID_SERVER_BOB)
                 .withFavourite(VALID_FAVOURITE_BOB)
                 .withCountry(VALID_COUNTRY_BOB)

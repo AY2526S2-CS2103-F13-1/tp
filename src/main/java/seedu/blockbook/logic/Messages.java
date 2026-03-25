@@ -49,7 +49,7 @@ public class Messages {
                 .append(" Email: ")
                 .append(formatNullable(gamer.getEmail()))
                 .append(" Group: ")
-                .append(formatNullable(gamer.getGroup()))
+                .append(formatNullable(gamer.getGroups()))
                 .append(" Server: ")
                 .append(formatNullable(gamer.getServer()))
                 .append(" Favourite: ")

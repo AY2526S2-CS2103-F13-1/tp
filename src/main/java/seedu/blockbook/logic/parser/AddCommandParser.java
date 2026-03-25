@@ -12,6 +12,7 @@ import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_REGION;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_SERVER;
 
+import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.blockbook.logic.commands.AddCommand;
@@ -116,6 +117,10 @@ public class AddCommandParser implements Parser<AddCommand> {
         Phone phone = parseOptionalPhone(argMultimap);
         Email email = parseOptionalEmail(argMultimap);
         Group group = parseOptionalGroup(argMultimap);
+        Set<Group> groupSet = new java.util.HashSet<>();
+        if (group != null) {
+            groupSet.add(group);
+        }
         Server server = parseOptionalServer(argMultimap);
         Favourite favourite = parseOptionalFavourite(argMultimap);
         Country country = parseOptionalCountry(argMultimap);
@@ -127,7 +132,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 gamerTag,
                 phone,
                 email,
-                group,
+                groupSet,
                 server,
                 favourite,
                 country,

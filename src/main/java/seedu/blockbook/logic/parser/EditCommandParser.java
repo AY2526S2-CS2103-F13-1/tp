@@ -13,10 +13,13 @@ import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_REGION;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_SERVER;
 
+import java.util.Set;
+
 import seedu.blockbook.commons.core.index.Index;
 import seedu.blockbook.logic.commands.EditCommand;
 import seedu.blockbook.logic.commands.EditCommand.EditGamerDescriptor;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
+import seedu.blockbook.model.gamer.Group;
 
 /**
  * Parses input arguments and creates a new EditCommand object.
@@ -78,7 +81,10 @@ public class EditCommandParser implements Parser<EditCommand> {
             descriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
         }
         if (argMultimap.getValue(PREFIX_GROUP).isPresent()) {
-            descriptor.setGroup(ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP).get()));
+            Group parsedGroup = ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP).get());
+            Set<Group> groupSet = new java.util.HashSet<>();
+            groupSet.add(parsedGroup);
+            descriptor.setGroups(groupSet);
         }
         if (argMultimap.getValue(PREFIX_SERVER).isPresent()) {
             descriptor.setServer(ParserUtil.parseServer(argMultimap.getValue(PREFIX_SERVER).get()));
