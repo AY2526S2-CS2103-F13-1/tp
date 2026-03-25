@@ -147,6 +147,27 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd gamer shown in the list.
 * `find Betsy` followed by `delete 1 2` deletes the 1st and 2nd gamer in the results of the `find` command.
 
+### Sorting contacts : `sort`
+
+Sorts the contact list by the specified attributes. Favourite contacts are always shown first.
+
+Format: `sort [ATTRIBUTE/]…`
+
+* If no attributes are provided, contacts are sorted by gamertag (default).
+* Multiple attributes can be specified to sort by priority order (first attribute is the primary sort key).
+* Sorting is **session-based** and does not persist after closing the app.
+* Valid attributes: `name`, `phone`, `email`, `group`, `server`, `favourite`, `country`, `region`, `note`, `gamertag`.
+
+<box type="tip" seamless>
+
+**Tip:** Favourite contacts are always pinned to the top of the list, regardless of the sort attributes.
+</box>
+
+Examples:
+* `sort` sorts contacts by gamertag (default).
+* `sort name/` sorts contacts by name.
+* `sort name/ phone/` sorts contacts by name first, then by phone for contacts with the same name.
+
 ### Clearing all entries : `clear`
 
 Clears all entries from BlockBook.
@@ -204,5 +225,6 @@ _Details coming soon ..._
 | **Edit**   | `edit INDEX [name/NAME] [gamertag/GAMERTAG]`<br> e.g.,`edit 2 name/James Lee`    |
 | **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                       |
 | **List**   | `list`                                                                           |
+| **Sort**   | `sort [ATTRIBUTE/]…`<br> e.g., `sort name/`, `sort name/ phone/`                |
 | **Help**   | `help`                                                                           |
 
