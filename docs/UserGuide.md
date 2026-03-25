@@ -196,13 +196,13 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action     | Format, Examples                                                                                                                                     |
-|------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**    | `add name/NAME gamertag/GAMERTAG` <br> e.g., `add name/James Ho gamertag/JamieH` |
-| **Clear**  | `clear`                                                                                                                                              |
-| **Delete** | `delete INDEX`<br> e.g., `delete 3`                                                                                                                  |
-| **Edit**   | `edit INDEX [name/NAME] [gamertag/GAMERTAG]`<br> e.g.,`edit 2 name/James Lee`                      |
-| **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                           |
-| **List**   | `list`                                                                                                                                               |
-| **Help**   | `help`                                                                                                                                               |
+| Action     | Format, Examples                                                                                                                         |
+|------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**    | `add name/NAME gamertag/GAMERTAG` <br> e.g., `add name/James Ho gamertag/JamieH`                                                         |
+| **Clear**  | `clear`                                                                                                                                  |
+| **Delete** | `delete INDEX`<br> e.g., `delete 3`                                                                                                      |
+| **Edit**   | `edit INDEX [name/NAME] [gamertag/GAMERTAG]`<br> e.g.,`edit 2 name/James Lee`                                                            |
+| **Find**   | `find KEYWORD`<br> e.g., `find James`<br> `find ATTRIBUTE1/KEYWORD1 [ATTRIBUTE2/KEYWORD2]...`<br> e.g., `find name/Steve gamertag/Block` |
+| **List**   | `list`                                                                                                                                   |
+| **Help**   | `help`                                                                                                                                   |
 
