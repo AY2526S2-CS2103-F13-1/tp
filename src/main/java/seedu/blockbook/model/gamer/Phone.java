@@ -8,13 +8,11 @@ import static seedu.blockbook.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
  */
 public class Phone {
-
-
     public static final String MESSAGE_CONSTRAINTS =
             "Phone number should only contain numbers, spaces, hyphens, plus sign (+), parentheses, "
                     + "and be at most 30 characters.";
-    // public static final String VALIDATION_REGEX = "\\d{3,}";
     public static final String VALIDATION_REGEX = "^(?=.*\\d)[0-9+()\\- ]{1,30}$";
+    public static final String VALIDATION_LAX_REGEX = "^[0-9+()\\- ]+$";
     public final String fullPhone;
 
     /**
@@ -33,6 +31,13 @@ public class Phone {
      */
     public static boolean isValidPhone(String test) {
         return test.matches(VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if a given string is a valid lax phone number, where only numbers are allowed.
+     */
+    public static boolean isValidLaxPhone(String test) {
+        return test.matches(VALIDATION_LAX_REGEX);
     }
 
     @Override
