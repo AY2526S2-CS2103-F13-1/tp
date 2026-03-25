@@ -83,7 +83,7 @@ public class EditCommand extends Command {
         model.setGamer(gamerToEdit, editedGamer);
         model.updateFilteredGamerList(PREDICATE_SHOW_ALL_GAMERS);
         logger.fine("Edited gamer at index " + index.getOneBased() + ": " + editedGamer.getGamerTag());
-        return new CommandResult(String.format(MESSAGE_EDIT_GAMER_SUCCESS, formatEditedGamer(editedGamer)));
+        return new CommandResult(String.format(MESSAGE_EDIT_GAMER_SUCCESS, Messages.format(editedGamer)));
     }
 
     /**
@@ -131,19 +131,6 @@ public class EditCommand extends Command {
                 updatedRegion,
                 updatedNote
         );
-    }
-
-    private static String formatEditedGamer(Gamer gamer) {
-        return "Name: " + Messages.formatNullable(gamer.getName())
-                + " Gamertag: " + Messages.formatNullable(gamer.getGamerTag())
-                + " Phone: " + Messages.formatNullable(gamer.getPhone())
-                + " Email: " + Messages.formatNullable(gamer.getEmail())
-                + " Group: " + Messages.formatNullable(gamer.getGroup())
-                + " Server: " + Messages.formatNullable(gamer.getServer())
-                + " Favourite: " + Messages.formatNullable(gamer.getFavourite())
-                + " Country: " + Messages.formatNullable(gamer.getCountry())
-                + " Region: " + Messages.formatNullable(gamer.getRegion())
-                + " Note: " + Messages.formatNullable(gamer.getNote());
     }
 
     @Override

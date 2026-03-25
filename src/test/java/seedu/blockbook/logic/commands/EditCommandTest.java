@@ -61,7 +61,7 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_GAMER, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_GAMER_SUCCESS,
-                formatEditedGamer(editedGamer));
+                Messages.format(editedGamer));
 
         Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
         expectedModel.setGamer(gamerToEdit, editedGamer);
@@ -84,7 +84,7 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_GAMER, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_GAMER_SUCCESS,
-                formatEditedGamer(editedGamer));
+                Messages.format(editedGamer));
 
         Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
         expectedModel.setGamer(gamerToEdit, editedGamer);
@@ -153,16 +153,4 @@ public class EditCommandTest {
         assertEquals(expected, editCommand.toString());
     }
 
-    private String formatEditedGamer(Gamer gamer) {
-        return "Name: " + Messages.formatNullable(gamer.getName())
-                + " Gamertag: " + Messages.formatNullable(gamer.getGamerTag())
-                + " Phone: " + Messages.formatNullable(gamer.getPhone())
-                + " Email: " + Messages.formatNullable(gamer.getEmail())
-                + " Group: " + Messages.formatNullable(gamer.getGroup())
-                + " Server: " + Messages.formatNullable(gamer.getServer())
-                + " Favourite: " + Messages.formatNullable(gamer.getFavourite())
-                + " Country: " + Messages.formatNullable(gamer.getCountry())
-                + " Region: " + Messages.formatNullable(gamer.getRegion())
-                + " Note: " + Messages.formatNullable(gamer.getNote());
-    }
 }
