@@ -13,7 +13,6 @@ public class Phone {
     public static final String MESSAGE_CONSTRAINTS =
             "Phone number should only contain numbers, spaces, hyphens, plus sign (+), parentheses, "
                     + "and be at most 30 characters.";
-    // public static final String VALIDATION_REGEX = "\\d{3,}";
     public static final String VALIDATION_REGEX = "^(?=.*\\d)[0-9+()\\- ]{1,30}$";
     public final String fullPhone;
 

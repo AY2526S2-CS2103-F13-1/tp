@@ -15,14 +15,6 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    //    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a gamer to BlockBook. "
-    //            + "Parameters: "
-    //            + PREFIX_NAME + "NAME "
-    //            + PREFIX_GAMERTAG + "GAMERTAG\n"
-    //            + "Example: " + COMMAND_WORD + " "
-    //            + PREFIX_NAME + "Herobrine "
-    //            + PREFIX_GAMERTAG + "ilovesteve";
-
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a gamer to BlockBook.\n"
             + "Format: add gamertag/GAMERTAG "
             + "[name/NAME] [phone/PHONE] [email/EMAIL] "
@@ -56,17 +48,6 @@ public class AddCommand extends Command {
         }
 
         model.addGamer(toAdd);
-        //        String formattedContact = toAdd.getName() + ", " + toAdd.getGamerTag();
-        //        String formattedContact = "Name: " + toAdd.getName()
-        //                + " Gamertag: " + toAdd.getGamerTag()
-        //                + " Phone: " + toAdd.getPhone()
-        //                + " Email: " + toAdd.getEmail()
-        //                + " Group: " + toAdd.getGroup()
-        //                + " Server: " + toAdd.getServer()
-        //                + " Favourite: " + toAdd.getFavourite()
-        //                + " Country: " + toAdd.getCountry()
-        //                + " Region: " + toAdd.getRegion()
-        //                + " Note: " + toAdd.getNote();
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 

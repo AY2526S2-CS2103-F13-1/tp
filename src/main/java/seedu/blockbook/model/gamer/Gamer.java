@@ -24,9 +24,6 @@ public class Gamer {
     private final Region region;
     private final Note note;
 
-    // Data fields
-    // private final Region region;
-
     /**
      * Every field must be present and not null.
      */
@@ -116,11 +113,6 @@ public class Gamer {
         }
 
         Gamer otherGamer = (Gamer) other;
-        // return name.equals(otherGamer.name)
-        //        && gamerTag.equals(otherGamer.gamerTag);
-
-        //        && phone.equals(otherGamer.phone)
-        //        && email.equals(otherGamer.email);
         // prevent nullpointerexception
         return Objects.equals(name, otherGamer.name)
                 && Objects.equals(gamerTag, otherGamer.gamerTag)
