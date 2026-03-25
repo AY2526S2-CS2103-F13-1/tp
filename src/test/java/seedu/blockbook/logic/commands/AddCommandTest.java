@@ -159,6 +159,11 @@ public class AddCommandTest {
         public void updateFilteredGamerList(Predicate<Gamer> predicate) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void sortGamerList(java.util.Comparator<Gamer> comparator) {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

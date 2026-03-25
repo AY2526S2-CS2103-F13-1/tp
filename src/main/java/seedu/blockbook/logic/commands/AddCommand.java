@@ -2,11 +2,15 @@ package seedu.blockbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.logging.Logger;
+
+import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.commons.util.ToStringBuilder;
 import seedu.blockbook.logic.Messages;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.gamer.Gamer;
+
 
 /**
  * Adds a gamer to the BlockBook.
@@ -14,14 +18,6 @@ import seedu.blockbook.model.gamer.Gamer;
 public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
-
-    //    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a gamer to BlockBook. "
-    //            + "Parameters: "
-    //            + PREFIX_NAME + "NAME "
-    //            + PREFIX_GAMERTAG + "GAMERTAG\n"
-    //            + "Example: " + COMMAND_WORD + " "
-    //            + PREFIX_NAME + "Herobrine "
-    //            + PREFIX_GAMERTAG + "ilovesteve";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a gamer to BlockBook.\n"
             + "Format: add gamertag/GAMERTAG "
@@ -36,6 +32,7 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Contact added: %1$s";
     public static final String MESSAGE_DUPLICATE_GAMERTAG = "This gamertag is already used by someone in BlockBook.";
+    private static final Logger logger = LogsCenter.getLogger(AddCommand.class);
 
     private final Gamer toAdd;
 
@@ -50,23 +47,15 @@ public class AddCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        logger.info("Attempting to add gamer: " + toAdd);
 
         if (model.hasGamer(toAdd)) {
+            logger.warning("Duplicate gamer tag detected: " + toAdd.getGamerTag());
             throw new CommandException(MESSAGE_DUPLICATE_GAMERTAG);
         }
 
         model.addGamer(toAdd);
-        //        String formattedContact = toAdd.getName() + ", " + toAdd.getGamerTag();
-        //        String formattedContact = "Name: " + toAdd.getName()
-        //                + " Gamertag: " + toAdd.getGamerTag()
-        //                + " Phone: " + toAdd.getPhone()
-        //                + " Email: " + toAdd.getEmail()
-        //                + " Group: " + toAdd.getGroup()
-        //                + " Server: " + toAdd.getServer()
-        //                + " Favourite: " + toAdd.getFavourite()
-        //                + " Country: " + toAdd.getCountry()
-        //                + " Region: " + toAdd.getRegion()
-        //                + " Note: " + toAdd.getNote();
+        logger.info("Gamer added successfully: " + toAdd.getGamerTag());
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
