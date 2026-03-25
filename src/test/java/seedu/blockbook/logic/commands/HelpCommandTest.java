@@ -1,21 +1,47 @@
 package seedu.blockbook.logic.commands;
 
-//import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandSuccess;
-//import static seedu.blockbook.logic.commands.HelpCommand.SHOWING_HELP_MESSAGE;
-//
-//import org.junit.jupiter.api.Test;
-//
-//import seedu.blockbook.model.Model;
-//import seedu.blockbook.model.ModelManager;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
+import seedu.blockbook.model.Model;
+import seedu.blockbook.model.ModelManager;
 
 public class HelpCommandTest {
-//    private Model model = new ModelManager();
-//    private Model expectedModel = new ModelManager();
-//
-//    @Test
-//    public void execute_help_success() {
-//        CommandResult expectedCommandResult = new CommandResult(SHOWING_HELP_MESSAGE, true, false);
-//        assertCommandSuccess(new HelpCommand(), model, expectedCommandResult, expectedModel);
-//    }
-}
+    @Test
+    public void execute_returnsExpectedHelpOutput() {
+        Model model = new ModelManager();
 
+        String expectedOutput = HelpCommand.SHOWING_HELP_MESSAGE + "\n"
+                + HelpCommand.MESSAGE_USAGE + "\n\n"
+                + AddCommand.MESSAGE_USAGE + "\n\n"
+                + EditCommand.MESSAGE_USAGE + "\n\n"
+                + DeleteCommand.MESSAGE_USAGE + "\n"
+                + HelpCommand.SEPARATOR
+                + FindCommand.MESSAGE_USAGE + "\n\n"
+                + ListCommand.MESSAGE_USAGE + "\n"
+                + HelpCommand.SEPARATOR
+                + ClearCommand.MESSAGE_USAGE + "\n\n"
+                + ExitCommand.MESSAGE_USAGE;
+
+        CommandResult expectedCommandResult = new CommandResult(expectedOutput, false, false);
+
+        assertEquals(expectedCommandResult, new HelpCommand().execute(model));
+    }
+
+    @Test
+    public void execute_includesAllCommandUsageMessages() {
+        Model model = new ModelManager();
+        String output = new HelpCommand().execute(model).getFeedbackToUser();
+
+        assertTrue(output.contains(HelpCommand.MESSAGE_USAGE));
+        assertTrue(output.contains(AddCommand.MESSAGE_USAGE));
+        assertTrue(output.contains(EditCommand.MESSAGE_USAGE));
+        assertTrue(output.contains(DeleteCommand.MESSAGE_USAGE));
+        assertTrue(output.contains(FindCommand.MESSAGE_USAGE));
+        assertTrue(output.contains(ListCommand.MESSAGE_USAGE));
+        assertTrue(output.contains(ClearCommand.MESSAGE_USAGE));
+        assertTrue(output.contains(ExitCommand.MESSAGE_USAGE));
+    }
+}

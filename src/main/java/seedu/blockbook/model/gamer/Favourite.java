@@ -30,7 +30,6 @@ public class Favourite {
      * Returns true if a given string is a valid favourite.
      */
     public static boolean isValidFavourite(String test) {
-        // return test.matches(VALIDATION_REGEX);
         requireNonNull(test);
         try {
             FavouriteStatus.valueOf(test.toUpperCase());
@@ -42,8 +41,6 @@ public class Favourite {
 
     @Override
     public String toString() {
-        // return value;
-        // return fullFavourite.toLowerCase();
         if (fullFavourite.equalsIgnoreCase("fav")) {
             return "Yes";
         }
