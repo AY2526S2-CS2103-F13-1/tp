@@ -19,34 +19,31 @@ import seedu.blockbook.logic.commands.EditCommand.EditGamerDescriptor;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new EditCommand object
+ * Parses input arguments and creates a new EditCommand object.
  */
 public class EditCommandParser implements Parser<EditCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     *
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        // ArgumentMultimap argMultimap =
-        //         ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE,
-        //         PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args,
-                        PREFIX_GAMERTAG,
-                        PREFIX_NAME,
-                        PREFIX_PHONE,
-                        PREFIX_EMAIL,
-                        PREFIX_GROUP,
-                        PREFIX_SERVER,
-                        PREFIX_FAVOURITE,
-                        PREFIX_COUNTRY,
-                        PREFIX_REGION,
-                        PREFIX_NOTE);
-        Index index;
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
+                PREFIX_GAMERTAG,
+                PREFIX_NAME,
+                PREFIX_PHONE,
+                PREFIX_EMAIL,
+                PREFIX_GROUP,
+                PREFIX_SERVER,
+                PREFIX_FAVOURITE,
+                PREFIX_COUNTRY,
+                PREFIX_REGION,
+                PREFIX_NOTE);
 
+        Index index;
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
@@ -58,6 +55,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                 PREFIX_NAME,
                 PREFIX_PHONE,
                 PREFIX_EMAIL,
+                PREFIX_GROUP,
                 PREFIX_SERVER,
                 PREFIX_FAVOURITE,
                 PREFIX_COUNTRY,
@@ -65,24 +63,43 @@ public class EditCommandParser implements Parser<EditCommand> {
                 PREFIX_NOTE
         );
 
-        EditGamerDescriptor editGamerDescriptor = new EditGamerDescriptor();
+        EditGamerDescriptor descriptor = new EditGamerDescriptor();
 
+        if (argMultimap.getValue(PREFIX_GAMERTAG).isPresent()) {
+            descriptor.setGamerTag(ParserUtil.parseGamerTag(argMultimap.getValue(PREFIX_GAMERTAG).get()));
+        }
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editGamerDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+            descriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            editGamerDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
+            descriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
         }
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            editGamerDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
+            descriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
+        }
+        if (argMultimap.getValue(PREFIX_GROUP).isPresent()) {
+            descriptor.setGroup(ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP).get()));
+        }
+        if (argMultimap.getValue(PREFIX_SERVER).isPresent()) {
+            descriptor.setServer(ParserUtil.parseServer(argMultimap.getValue(PREFIX_SERVER).get()));
+        }
+        if (argMultimap.getValue(PREFIX_FAVOURITE).isPresent()) {
+            descriptor.setFavourite(ParserUtil.parseFavourite(argMultimap.getValue(PREFIX_FAVOURITE).get()));
+        }
+        if (argMultimap.getValue(PREFIX_COUNTRY).isPresent()) {
+            descriptor.setCountry(ParserUtil.parseCountry(argMultimap.getValue(PREFIX_COUNTRY).get()));
+        }
+        if (argMultimap.getValue(PREFIX_REGION).isPresent()) {
+            descriptor.setRegion(ParserUtil.parseRegion(argMultimap.getValue(PREFIX_REGION).get()));
+        }
+        if (argMultimap.getValue(PREFIX_NOTE).isPresent()) {
+            descriptor.setNote(ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE).get()));
         }
 
-        if (!editGamerDescriptor.isAnyFieldEdited()) {
+        if (!descriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(index, editGamerDescriptor);
+        return new EditCommand(index, descriptor);
     }
-
 }
-

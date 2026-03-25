@@ -1,6 +1,7 @@
 package seedu.blockbook.model;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -85,6 +86,13 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredGamerList(Predicate<Gamer> predicate);
+
+    /**
+     * Sorts the gamer list using the given {@code comparator}.
+     * This sort is session-based and does not persist to storage.
+     * @throws NullPointerException if {@code comparator} is null.
+     */
+    void sortGamerList(Comparator<Gamer> comparator);
 }
 
 

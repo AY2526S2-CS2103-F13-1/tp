@@ -13,7 +13,6 @@ public class Note {
     public static final String MESSAGE_CONSTRAINTS =
             "Notes should only contain, letters, numbers and underscore, "
                     + "and be at most 30 characters.";
-    //    public static final String VALIDATION_REGEX = "\\d{3,}";
     public static final String VALIDATION_REGEX = "^[a-zA-Z0-9_ '\\\\-]{1,50}$";
     public final String fullNote;
 

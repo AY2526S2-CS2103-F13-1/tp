@@ -1,19 +1,29 @@
 #copyButton, #helpMessage {
-    -fx-text-fill: white;
+    -fx-text-fill: #f5f7f8;
+    -fx-font-family: "Lucida Console", "Courier New", "Monospaced";
 }
 
 #copyButton {
-    -fx-background-color: dimgray;
+    -fx-background-color: linear-gradient(to bottom, #3f4752, #313842);
+    -fx-border-color: #6a7380 #1c2127 #151a1f #59616d;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
 }
 
 #copyButton:hover {
-    -fx-background-color: gray;
+    -fx-background-color: linear-gradient(to bottom, #4a5360, #39414d);
 }
 
 #copyButton:armed {
-    -fx-background-color: darkgray;
+    -fx-background-color: linear-gradient(to bottom, #2e353f, #242b33);
 }
 
 #helpMessageContainer {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color:
+        linear-gradient(to bottom, #8acb61, #6fb54d),
+        linear-gradient(to bottom, #2f3741, #222830);
+    -fx-background-insets: 0, 5 0 0 0;
+    -fx-border-color: #9bd579 #1a1f24 #1a1f24 #335726;
+    -fx-border-width: 2;
 }

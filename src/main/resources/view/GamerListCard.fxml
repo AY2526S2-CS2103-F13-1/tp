@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -9,36 +10,34 @@
 <?import javafx.scene.layout.VBox?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-  <GridPane HBox.hgrow="ALWAYS">
-    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
-    </columnConstraints>
-    <VBox alignment="CENTER_LEFT" minHeight="70" GridPane.columnIndex="0">
-      <padding>
-        <Insets top="5" right="5" bottom="5" left="15" />
-      </padding>
-      <HBox spacing="0.5" alignment="CENTER_LEFT">
-        <Label fx:id="id" styleClass="cell_big_label">
-          <minWidth>
-            <!-- Ensures that the label text is never truncated -->
-            <Region fx:constant="USE_PREF_SIZE" />
-          </minWidth>
-        </Label>
-        <Label fx:id="gamerTag" text="\$first" styleClass="cell_big_label" />
-      </HBox>
-      <!-- <FlowPane fx:id="tags" /> -->
-<!--      <Label fx:id="gamerTag" text="$gamerTag" styleClass="cell_small_label" />-->
-      <!-- <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" /> -->
-      <!-- <Label fx:id="email" styleClass="cell_small_label" text="\$email" /> -->
-        <Label fx:id="name" text="name" styleClass="cell_small_label" />
-        <Label fx:id="phone" text="$phone" styleClass="cell_small_label" />
-        <Label fx:id="email" text="$email" styleClass="cell_small_label" />
-        <Label fx:id="group" text="$group" styleClass="cell_small_label" />
-        <Label fx:id="server" text="$server" styleClass="cell_small_label" />
-        <Label fx:id="favourite" text="$favourite" styleClass="cell_small_label" />
-        <Label fx:id="country" text="$country" styleClass="cell_small_label" />
-        <Label fx:id="region" text="$region" styleClass="cell_small_label" />
-        <Label fx:id="note" text="$note" styleClass="cell_small_label" />
-    </VBox>
-  </GridPane>
+  <VBox alignment="CENTER_LEFT" minHeight="100" spacing="8" styleClass="gamer-card-body" HBox.hgrow="ALWAYS">
+    <padding>
+      <Insets top="8" right="10" bottom="8" left="12" />
+    </padding>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+      <Label fx:id="id" styleClass="cell_index_label">
+        <minWidth>
+          <!-- Ensures that the label text is never truncated -->
+          <Region fx:constant="USE_PREF_SIZE" />
+        </minWidth>
+      </Label>
+      <Label fx:id="name" text="name" styleClass="cell_name_label" />
+      <ImageView fx:id="favouriteIcon" fitHeight="20.0" fitWidth="20.0" preserveRatio="true" smooth="false" />
+      <Region HBox.hgrow="ALWAYS" />
+    </HBox>
+
+    <Label fx:id="gamerTag" text="@gamerTag" styleClass="cell_tag_label" />
+
+    <GridPane hgap="10" vgap="4">
+      <columnConstraints>
+        <ColumnConstraints minWidth="70" prefWidth="70" />
+        <ColumnConstraints hgrow="ALWAYS" minWidth="10" prefWidth="240" />
+      </columnConstraints>
+      <Label text="Server" styleClass="card_meta_key" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+      <Label fx:id="server" text="$server" styleClass="card_meta_value" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+      <Label text="Region" styleClass="card_meta_key" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+      <Label fx:id="region" text="$region" styleClass="card_meta_value" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    </GridPane>
+  </VBox>
 </HBox>

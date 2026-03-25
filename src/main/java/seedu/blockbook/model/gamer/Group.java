@@ -13,7 +13,6 @@ public class Group {
     public static final String MESSAGE_CONSTRAINTS =
             "Group should only contain letters, spaces, hyphens, and apostrophes, "
                     + "and be at most 50 characters.";
-    //    public static final String VALIDATION_REGEX = "\\d{3,}";
     public static final String VALIDATION_REGEX = "^[a-zA-Z' \\-]{1,50}$";
     public final String fullGroup;
 
