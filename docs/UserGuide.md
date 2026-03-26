@@ -97,23 +97,35 @@ Shows a list of all gamers stored in BlockBook.
 
 Format: `list`
 
+* Only show important fields (gamertag, name, server, favourite and region)
+
 ### Editing a gamer : `edit`
 
 Edits an existing gamer stored in BlockBook.
-**TAKE NOTE!** This command does not allow the editing of fields that do not exist, such as `p/`, `e/`, `a/` etc. These fields are a work in progress.
 
-Format: `edit INDEX [name/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
+Format: `edit INDEX [gamertag/GAMERTAG] [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP] [server/SERVER] [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]`
 
 * Edits the gamer at the specified `INDEX`. The index refers to the index number shown in the displayed gamer list. The index **must be a positive integer** 1, 2, 3, ...
 * At least one of the optional fields must be provided.
+* Does not allow duplicate gamertags.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the gamer will be removed i.e adding of tags is not cumulative.
-* You can remove all the gamer's tags by typing `t/` without
-    specifying any tags after it.
+* Edit for region and favourite must follow the provided values.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st gamer to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 name/Betsy Crower t/` Edits the name of the 2nd gamer to be `Betsy Crower` and clears all existing tags.
+*  `edit 1 name/Herobrine gamertag/ilovesteve phone/99999 email/brine@gmail.com group/DestroySteve favourite/fav country/Singapore region/SEA note/I hate steve` Edits all the fields of the first gamer.     
+*  `edit 2 name/Betsy ` Edits the name of the 2nd gamer to be `Betsy`.
+
+### Editing a gamer’s favourite status : `favourite/unfavourite`
+
+Updates a gamer’s favourite status via index
+
+Format: `favourite INDEX` or `unfavourite INDEX`
+
+* Updates the favourite status of the gamer at the specified `INDEX`. The index refers to the index number shown in the displayed gamer list.
+
+Examples:
+*  `favourite 1` Updates the favourite status of the first gamer to favourite.
+*  `unfavourite 1` Remove the first gamer from favourites.
 
 ### Locating gamers by name: `find`
 
