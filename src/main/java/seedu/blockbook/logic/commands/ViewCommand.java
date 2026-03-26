@@ -38,7 +38,7 @@ public class ViewCommand extends Command {
                     + " Gamertag: " + specifiedGamer.getGamerTag()
                     + " Phone: " + Messages.formatNullable(specifiedGamer.getPhone())
                     + " Email: " + Messages.formatNullable(specifiedGamer.getEmail())
-                    + " Group: " + Messages.formatNullable(specifiedGamer.getGroup())
+                    + " Group: " + Messages.formatNullable(specifiedGamer.getGroups())
                     + " Server: " + Messages.formatNullable(specifiedGamer.getServer())
                     + " Favourite: " + Messages.formatNullable(specifiedGamer.getFavourite())
                     + " Country: " + Messages.formatNullable(specifiedGamer.getCountry())
