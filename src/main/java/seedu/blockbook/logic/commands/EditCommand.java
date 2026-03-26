@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.commons.core.index.Index;
@@ -47,6 +48,7 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_GAMER_SUCCESS = "Contact edited: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_GAMER = "This gamertag is already used by someone in BlockBook.";
+    public static final String MESSAGE_DUPLICATE_GROUP = "This gamer is already in the specified group.";
 
     private static final Logger logger = LogsCenter.getLogger(EditCommand.class);
 
@@ -54,7 +56,7 @@ public class EditCommand extends Command {
     private final EditGamerDescriptor editGamerDescriptor;
 
     /**
-     * @param index of the gamer in the filtered gamer list to edit
+     * @param index               of the gamer in the filtered gamer list to edit
      * @param editGamerDescriptor details to edit the gamer with
      */
     public EditCommand(Index index, EditGamerDescriptor editGamerDescriptor) {
@@ -75,18 +77,50 @@ public class EditCommand extends Command {
 
         Gamer gamerToEdit = lastShownList.get(targetIndex);
         assert gamerToEdit != null;
+
+        if (editGamerDescriptor.getGroups().isPresent() && !editGamerDescriptor.getGroups().get().isEmpty()) {
+            Set<Group> groupsToAdd = editGamerDescriptor.getGroups().get();
+            // If the gamer already has the group(s) the user is trying to add, throw the error
+            if (gamerToEdit.getGroups().containsAll(groupsToAdd)) {
+                throw new CommandException(MESSAGE_DUPLICATE_GROUP);
+            }
+        }
+
         Gamer editedGamer = createEditedGamer(gamerToEdit, editGamerDescriptor);
         assert editedGamer != null;
+
+        Set<Group> existingGroups = model.getBlockBook().getGamerList().stream()
+                .flatMap(g -> g.getGroups().stream())
+                .collect(Collectors.toSet());
+
+        Set<Group> groupsAddedToGamer = new HashSet<>(editedGamer.getGroups());
+        groupsAddedToGamer.removeAll(gamerToEdit.getGroups());
+
+        model.setGamer(gamerToEdit, editedGamer);
+        model.updateFilteredGamerList(PREDICATE_SHOW_ALL_GAMERS);
+        logger.fine("Edited gamer at index " + index.getOneBased() + ": " + editedGamer.getGamerTag());
+
+        StringBuilder resultMessage = new StringBuilder();
+        resultMessage.append(String.format(MESSAGE_EDIT_GAMER_SUCCESS, Messages.format(editedGamer)));
+
+        // Check if group already exists
+        for (Group group : groupsAddedToGamer) {
+            if (!existingGroups.contains(group)) {
+                resultMessage.append(String.format("\nGroup %s created. Gamertag: %s added to Group: %s.",
+                        group.fullGroup, editedGamer.getGamerTag().fullGamerTag, group.fullGroup));
+            } else {
+                resultMessage.append(String.format("\nGamertag: %s added to Group: %s.",
+                        editedGamer.getGamerTag().fullGamerTag, group.fullGroup));
+            }
+        }
 
         if (!gamerToEdit.isSameGamer(editedGamer) && model.hasGamer(editedGamer)) {
             logger.finer("Edit failed: duplicate gamertag at index " + index.getOneBased());
             throw new CommandException(MESSAGE_DUPLICATE_GAMER);
         }
 
-        model.setGamer(gamerToEdit, editedGamer);
-        model.updateFilteredGamerList(PREDICATE_SHOW_ALL_GAMERS);
-        logger.fine("Edited gamer at index " + index.getOneBased() + ": " + editedGamer.getGamerTag());
-        return new CommandResult(String.format(MESSAGE_EDIT_GAMER_SUCCESS, Messages.format(editedGamer)));
+
+        return new CommandResult(resultMessage.toString());
     }
 
     /**

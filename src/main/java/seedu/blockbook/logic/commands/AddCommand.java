@@ -2,7 +2,9 @@ package seedu.blockbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.commons.util.ToStringBuilder;
@@ -10,6 +12,7 @@ import seedu.blockbook.logic.Messages;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.Group;
 
 
 /**
@@ -54,9 +57,27 @@ public class AddCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_GAMERTAG);
         }
 
+        Set<Group> existingGroups = model.getBlockBook().getGamerList().stream()
+                .flatMap(gamer -> gamer.getGroups().stream())
+                .collect(Collectors.toSet());
+
+        StringBuilder resultMessage = new StringBuilder();
+        resultMessage.append(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+
+        // Check if group already exists
+        for (Group group : toAdd.getGroups()) {
+            if (!existingGroups.contains(group)) {
+                resultMessage.append(String.format("\nGroup %s created. Gamertag: %s added to Group: %s.",
+                        group.fullGroup, toAdd.getGamerTag().fullGamerTag, group.fullGroup));
+            } else {
+                resultMessage.append(String.format("\nGamertag: %s added to Group: %s.",
+                        toAdd.getGamerTag().fullGamerTag, group.fullGroup));
+            }
+        }
+
         model.addGamer(toAdd);
         logger.info("Gamer added successfully: " + toAdd.getGamerTag());
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        return new CommandResult(resultMessage.toString());
     }
 
     @Override
