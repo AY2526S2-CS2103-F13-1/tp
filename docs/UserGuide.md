@@ -31,15 +31,15 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open this User Guide in a browser window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+    * `list` : Lists all contacts.
 
-   * `add name/John Doe gamertag/JD910` : Adds a contact named `John Doe` to BlockBook with the gamertag `JD910`.
+    * `add name/John Doe gamertag/JD910` : Adds a contact named `John Doe` to BlockBook with the gamertag `JD910`.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all contacts.
+    * `clear` : Deletes all contacts.
 
-   * `exit` : Exits the app.
+    * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -52,13 +52,13 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 **Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  * e.g. in `add name/NAME`, `NAME` is a parameter which can be used as `add name/John Doe`.
+    * e.g. in `add name/NAME`, `NAME` is a parameter which can be used as `add name/John Doe`.
 
 * Items in square brackets are optional.<br>
-  * e.g `name/NAME [t/TAG]` can be used as `name/John Doe t/friend` or as `name/John Doe`.
+    * e.g `name/NAME [t/TAG]` can be used as `name/John Doe t/friend` or as `name/John Doe`.
 
 * Items with `…` after them can be used multiple times including zero times.
-  * e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+    * e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `name/NAME gamertag/GAMERTAG`, `gamertag/GAMERTAG name/NAME` is also acceptable.
@@ -67,7 +67,7 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-</box>
+  </box>
 
 ### Viewing help : `help`
 
@@ -97,23 +97,23 @@ Shows a list of all gamers stored in BlockBook.
 
 Format: `list`
 
-* Only show important fields (gamertag, name, server, favourite and region)
-
 ### Editing a gamer : `edit`
 
 Edits an existing gamer stored in BlockBook.
+**TAKE NOTE!** This command does not allow the editing of fields that do not exist, such as `p/`, `e/`, `a/` etc. These fields are a work in progress.
 
-Format: `edit INDEX [gamertag/GAMERTAG] [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP] [server/SERVER] [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]`
+Format: `edit INDEX [name/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
 
 * Edits the gamer at the specified `INDEX`. The index refers to the index number shown in the displayed gamer list. The index **must be a positive integer** 1, 2, 3, ...
 * At least one of the optional fields must be provided.
-* Does not allow duplicate gamertags.
 * Existing values will be updated to the input values.
-* Edit for region and favourite must follow the provided values.
+* When editing tags, the existing tags of the gamer will be removed i.e adding of tags is not cumulative.
+* You can remove all the gamer's tags by typing `t/` without
+  specifying any tags after it.
 
 Examples:
-*  `edit 1 name/Herobrine gamertag/ilovesteve phone/99999 email/brine@gmail.com group/DestroySteve favourite/fav country/Singapore region/SEA note/I hate steve` Edits all the fields of the first gamer.     
-*  `edit 2 name/Betsy ` Edits the name of the 2nd gamer to be `Betsy`.
+*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st gamer to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 2 name/Betsy Crower t/` Edits the name of the 2nd gamer to be `Betsy Crower` and clears all existing tags.
 
 ### Editing a gamer’s favourite status : `favourite/unfavourite`
 
@@ -145,20 +145,6 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Viewing a gamer's full contact details: `view`
-Returns in the command prompt and GUI, the full contact details of the gamer associated given a valid Gamertag.
-
-Format: `view gamertag/GAMERTAG`
-
-<box type="tip" seamless>
-
-**Tip:** `gamertag/` parameter is required.
-</box>
-
-
-Examples:
-* `view gamertag/SteveMaster99`
-
 ### Deleting a Gamer : `delete`
 
 Deletes the specified gamers from BlockBook.
@@ -172,27 +158,6 @@ Format: `delete INDEX [INDEX]...`
 Examples:
 * `list` followed by `delete 2` deletes the 2nd gamer shown in the list.
 * `find Betsy` followed by `delete 1 2` deletes the 1st and 2nd gamer in the results of the `find` command.
-
-### Sorting contacts : `sort`
-
-Sorts the contact list by the specified attributes. Favourite contacts are always shown first.
-
-Format: `sort [ATTRIBUTE/]…`
-
-* If no attributes are provided, contacts are sorted by gamertag (default).
-* Multiple attributes can be specified to sort by priority order (first attribute is the primary sort key).
-* Sorting is **session-based** and does not persist after closing the app.
-* Valid attributes: `name`, `phone`, `email`, `group`, `server`, `favourite`, `country`, `region`, `note`, `gamertag`.
-
-<box type="tip" seamless>
-
-**Tip:** Favourite contacts are always pinned to the top of the list, regardless of the sort attributes.
-</box>
-
-Examples:
-* `sort` sorts contacts by gamertag (default).
-* `sort name/` sorts contacts by name.
-* `sort name/ phone/` sorts contacts by name first, then by phone for contacts with the same name.
 
 ### Clearing all entries : `clear`
 
@@ -243,15 +208,15 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action     | Format, Examples                                                                 |
-|------------|----------------------------------------------------------------------------------|
-| **Add**    | `add name/NAME gamertag/GAMERTAG` <br> e.g., `add name/James Ho gamertag/JamieH` |
-| **Clear**  | `clear`                                                                          |
-| **Delete** | `delete INDEX [INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                     |
-| **Edit**   | `edit INDEX [name/NAME] [gamertag/GAMERTAG]`<br> e.g.,`edit 2 name/James Lee`    |
-| **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                       |
-| **View**   | `view gamertag/GAMERTAG` <br> e.g., `view gamertag/SteveMaster99`                |
-| **List**   | `list`                                                                           |
-| **Sort**   | `sort [ATTRIBUTE/]…`<br> e.g., `sort name/`, `sort name/ phone/`                |
-| **Help**   | `help`                                                                           |
+| Action     | Format, Examples                                                                                                                         |
+|------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**    | `add name/NAME gamertag/GAMERTAG` <br> e.g., `add name/James Ho gamertag/JamieH`                                                         |
+| **Clear**  | `clear`                                                                                                                                  |
+| **Delete** | `delete INDEX [INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                                                                             |
+| **Edit**   | `edit INDEX [name/NAME] [gamertag/GAMERTAG]`<br> e.g.,`edit 2 name/James Lee`                                                            |
+| **Find**   | `find KEYWORD`<br> e.g., `find James`<br> `find ATTRIBUTE1/KEYWORD1 [ATTRIBUTE2/KEYWORD2]...`<br> e.g., `find name/Steve gamertag/Block` |
+| **View**   | `view gamertag/GAMERTAG` <br> e.g., `view gamertag/SteveMaster99`                                                                        |
+| **List**   | `list`                                                                                                                                   |
+| **Sort**   | `sort [ATTRIBUTE/]…`<br> e.g., `sort name/`, `sort name/ phone/`                                                                         |
+| **Help**   | `help`                                                                                                                                   |
 
