@@ -20,6 +20,7 @@ import seedu.blockbook.model.gamer.Email;
 import seedu.blockbook.model.gamer.GamerTag;
 import seedu.blockbook.model.gamer.Group;
 import seedu.blockbook.model.gamer.Name;
+import seedu.blockbook.model.gamer.Note;
 import seedu.blockbook.model.gamer.Phone;
 import seedu.blockbook.model.gamer.Region;
 import seedu.blockbook.model.gamer.Server;
@@ -45,17 +46,33 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        if (trimmedArgs.length() > 50) {
-            throw new ParseException("Global search KEYWORD input cannot exceed 50 characters.");
-        }
-
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
                 PREFIX_GAMERTAG, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                 PREFIX_GROUP, PREFIX_SERVER, PREFIX_FAVOURITE, PREFIX_COUNTRY,
                 PREFIX_REGION, PREFIX_NOTE);
 
+        // Trim out prefixes to get the actual length of the keyword.
+        boolean hasAnyPrefixedArguments =
+                argMultimap.getValue(PREFIX_GAMERTAG).isPresent()
+                        || argMultimap.getValue(PREFIX_NAME).isPresent()
+                        || argMultimap.getValue(PREFIX_PHONE).isPresent()
+                        || argMultimap.getValue(PREFIX_EMAIL).isPresent()
+                        || argMultimap.getValue(PREFIX_GROUP).isPresent()
+                        || argMultimap.getValue(PREFIX_SERVER).isPresent()
+                        || argMultimap.getValue(PREFIX_FAVOURITE).isPresent()
+                        || argMultimap.getValue(PREFIX_COUNTRY).isPresent()
+                        || argMultimap.getValue(PREFIX_REGION).isPresent()
+                        || argMultimap.getValue(PREFIX_NOTE).isPresent();
+
+        if (!hasAnyPrefixedArguments) {
+            String preamble = argMultimap.getPreamble().trim();
+            if (preamble.length() > 50) {
+                throw new ParseException("Global search KEYWORD input cannot exceed 50 characters.");
+            }
+        }
+
         argMultimap.verifyNoDuplicatePrefixesFor(
-                PREFIX_GAMERTAG, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                PREFIX_GAMERTAG, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_GROUP,
                 PREFIX_SERVER, PREFIX_FAVOURITE, PREFIX_COUNTRY, PREFIX_REGION, PREFIX_NOTE
         );
 
@@ -104,14 +121,19 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(Region.MESSAGE_CONSTRAINTS);
         }
 
+        String noteArg = extractAndValidateArg(argMultimap, PREFIX_NOTE);
+        if (noteArg != null && !Note.isValidNote(noteArg)) {
+            throw new ParseException(Note.MESSAGE_CONSTRAINTS);
+        }
+
         boolean isSpecificSearch = nameArg != null || gamertagArg != null || phoneArg != null
                 || emailArg != null || groupArg != null || serverArg != null
-                || countryArg != null || regionArg != null || favouriteArg != null;
+                || countryArg != null || regionArg != null || favouriteArg != null || noteArg != null;
 
         if (isSpecificSearch) {
             return new FindCommand(new SpecificAttributesMatchPredicate(
                     nameArg, gamertagArg, phoneArg, emailArg,
-                    groupArg, serverArg, favouriteArg, countryArg, regionArg));
+                    groupArg, serverArg, favouriteArg, countryArg, regionArg, noteArg));
         } else {
             // Global Search Fallback
             return new FindCommand(new AnyAttributeContainsKeywordsPredicate(trimmedArgs));
@@ -125,11 +147,17 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     private String extractAndValidateArg(ArgumentMultimap argMultimap, Prefix prefix) throws ParseException {
         if (argMultimap.getValue(prefix).isPresent()) {
-
+            String rawArg = argMultimap.getValue(prefix).get();
             if (prefix == PREFIX_FAVOURITE) {
+                String trimmedFavouriteArg = rawArg.trim();
+                if (!trimmedFavouriteArg.isEmpty()) {
+                    throw new ParseException("The favourite prefix does not take a value. "
+                            + "Remove any keyword after the prefix \"" + prefix.getPrefix() + "\".");
+                }
                 return "Yes";
             }
-            String arg = argMultimap.getValue(prefix).get().trim();
+
+            String arg = rawArg.trim();
             if (arg.isEmpty()) {
                 throw new ParseException(String.format("The search keyword for %s cannot be empty.",
                         prefix.getPrefix()));

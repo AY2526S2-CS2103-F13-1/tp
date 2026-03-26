@@ -34,7 +34,8 @@ public class Phone {
     }
 
     /**
-     * Returns true if a given string is a valid lax phone number, where only numbers are allowed.
+     * Returns true if a given string is a valid lax phone number, where it will allow search
+     * if keyword has numbers, spaces, hyphens, plus signs (+), and parentheses
      */
     public static boolean isValidLaxPhone(String test) {
         return test.matches(VALIDATION_LAX_REGEX);

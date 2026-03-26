@@ -17,6 +17,7 @@ public class SpecificAttributesMatchPredicate implements Predicate<Gamer> {
     private final String favouriteKeyword;
     private final String countryKeyword;
     private final String regionKeyword;
+    private final String noteKeyword;
 
     /**
      * Tests that a {@code Gamer}'s attributes partially match the given keywords.
@@ -33,12 +34,13 @@ public class SpecificAttributesMatchPredicate implements Predicate<Gamer> {
      * @param favouriteKeyword the keyword to match against the gamer's favourite
      * @param countryKeyword the keyword to match against the gamer's country
      * @param regionKeyword the keyword to match against the gamer's region
+     * @param noteKeyword  the keyword to match against the gamer's note
      */
     public SpecificAttributesMatchPredicate(String nameKeyword, String gamertagKeyword,
             String phoneKeyword, String emailKeyword,
             String groupKeyword, String serverKeyword,
             String favouriteKeyword,
-            String countryKeyword, String regionKeyword) {
+            String countryKeyword, String regionKeyword, String noteKeyword) {
         this.nameKeyword = nameKeyword;
         this.gamertagKeyword = gamertagKeyword;
         this.phoneKeyword = phoneKeyword;
@@ -48,6 +50,7 @@ public class SpecificAttributesMatchPredicate implements Predicate<Gamer> {
         this.favouriteKeyword = favouriteKeyword;
         this.countryKeyword = countryKeyword;
         this.regionKeyword = regionKeyword;
+        this.noteKeyword = noteKeyword;
     }
 
     @Override
@@ -60,7 +63,8 @@ public class SpecificAttributesMatchPredicate implements Predicate<Gamer> {
                 && (serverKeyword == null || attributeContains(gamer.getServer(), serverKeyword))
                 && (favouriteKeyword == null || attributeContains(gamer.getFavourite(), favouriteKeyword))
                 && (countryKeyword == null || attributeContains(gamer.getCountry(), countryKeyword))
-                && (regionKeyword == null || attributeContains(gamer.getRegion(), regionKeyword));
+                && (regionKeyword == null || attributeContains(gamer.getRegion(), regionKeyword))
+                && (noteKeyword == null || attributeContains(gamer.getNote(), noteKeyword));
     }
 
     /**
@@ -94,6 +98,8 @@ public class SpecificAttributesMatchPredicate implements Predicate<Gamer> {
                 && java.util.Objects.equals(serverKeyword, o.serverKeyword)
                 && java.util.Objects.equals(favouriteKeyword, o.favouriteKeyword)
                 && java.util.Objects.equals(countryKeyword, o.countryKeyword)
-                && java.util.Objects.equals(regionKeyword, o.regionKeyword);
+                && java.util.Objects.equals(regionKeyword, o.regionKeyword)
+                && java.util.Objects.equals(noteKeyword, o.noteKeyword);
+
     }
 }

@@ -168,12 +168,12 @@ public class FindCommandParserTest {
         // 1. Single attribute search (Partial phone search)
         // Constructor params: name, gamertag, phone, email, group, server, favourite, country, region
         FindCommand expectedSingleCommand = new FindCommand(new SpecificAttributesMatchPredicate(
-                null, null, "987", null, null, null, null, null, null));
+                null, null, "987", null, null, null, null, null, null, null));
         assertParseSuccess(parser, " " + PREFIX_PHONE + "987", expectedSingleCommand);
 
         // 2. Multiple attribute search (Name and lax email)
         FindCommand expectedMultiCommand = new FindCommand(new SpecificAttributesMatchPredicate(
-                "Alice", null, null, "gmail", null, null, null, null, null));
+                "Alice", null, null, "gmail", null, null, null, null, null, null));
         assertParseSuccess(parser, " " + PREFIX_NAME + "Alice " + PREFIX_EMAIL + "gmail", expectedMultiCommand);
     }
 

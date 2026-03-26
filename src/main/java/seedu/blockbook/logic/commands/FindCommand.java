@@ -1,7 +1,6 @@
 package seedu.blockbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-
 import java.util.function.Predicate;
 
 import seedu.blockbook.commons.util.ToStringBuilder;
@@ -24,8 +23,8 @@ public class FindCommand extends Command {
             + "Example: " + COMMAND_WORD + " joe\n"
             + "Format 2: find ATTRIBUTE1/KEYWORD1 [ATRRIBUTE2/KEYWORD2]... \n"
             + "find name/NAME\nfind phone/PHONE\nfind email/EMAIL\n"
-            + "find group/GROUP\nfind server/SERVER\nfind favourites/\n"
-            + "find country/COUNTRY\nfind region/REGION\n"
+            + "find group/GROUP\nfind server/SERVER\nfind favourite/\n"
+            + "find country/COUNTRY\nfind region/REGION\nfind note/NOTE\n"
             + "Example: find name/steve\n"
             + "Example: find name/steve gamertag/steve \n";
 

@@ -6,11 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.blockbook.logic.Messages.MESSAGE_GAMERS_FOUND_BY_FIND;
 import static seedu.blockbook.logic.Messages.MESSAGE_NO_GAMERS_FOUND_BY_FIND;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.blockbook.testutil.TypicalGamers.BENSON;
-import static seedu.blockbook.testutil.TypicalGamers.CARL;
-import static seedu.blockbook.testutil.TypicalGamers.DANIEL;
-import static seedu.blockbook.testutil.TypicalGamers.ELLE;
-import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
+import static seedu.blockbook.testutil.TypicalGamers.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -67,9 +63,9 @@ public class FindCommandTest {
         assertNotEquals(findFirstGlobalCommand, findSecondGlobalCommand);
 
         SpecificAttributesMatchPredicate firstSpecificPredicate =
-                new SpecificAttributesMatchPredicate("Alice", null, null, null, null, null, null, null, null);
+                new SpecificAttributesMatchPredicate("Alice", null, null, null, null, null, null, null, null, null);
         SpecificAttributesMatchPredicate secondSpecificPredicate =
-                new SpecificAttributesMatchPredicate("Bob", null, null, null, null, null, null, null, null);
+                new SpecificAttributesMatchPredicate("Bob", null, null, null, null, null, null, null, null, null);
 
         FindCommand findFirstSpecificCommand = new FindCommand(firstSpecificPredicate);
         FindCommand findSecondSpecificCommand = new FindCommand(secondSpecificPredicate);
@@ -125,7 +121,7 @@ public class FindCommandTest {
         String expectedMessage = String.format(MESSAGE_GAMERS_FOUND_BY_FIND, 1);
 
         SpecificAttributesMatchPredicate predicate = new SpecificAttributesMatchPredicate(
-                "Kurz", null, null, null, null, null, null, null, null);
+                "Kurz", null, null, null, null, null, null, null, null, null);
         FindCommand command = new FindCommand(predicate);
 
         expectedModel.updateFilteredGamerList(predicate);
@@ -140,11 +136,13 @@ public class FindCommandTest {
     public void execute_specificSearchMultipleAttributes_gamersFound() {
         String expectedMessage = String.format(MESSAGE_GAMERS_FOUND_BY_FIND, 1);
         SpecificAttributesMatchPredicate predicate = new SpecificAttributesMatchPredicate(
-                "Alice", null, "8535", null, null, null, null, null, null);
+                "Alice", null, "8535", null, null, null, null, null, null, null);
         FindCommand command = new FindCommand(predicate);
 
         expectedModel.updateFilteredGamerList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
+
+        assertEquals(Arrays.asList(ALICE), model.getFilteredGamerList());
     }
     /**
      * Verifies that a specific search does not find a gamer given multiple keywords
@@ -155,11 +153,12 @@ public class FindCommandTest {
         // Proves the "AND" logic works: If the name matches but the phone is wrong, it returns 0.
         String expectedMessage = String.format(MESSAGE_NO_GAMERS_FOUND_BY_FIND, 0);
         SpecificAttributesMatchPredicate predicate = new SpecificAttributesMatchPredicate(
-                "Alice", null, "00000000", null, null, null, null, null, null); // 00000000 doesn't exist
+                "Alice", null, "00000000", null, null, null, null, null, null, null); // 00000000 doesn't exist
         FindCommand command = new FindCommand(predicate);
 
         expectedModel.updateFilteredGamerList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.emptyList(), model.getFilteredGamerList());
     }
 
     /**
@@ -174,6 +173,7 @@ public class FindCommandTest {
 
         expectedModel.updateFilteredGamerList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.singletonList(CARL), model.getFilteredGamerList());
     }
 
     /**
@@ -183,7 +183,7 @@ public class FindCommandTest {
     public void execute_specificSearchCaseInsensitive_gamersFound() {
         String expectedMessage = String.format(MESSAGE_GAMERS_FOUND_BY_FIND, 1);
         SpecificAttributesMatchPredicate predicate = new SpecificAttributesMatchPredicate(
-                "kUrZ", null, null, null, null, null, null, null, null);
+                "kUrZ", null, null, null, null, null, null, null, null, null);
         FindCommand command = new FindCommand(predicate);
 
         expectedModel.updateFilteredGamerList(predicate);
