@@ -19,8 +19,10 @@ public class SpecificAttributesMatchPredicate implements Predicate<Gamer> {
     private final String regionKeyword;
 
     /**
-     * Tests that a {@code Gamer}'s attributes partial matches any of the
-     * keywords given.
+     * Tests that a {@code Gamer}'s attributes partially match the given keywords.
+     * For each non-null keyword, the corresponding attribute must contain that
+     * keyword (case-insensitive) for this predicate to evaluate to {@code true}.
+     * Attributes whose keywords are {@code null} are not checked (ignored).
      *
      * @param nameKeyword the keyword to match against the gamer's name
      * @param gamertagKeyword the keyword to match against the gamer's gamertag
