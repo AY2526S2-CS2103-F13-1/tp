@@ -133,6 +133,20 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+### Viewing a gamer's full contact details: `view`
+Returns in the command prompt and GUI, the full contact details of the gamer associated given a valid Gamertag.
+
+Format: `view gamertag/GAMERTAG`
+
+<box type="tip" seamless>
+
+**Tip:** `gamertag/` parameter is required.
+</box>
+
+
+Examples:
+* `view gamertag/SteveMaster99`
+
 ### Deleting a Gamer : `delete`
 
 Deletes the specified gamers from BlockBook.
@@ -200,9 +214,10 @@ _Details coming soon ..._
 |------------|----------------------------------------------------------------------------------|
 | **Add**    | `add name/NAME gamertag/GAMERTAG` <br> e.g., `add name/James Ho gamertag/JamieH` |
 | **Clear**  | `clear`                                                                          |
-| **Delete** | `delete INDEX [INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                      |
+| **Delete** | `delete INDEX [INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                     |
 | **Edit**   | `edit INDEX [name/NAME] [gamertag/GAMERTAG]`<br> e.g.,`edit 2 name/James Lee`    |
 | **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                       |
+| **View**   | `view gamertag/GAMERTAG` <br> e.g., `view gamertag/SteveMaster99`                |
 | **List**   | `list`                                                                           |
 | **Help**   | `help`                                                                           |
 
