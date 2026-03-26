@@ -89,6 +89,10 @@ public class EditCommand extends Command {
         Gamer editedGamer = createEditedGamer(gamerToEdit, editGamerDescriptor);
         assert editedGamer != null;
 
+        if (!gamerToEdit.isSameGamer(editedGamer) && model.hasGamer(editedGamer)) {
+            throw new CommandException(MESSAGE_DUPLICATE_GAMER);
+        }
+
         Set<Group> existingGroups = model.getBlockBook().getGamerList().stream()
                 .flatMap(g -> g.getGroups().stream())
                 .collect(Collectors.toSet());

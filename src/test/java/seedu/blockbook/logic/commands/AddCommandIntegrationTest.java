@@ -36,7 +36,9 @@ public class AddCommandIntegrationTest {
         String expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS,
                 Messages.format(validGamer));
 
-        assertCommandSuccess(new AddCommand(validGamer), model, expectedMessage, expectedModel);
+        String finalExpectedMessage = expectedMessage + "\nGamertag: unique_tag added to Group: raid team.";
+
+        assertCommandSuccess(new AddCommand(validGamer), model, finalExpectedMessage, expectedModel);
     }
 
     @Test

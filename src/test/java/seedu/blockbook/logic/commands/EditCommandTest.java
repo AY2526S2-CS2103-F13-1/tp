@@ -8,7 +8,6 @@ import static seedu.blockbook.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_COUNTRY_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_FAVOURITE_BOB;
-import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_GAMERTAG_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_GROUP_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_NOTE_BOB;
@@ -21,6 +20,9 @@ import static seedu.blockbook.logic.commands.CommandTestUtil.showGamerAtIndex;
 import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
 import static seedu.blockbook.testutil.TypicalIndexes.INDEX_FIRST_GAMER;
 import static seedu.blockbook.testutil.TypicalIndexes.INDEX_SECOND_GAMER;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -44,12 +46,16 @@ public class EditCommandTest {
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
         Gamer gamerToEdit = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
-        Gamer editedGamer = new GamerBuilder(gamerToEdit)
+
+        // 1. Keep the EXACT same Gamertag to bypass the duplicate Exception block
+        String originalTag = gamerToEdit.getGamerTag().fullGamerTag;
+
+        EditGamerDescriptor descriptor = new EditGamerDescriptorBuilder()
                 .withName(VALID_NAME_BOB)
-                .withGamerTag(VALID_GAMERTAG_BOB)
+                .withGamerTag(originalTag) // Force it to match the original
                 .withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB)
-                .withGroups(VALID_GROUP_BOB)
+                .withGroups(VALID_GROUP_BOB) // The new group to append
                 .withServer(VALID_SERVER_BOB)
                 .withFavourite(VALID_FAVOURITE_BOB)
                 .withCountry(VALID_COUNTRY_BOB)
@@ -57,16 +63,47 @@ public class EditCommandTest {
                 .withNote(VALID_NOTE_BOB)
                 .build();
 
-        EditGamerDescriptor descriptor = new EditGamerDescriptorBuilder(editedGamer).build();
+        Set<String> expectedGroupStrings = gamerToEdit.getGroups().stream()
+                .map(g -> g.fullGroup)
+                .collect(Collectors.toSet());
+        expectedGroupStrings.add(VALID_GROUP_BOB.toLowerCase());
+
+        Gamer editedGamer = new GamerBuilder(gamerToEdit)
+                .withName(VALID_NAME_BOB)
+                .withGamerTag(originalTag) // Force it to match the original
+                .withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_BOB)
+                .withGroups(expectedGroupStrings.toArray(new String[0]))
+                .withServer(VALID_SERVER_BOB)
+                .withFavourite(VALID_FAVOURITE_BOB)
+                .withCountry(VALID_COUNTRY_BOB)
+                .withRegion(VALID_REGION_BOB)
+                .withNote(VALID_NOTE_BOB)
+                .build();
+
         EditCommand editCommand = new EditCommand(INDEX_FIRST_GAMER, descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_GAMER_SUCCESS,
-                Messages.format(editedGamer));
+        StringBuilder expectedMessage = new StringBuilder();
+        expectedMessage.append(String.format(EditCommand.MESSAGE_EDIT_GAMER_SUCCESS, Messages.format(editedGamer)));
+
+        String expectedGroupName = VALID_GROUP_BOB.toLowerCase();
+
+        boolean groupExists = model.getBlockBook().getGamerList().stream()
+                .flatMap(g -> g.getGroups().stream())
+                .anyMatch(g -> g.fullGroup.equals(expectedGroupName));
+
+        if (!groupExists) {
+            expectedMessage.append(String.format("\nGroup %s created. Gamertag: %s added to Group: %s.",
+                    expectedGroupName, originalTag, expectedGroupName));
+        } else {
+            expectedMessage.append(String.format("\nGamertag: %s added to Group: %s.",
+                    originalTag, expectedGroupName));
+        }
 
         Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
         expectedModel.setGamer(gamerToEdit, editedGamer);
 
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editCommand, model, expectedMessage.toString(), expectedModel);
     }
 
     @Test

@@ -39,9 +39,17 @@ public class AddCommandTest {
 
         CommandResult commandResult = new AddCommand(validGamer).execute(modelStub);
 
-        String expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS,
-                Messages.format(validGamer));
-        assertEquals(expectedMessage, commandResult.getFeedbackToUser());
+        StringBuilder expectedMessage = new StringBuilder();
+        expectedMessage.append(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validGamer)));
+
+        String expectedGroup = "raid team";
+        String expectedGamerTag = validGamer.getGamerTag().fullGamerTag;
+
+        expectedMessage.append(String.format("\nGroup %s created. Gamertag: %s added to Group: %s.",
+                expectedGroup, expectedGamerTag, expectedGroup));
+
+
+        assertEquals(expectedMessage.toString(), commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validGamer), modelStub.gamersAdded);
     }
 
