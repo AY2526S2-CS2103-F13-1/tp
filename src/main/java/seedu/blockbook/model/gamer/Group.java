@@ -24,7 +24,7 @@ public class Group {
     public Group(String group) {
         requireNonNull(group);
         checkArgument(isValidGroup(group), MESSAGE_CONSTRAINTS);
-        fullGroup = group;
+        fullGroup = group.toLowerCase();
     }
 
     /**
@@ -51,12 +51,14 @@ public class Group {
         }
 
         Group otherGroup = (Group) other;
-        return fullGroup.equals(otherGroup.fullGroup);
+        // Such that groups will always be lowercase
+        return fullGroup.equalsIgnoreCase(otherGroup.fullGroup);
     }
 
     @Override
     public int hashCode() {
-        return fullGroup.hashCode();
+        // Such that groups will always be lowercase
+        return fullGroup.toLowerCase().hashCode();
     }
 
 }
