@@ -127,6 +127,15 @@ Examples:
 *  `favourite 1` Updates the favourite status of the first gamer to favourite.
 *  `unfavourite 1` Remove the first gamer from favourites.
 
+### Creating a group
+* To create a group, it can be done via the `add` command or `edit` command.
+* Group names are also a max 50 characters, letters, spaces, hyphens, and apostrophes allowed.
+* A gamer contact can have zero or multiple groups.
+
+Examples:
+* `add gamertag/GAMERTAG group/GROUP` (Derived from [1] Add a Contact, any valid command with group/GROUP)
+* `edit INDEX group/GROUP` (Derived from [2] Edit a Contact, any valid command with group/GROUP)
+
 ### Locating gamers by name: `find`
 
 Finds gamers whose names contain any of the given keywords.
@@ -182,7 +191,7 @@ Format: `sort [ATTRIBUTE/]…`
 * If no attributes are provided, contacts are sorted by gamertag (default).
 * Multiple attributes can be specified to sort by priority order (first attribute is the primary sort key).
 * Sorting is **session-based** and does not persist after closing the app.
-* Valid attributes: `name`, `phone`, `email`, `group`, `server`, `favourite`, `country`, `region`, `note`, `gamertag`.
+* Valid attributes: `name`, `phone`, `email`, `groups`, `server`, `favourite`, `country`, `region`, `note`, `gamertag`.
 
 <box type="tip" seamless>
 
@@ -252,6 +261,6 @@ _Details coming soon ..._
 | **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                       |
 | **View**   | `view gamertag/GAMERTAG` <br> e.g., `view gamertag/SteveMaster99`                |
 | **List**   | `list`                                                                           |
-| **Sort**   | `sort [ATTRIBUTE/]…`<br> e.g., `sort name/`, `sort name/ phone/`                |
+| **Sort**   | `sort [ATTRIBUTE/]…`<br> e.g., `sort name/`, `sort name/ phone/`                 |
 | **Help**   | `help`                                                                           |
 
