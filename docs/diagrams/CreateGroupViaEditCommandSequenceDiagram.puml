@@ -1,0 +1,85 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle normal
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant "e:EditCommand" as EditCommand LOGIC_COLOR
+participant "result:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+participant "b:BlockBook" as BlockBook MODEL_COLOR
+end box
+
+[-> LogicManager : execute("edit 1 group/Sniper")
+activate LogicManager
+
+' Note: Parser logic omitted for brevity
+LogicManager -> EditCommand : execute(m)
+activate EditCommand
+
+EditCommand -> Model : getFilteredGamerList()
+activate Model
+Model --> EditCommand : lastShownList
+deactivate Model
+
+'note right of EditCommand
+'  Extracts target gamerToEdit.
+'  Checks if gamerToEdit already
+'  contains the "Sniper" group.
+'end note
+
+EditCommand -> EditCommand : createEditedGamer(gamerToEdit, descriptor)
+activate EditCommand
+'note right of EditCommand
+'  Appends "Sniper" to the
+'  existing Set<Group>.
+'end note
+EditCommand --> EditCommand : editedGamer
+deactivate EditCommand
+
+EditCommand -> Model : hasGamer(editedGamer)
+activate Model
+Model --> EditCommand : false
+deactivate Model
+
+EditCommand -> Model : getBlockBook()
+activate Model
+Model --> EditCommand : b
+deactivate Model
+
+EditCommand -> BlockBook : getGamerList()
+activate BlockBook
+BlockBook --> EditCommand : gamerList
+deactivate BlockBook
+
+'note right of EditCommand
+'  Calculates groupsAddedToGamer
+'  to dynamically build the
+'  success message string.
+'end note
+
+EditCommand -> Model : setGamer(gamerToEdit, editedGamer)
+activate Model
+Model --> EditCommand
+deactivate Model
+
+EditCommand -> Model : updateFilteredGamerList(PREDICATE_SHOW_ALL_GAMERS)
+activate Model
+Model --> EditCommand
+deactivate Model
+
+create CommandResult
+EditCommand -> CommandResult : CommandResult(resultMessage)
+activate CommandResult
+CommandResult --> EditCommand : result
+deactivate CommandResult
+
+EditCommand --> LogicManager : result
+deactivate EditCommand
+
+[<--LogicManager : result
+deactivate LogicManager
+@enduml
