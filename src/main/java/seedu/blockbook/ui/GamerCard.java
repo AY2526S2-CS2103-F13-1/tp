@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.blockbook.logic.Messages;
@@ -86,5 +88,16 @@ public class GamerCard extends UiPart<Region> {
         favouriteIcon.setImage(isFavourite ? FAVOURITE_ICON : null);
         favouriteIcon.setVisible(isFavourite);
         favouriteIcon.setManaged(isFavourite);
+    }
+
+    /**
+     * Copies the gamer's details to the clipboard.
+     */
+    @FXML
+    private void copyDetails() {
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent details = new ClipboardContent();
+        details.putString(Messages.format(gamer));
+        clipboard.setContent(details);
     }
 }
