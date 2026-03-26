@@ -1,0 +1,88 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle normal
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":BlockBookParser" as BlockBookParser LOGIC_COLOR
+participant ":ViewCommandParser" as ViewCommandParser LOGIC_COLOR
+participant "<<class>>\nParserUtil" as ParserUtil LOGIC_COLOR
+participant "p:GamertagContainsKeywordPredicate" as GamertagContainsKeywordPredicate LOGIC_COLOR
+participant "v:ViewCommand" as ViewCommand LOGIC_COLOR
+participant "result:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("view gamertag/Herobrine")
+activate LogicManager
+
+LogicManager -> BlockBookParser : parseCommand("view gamertag/Herobrine")
+activate BlockBookParser
+
+create ViewCommandParser
+BlockBookParser -> ViewCommandParser
+activate ViewCommandParser
+ViewCommandParser --> BlockBookParser
+deactivate ViewCommandParser
+
+BlockBookParser -> ViewCommandParser : parse(" gamertag/Herobrine")
+activate ViewCommandParser
+
+ViewCommandParser -> ParserUtil : parseGamerTag("Herobrine")
+activate ParserUtil
+ParserUtil --> ViewCommandParser : gamerTag
+deactivate ParserUtil
+
+create GamertagContainsKeywordPredicate
+ViewCommandParser -> GamertagContainsKeywordPredicate : GamertagContainsKeywordPredicate("Herobrine")
+activate GamertagContainsKeywordPredicate
+GamertagContainsKeywordPredicate --> ViewCommandParser : p
+deactivate GamertagContainsKeywordPredicate
+
+create ViewCommand
+ViewCommandParser -> ViewCommand : ViewCommand(p)
+activate ViewCommand
+
+ViewCommand --> ViewCommandParser : v
+deactivate ViewCommand
+
+ViewCommandParser --> BlockBookParser : v
+deactivate ViewCommandParser
+'Hidden arrow to position the destroy marker
+ViewCommandParser -[hidden]-> BlockBookParser
+destroy ViewCommandParser
+
+BlockBookParser --> LogicManager : v
+deactivate BlockBookParser
+
+LogicManager -> ViewCommand : execute(m)
+activate ViewCommand
+
+ViewCommand -> Model : updateFilteredGamerList(p)
+activate Model
+Model --> ViewCommand
+deactivate Model
+
+ViewCommand -> Model : getFilteredGamerList()
+activate Model
+Model --> ViewCommand : gamerList
+deactivate Model
+
+create CommandResult
+ViewCommand -> CommandResult : CommandResult(formattedContact)
+activate CommandResult
+
+CommandResult --> ViewCommand : result
+deactivate CommandResult
+
+ViewCommand --> LogicManager : result
+deactivate ViewCommand
+ViewCommand -[hidden]-> LogicManager
+destroy ViewCommand
+
+[<--LogicManager : result
+deactivate LogicManager
+@enduml
