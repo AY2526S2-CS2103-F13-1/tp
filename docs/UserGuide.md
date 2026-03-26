@@ -115,6 +115,18 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st gamer to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 name/Betsy Crower t/` Edits the name of the 2nd gamer to be `Betsy Crower` and clears all existing tags.
 
+### Editing a gamer’s favourite status : `favourite/unfavourite`
+
+Updates a gamer’s favourite status via index
+
+Format: `favourite INDEX` or `unfavourite INDEX`
+
+* Updates the favourite status of the gamer at the specified `INDEX`. The index refers to the index number shown in the displayed gamer list.
+
+Examples:
+*  `favourite 1` Updates the favourite status of the first gamer to favourite.
+*  `unfavourite 1` Remove the first gamer from favourites.
+
 ### Locating gamers by name: `find`
 
 Finds gamers whose names contain any of the given keywords.
