@@ -1,0 +1,60 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle normal
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant "a:AddCommand" as AddCommand LOGIC_COLOR
+participant "result:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+participant "b:BlockBook" as BlockBook MODEL_COLOR
+end box
+
+[-> LogicManager : execute("add ... group/Sniper")
+activate LogicManager
+
+' Note: Parser logic omitted for brevity to focus on Group execution
+LogicManager -> AddCommand : execute(m)
+activate AddCommand
+
+AddCommand -> Model : hasGamer(toAdd)
+activate Model
+Model --> AddCommand : false
+deactivate Model
+
+AddCommand -> Model : getBlockBook()
+activate Model
+Model --> AddCommand : b
+deactivate Model
+
+AddCommand -> BlockBook : getGamerList()
+activate BlockBook
+BlockBook --> AddCommand : gamerList
+deactivate BlockBook
+
+'note right of AddCommand
+'  Extracts all existing groups
+'  from gamerList to determine
+'  if "Sniper" is a new group.
+'end note
+
+AddCommand -> Model : addGamer(toAdd)
+activate Model
+Model --> AddCommand
+deactivate Model
+
+create CommandResult
+AddCommand -> CommandResult : CommandResult(resultMessage)
+activate CommandResult
+CommandResult --> AddCommand : result
+deactivate CommandResult
+
+AddCommand --> LogicManager : result
+deactivate AddCommand
+
+[<--LogicManager : result
+deactivate LogicManager
+@enduml
