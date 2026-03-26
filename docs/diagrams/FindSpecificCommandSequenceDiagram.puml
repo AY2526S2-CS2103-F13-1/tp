@@ -1,0 +1,100 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle normal
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":BlockBookParser" as BlockBookParser LOGIC_COLOR
+participant ":FindCommandParser" as FindCommandParser LOGIC_COLOR
+participant "<<class>>\nArgumentTokenizer" as ArgumentTokenizer LOGIC_COLOR
+participant "p:SpecificAttributesMatchPredicate" as SpecificAttributesMatchPredicate LOGIC_COLOR
+participant "f:FindCommand" as FindCommand LOGIC_COLOR
+participant "result:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("find name/Steve")
+activate LogicManager
+
+LogicManager -> BlockBookParser : parseCommand("find name/Steve")
+activate BlockBookParser
+
+create FindCommandParser
+BlockBookParser -> FindCommandParser
+activate FindCommandParser
+FindCommandParser --> BlockBookParser
+deactivate FindCommandParser
+
+BlockBookParser -> FindCommandParser : parse(" name/Steve")
+activate FindCommandParser
+
+FindCommandParser -> ArgumentTokenizer : tokenize(" name/Steve", PREFIX_GAMERTAG, PREFIX_NAME...)
+activate ArgumentTokenizer
+ArgumentTokenizer --> FindCommandParser : argMultimap
+deactivate ArgumentTokenizer
+
+'note right of FindCommandParser
+'  Parser extracts and validates prefixes.
+'  Since PREFIX_NAME is present,
+'  isSpecificSearch becomes true.
+'end note
+
+create SpecificAttributesMatchPredicate
+FindCommandParser -> SpecificAttributesMatchPredicate : SpecificAttributesMatchPredicate("Steve", null, null...)
+activate SpecificAttributesMatchPredicate
+SpecificAttributesMatchPredicate --> FindCommandParser : p
+deactivate SpecificAttributesMatchPredicate
+
+create FindCommand
+FindCommandParser -> FindCommand : FindCommand(p)
+activate FindCommand
+FindCommand --> FindCommandParser : f
+deactivate FindCommand
+
+FindCommandParser --> BlockBookParser : f
+deactivate FindCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation block.
+FindCommandParser -[hidden]-> BlockBookParser
+destroy FindCommandParser
+
+BlockBookParser --> LogicManager : f
+deactivate BlockBookParser
+
+LogicManager -> FindCommand : execute(m)
+activate FindCommand
+
+FindCommand -> Model : updateFilteredGamerList(p)
+activate Model
+Model --> FindCommand
+deactivate Model
+
+FindCommand -> Model : getFilteredGamerList()
+activate Model
+Model --> FindCommand : gamerList
+deactivate Model
+
+alt filteredGamerCount == 0
+    create CommandResult
+    FindCommand -> CommandResult : CommandResult(MESSAGE_NO_GAMERS_FOUND_BY_FIND)
+    activate CommandResult
+    CommandResult --> FindCommand : result
+    deactivate CommandResult
+else filteredGamerCount > 0
+    create CommandResult
+    FindCommand -> CommandResult : CommandResult(MESSAGE_GAMERS_FOUND_BY_FIND)
+    activate CommandResult
+    CommandResult --> FindCommand : result
+    deactivate CommandResult
+end
+
+FindCommand --> LogicManager : result
+deactivate FindCommand
+FindCommand -[hidden]-> LogicManager
+destroy FindCommand
+
+[<--LogicManager : result
+deactivate LogicManager
+@enduml
