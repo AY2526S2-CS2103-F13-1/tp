@@ -59,7 +59,7 @@ public class SpecificAttributesMatchPredicate implements Predicate<Gamer> {
                 && (gamertagKeyword == null || attributeContains(gamer.getGamerTag(), gamertagKeyword))
                 && (phoneKeyword == null || attributeContains(gamer.getPhone(), phoneKeyword))
                 && (emailKeyword == null || attributeContains(gamer.getEmail(), emailKeyword))
-                && (groupKeyword == null || attributeContains(gamer.getGroup(), groupKeyword))
+                && (groupKeyword == null || attributeContains(gamer.getGroups(), groupKeyword))
                 && (serverKeyword == null || attributeContains(gamer.getServer(), serverKeyword))
                 && (favouriteKeyword == null || attributeContains(gamer.getFavourite(), favouriteKeyword))
                 && (countryKeyword == null || attributeContains(gamer.getCountry(), countryKeyword))

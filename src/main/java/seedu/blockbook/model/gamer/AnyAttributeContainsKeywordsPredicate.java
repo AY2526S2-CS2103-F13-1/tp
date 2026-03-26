@@ -20,7 +20,7 @@ public class AnyAttributeContainsKeywordsPredicate implements Predicate<Gamer> {
                 || attributeContains(gamer.getGamerTag(), keyword)
                 || attributeContains(gamer.getPhone(), keyword)
                 || attributeContains(gamer.getEmail(), keyword)
-                || attributeContains(gamer.getGroup(), keyword)
+                || attributeContains(gamer.getGroups(), keyword)
                 || attributeContains(gamer.getServer(), keyword)
                 || attributeContains(gamer.getNote(), keyword)
                 // Favourites should not be in the any attribute partial search
