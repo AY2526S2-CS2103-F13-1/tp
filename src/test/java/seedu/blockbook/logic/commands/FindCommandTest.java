@@ -6,7 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.blockbook.logic.Messages.MESSAGE_GAMERS_FOUND_BY_FIND;
 import static seedu.blockbook.logic.Messages.MESSAGE_NO_GAMERS_FOUND_BY_FIND;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.blockbook.testutil.TypicalGamers.*;
+import static seedu.blockbook.testutil.TypicalGamers.ALICE;
+import static seedu.blockbook.testutil.TypicalGamers.BENSON;
+import static seedu.blockbook.testutil.TypicalGamers.CARL;
+import static seedu.blockbook.testutil.TypicalGamers.DANIEL;
+import static seedu.blockbook.testutil.TypicalGamers.ELLE;
+import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
 
 import java.util.Arrays;
 import java.util.Collections;
