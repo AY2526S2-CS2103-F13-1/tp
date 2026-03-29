@@ -177,7 +177,7 @@ Format: `sort [ATTRIBUTE/]…`
 * If no attributes are provided, contacts are sorted by gamertag (default).
 * Multiple attributes can be specified to sort by priority order (first attribute is the primary sort key).
 * Sorting is **session-based** and does not persist after closing the app.
-* Valid attributes: `name`, `phone`, `email`, `groups`, `server`, `favourite`, `country`, `region`, `note`, `gamertag`.
+* Valid attributes: `name`, `phone`, `email`, `group`, `server`, `favourite`, `country`, `region`, `note`, `gamertag`.
 
 <box type="tip" seamless>
 
