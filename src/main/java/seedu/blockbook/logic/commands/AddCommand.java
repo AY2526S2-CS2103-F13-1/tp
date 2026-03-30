@@ -28,7 +28,7 @@ public class AddCommand extends Command {
             + "Example: add gamertag/ilovesteve name/Herobrine "
             + "phone/99999 email/brine@gmail.com "
             + "group/DestroySteve server/127.0.0.1:8080 favourite/fav "
-            + "country/Singapore region/SEA note/I hate steve";
+            + "country/Singapore region/ASIA note/I hate steve";
 
     public static final String MESSAGE_SUCCESS = "Contact added: %1$s";
     public static final String MESSAGE_DUPLICATE_GAMERTAG = "This gamertag is already used by someone in BlockBook.";
