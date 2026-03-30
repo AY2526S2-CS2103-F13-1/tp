@@ -10,7 +10,7 @@ import static seedu.blockbook.commons.util.AppUtil.checkArgument;
 public class Phone {
     public static final String MESSAGE_CONSTRAINTS =
             "Phone number should only contain numbers, spaces, hyphens, plus sign (+), parentheses, "
-                    + "and be at most 30 characters.";
+                    + "must contain at least one digit, and be at most 30 characters.";
     public static final String VALIDATION_REGEX = "^(?=.*\\d)[0-9+()\\- ]{1,30}$";
     public static final String VALIDATION_LAX_REGEX = "^[0-9+()\\- ]+$";
     public final String fullPhone;
