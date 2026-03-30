@@ -140,6 +140,13 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void clearSort() {
+        assert sortedGamers != null : "SortedList should have been initialized";
+        logger.info("Clearing sort comparator to restore insertion order");
+        sortedGamers.setComparator(null);
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;

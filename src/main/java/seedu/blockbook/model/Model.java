@@ -93,6 +93,11 @@ public interface Model {
      * @throws NullPointerException if {@code comparator} is null.
      */
     void sortGamerList(Comparator<Gamer> comparator);
+
+    /**
+     * Clears any active sort and returns the list to insertion order.
+     */
+    void clearSort();
 }
 
 
