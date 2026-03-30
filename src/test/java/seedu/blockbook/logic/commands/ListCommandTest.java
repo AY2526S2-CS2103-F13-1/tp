@@ -1,9 +1,13 @@
 package seedu.blockbook.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.blockbook.logic.commands.CommandTestUtil.showGamerAtIndex;
 import static seedu.blockbook.model.Model.PREDICATE_SHOW_ALL_GAMERS;
 import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +17,7 @@ import seedu.blockbook.model.BlockBook;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.ModelManager;
 import seedu.blockbook.model.UserPrefs;
+import seedu.blockbook.model.gamer.Gamer;
 import seedu.blockbook.testutil.TypicalIndexes;
 
 /**
@@ -47,6 +52,19 @@ public class ListCommandTest {
     @Test
     public void execute_listIsFiltered_showsEverything() {
         showGamerAtIndex(model, TypicalIndexes.INDEX_FIRST_GAMER);
+        expectedModel.updateFilteredGamerList(PREDICATE_SHOW_ALL_GAMERS);
+        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    /**
+     * Verifies list resets any active sort and restores insertion order.
+     */
+    @Test
+    public void execute_sortedList_resetsToInsertionOrder() {
+        ArrayList<Gamer> originalOrder = new ArrayList<>(model.getFilteredGamerList());
+        model.sortGamerList(Comparator.comparing((Gamer gamer) -> gamer.getName().toString()).reversed());
+        assertNotEquals(originalOrder, new ArrayList<>(model.getFilteredGamerList()));
+
         expectedModel.updateFilteredGamerList(PREDICATE_SHOW_ALL_GAMERS);
         assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
