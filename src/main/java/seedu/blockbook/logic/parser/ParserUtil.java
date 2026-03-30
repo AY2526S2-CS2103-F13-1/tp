@@ -116,11 +116,11 @@ public class ParserUtil {
      */
     public static Phone parsePhone(String phone) throws ParseException {
         requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
+        String normalizedPhone = normalizeSpacedValue(phone);
+        if (!Phone.isValidPhone(normalizedPhone)) {
             throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
         }
-        return new Phone(trimmedPhone);
+        return new Phone(normalizedPhone);
     }
 
     /**
@@ -146,11 +146,11 @@ public class ParserUtil {
      */
     public static Group parseGroup(String group) throws ParseException {
         requireNonNull(group);
-        String trimmedGroup = group.trim();
-        if (!Group.isValidGroup(trimmedGroup)) {
+        String normalizedGroup = normalizeSpacedValue(group);
+        if (!Group.isValidGroup(normalizedGroup)) {
             throw new ParseException(Group.MESSAGE_CONSTRAINTS);
         }
-        return new Group(trimmedGroup);
+        return new Group(normalizedGroup);
     }
 
     /**
@@ -191,11 +191,11 @@ public class ParserUtil {
      */
     public static Country parseCountry(String country) throws ParseException {
         requireNonNull(country);
-        String trimmedCountry = country.trim();
-        if (!Country.isValidCountry(trimmedCountry)) {
+        String normalizedCountry = normalizeSpacedValue(country);
+        if (!Country.isValidCountry(normalizedCountry)) {
             throw new ParseException(Country.MESSAGE_CONSTRAINTS);
         }
-        return new Country(trimmedCountry);
+        return new Country(normalizedCountry);
     }
 
     /**
@@ -221,11 +221,18 @@ public class ParserUtil {
      */
     public static Note parseNote(String note) throws ParseException {
         requireNonNull(note);
-        String trimmedNote = note.trim();
-        if (!Note.isValidNote(trimmedNote)) {
+        String normalizedNote = normalizeSpacedValue(note);
+        if (!Note.isValidNote(normalizedNote)) {
             throw new ParseException(Note.MESSAGE_CONSTRAINTS);
         }
-        return new Note(trimmedNote);
+        return new Note(normalizedNote);
+    }
+
+    /**
+     * Trims the input and collapses repeated whitespace into a single space.
+     */
+    private static String normalizeSpacedValue(String value) {
+        return value.trim().replaceAll("\\s+", " ");
     }
 
 }
