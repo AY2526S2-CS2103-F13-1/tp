@@ -74,15 +74,6 @@ public class GamerCard extends UiPart<Region> {
         server.setText(Messages.formatNullable(gamer.getServer()));
         region.setText(Messages.formatNullable(gamer.getRegion()));
         updateFavouriteIcon(gamer.getFavourite().toString());
-        // email.setText("Email: " + Messages.formatNullable(gamer.getEmail()));
-        // phone.setText("Phone: " + Messages.formatNullable(gamer.getPhone()));
-        // group.setText("Group: " + Messages.formatNullable(gamer.getGroup()));
-        // country.setText("Country: " + Messages.formatNullable(gamer.getCountry()));
-        // note.setText("Note: " + Messages.formatNullable(gamer.getNote()));
-
-        // region.setText(gamer.getRegion().fullRegion);
-        // phone.setText(gamer.getPhone().value);
-        // email.setText(gamer.getEmail().value);
     }
 
     /**
@@ -104,11 +95,11 @@ public class GamerCard extends UiPart<Region> {
         final ClipboardContent details = new ClipboardContent();
         details.putString(Messages.format(gamer));
         clipboard.setContent(details);
-        
+
         // Change button text to indicate copy success
         String originalText = copyButton.getText();
         copyButton.setText("Copied!");
-        
+
         // Revert button text after a short delay
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(e -> copyButton.setText(originalText));
