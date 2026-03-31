@@ -220,6 +220,14 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
+            if (commandResult.isShowHelp()) {
+                if (!helpWindow.isShowing()) {
+                    helpWindow.show();
+                } else {
+                    helpWindow.focus();
+                }
+            }
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
