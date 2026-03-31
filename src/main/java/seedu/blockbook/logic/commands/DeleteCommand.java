@@ -20,9 +20,12 @@ public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the gamer contacts identified by the index numbers used in the displayed gamer list.\n"
+            + ": Deletes the gamer contacts identified by the index numbers used in the displayed gamer list."
+            + " Entering duplicate indexes will only delete the contact once.\n"
             + "\n\tFormat: delete INDEX [INDEX]..."
-            + "\n\tExamples: " + COMMAND_WORD + " 1  |  " + COMMAND_WORD + " 1 2 3";
+            + "\n\tExample 1: " + COMMAND_WORD + " 1"
+            + "\n\tExample 2: " + COMMAND_WORD + " 1 2 3"
+            + "\n\tExample 3: " + COMMAND_WORD + " 1 1 1 (Deletes the first contact only once)";
 
     public static final String MESSAGE_DELETE_GAMER_SUCCESS = "Contact(s) deleted: %1$s";
 
