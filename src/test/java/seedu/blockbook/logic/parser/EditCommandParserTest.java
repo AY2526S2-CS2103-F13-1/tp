@@ -44,26 +44,35 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_missingParts_failure() {
+        // EP: missing index
         assertParseFailure(parser, VALID_NAME_BOB, MESSAGE_INVALID_FORMAT);
+        // EP: missing fields
         assertParseFailure(parser, "1", EditCommand.MESSAGE_NOT_EDITED);
+        // EP: empty input
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
     public void parse_invalidPreamble_failure() {
-        assertParseFailure(parser, "-5" + NAME_DESC_BOB, MESSAGE_INVALID_FORMAT);
-        assertParseFailure(parser, "0" + NAME_DESC_BOB, MESSAGE_INVALID_FORMAT);
+        // EP: invalid numeric index (negative)
+        assertParseFailure(parser, "-5" + NAME_DESC_BOB, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        // EP: invalid numeric index (zero)
+        assertParseFailure(parser, "0" + NAME_DESC_BOB, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        // EP: preamble contains extra tokens
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
+        // EP: non-numeric preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB, MESSAGE_INVALID_FORMAT);
     }
 
     @Test
     public void parse_invalidValue_failure() {
+        // EP: invalid field value
         assertParseFailure(parser, "1" + INVALID_NAME_DESC, seedu.blockbook.model.gamer.Name.MESSAGE_CONSTRAINTS);
     }
 
     @Test
     public void parse_allFieldsSpecified_success() {
+        // EP: all valid fields present
         String userInput = INDEX_SECOND_GAMER.getOneBased()
                 + GAMERTAG_DESC_BOB
                 + NAME_DESC_BOB
@@ -95,6 +104,7 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_repeatedValue_failure() {
+        // EP: duplicate prefix in input
         String userInput = INDEX_FIRST_GAMER.getOneBased() + NAME_DESC_BOB + NAME_DESC_BOB;
         assertParseFailure(parser, userInput,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
