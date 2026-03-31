@@ -27,7 +27,7 @@ public class FindCommand extends Command {
             + "find group/GROUP\nfind server/SERVER\nfind favourite/\n"
             + "find country/COUNTRY\nfind region/REGION\nfind note/NOTE\n"
             + "Example: find name/steve\n"
-            + "Example: find name/steve gamertag/steve \n";
+            + "Example: find name/steve gamertag/steve";
 
     // Use the generic Predicate interface to accept ANY valid gamer predicate
     private final Predicate<Gamer> predicate;
