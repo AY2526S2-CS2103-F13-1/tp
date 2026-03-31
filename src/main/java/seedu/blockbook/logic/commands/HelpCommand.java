@@ -24,10 +24,13 @@ public class HelpCommand extends Command {
         outputString.append(MESSAGE_USAGE + "\n\n");
         outputString.append(AddCommand.MESSAGE_USAGE + "\n\n");
         outputString.append(EditCommand.MESSAGE_USAGE + "\n\n");
-        outputString.append(DeleteCommand.MESSAGE_USAGE + "\n");
+        outputString.append(DeleteCommand.MESSAGE_USAGE + "\n\n");
+        outputString.append(FavouriteCommand.MESSAGE_USAGE + "\n");
         outputString.append(SEPARATOR);
-        outputString.append(FindCommand.MESSAGE_USAGE + "\n\n");
-        outputString.append(ListCommand.MESSAGE_USAGE + "\n");
+        outputString.append(ListCommand.MESSAGE_USAGE + "\n\n");
+        outputString.append(ViewCommand.MESSAGE_USAGE + "\n\n");
+        outputString.append(SortCommand.MESSAGE_USAGE + "\n\n");
+        outputString.append(FindCommand.MESSAGE_USAGE + "\n");
         outputString.append(SEPARATOR);
         outputString.append(ClearCommand.MESSAGE_USAGE + "\n\n");
         outputString.append(ExitCommand.MESSAGE_USAGE);
