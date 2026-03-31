@@ -109,8 +109,8 @@ public class GamerCard extends UiPart<Region> {
         String originalText = copyButton.getText();
         copyButton.setText("Copied!");
         
-        // Revert button text after 2 seconds
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        // Revert button text after a short delay
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(e -> copyButton.setText(originalText));
         pause.play();
     }
