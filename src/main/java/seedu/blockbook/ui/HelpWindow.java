@@ -3,10 +3,7 @@ package seedu.blockbook.ui;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import seedu.blockbook.commons.core.LogsCenter;
 
@@ -18,7 +15,7 @@ public class HelpWindow extends UiPart<Stage> {
     private static final String FXML = "HelpWindow.fxml";
 
     @FXML
-    private Label helpMessage;
+    private TextArea helpMessage;
 
     /**
      * Creates a new HelpWindow.
