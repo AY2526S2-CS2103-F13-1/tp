@@ -80,5 +80,9 @@ public class HelpWindow extends UiPart<Stage> {
     public void focus() {
         getRoot().requestFocus();
     }
+
+    public void setHelpText(String helpText) {
+        helpMessage.setText(helpText);
+    }
 }
 

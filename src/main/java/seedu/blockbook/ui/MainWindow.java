@@ -222,6 +222,7 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isShowHelp()) {
                 if (!helpWindow.isShowing()) {
+                    helpWindow.setHelpText(commandResult.getFeedbackToUser());
                     helpWindow.show();
                 } else {
                     helpWindow.focus();
