@@ -21,8 +21,8 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the gamer contacts identified by the index numbers used in the displayed gamer list.\n"
-            + "Format: delete INDEX [INDEX]...\n"
-            + "Examples: " + COMMAND_WORD + " 1  |  " + COMMAND_WORD + " 1 2 3";
+            + "\n\tFormat: delete INDEX [INDEX]..."
+            + "\n\tExamples: " + COMMAND_WORD + " 1  |  " + COMMAND_WORD + " 1 2 3";
 
     public static final String MESSAGE_DELETE_GAMER_SUCCESS = "Contact(s) deleted: %1$s";
 

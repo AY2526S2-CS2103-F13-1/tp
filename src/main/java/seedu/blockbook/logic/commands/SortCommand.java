@@ -23,11 +23,10 @@ public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Sorts contacts by the specified attributes. "
-            + "Favourite contacts are always shown first.\n"
-            + "Format: " + COMMAND_WORD + " [name/] [phone/] [email/] "
-            + "[group/] [server/] [favourite/] [country/] [region/] [note/]\n"
-            + "Example: " + COMMAND_WORD + " name/ phone/";
+            + ":\tSorts contacts by the specified attributes. Favourite contacts are always shown first.\n"
+            + "\n\tFormat: " + COMMAND_WORD + " [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP] [server/SERVER]"
+            + " [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]"
+            + "\n\tExample: " + COMMAND_WORD + " name/John phone/98002132";
 
     public static final String MESSAGE_SORT_SUCCESS = "Sorted all contacts.";
     public static final String MESSAGE_SORT_DEFAULT_SUCCESS = "Sorted all contacts by gamertag (default).";
