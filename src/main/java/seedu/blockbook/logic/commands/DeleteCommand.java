@@ -25,7 +25,7 @@ public class DeleteCommand extends Command {
             + "\tFormat: delete INDEX [INDEX]...\n"
             + "\tExamples: " + COMMAND_WORD + " 1\n\t\t  "
             + COMMAND_WORD + " 1 2 3\n\t\t  "
-            + COMMAND_WORD + " 1 1 1 (Deletes the first contact only once)" ;
+            + COMMAND_WORD + " 1 1 1 (Deletes the first contact only once)";
 
     public static final String MESSAGE_DELETE_GAMER_SUCCESS = "Contact(s) deleted: %1$s";
 
