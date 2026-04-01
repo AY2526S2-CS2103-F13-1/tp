@@ -78,18 +78,20 @@ Format: `help`
 
 ### Adding a gamer: `add`
 
-Adds a gamer to BlockBook.
+Adds a gamer to BlockBook with a required gamertag and optional details such as name, phone number, email address, group, server, favourite status, region, country, and notes.
 
-Format: `add name/NAME gamertag/GAMERTAG`
+Format: `add gamertag/GAMERTAG [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP] [server/SERVER] [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]`
 
 <box type="tip" seamless>
 
-**Tip:** Both `name/` and `gamertag/` parameters are required.
+**Tip:** Only `gamertag/` is required. All other fields are optional.
 </box>
+- `favourite/` accepts `fav` or `unfav`
+- `region/` accepts `NA`, `SA`, `EU`, `AFRICA`, `ASIA`, `OCEANIA` or `ME`
 
 Examples:
-* `add name/John Doe gamertag/JohnThePro`
-* `add name/Betsy Crowe gamertag/ShadowCrowe`
+* `add gamertag/ilovesteve name/Herobrine phone/99999 email/brine@gmail.com group/DestroySteve server/127.0.0.1:8080 favourite/fav country/Singapore region/ASIA note/I hate steve`
+* `add gamertag/Notch name/Notch phone/+12345 email/notch@example.com group/Redstone Crew server/mc.example.net:25565 favourite/unfav country/Malaysia region/ASIA note/Usually plays survival`
 
 ### Listing all gamers : `list`
 
