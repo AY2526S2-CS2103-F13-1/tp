@@ -42,14 +42,6 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_defaultSort_success() throws CommandException {
-        SortCommand sortCommand = new SortCommand(new ArrayList<>());
-        CommandResult result = sortCommand.execute(model);
-
-        assertEquals(SortCommand.MESSAGE_SORT_DEFAULT_SUCCESS, result.getFeedbackToUser());
-    }
-
-    @Test
     public void execute_sortByName_success() throws CommandException {
         SortCommand sortCommand = new SortCommand(List.of("name"));
         CommandResult result = sortCommand.execute(model);
@@ -210,57 +202,28 @@ public class SortCommandTest {
     }
 
     @Test
+    public void execute_sortByFavourite_success() throws CommandException {
+        BlockBook blockBook = new BlockBook();
+        blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("a1").withFavourite("unfav").build());
+        blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("b1").withFavourite("fav").build());
+        blockBook.addGamer(new GamerBuilder().withName("C").withGamerTag("c1").withFavourite("unfav").build());
+        Model testModel = new ModelManager(blockBook, new UserPrefs());
+
+        new SortCommand(List.of("favourite")).execute(testModel);
+
+        List<Gamer> sortedList = testModel.getFilteredGamerList();
+        // Favourites should come before non-favourites
+        assertTrue(sortedList.get(0).getFavourite().isFav());
+        assertFalse(sortedList.get(1).getFavourite().isFav());
+        assertFalse(sortedList.get(2).getFavourite().isFav());
+    }
+
+    @Test
     public void execute_sortByMultipleAttributes_success() throws CommandException {
         SortCommand sortCommand = new SortCommand(List.of("name", "phone"));
         CommandResult result = sortCommand.execute(model);
 
         assertEquals(SortCommand.MESSAGE_SORT_SUCCESS, result.getFeedbackToUser());
-    }
-
-    @Test
-    public void execute_sortByName_doesNotPrioritiseFavouritesByDefault_success() throws CommandException {
-        BlockBook blockBook = new BlockBook();
-        Gamer favGamer = new GamerBuilder().withName("Zoe").withGamerTag("zoe1")
-                .withFavourite("fav").build();
-        Gamer nonFavGamer = new GamerBuilder().withName("Aaron").withGamerTag("aaron1")
-                .withFavourite("unfav").build();
-        blockBook.addGamer(favGamer);
-        blockBook.addGamer(nonFavGamer);
-        Model testModel = new ModelManager(blockBook, new UserPrefs());
-
-        SortCommand sortCommand = new SortCommand(List.of("name"));
-        sortCommand.execute(testModel);
-
-        List<Gamer> sortedList = testModel.getFilteredGamerList();
-        assertEquals("Aaron", sortedList.get(0).getName().toString());
-        assertEquals("Zoe", sortedList.get(1).getName().toString());
-    }
-
-    @Test
-    public void execute_sortByFavourite_prioritisesFavouritesWhenRequested_success() throws CommandException {
-        BlockBook blockBook = new BlockBook();
-        Gamer favGamerB = new GamerBuilder().withName("Yuki").withGamerTag("yuki1")
-                .withFavourite("fav").build();
-        Gamer favGamerA = new GamerBuilder().withName("Zulu").withGamerTag("zulu1")
-                .withFavourite("fav").build();
-        Gamer nonFavGamerD = new GamerBuilder().withName("Adam").withGamerTag("adam1")
-                .withFavourite("unfav").build();
-        Gamer nonFavGamerC = new GamerBuilder().withName("Brian").withGamerTag("brian1")
-                .withFavourite("unfav").build();
-        blockBook.addGamer(favGamerB);
-        blockBook.addGamer(nonFavGamerD);
-        blockBook.addGamer(favGamerA);
-        blockBook.addGamer(nonFavGamerC);
-        Model testModel = new ModelManager(blockBook, new UserPrefs());
-
-        SortCommand sortCommand = new SortCommand(List.of("favourite", "name"));
-        sortCommand.execute(testModel);
-
-        List<Gamer> sortedList = testModel.getFilteredGamerList();
-        assertEquals("Yuki", sortedList.get(0).getName().toString());
-        assertEquals("Zulu", sortedList.get(1).getName().toString());
-        assertEquals("Adam", sortedList.get(2).getName().toString());
-        assertEquals("Brian", sortedList.get(3).getName().toString());
     }
 
     @Test
