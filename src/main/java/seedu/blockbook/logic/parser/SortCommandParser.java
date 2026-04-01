@@ -52,6 +52,10 @@ public class SortCommandParser implements Parser<SortCommand> {
                 throw new ParseException(
                         String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, attribute));
             }
+            if (attributes.contains(attribute)) {
+                throw new ParseException(
+                        String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, attribute));
+            }
             attributes.add(attribute);
         }
 
