@@ -113,8 +113,7 @@ public class SortCommand extends Command {
         assert VALID_ATTRIBUTES.contains(attribute) : "Attribute should be valid at this point: " + attribute;
         if ("favourite".equals(attribute)) {
             // Explicit favourite sorting places favourites before non-favourites.
-            return Comparator.comparing(
-                    (Gamer g) -> g.getFavourite() == null ? null : g.getFavourite().isFav(),
+            return Comparator.comparing((Gamer g) -> g.getFavourite() == null ? null : g.getFavourite().isFav(),
                     Comparator.nullsLast(Comparator.reverseOrder())
             );
         }
