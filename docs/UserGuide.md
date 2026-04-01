@@ -86,8 +86,9 @@ Format: `add gamertag/GAMERTAG [name/NAME] [phone/PHONE] [email/EMAIL] [group/GR
 
 **Tip:** Only `gamertag/` is required. All other fields are optional.
 </box>
-- `favourite/` accepts `fav` or `unfav`
-- `region/` accepts `NA`, `SA`, `EU`, `AFRICA`, `ASIA`, `OCEANIA` or `ME`
+- `email/`, must be a valid email in the format `local-part@domain`.
+- `favourite/` accepts `fav` or `unfav`.
+- `region/` accepts `NA`, `SA`, `EU`, `AFRICA`, `ASIA`, `OCEANIA` or `ME`.
 
 Examples:
 * `add gamertag/ilovesteve name/Herobrine phone/99999 email/brine@gmail.com group/DestroySteve server/127.0.0.1:8080 favourite/fav country/Singapore region/ASIA note/I hate steve`
