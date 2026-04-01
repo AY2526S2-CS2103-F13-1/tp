@@ -288,6 +288,24 @@
     -fx-font-weight: bold;
 }
 
+#cardPane .gamer-meta-grid,
+.grid-pane.gamer-meta-grid {
+    -fx-background-color: linear-gradient(to bottom, rgba(42, 49, 57, 0.92), rgba(35, 41, 48, 0.92));
+    -fx-border-color: #788390 #232a32 #171d23 #646f7b;
+    -fx-border-width: 1;
+    -fx-padding: 8 10 8 10;
+}
+
+#cardPane .gamer-meta-grid .card_meta_key,
+.grid-pane.gamer-meta-grid .card_meta_key {
+    -fx-text-fill: #a8b4c3;
+}
+
+#cardPane .gamer-meta-grid .card_meta_value,
+.grid-pane.gamer-meta-grid .card_meta_value {
+    -fx-text-fill: #f4faef;
+}
+
 .status-bar {
     -fx-background-color:
         linear-gradient(to top, -fx-mc-dirt-700, -fx-mc-dirt-600),
