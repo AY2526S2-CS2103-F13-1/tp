@@ -148,6 +148,37 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+### Sorting gamers : `sort`
+
+Sorts the displayed contact list by one or more attributes.
+
+Format: `sort [ATTRIBUTE/]...`
+
+* If no attributes are provided, contacts are sorted by **gamertag** by default.
+* When multiple attributes are provided, they are applied in order of priority (left to right). The first attribute is the primary sort key, the second is used to break ties, and so on.
+* Each attribute can only be specified **once** (no duplicates).
+
+**Valid attributes:**
+
+| Attribute | Description |
+|-----------|-------------|
+| `name/` | Sort by name |
+| `gamertag/` | Sort by gamertag |
+| `phone/` | Sort by phone number |
+| `email/` | Sort by email address |
+| `group/` | Sort by group |
+| `server/` | Sort by server |
+| `favourite/` | Sort by favourite status (favourites first) |
+| `country/` | Sort by country |
+| `region/` | Sort by region |
+| `note/` | Sort by note |
+
+Examples:
+* `sort` sorts all contacts by gamertag (default).
+* `sort name/` sorts all contacts by name.
+* `sort phone/ gamertag/` sorts all contacts by phone number, using gamertag to break ties.
+* `sort favourite/ name/` sorts favourites before non-favourites, then by name within each group.
+
 ### Deleting a Gamer : `delete`
 
 Deletes the specified gamers from BlockBook.
@@ -220,6 +251,6 @@ _Details coming soon ..._
 | **Find**   | `find KEYWORD`<br> e.g., `find James`<br> `find ATTRIBUTE1/KEYWORD1 [ATTRIBUTE2/KEYWORD2]...`<br> e.g., `find name/Steve gamertag/Block` |
 | **View**   | `view gamertag/GAMERTAG` <br> e.g., `view gamertag/SteveMaster99`                                                                        |
 | **List**   | `list`                                                                                                                                   |
-| **Sort**   | `sort [ATTRIBUTE/]…`<br> e.g., `sort name/`, `sort name/ phone/`                                                                         |
+| **Sort**   | `sort [ATTRIBUTE/]...`<br> e.g., `sort`, `sort name/`, `sort phone/ gamertag/`                                                            |
 | **Help**   | `help`                                                                                                                                   |
 
