@@ -3,18 +3,21 @@ package seedu.blockbook.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.blockbook.logic.commands.CommandTestUtil.showGamerAtIndex;
 import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import seedu.blockbook.commons.core.index.Index;
 import seedu.blockbook.logic.Messages;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.ModelManager;
 import seedu.blockbook.model.UserPrefs;
 import seedu.blockbook.model.gamer.Gamer;
-import seedu.blockbook.model.gamer.GamertagContainsKeywordPredicate;
+import seedu.blockbook.testutil.TypicalIndexes;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ViewCommand.
@@ -35,81 +38,64 @@ public class ViewCommandTest {
 
 
     /**
-     * Verifies that the command finds the exact gamer contact as supplied by Gamertag.
+     * Verifies that the command finds the exact gamer contact as supplied by index.
      */
     @Test
     public void execute_gamerFound_success() {
-        // Extract the first gamer from the typical test data to ensure a match
-        Gamer targetGamer = model.getFilteredGamerList().get(0);
-        String keyword = targetGamer.getGamerTag().toString();
-
-        GamertagContainsKeywordPredicate predicate = new GamertagContainsKeywordPredicate(keyword);
-        ViewCommand command = new ViewCommand(predicate);
-
-        // Set up the expected model's filtered list
-        expectedModel.updateFilteredGamerList(predicate);
+        Index targetIndex = TypicalIndexes.INDEX_FIRST_GAMER;
+        Gamer targetGamer = model.getFilteredGamerList().get(targetIndex.getZeroBased());
+        ViewCommand command = new ViewCommand(targetIndex);
 
         // Construct the exact expected string output based on the ViewCommand logic
-        String expectedMessage = "Name: " + targetGamer.getName()
+        String expectedMessage = "Name: " + Messages.formatNullable(targetGamer.getName())
                 + " Gamertag: " + targetGamer.getGamerTag()
-                + " Phone: " + targetGamer.getPhone()
-                + " Email: " + targetGamer.getEmail()
-                + " Group: " + targetGamer.getGroup()
-                + " Server: " + targetGamer.getServer()
-                + " Favourite: " + targetGamer.getFavourite()
-                + " Country: " + targetGamer.getCountry()
-                + " Region: " + targetGamer.getRegion()
-                + " Note: " + targetGamer.getNote();
+                + " Phone: " + Messages.formatNullable(targetGamer.getPhone())
+                + " Email: " + Messages.formatNullable(targetGamer.getEmail())
+                + " Group: " + Messages.formatNullable(targetGamer.getGroup())
+                + " Server: " + Messages.formatNullable(targetGamer.getServer())
+                + " Favourite: " + Messages.formatNullable(targetGamer.getFavourite())
+                + " Country: " + Messages.formatNullable(targetGamer.getCountry())
+                + " Region: " + Messages.formatNullable(targetGamer.getRegion())
+                + " Note: " + Messages.formatNullable(targetGamer.getNote());
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     /**
-     * Verifies that the command finds the exact gamer contact as supplied by Gamertag regardless of character case.
+     * Verifies that view uses the currently displayed list when it is filtered.
      */
     @Test
-    public void execute_caseInsensitiveSearch_success() {
-        Gamer targetGamer = model.getFilteredGamerList().get(0);
-        String originalGamertag = targetGamer.getGamerTag().toString();
+    public void execute_filteredList_viewIndexSuccess() {
+        showGamerAtIndex(model, TypicalIndexes.INDEX_FIRST_GAMER);
+        showGamerAtIndex(expectedModel, TypicalIndexes.INDEX_FIRST_GAMER);
 
-        // Invert the case of the gamertag to test case-insensitivity
-        String invertedCaseKeyword = originalGamertag.toLowerCase().equals(originalGamertag)
-                ? originalGamertag.toUpperCase()
-                : originalGamertag.toLowerCase();
+        Index targetIndex = TypicalIndexes.INDEX_FIRST_GAMER;
+        Gamer targetGamer = model.getFilteredGamerList().get(targetIndex.getZeroBased());
+        ViewCommand command = new ViewCommand(targetIndex);
 
-        GamertagContainsKeywordPredicate predicate = new GamertagContainsKeywordPredicate(invertedCaseKeyword);
-        ViewCommand command = new ViewCommand(predicate);
-
-        expectedModel.updateFilteredGamerList(predicate);
-
-        String expectedMessage = "Name: " + targetGamer.getName()
+        String expectedMessage = "Name: " + Messages.formatNullable(targetGamer.getName())
                 + " Gamertag: " + targetGamer.getGamerTag()
-                + " Phone: " + targetGamer.getPhone()
-                + " Email: " + targetGamer.getEmail()
-                + " Group: " + targetGamer.getGroup()
-                + " Server: " + targetGamer.getServer()
-                + " Favourite: " + targetGamer.getFavourite()
-                + " Country: " + targetGamer.getCountry()
-                + " Region: " + targetGamer.getRegion()
-                + " Note: " + targetGamer.getNote();
+                + " Phone: " + Messages.formatNullable(targetGamer.getPhone())
+                + " Email: " + Messages.formatNullable(targetGamer.getEmail())
+                + " Group: " + Messages.formatNullable(targetGamer.getGroup())
+                + " Server: " + Messages.formatNullable(targetGamer.getServer())
+                + " Favourite: " + Messages.formatNullable(targetGamer.getFavourite())
+                + " Country: " + Messages.formatNullable(targetGamer.getCountry())
+                + " Region: " + Messages.formatNullable(targetGamer.getRegion())
+                + " Note: " + Messages.formatNullable(targetGamer.getNote());
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     /**
-     * Verifies that the command returns the MESSAGE_GAMERTAG_NOT_FOUND when the command
-     * cannot locate a gamer contact with the specified Gamertag.
+     * Verifies that an out-of-range index returns the index-out-of-range message.
      */
     @Test
     public void execute_gamerNotFound_showsNotFoundMessage() {
-        String nonexistentKeyword = "ThisGamertagShouldNotExist123";
-        GamertagContainsKeywordPredicate predicate = new GamertagContainsKeywordPredicate(nonexistentKeyword);
-        ViewCommand command = new ViewCommand(predicate);
+        Index outOfRangeIndex = Index.fromOneBased(model.getFilteredGamerList().size() + 1);
+        ViewCommand command = new ViewCommand(outOfRangeIndex);
 
-        // The expected model should have an empty filtered list
-        expectedModel.updateFilteredGamerList(predicate);
-
-        assertCommandSuccess(command, model, Messages.MESSAGE_GAMERTAG_NOT_FOUND, expectedModel);
+        assertCommandFailure(command, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
     }
 
     /**
@@ -117,19 +103,17 @@ public class ViewCommandTest {
      */
     @Test
     public void equals() {
-        GamertagContainsKeywordPredicate firstPredicate =
-                new GamertagContainsKeywordPredicate("first");
-        GamertagContainsKeywordPredicate secondPredicate =
-                new GamertagContainsKeywordPredicate("second");
+        Index firstIndex = Index.fromOneBased(1);
+        Index secondIndex = Index.fromOneBased(2);
 
-        ViewCommand viewFirstCommand = new ViewCommand(firstPredicate);
-        ViewCommand viewSecondCommand = new ViewCommand(secondPredicate);
+        ViewCommand viewFirstCommand = new ViewCommand(firstIndex);
+        ViewCommand viewSecondCommand = new ViewCommand(secondIndex);
 
         // same object returns true
         assertTrue(viewFirstCommand.equals(viewFirstCommand));
 
         // same values returns true
-        ViewCommand viewFirstCommandCopy = new ViewCommand(firstPredicate);
+        ViewCommand viewFirstCommandCopy = new ViewCommand(firstIndex);
         assertTrue(viewFirstCommand.equals(viewFirstCommandCopy));
 
         // different types returns false
@@ -147,10 +131,10 @@ public class ViewCommandTest {
      */
     @Test
     public void toStringMethod() {
-        GamertagContainsKeywordPredicate predicate = new GamertagContainsKeywordPredicate("keyword");
-        ViewCommand viewCommand = new ViewCommand(predicate);
+        Index index = Index.fromOneBased(1);
+        ViewCommand viewCommand = new ViewCommand(index);
 
-        String expected = ViewCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
+        String expected = ViewCommand.class.getCanonicalName() + "{targetIndex=" + index + "}";
         assertEquals(expected, viewCommand.toString());
     }
 }
