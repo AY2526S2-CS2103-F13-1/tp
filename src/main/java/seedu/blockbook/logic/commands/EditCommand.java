@@ -34,9 +34,9 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits a gamer in BlockBook.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits a gamer in BlockBook.\n\n"
             + "Format: edit INDEX [gamertag/GAMERTAG] [name/NAME] [phone/PHONE] [email/EMAIL] "
-            + "[group/GROUP] [server/SERVER] [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]\n"
+            + "[group/GROUP] [server/SERVER] [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]\n\n"
             + "Example: edit 1 name/Herobrine gamertag/ilovesteve phone/99999 "
             + "email/brine@gmail.com group/DestroySteve favourite/fav country/Singapore region/ASIA "
             + "note/I hate steve";
