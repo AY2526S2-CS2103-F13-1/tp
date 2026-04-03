@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.blockbook.logic.commands.CommandTestUtil.showGamerAtIndex;
 import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,7 @@ import seedu.blockbook.model.ModelManager;
 import seedu.blockbook.model.UserPrefs;
 import seedu.blockbook.model.gamer.Gamer;
 import seedu.blockbook.model.gamer.GamertagContainsKeywordPredicate;
+import seedu.blockbook.testutil.TypicalIndexes;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ViewCommand.
@@ -46,20 +48,17 @@ public class ViewCommandTest {
         GamertagContainsKeywordPredicate predicate = new GamertagContainsKeywordPredicate(keyword);
         ViewCommand command = new ViewCommand(predicate);
 
-        // Set up the expected model's filtered list
-        expectedModel.updateFilteredGamerList(predicate);
-
         // Construct the exact expected string output based on the ViewCommand logic
-        String expectedMessage = "Name: " + targetGamer.getName()
+        String expectedMessage = "Name: " + Messages.formatNullable(targetGamer.getName())
                 + " Gamertag: " + targetGamer.getGamerTag()
-                + " Phone: " + targetGamer.getPhone()
-                + " Email: " + targetGamer.getEmail()
-                + " Group: " + targetGamer.getGroup()
-                + " Server: " + targetGamer.getServer()
-                + " Favourite: " + targetGamer.getFavourite()
-                + " Country: " + targetGamer.getCountry()
-                + " Region: " + targetGamer.getRegion()
-                + " Note: " + targetGamer.getNote();
+                + " Phone: " + Messages.formatNullable(targetGamer.getPhone())
+                + " Email: " + Messages.formatNullable(targetGamer.getEmail())
+                + " Group: " + Messages.formatNullable(targetGamer.getGroup())
+                + " Server: " + Messages.formatNullable(targetGamer.getServer())
+                + " Favourite: " + Messages.formatNullable(targetGamer.getFavourite())
+                + " Country: " + Messages.formatNullable(targetGamer.getCountry())
+                + " Region: " + Messages.formatNullable(targetGamer.getRegion())
+                + " Note: " + Messages.formatNullable(targetGamer.getNote());
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
@@ -80,18 +79,16 @@ public class ViewCommandTest {
         GamertagContainsKeywordPredicate predicate = new GamertagContainsKeywordPredicate(invertedCaseKeyword);
         ViewCommand command = new ViewCommand(predicate);
 
-        expectedModel.updateFilteredGamerList(predicate);
-
-        String expectedMessage = "Name: " + targetGamer.getName()
+        String expectedMessage = "Name: " + Messages.formatNullable(targetGamer.getName())
                 + " Gamertag: " + targetGamer.getGamerTag()
-                + " Phone: " + targetGamer.getPhone()
-                + " Email: " + targetGamer.getEmail()
-                + " Group: " + targetGamer.getGroup()
-                + " Server: " + targetGamer.getServer()
-                + " Favourite: " + targetGamer.getFavourite()
-                + " Country: " + targetGamer.getCountry()
-                + " Region: " + targetGamer.getRegion()
-                + " Note: " + targetGamer.getNote();
+                + " Phone: " + Messages.formatNullable(targetGamer.getPhone())
+                + " Email: " + Messages.formatNullable(targetGamer.getEmail())
+                + " Group: " + Messages.formatNullable(targetGamer.getGroup())
+                + " Server: " + Messages.formatNullable(targetGamer.getServer())
+                + " Favourite: " + Messages.formatNullable(targetGamer.getFavourite())
+                + " Country: " + Messages.formatNullable(targetGamer.getCountry())
+                + " Region: " + Messages.formatNullable(targetGamer.getRegion())
+                + " Note: " + Messages.formatNullable(targetGamer.getNote());
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
@@ -102,6 +99,10 @@ public class ViewCommandTest {
      */
     @Test
     public void execute_gamerNotFound_showsNotFoundMessage() {
+        // Filter the list to ensure it stays unchanged on a failed view.
+        showGamerAtIndex(model, TypicalIndexes.INDEX_FIRST_GAMER);
+        showGamerAtIndex(expectedModel, TypicalIndexes.INDEX_FIRST_GAMER);
+
         String nonexistentKeyword = "ThisGamertagShouldNotExist123";
         GamertagContainsKeywordPredicate predicate = new GamertagContainsKeywordPredicate(nonexistentKeyword);
         ViewCommand command = new ViewCommand(predicate);
