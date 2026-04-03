@@ -28,24 +28,32 @@ public class ViewCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateFilteredGamerList(predicate);
-        int gamerListSize = model.getFilteredGamerList().size();
-        if (gamerListSize == 0) {
+
+        // Check whether a match exists.
+        boolean hasMatch = model.getBlockBook().getGamerList()
+                .stream()
+                .anyMatch(predicate::test);
+
+        // If no gamertag exist, return, where the filteredGameList will not be updated
+        if (!hasMatch) {
             return new CommandResult(Messages.MESSAGE_GAMERTAG_NOT_FOUND);
-        } else {
-            Gamer specifiedGamer = model.getFilteredGamerList().get(0);
-            String formattedContact = "Name: " + Messages.formatNullable(specifiedGamer.getName())
-                    + " Gamertag: " + specifiedGamer.getGamerTag()
-                    + " Phone: " + Messages.formatNullable(specifiedGamer.getPhone())
-                    + " Email: " + Messages.formatNullable(specifiedGamer.getEmail())
-                    + " Group: " + Messages.formatNullable(specifiedGamer.getGroup())
-                    + " Server: " + Messages.formatNullable(specifiedGamer.getServer())
-                    + " Favourite: " + Messages.formatNullable(specifiedGamer.getFavourite())
-                    + " Country: " + Messages.formatNullable(specifiedGamer.getCountry())
-                    + " Region: " + Messages.formatNullable(specifiedGamer.getRegion())
-                    + " Note: " + Messages.formatNullable(specifiedGamer.getNote());
-            return new CommandResult(formattedContact);
         }
+
+        model.updateFilteredGamerList(predicate);
+
+        Gamer specifiedGamer = model.getFilteredGamerList().get(0);
+        String formattedContact = "Name: " + Messages.formatNullable(specifiedGamer.getName())
+                + " Gamertag: " + specifiedGamer.getGamerTag()
+                + " Phone: " + Messages.formatNullable(specifiedGamer.getPhone())
+                + " Email: " + Messages.formatNullable(specifiedGamer.getEmail())
+                + " Group: " + Messages.formatNullable(specifiedGamer.getGroup())
+                + " Server: " + Messages.formatNullable(specifiedGamer.getServer())
+                + " Favourite: " + Messages.formatNullable(specifiedGamer.getFavourite())
+                + " Country: " + Messages.formatNullable(specifiedGamer.getCountry())
+                + " Region: " + Messages.formatNullable(specifiedGamer.getRegion())
+                + " Note: " + Messages.formatNullable(specifiedGamer.getNote());
+        return new CommandResult(formattedContact);
+
 
     }
 
