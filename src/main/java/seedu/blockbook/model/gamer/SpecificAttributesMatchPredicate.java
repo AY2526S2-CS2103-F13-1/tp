@@ -1,5 +1,7 @@
 package seedu.blockbook.model.gamer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -101,5 +103,43 @@ public class SpecificAttributesMatchPredicate implements Predicate<Gamer> {
                 && java.util.Objects.equals(regionKeyword, o.regionKeyword)
                 && java.util.Objects.equals(noteKeyword, o.noteKeyword);
 
+    }
+
+    /**
+     * Returns display-friendly labels for the non-null search criteria.
+     */
+    public List<String> getSearchCriteriaLabels() {
+        List<String> labels = new ArrayList<>();
+        if (nameKeyword != null) {
+            labels.add("Name");
+        }
+        if (gamertagKeyword != null) {
+            labels.add("Gamertag");
+        }
+        if (phoneKeyword != null) {
+            labels.add("Phone");
+        }
+        if (emailKeyword != null) {
+            labels.add("Email");
+        }
+        if (groupKeyword != null) {
+            labels.add("Group");
+        }
+        if (serverKeyword != null) {
+            labels.add("Server");
+        }
+        if (favouriteKeyword != null) {
+            labels.add("Favourite");
+        }
+        if (countryKeyword != null) {
+            labels.add("Country");
+        }
+        if (regionKeyword != null) {
+            labels.add("Region");
+        }
+        if (noteKeyword != null) {
+            labels.add("Note");
+        }
+        return labels;
     }
 }
