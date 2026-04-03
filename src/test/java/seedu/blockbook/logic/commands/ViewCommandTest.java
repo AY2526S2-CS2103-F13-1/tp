@@ -106,9 +106,6 @@ public class ViewCommandTest {
         GamertagContainsKeywordPredicate predicate = new GamertagContainsKeywordPredicate(nonexistentKeyword);
         ViewCommand command = new ViewCommand(predicate);
 
-        // The expected model should have an empty filtered list
-        expectedModel.updateFilteredGamerList(predicate);
-
         assertCommandSuccess(command, model, Messages.MESSAGE_GAMERTAG_NOT_FOUND, expectedModel);
     }
 
