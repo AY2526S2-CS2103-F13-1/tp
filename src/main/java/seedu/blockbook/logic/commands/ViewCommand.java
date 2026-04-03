@@ -29,19 +29,18 @@ public class ViewCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
 
-        // Check whether a match exists.
-        boolean hasMatch = model.getBlockBook().getGamerList()
+        // Find a matching gamer contact without mutating the current filtered list.
+        java.util.Optional<Gamer> match = model.getBlockBook().getGamerList()
                 .stream()
-                .anyMatch(predicate::test);
+                .filter(predicate::test)
+                .findFirst();
 
-        // If no gamertag exist, return, where the filteredGameList will not be updated
-        if (!hasMatch) {
+        // If no gamertag exists, return without updating the filtered list.
+        if (match.isEmpty()) {
             return new CommandResult(Messages.MESSAGE_GAMERTAG_NOT_FOUND);
         }
 
-        model.updateFilteredGamerList(predicate);
-
-        Gamer specifiedGamer = model.getFilteredGamerList().get(0);
+        Gamer specifiedGamer = match.get();
         String formattedContact = "Name: " + Messages.formatNullable(specifiedGamer.getName())
                 + " Gamertag: " + specifiedGamer.getGamerTag()
                 + " Phone: " + Messages.formatNullable(specifiedGamer.getPhone())
