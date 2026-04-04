@@ -55,13 +55,17 @@ public class GamerTag {
             return false;
         }
 
-        GamerTag otherName = (GamerTag) other;
-        return fullGamerTag.equals(otherName.fullGamerTag);
+        GamerTag otherGamerTag = (GamerTag) other;
+        return fullGamerTag.equalsIgnoreCase(otherGamerTag.fullGamerTag);
     }
 
+    /**
+     * Returns a case-insensitive hash code for this gamertag.
+     * Gamertags that differ only by letter casing will have the same hash code.
+     */
     @Override
     public int hashCode() {
-        return fullGamerTag.hashCode();
+        return fullGamerTag.toLowerCase().hashCode();
     }
 
 }

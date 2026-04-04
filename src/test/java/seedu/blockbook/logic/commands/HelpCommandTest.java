@@ -17,15 +17,18 @@ public class HelpCommandTest {
                 + HelpCommand.MESSAGE_USAGE + "\n\n"
                 + AddCommand.MESSAGE_USAGE + "\n\n"
                 + EditCommand.MESSAGE_USAGE + "\n\n"
-                + DeleteCommand.MESSAGE_USAGE + "\n"
+                + DeleteCommand.MESSAGE_USAGE + "\n\n"
+                + FavouriteCommand.MESSAGE_USAGE + "\n"
                 + HelpCommand.SEPARATOR
-                + FindCommand.MESSAGE_USAGE + "\n\n"
-                + ListCommand.MESSAGE_USAGE + "\n"
+                + ListCommand.MESSAGE_USAGE + "\n\n"
+                + ViewCommand.MESSAGE_USAGE + "\n\n"
+                + SortCommand.MESSAGE_USAGE + "\n\n"
+                + FindCommand.MESSAGE_USAGE + "\n"
                 + HelpCommand.SEPARATOR
                 + ClearCommand.MESSAGE_USAGE + "\n\n"
                 + ExitCommand.MESSAGE_USAGE;
 
-        CommandResult expectedCommandResult = new CommandResult(expectedOutput, false, false);
+        CommandResult expectedCommandResult = new CommandResult(expectedOutput, true, false);
 
         assertEquals(expectedCommandResult, new HelpCommand().execute(model));
     }

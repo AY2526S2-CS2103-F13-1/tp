@@ -9,7 +9,6 @@ import seedu.blockbook.commons.util.StringUtil;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
 import seedu.blockbook.model.gamer.Country;
 import seedu.blockbook.model.gamer.Email;
-import seedu.blockbook.model.gamer.Favourite;
 import seedu.blockbook.model.gamer.GamerTag;
 import seedu.blockbook.model.gamer.Group;
 import seedu.blockbook.model.gamer.Name;
@@ -110,17 +109,19 @@ public class ParserUtil {
 
     /**
      * Parses a {@code String phone} into a {@code Phone}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Leading and trailing whitespaces will be trimmed, and repeated internal spaces
+     * will be collapsed into a single space before validation.
      *
      * @throws ParseException if the given {@code phone} is invalid.
      */
     public static Phone parsePhone(String phone) throws ParseException {
         requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
+        String normalizedPhone = normalizeSpacedValue(phone);
+        String error = Phone.getPhoneValidationError(normalizedPhone);
+        if (error != null) {
+            throw new ParseException(error);
         }
-        return new Phone(trimmedPhone);
+        return new Phone(normalizedPhone);
     }
 
     /**
@@ -169,21 +170,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String favourite} into a {@code Favourite}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code favourite} is invalid.
-     */
-    public static Favourite parseFavourite(String favourite) throws ParseException {
-        requireNonNull(favourite);
-        String trimmedFavourite = favourite.trim();
-        if (!Favourite.isValidFavourite(trimmedFavourite)) {
-            throw new ParseException(Favourite.MESSAGE_CONSTRAINTS);
-        }
-        return new Favourite(trimmedFavourite);
-    }
-
-    /**
      * Parses a {@code String country} into a {@code Country}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -228,5 +214,12 @@ public class ParserUtil {
         return new Note(trimmedNote);
     }
 
+
+    /**
+     * Trims the input and collapses repeated whitespace into a single space.
+     */
+    private static String normalizeSpacedValue(String value) {
+        return value.trim().replaceAll("\\s+", " ");
+    }
 }
 

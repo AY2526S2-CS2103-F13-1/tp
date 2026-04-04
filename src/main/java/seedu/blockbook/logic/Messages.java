@@ -12,8 +12,8 @@ import seedu.blockbook.model.gamer.Gamer;
  */
 public class Messages {
 
-    public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
-    public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n\n%1$s";
+    public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command! Type help to view all available commands.";
+    public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
     public static final String MESSAGE_GAMERS_LISTED_COUNT = "%1$d gamers listed!";
     public static final String MESSAGE_GAMERTAG_NOT_FOUND = "Gamertag not found. Use a different gamertag instead!";
     public static final String MESSAGE_GAMERS_LISTED_OVERVIEW = "Listed all gamers.";
@@ -56,8 +56,8 @@ public class Messages {
                 .append(formatNullable(gamer.getGroup()))
                 .append(" Server: ")
                 .append(formatNullable(gamer.getServer()))
-                .append(" Favourite: ")
-                .append(formatNullable(gamer.getFavourite()))
+                // .append(" Favourite: ")
+                // .append(formatNullable(gamer.getFavourite()))
                 .append(" Country: ")
                 .append(formatNullable(gamer.getCountry()))
                 .append(" Region: ")

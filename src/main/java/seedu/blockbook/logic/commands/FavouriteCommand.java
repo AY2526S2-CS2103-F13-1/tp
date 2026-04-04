@@ -12,7 +12,6 @@ import seedu.blockbook.logic.Messages;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.gamer.Favourite;
-import seedu.blockbook.model.gamer.FavouriteStatus;
 import seedu.blockbook.model.gamer.Gamer;
 
 /**
@@ -28,8 +27,8 @@ public class FavouriteCommand extends Command {
             + "Format: " + COMMAND_WORD + " INDEX\n"
             + "Example: " + COMMAND_WORD + " 2\n\n"
             + COMMAND_WORD_UNFAVOURITE + ": Removes a gamer from favourites using the displayed index.\n"
-            + "Format: " + COMMAND_WORD_UNFAVOURITE + " INDEX\n"
-            + "Example: " + COMMAND_WORD_UNFAVOURITE + " 2";
+            + "\n\tFormat: " + COMMAND_WORD_UNFAVOURITE + " INDEX"
+            + "\n\tExample: " + COMMAND_WORD_UNFAVOURITE + " 2";
 
     public static final String MESSAGE_MARK_FAVOURITE_SUCCESS =
             "Contact updated as favourite: %1$s";
@@ -82,8 +81,9 @@ public class FavouriteCommand extends Command {
             throw new CommandException(String.format(MESSAGE_ALREADY_UNFAVOURITE, name));
         }
 
-        FavouriteStatus updatedStatus = markFavourite ? FavouriteStatus.FAV : FavouriteStatus.UNFAV;
-        Favourite updatedFavourite = Favourite.fromStatus(updatedStatus);
+        // FavouriteStatus updatedStatus = markFavourite ? FavouriteStatus.FAV : FavouriteStatus.UNFAV;
+        // Favourite updatedFavourite = Favourite.fromStatus(updatedStatus);
+        Favourite updatedFavourite = new Favourite(markFavourite);
         assert updatedFavourite != null;
 
         Gamer updatedGamer = createToggledGamer(gamerToToggle, updatedFavourite);

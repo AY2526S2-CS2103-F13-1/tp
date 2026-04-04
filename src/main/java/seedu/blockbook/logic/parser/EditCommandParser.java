@@ -88,9 +88,9 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (argMultimap.getValue(PREFIX_SERVER).isPresent()) {
             descriptor.setServer(ParserUtil.parseServer(argMultimap.getValue(PREFIX_SERVER).get()));
         }
-        if (argMultimap.getValue(PREFIX_FAVOURITE).isPresent()) {
-            descriptor.setFavourite(ParserUtil.parseFavourite(argMultimap.getValue(PREFIX_FAVOURITE).get()));
-        }
+        // if (argMultimap.getValue(PREFIX_FAVOURITE).isPresent()) {
+        //     descriptor.setFavourite(ParserUtil.parseFavourite(argMultimap.getValue(PREFIX_FAVOURITE).get()));
+        // }
         if (argMultimap.getValue(PREFIX_COUNTRY).isPresent()) {
             descriptor.setCountry(ParserUtil.parseCountry(argMultimap.getValue(PREFIX_COUNTRY).get()));
         }
