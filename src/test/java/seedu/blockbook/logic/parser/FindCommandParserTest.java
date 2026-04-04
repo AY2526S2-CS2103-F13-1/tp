@@ -95,7 +95,7 @@ public class FindCommandParserTest {
     @Test
     public void parse_invalidPhone_throwsParseException() {
         // Contains letters instead of just numbers
-        assertParseFailure(parser, " " + PREFIX_PHONE + "9123abcd", Phone.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, " " + PREFIX_PHONE + "9123abcd", Phone.MESSAGE_LAX_CONSTRAINTS);
     }
 
     /**
@@ -178,5 +178,4 @@ public class FindCommandParserTest {
     }
 
 }
-
 

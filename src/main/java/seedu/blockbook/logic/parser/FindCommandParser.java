@@ -90,7 +90,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String phoneArg = extractAndValidateArg(argMultimap, PREFIX_PHONE);
         // Lax validation is added here to allow for Partial Search
         if (phoneArg != null && !Phone.isValidLaxPhone(phoneArg)) {
-            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
+            throw new ParseException(Phone.MESSAGE_LAX_CONSTRAINTS);
         }
 
         String emailArg = extractAndValidateArg(argMultimap, PREFIX_EMAIL);
@@ -168,4 +168,3 @@ public class FindCommandParser implements Parser<FindCommand> {
     }
 
 }
-
