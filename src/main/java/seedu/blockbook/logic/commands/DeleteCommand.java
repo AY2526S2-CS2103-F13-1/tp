@@ -52,7 +52,7 @@ public class DeleteCommand extends Command {
         String deletedGamerNames = "";
         for (Index index : indexList) {
             int indexNumber = index.getZeroBased();
-            if (lastIndex == indexNumber) {
+            if (lastIndex == indexNumber) { // Skip duplicate indexes
                 continue;
             }
             lastIndex = indexNumber;
