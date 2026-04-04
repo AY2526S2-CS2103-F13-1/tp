@@ -46,21 +46,21 @@ public class GamerCard extends UiPart<Region> {
     @FXML
     private ImageView favouriteIcon;
     @FXML
+    private Label phone;
+    @FXML
+    private Label email;
+    @FXML
+    private Label group;
+    @FXML
+    private Label favourite;
+    @FXML
+    private Label country;
+    @FXML
     private Label region;
     @FXML
+    private Label note;
+    @FXML
     private Button copyButton;
-    // @FXML
-    // private Label email;
-    // @FXML
-    // private Label phone;
-    // @FXML
-    // private Label group;
-    // @FXML
-    // private Label country;
-    // @FXML
-    // private Label region;
-    // @FXML
-    // private Label note;
 
     /**
      * Creates a {@code GamerCard} with the given {@code Gamer} and index to display.
@@ -71,8 +71,14 @@ public class GamerCard extends UiPart<Region> {
         id.setText("#" + displayedIndex);
         gamerTag.setText("@" + gamer.getGamerTag().fullGamerTag);
         name.setText(Messages.formatNullable(gamer.getName()));
+        phone.setText(Messages.formatNullable(gamer.getPhone()));
+        email.setText(Messages.formatNullable(gamer.getEmail()));
+        group.setText(Messages.formatNullable(gamer.getGroup()));
         server.setText(Messages.formatNullable(gamer.getServer()));
+        favourite.setText(Messages.formatNullable(gamer.getFavourite()));
+        country.setText(Messages.formatNullable(gamer.getCountry()));
         region.setText(Messages.formatNullable(gamer.getRegion()));
+        note.setText(Messages.formatNullable(gamer.getNote()));
         updateFavouriteIcon(gamer.getFavourite().toString());
     }
 

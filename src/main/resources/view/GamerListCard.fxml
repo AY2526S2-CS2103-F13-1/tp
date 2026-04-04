@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
@@ -39,21 +38,32 @@
 
         <Label fx:id="gamerTag" styleClass="cell_tag_label" text="@gamerTag"/>
 
-        <GridPane hgap="10" vgap="4">
+        <GridPane hgap="18" vgap="6" styleClass="gamer-meta-grid">
             <columnConstraints>
-                <ColumnConstraints minWidth="70" prefWidth="70"/>
-                <ColumnConstraints hgrow="ALWAYS" minWidth="10" prefWidth="240"/>
+                <ColumnConstraints minWidth="66" prefWidth="66"/>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="90" prefWidth="160"/>
+                <ColumnConstraints minWidth="66" prefWidth="66"/>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="90" prefWidth="170"/>
             </columnConstraints>
-            <Label styleClass="card_meta_key" text="Server" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <Label fx:id="server" styleClass="card_meta_value" text="$server" GridPane.columnIndex="1"
-                   GridPane.rowIndex="0"/>
-            <Label styleClass="card_meta_key" text="Region" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <Label fx:id="region" styleClass="card_meta_value" text="$region" GridPane.columnIndex="1"
-                   GridPane.rowIndex="1"/>
-            <rowConstraints>
-                <RowConstraints/>
-                <RowConstraints/>
-            </rowConstraints>
+            <Label styleClass="card_meta_key" text="Phone" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <Label fx:id="phone" styleClass="card_meta_value" text="$phone" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <Label styleClass="card_meta_key" text="Email" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+            <Label fx:id="email" styleClass="card_meta_value" text="$email" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+            <Label styleClass="card_meta_key" text="Group" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Label fx:id="group" styleClass="card_meta_value" text="$group" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <Label styleClass="card_meta_key" text="Server" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+            <Label fx:id="server" styleClass="card_meta_value" text="$server" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+            <Label styleClass="card_meta_key" text="Favourite" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <Label fx:id="favourite" styleClass="card_meta_value" text="$favourite" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <Label styleClass="card_meta_key" text="Country" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+            <Label fx:id="country" styleClass="card_meta_value" text="$country" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+
+            <Label styleClass="card_meta_key" text="Region" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <Label fx:id="region" styleClass="card_meta_value" text="$region" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <Label styleClass="card_meta_key" text="Note" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+            <Label fx:id="note" styleClass="card_meta_value" text="$note" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
         </GridPane>
     </VBox>
 </HBox>
