@@ -37,7 +37,7 @@ public class FavouriteCommandTest {
         expectedModel.setGamer(gamerToToggle, updatedGamer);
 
         String expectedMessage = String.format(FavouriteCommand.MESSAGE_UNMARK_FAVOURITE_SUCCESS,
-                formatContactSummaryForUnmark(updatedGamer));
+                formatContactSummary(updatedGamer));
 
         assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);
     }
@@ -56,7 +56,7 @@ public class FavouriteCommandTest {
         expectedModel.setGamer(unfavGamer, favGamer);
 
         String expectedMessage = String.format(FavouriteCommand.MESSAGE_MARK_FAVOURITE_SUCCESS,
-                formatContactSummaryForMark(favGamer));
+                formatContactSummary(favGamer));
 
         assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);
     }
@@ -139,15 +139,8 @@ public class FavouriteCommandTest {
         assertEquals(expected, favouriteCommand.toString());
     }
 
-    private static String formatContactSummaryForMark(Gamer gamer) {
-        return String.format("Name: %s GamerTag: %s Favourite: %s",
-                Messages.formatNullable(gamer.getName()),
-                Messages.formatNullable(gamer.getGamerTag()),
-                Messages.formatNullable(gamer.getFavourite()));
-    }
-
-    private static String formatContactSummaryForUnmark(Gamer gamer) {
-        return String.format("Name: %s GamerTag: %s Favourite: %s",
+    private static String formatContactSummary(Gamer gamer) {
+        return String.format("\n Name: %s\n GamerTag: %s\n Favourite: %s",
                 Messages.formatNullable(gamer.getName()),
                 Messages.formatNullable(gamer.getGamerTag()),
                 Messages.formatNullable(gamer.getFavourite()));

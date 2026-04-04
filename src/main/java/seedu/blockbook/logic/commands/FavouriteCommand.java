@@ -22,13 +22,13 @@ public class FavouriteCommand extends Command {
     public static final String COMMAND_WORD = "favourite";
     public static final String COMMAND_WORD_UNFAVOURITE = "unfavourite";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates the favourite status of the gamer identified"
-            + "by the index number used in the displayed gamer list.\n"
-            + "\n\tFormat: " + COMMAND_WORD + " INDEX"
-            + "\n\tExample: " + COMMAND_WORD + " 2\n\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Adds a gamer to favourites using the displayed index.\n"
+            + "Format: " + COMMAND_WORD + " INDEX\n"
+            + "Example: " + COMMAND_WORD + " 2\n\n"
             + COMMAND_WORD_UNFAVOURITE + ": Removes a gamer from favourites using the displayed index.\n"
-            + "\n\tFormat: " + COMMAND_WORD_UNFAVOURITE + " INDEX"
-            + "\n\tExample: " + COMMAND_WORD_UNFAVOURITE + " 2";
+            + "Format: " + COMMAND_WORD_UNFAVOURITE + " INDEX\n"
+            + "Example: " + COMMAND_WORD_UNFAVOURITE + " 2";
 
     public static final String MESSAGE_MARK_FAVOURITE_SUCCESS =
             "Contact updated as favourite: %1$s";
@@ -143,14 +143,14 @@ public class FavouriteCommand extends Command {
     }
 
     private static String formatContactSummaryForMark(Gamer gamer) {
-        return String.format("Name: %s GamerTag: %s Favourite: %s",
+        return String.format("\n Name: %s\n GamerTag: %s\n Favourite: %s",
                 Messages.formatNullable(gamer.getName()),
                 Messages.formatNullable(gamer.getGamerTag()),
                 Messages.formatNullable(gamer.getFavourite()));
     }
 
     private static String formatContactSummaryForUnmark(Gamer gamer) {
-        return String.format("Name: %s GamerTag: %s Favourite: %s",
+        return String.format("\n Name: %s\n GamerTag: %s\n Favourite: %s",
                 Messages.formatNullable(gamer.getName()),
                 Messages.formatNullable(gamer.getGamerTag()),
                 Messages.formatNullable(gamer.getFavourite()));

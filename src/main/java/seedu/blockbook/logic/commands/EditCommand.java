@@ -34,11 +34,16 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits a gamer in BlockBook.\n"
-            + "\n\tFormat: edit INDEX [gamertag/GAMERTAG] [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP]"
-            + " [server/SERVER] [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]"
-            + "\n\tExample: edit 1 name/Herobrine gamertag/ilovesteve phone/99999 email/brine@gmail.com"
-            + " group/DestroySteve favourite/fav country/Singapore region/ASIA note/I hate steve";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits a gamer in BlockBook.\n\n"
+            + "Format: edit INDEX [gamertag/GAMERTAG] "
+            + "[name/NAME] [phone/PHONE] [email/EMAIL] "
+            + "[group/GROUP] [server/SERVER] "
+            + "[country/COUNTRY] "
+            + "[region/REGION] [note/NOTE]\n\n"
+            + "Example: add gamertag/ilovesteve name/Herobrine "
+            + "phone/99999 email/brine@gmail.com "
+            + "group/DestroySteve server/127.0.0.1:8080 "
+            + "country/Singapore region/ASIA note/I hate steve";
 
     public static final String MESSAGE_EDIT_GAMER_SUCCESS = "Contact edited: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
