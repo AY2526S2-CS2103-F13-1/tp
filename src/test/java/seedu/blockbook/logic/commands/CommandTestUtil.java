@@ -43,8 +43,8 @@ public class CommandTestUtil {
     public static final String VALID_GROUP_BOB = "DestroySteve";
     public static final String VALID_SERVER_AMY = "127.0.0.1:8080";
     public static final String VALID_SERVER_BOB = "mc.example.com:25565";
-    public static final String VALID_FAVOURITE_AMY = "fav";
-    public static final String VALID_FAVOURITE_BOB = "unfav";
+    public static final Boolean VALID_FAVOURITE_AMY = true;
+    public static final Boolean VALID_FAVOURITE_BOB = false;
     public static final String VALID_COUNTRY_AMY = "Singapore";
     public static final String VALID_COUNTRY_BOB = "Malaysia";
     public static final String VALID_REGION_AMY = "ASIA";
