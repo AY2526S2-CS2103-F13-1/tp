@@ -19,16 +19,11 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a gamer to BlockBook.\n\n"
-            + "Format: add gamertag/GAMERTAG "
-            + "[name/NAME] [phone/PHONE] [email/EMAIL] "
-            + "[group/GROUP] [server/SERVER] "
-            + "[favourite/FAVOURITE] [country/COUNTRY] "
-            + "[region/REGION] [note/NOTE]\n\n"
-            + "Example: add gamertag/ilovesteve name/Herobrine "
-            + "phone/99999 email/brine@gmail.com "
-            + "group/DestroySteve server/127.0.0.1:8080 favourite/fav "
-            + "country/Singapore region/ASIA note/I hate steve";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a gamer to BlockBook.\n"
+            + "\n\tFormat: add gamertag/GAMERTAG [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP] [server/SERVER]"
+            + " [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]"
+            + "\n\tExample: add gamertag/ilovesteve name/Herobrine phone/99999 email/brine@gmail.com group/DestroySteve"
+            + " server/127.0.0.1:8080 favourite/fav country/Singapore region/ASIA note/I hate steve";
 
     public static final String MESSAGE_SUCCESS = "Contact added: %1$s";
     public static final String MESSAGE_DUPLICATE_GAMERTAG = "This gamertag is already used by someone in BlockBook.";
