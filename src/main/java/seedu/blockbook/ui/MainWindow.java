@@ -48,6 +48,8 @@ public class MainWindow extends UiPart<Stage> {
     private Menu exitMenu;
 
     @FXML
+    private MenuItem helpMenuItem;
+    @FXML
     private MenuItem websiteMenuItem;
     @FXML
     private MenuItem userGuideMenuItem;
@@ -89,9 +91,10 @@ public class MainWindow extends UiPart<Stage> {
 
     private void setAccelerators() {
         setAccelerator(exitMenu, KeyCombination.valueOf("Shortcut+Q"));
-        setAccelerator(websiteMenuItem, KeyCombination.valueOf("F1"));
-        setAccelerator(userGuideMenuItem, KeyCombination.valueOf("F2"));
-        setAccelerator(developerGuideMenuItem, KeyCombination.valueOf("F3"));
+        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(websiteMenuItem, KeyCombination.valueOf("F2"));
+        setAccelerator(userGuideMenuItem, KeyCombination.valueOf("F3"));
+        setAccelerator(developerGuideMenuItem, KeyCombination.valueOf("F4"));
     }
 
     /**
@@ -201,6 +204,26 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
+    /**
+     * Opens the help menu.
+     */
+    @FXML
+    private void handleHelp() throws CommandException, ParseException {
+        try {
+            CommandResult commandResult = logic.execute("help");
+            helpWindow.setHelpText(commandResult.getFeedbackToUser());
+            if (!helpWindow.isShowing()) {
+                helpWindow.show();
+            } else {
+                helpWindow.focus();
+            }
+        } catch (CommandException | ParseException e) {
+            logger.info("An error occurred while executing help command.");
+            resultDisplay.setFeedbackToUser(e.getMessage());
+            throw e;
+        }
+    }
+
     public GamerListPanel getGamerListPanel() {
         return gamerListPanel;
     }
@@ -221,12 +244,7 @@ public class MainWindow extends UiPart<Stage> {
             }
 
             if (commandResult.isShowHelp()) {
-                if (!helpWindow.isShowing()) {
-                    helpWindow.setHelpText(commandResult.getFeedbackToUser());
-                    helpWindow.show();
-                } else {
-                    helpWindow.focus();
-                }
+                handleHelp();
             }
 
             return commandResult;
