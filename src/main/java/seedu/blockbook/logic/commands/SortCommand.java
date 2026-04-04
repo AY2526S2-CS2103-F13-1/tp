@@ -23,7 +23,7 @@ public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ":\tSorts contacts by the specified attributes. Favourite contacts are always shown first.\n"
+            + ": Sorts contacts by the specified attributes. Favourite contacts are always shown first.\n"
             + "\n\tFormat: " + COMMAND_WORD + " [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP] [server/SERVER]"
             + " [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]"
             + "\n\tExample: " + COMMAND_WORD + " name/John phone/98002132";

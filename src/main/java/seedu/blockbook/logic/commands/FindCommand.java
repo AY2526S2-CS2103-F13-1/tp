@@ -17,7 +17,7 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ":\tFinds all gamers whose attributes contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all gamers whose attributes contain any of "
             + "the specified keyword (case-insensitive) and displays them as a list with index numbers via Format 1."
             + "\n\tSpecific attribute search is also available via Format 2 and can be stacked.\n"
             + "\n\tFormat 1: " + COMMAND_WORD + " KEYWORD"

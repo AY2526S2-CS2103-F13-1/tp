@@ -9,7 +9,7 @@ public class HelpCommand extends Command {
 
     public static final String COMMAND_WORD = "help";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ":\tShows command usage instructions.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows command usage instructions.\n"
             + "\n\tFormat: " + COMMAND_WORD;
 
     public static final String SHOWING_HELP_MESSAGE = "The user guide can be found in the menu bar. "
