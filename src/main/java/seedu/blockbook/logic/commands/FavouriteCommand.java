@@ -27,8 +27,8 @@ public class FavouriteCommand extends Command {
             + "Format: " + COMMAND_WORD + " INDEX\n"
             + "Example: " + COMMAND_WORD + " 2\n\n"
             + COMMAND_WORD_UNFAVOURITE + ": Removes a gamer from favourites using the displayed index.\n"
-            + "\n\tFormat: " + COMMAND_WORD_UNFAVOURITE + " INDEX"
-            + "\n\tExample: " + COMMAND_WORD_UNFAVOURITE + " 2";
+            + "Format: " + COMMAND_WORD_UNFAVOURITE + " INDEX\n"
+            + "Example: " + COMMAND_WORD_UNFAVOURITE + " 2";
 
     public static final String MESSAGE_MARK_FAVOURITE_SUCCESS =
             "Contact updated as favourite: %1$s";
