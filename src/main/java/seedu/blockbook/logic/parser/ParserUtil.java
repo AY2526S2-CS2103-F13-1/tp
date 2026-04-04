@@ -221,11 +221,11 @@ public class ParserUtil {
      */
     public static Note parseNote(String note) throws ParseException {
         requireNonNull(note);
-        String normalizedNote = normalizeSpacedValue(note);
-        if (!Note.isValidNote(normalizedNote)) {
+        String trimmedNote = note.trim();
+        if (!Note.isValidNote(trimmedNote)) {
             throw new ParseException(Note.MESSAGE_CONSTRAINTS);
         }
-        return new Note(normalizedNote);
+        return new Note(trimmedNote);
     }
 
     /**
