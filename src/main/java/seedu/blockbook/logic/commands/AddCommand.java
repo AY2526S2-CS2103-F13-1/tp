@@ -23,11 +23,11 @@ public class AddCommand extends Command {
             + "Format: add gamertag/GAMERTAG "
             + "[name/NAME] [phone/PHONE] [email/EMAIL] "
             + "[group/GROUP] [server/SERVER] "
-            + "[favourite/FAVOURITE] [country/COUNTRY] "
+            + "[country/COUNTRY] "
             + "[region/REGION] [note/NOTE]\n\n"
             + "Example: add gamertag/ilovesteve name/Herobrine "
             + "phone/99999 email/brine@gmail.com "
-            + "group/DestroySteve server/127.0.0.1:8080 favourite/fav "
+            + "group/DestroySteve server/127.0.0.1:8080 "
             + "country/Singapore region/ASIA note/I hate steve";
 
     public static final String MESSAGE_SUCCESS = "Contact added: %1$s";

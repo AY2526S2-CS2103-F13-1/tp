@@ -19,7 +19,7 @@ public class ViewCommand extends Command {
     public static final String COMMAND_WORD = "view";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": View the full details of the gamer contact "
             + "identified by the index number used in the displayed gamer list.\n"
-            + "Format: " + COMMAND_WORD + " INDEX";
+            + "\n\tFormat: " + COMMAND_WORD + " INDEX";
 
     private final Index targetIndex;
 

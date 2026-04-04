@@ -31,7 +31,7 @@ public class JsonAdaptedGamerTest {
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
     private static final String VALID_GROUP = BENSON.getGroup().toString();
     private static final String VALID_SERVER = BENSON.getServer().toString();
-    private static final String VALID_FAVOURITE = BENSON.getFavourite().toString();
+    private static final boolean VALID_FAVOURITE = BENSON.getFavourite().isFav();
     private static final String VALID_COUNTRY = BENSON.getCountry().toString();
     private static final String VALID_REGION = BENSON.getRegion().toString();
     private static final String VALID_NOTE = BENSON.getNote().toString();
