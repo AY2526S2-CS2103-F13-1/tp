@@ -3,7 +3,6 @@ package seedu.blockbook.logic.parser;
 import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.blockbook.logic.commands.CommandTestUtil.COUNTRY_DESC_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.blockbook.logic.commands.CommandTestUtil.FAVOURITE_DESC_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.GAMERTAG_DESC_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.GROUP_DESC_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
@@ -15,7 +14,6 @@ import static seedu.blockbook.logic.commands.CommandTestUtil.REGION_DESC_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.SERVER_DESC_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_COUNTRY_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_FAVOURITE_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_GAMERTAG_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_GROUP_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
@@ -80,7 +78,7 @@ public class EditCommandParserTest {
                 + EMAIL_DESC_BOB
                 + GROUP_DESC_BOB
                 + SERVER_DESC_BOB
-                + FAVOURITE_DESC_BOB
+                // + FAVOURITE_DESC_BOB
                 + COUNTRY_DESC_BOB
                 + REGION_DESC_BOB
                 + NOTE_DESC_BOB;
@@ -92,7 +90,7 @@ public class EditCommandParserTest {
                 .withEmail(VALID_EMAIL_BOB)
                 .withGroup(VALID_GROUP_BOB)
                 .withServer(VALID_SERVER_BOB)
-                .withFavourite(VALID_FAVOURITE_BOB)
+                // .withFavourite(VALID_FAVOURITE_BOB)
                 .withCountry(VALID_COUNTRY_BOB)
                 .withRegion(VALID_REGION_BOB)
                 .withNote(VALID_NOTE_BOB)
