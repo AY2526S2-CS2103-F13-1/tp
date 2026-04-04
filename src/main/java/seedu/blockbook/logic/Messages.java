@@ -56,8 +56,6 @@ public class Messages {
                 .append(formatNullable(gamer.getGroup()))
                 .append(" Server: ")
                 .append(formatNullable(gamer.getServer()))
-                // .append(" Favourite: ")
-                // .append(formatNullable(gamer.getFavourite()))
                 .append(" Country: ")
                 .append(formatNullable(gamer.getCountry()))
                 .append(" Region: ")
