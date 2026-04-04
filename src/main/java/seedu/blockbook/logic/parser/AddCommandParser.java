@@ -3,7 +3,6 @@ package seedu.blockbook.logic.parser;
 import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_COUNTRY;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_FAVOURITE;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GAMERTAG;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_NAME;
@@ -61,7 +60,6 @@ public class AddCommandParser implements Parser<AddCommand> {
                 PREFIX_EMAIL,
                 PREFIX_GROUP,
                 PREFIX_SERVER,
-                PREFIX_FAVOURITE,
                 PREFIX_COUNTRY,
                 PREFIX_REGION,
                 PREFIX_NOTE);
@@ -93,7 +91,6 @@ public class AddCommandParser implements Parser<AddCommand> {
                 PREFIX_EMAIL,
                 PREFIX_GROUP,
                 PREFIX_SERVER,
-                PREFIX_FAVOURITE,
                 PREFIX_COUNTRY,
                 PREFIX_REGION,
                 PREFIX_NOTE
@@ -117,7 +114,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = parseOptionalEmail(argMultimap);
         Group group = parseOptionalGroup(argMultimap);
         Server server = parseOptionalServer(argMultimap);
-        Favourite favourite = parseOptionalFavourite(argMultimap);
+        Favourite favourite = new Favourite(false);
         Country country = parseOptionalCountry(argMultimap);
         Region region = parseOptionalRegion(argMultimap);
         Note note = parseOptionalNote(argMultimap);
@@ -170,13 +167,6 @@ public class AddCommandParser implements Parser<AddCommand> {
             return ParserUtil.parseServer(argMultimap.getValue(PREFIX_SERVER).get());
         }
         return null;
-    }
-
-    private Favourite parseOptionalFavourite(ArgumentMultimap argMultimap) throws ParseException {
-        if (argMultimap.getValue(PREFIX_FAVOURITE).isPresent()) {
-            return ParserUtil.parseFavourite(argMultimap.getValue(PREFIX_FAVOURITE).get());
-        }
-        return new Favourite("unfav");
     }
 
     private Country parseOptionalCountry(ArgumentMultimap argMultimap) throws ParseException {

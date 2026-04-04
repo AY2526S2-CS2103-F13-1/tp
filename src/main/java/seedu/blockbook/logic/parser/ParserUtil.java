@@ -9,7 +9,6 @@ import seedu.blockbook.commons.util.StringUtil;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
 import seedu.blockbook.model.gamer.Country;
 import seedu.blockbook.model.gamer.Email;
-import seedu.blockbook.model.gamer.Favourite;
 import seedu.blockbook.model.gamer.GamerTag;
 import seedu.blockbook.model.gamer.Group;
 import seedu.blockbook.model.gamer.Name;
@@ -168,21 +167,6 @@ public class ParserUtil {
             throw new ParseException(Server.MESSAGE_CONSTRAINTS);
         }
         return new Server(trimmedServer);
-    }
-
-    /**
-     * Parses a {@code String favourite} into a {@code Favourite}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code favourite} is invalid.
-     */
-    public static Favourite parseFavourite(String favourite) throws ParseException {
-        requireNonNull(favourite);
-        String trimmedFavourite = favourite.trim();
-        if (!Favourite.isValidFavourite(trimmedFavourite)) {
-            throw new ParseException(Favourite.MESSAGE_CONSTRAINTS);
-        }
-        return new Favourite(trimmedFavourite);
     }
 
     /**
