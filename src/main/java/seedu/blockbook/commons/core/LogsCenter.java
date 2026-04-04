@@ -98,7 +98,8 @@ public class LogsCenter {
         // add a FileHandler to log to a file
         try {
             FileUtil.createParentDirsOfFile(LOG_FILE);
-            FileHandler fileHandler = new FileHandler(LOG_FILE.toString(), MAX_FILE_SIZE_IN_BYTES, MAX_FILE_COUNT, true);
+            FileHandler fileHandler = new FileHandler(LOG_FILE.toString(), MAX_FILE_SIZE_IN_BYTES,
+                    MAX_FILE_COUNT, true);
             fileHandler.setFormatter(new SimpleFormatter());
             fileHandler.setLevel(Level.ALL);
             baseLogger.addHandler(fileHandler);
