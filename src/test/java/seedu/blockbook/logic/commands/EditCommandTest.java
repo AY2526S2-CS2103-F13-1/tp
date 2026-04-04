@@ -138,7 +138,7 @@ public class EditCommandTest {
 
         assertTrue(standardCommand.equals(standardCommand));
         assertFalse(standardCommand.equals(null));
-        assertFalse(standardCommand.equals(new ClearCommand()));
+        assertFalse(standardCommand.equals(new ClearCommand(null)));
         assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_GAMER, DESC_AMY)));
         assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_GAMER, DESC_BOB)));
     }
