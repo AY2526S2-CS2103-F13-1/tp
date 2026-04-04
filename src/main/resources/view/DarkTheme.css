@@ -155,6 +155,7 @@
 
 #resultDisplayPlaceholder {
     -fx-background-color: linear-gradient(to bottom, -fx-mc-stone-700, -fx-mc-stone-800);
+    -fx-min-height: 0;
 }
 
 #gamerList {
@@ -198,9 +199,11 @@
 }
 
 #cardPane {
+    -fx-background-image: url("/images/dirt.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
     -fx-background-color:
-        linear-gradient(to bottom, #7ebf59, #5d9441),
-        linear-gradient(to bottom, #3c444f, #303842);
+        linear-gradient(to bottom, #7ebf59, #5d9441);
     -fx-background-insets: 0, 0 0 0 6;
     -fx-border-color: #6e7783 #1c2127 #14191e #5a636f;
     -fx-border-width: 2;
@@ -212,7 +215,7 @@
 }
 
 .gamer-card-body {
-    -fx-background-color: transparent;
+    -fx-background-color: rgba(44, 50, 58, 0.72);
 }
 
 .cell_index_label {
