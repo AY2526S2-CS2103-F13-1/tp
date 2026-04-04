@@ -32,7 +32,7 @@ public class ViewCommand extends Command {
         requireNonNull(model);
         List<Gamer> lastShownList = model.getFilteredGamerList();
         int index = targetIndex.getZeroBased();
-        if (index >= lastShownList.size()) {
+        if (index < 0 || index >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
         }
 

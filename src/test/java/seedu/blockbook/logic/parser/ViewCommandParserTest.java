@@ -1,5 +1,6 @@
 package seedu.blockbook.logic.parser;
 
+import static seedu.blockbook.logic.Messages.MESSAGE_INDEX_OUT_OF_RANGE;
 import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.blockbook.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.blockbook.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -41,6 +42,12 @@ public class ViewCommandParserTest {
     public void parse_invalidArg_throwsParseException() {
         assertParseFailure(parser, " abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " 1s",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " +2",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " -1", MESSAGE_INDEX_OUT_OF_RANGE);
+        assertParseFailure(parser, " 0", MESSAGE_INDEX_OUT_OF_RANGE);
         assertParseFailure(parser, " 1 2",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
     }
