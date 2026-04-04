@@ -2,17 +2,16 @@ package seedu.blockbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Random;
+
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.model.BlockBook;
 import seedu.blockbook.model.Model;
-
-import java.util.Random;
 
 /**
  * Clears the BlockBook.
  */
 public class ClearCommand extends Command {
-
     public static final String COMMAND_WORD = "clear";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Removes every gamer from BlockBook. CANNOT BE UNDONE!\n"
@@ -23,9 +22,8 @@ public class ClearCommand extends Command {
             + "If you wish to continue, enter the command below.\n"
             + COMMAND_WORD;
     public static final String MESSAGE_SUCCESS = "BlockBook has been cleared!";
-
-    public static String confirmationCode = null;
-    public String userInput;
+    private static String confirmationCode = null;
+    private String userInput;
 
     /**
      * Creates a ClearCommand that clears the BlockBook.
@@ -36,6 +34,10 @@ public class ClearCommand extends Command {
         this.userInput = userInput;
     }
 
+    /**
+     * Generates a random confirmation code consisting of
+     * 6 alphanumeric characters, prefixed with a space.
+     */
     public String generateConfirmationCode() {
         String characters = "abcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder confirmationCode = new StringBuilder();
