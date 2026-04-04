@@ -98,14 +98,14 @@ class JsonAdaptedGamer {
         // final Note modelNote = new Note(note);
 
         // Optional fields can be null when omitted by the user, so we guard object construction to avoid null failures.
-        final Name modelName = name != null ? new Name(name) : null;
+        final Name modelName = name != null ? new Name(normalizeSpacedValue(name)) : null;
         final GamerTag modelGamerTag = new GamerTag(gamerTag);
-        final Phone modelPhone = phone != null ? new Phone(phone) : null;
+        final Phone modelPhone = phone != null ? new Phone(normalizeSpacedValue(phone)) : null;
         final Email modelEmail = email != null ? new Email(email) : null;
         final Group modelGroup = group != null ? new Group(group) : null;
         final Server modelServer = server != null ? new Server(server) : null;
         final Favourite modelFavourite = favourite != null ? new Favourite(favourite) : new Favourite("unfav");
-        final Country modelCountry = country != null ? new Country(country) : null;
+        final Country modelCountry = country != null ? new Country(normalizeSpacedValue(country)) : null;
         final Region modelRegion = region != null ? new Region(region) : null;
         final Note modelNote = note != null ? new Note(note) : null;
 
@@ -151,5 +151,9 @@ class JsonAdaptedGamer {
         if (note != null && !Note.isValidNote(note)) {
             throw new IllegalValueException(Note.MESSAGE_CONSTRAINTS);
         }
+    }
+
+    private static String normalizeSpacedValue(String value) {
+        return value.trim().replaceAll("\\s+", " ");
     }
 }
