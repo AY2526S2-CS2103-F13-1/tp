@@ -12,7 +12,6 @@ import seedu.blockbook.logic.Messages;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.gamer.Favourite;
-import seedu.blockbook.model.gamer.FavouriteStatus;
 import seedu.blockbook.model.gamer.Gamer;
 
 /**
@@ -83,8 +82,9 @@ public class FavouriteCommand extends Command {
             throw new CommandException(String.format(MESSAGE_ALREADY_UNFAVOURITE, name));
         }
 
-        FavouriteStatus updatedStatus = markFavourite ? FavouriteStatus.FAV : FavouriteStatus.UNFAV;
-        Favourite updatedFavourite = Favourite.fromStatus(updatedStatus);
+        // FavouriteStatus updatedStatus = markFavourite ? FavouriteStatus.FAV : FavouriteStatus.UNFAV;
+        // Favourite updatedFavourite = Favourite.fromStatus(updatedStatus);
+        Favourite updatedFavourite = new Favourite(markFavourite);
         assert updatedFavourite != null;
 
         Gamer updatedGamer = createToggledGamer(gamerToToggle, updatedFavourite);
@@ -144,17 +144,17 @@ public class FavouriteCommand extends Command {
     }
 
     private static String formatContactSummaryForMark(Gamer gamer) {
-        return String.format("Name: %s GamerTag: %s Favourite: %s",
+        return String.format("Name: %s GamerTag: %s",
                 Messages.formatNullable(gamer.getName()),
-                Messages.formatNullable(gamer.getGamerTag()),
-                Messages.formatNullable(gamer.getFavourite()));
+                Messages.formatNullable(gamer.getGamerTag()));
+//                Messages.formatNullable(gamer.getFavourite()));
     }
 
     private static String formatContactSummaryForUnmark(Gamer gamer) {
-        return String.format("Name: %s GamerTag: %s Favourite: %s",
+        return String.format("Name: %s GamerTag: %s",
                 Messages.formatNullable(gamer.getName()),
-                Messages.formatNullable(gamer.getGamerTag()),
-                Messages.formatNullable(gamer.getFavourite()));
+                Messages.formatNullable(gamer.getGamerTag()));
+//                Messages.formatNullable(gamer.getFavourite()));
     }
 
     @Override
