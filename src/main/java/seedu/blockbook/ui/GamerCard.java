@@ -1,6 +1,8 @@
 package seedu.blockbook.ui;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,6 +10,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.util.Duration;
 import seedu.blockbook.logic.Messages;
 import seedu.blockbook.model.gamer.Gamer;
 
@@ -56,6 +59,8 @@ public class GamerCard extends UiPart<Region> {
     private Label region;
     @FXML
     private Label note;
+    @FXML
+    private Button copyButton;
 
     /**
      * Creates a {@code GamerCard} with the given {@code Gamer} and index to display.
@@ -96,5 +101,14 @@ public class GamerCard extends UiPart<Region> {
         final ClipboardContent details = new ClipboardContent();
         details.putString(Messages.format(gamer));
         clipboard.setContent(details);
+
+        // Change button text to indicate copy success
+        String originalText = copyButton.getText();
+        copyButton.setText("Copied!");
+
+        // Revert button text after a short delay
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        pause.setOnFinished(e -> copyButton.setText(originalText));
+        pause.play();
     }
 }

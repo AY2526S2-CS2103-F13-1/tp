@@ -31,6 +31,7 @@
             <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#handleExit" text="Exit" />
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
+            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help Menu" />
             <MenuItem fx:id="websiteMenuItem" mnemonicParsing="false" onAction="#openWebsite" text="BlockBook Website" />
             <MenuItem fx:id="userGuideMenuItem" mnemonicParsing="false" onAction="#openUserGuide" text="User Guide" />
             <MenuItem fx:id="developerGuideMenuItem" mnemonicParsing="false" onAction="#openDeveloperGuide" text="Developer Guide" />

@@ -96,7 +96,7 @@ public class EditGamerDescriptorBuilder {
     /**
      * Sets the {@code Favourite} of the {@code EditGamerDescriptor} that we are building.
      */
-    public EditGamerDescriptorBuilder withFavourite(String favourite) {
+    public EditGamerDescriptorBuilder withFavourite(Boolean favourite) {
         descriptor.setFavourite(new Favourite(favourite));
         return this;
     }

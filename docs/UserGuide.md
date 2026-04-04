@@ -78,18 +78,21 @@ Format: `help`
 
 ### Adding a gamer: `add`
 
-Adds a gamer to BlockBook.
+Adds a gamer to BlockBook with a required gamertag and optional details such as name, phone number, email address, group, server, favourite status, region, country, and notes.
 
-Format: `add name/NAME gamertag/GAMERTAG`
+Format: `add gamertag/GAMERTAG [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP] [server/SERVER] [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]`
 
 <box type="tip" seamless>
 
-**Tip:** Both `name/` and `gamertag/` parameters are required.
+**Tip:** Only `gamertag/` is required. All other fields are optional.
 </box>
+- `email/`, must be a valid email in the format `local-part@domain`.
+- `favourite/` accepts `fav` or `unfav`.
+- `region/` accepts `NA`, `SA`, `EU`, `AFRICA`, `ASIA`, `OCEANIA` or `ME`.
 
 Examples:
-* `add name/John Doe gamertag/JohnThePro`
-* `add name/Betsy Crowe gamertag/ShadowCrowe`
+* `add gamertag/ilovesteve name/Herobrine phone/99999 email/brine@gmail.com group/DestroySteve server/127.0.0.1:8080 favourite/fav country/Singapore region/ASIA note/I hate steve`
+* `add gamertag/Notch name/Notch phone/+12345 email/notch@example.com group/Redstone Crew server/mc.example.net:25565 favourite/unfav country/Malaysia region/ASIA note/Usually plays survival`
 
 ### Listing all gamers : `list`
 
@@ -145,6 +148,37 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+### Sorting gamers : `sort`
+
+Sorts the displayed contact list by one or more attributes.
+
+Format: `sort [ATTRIBUTE/]...`
+
+* If no attributes are provided, contacts are sorted by **gamertag** by default.
+* When multiple attributes are provided, they are applied in order of priority (left to right). The first attribute is the primary sort key, the second is used to break ties, and so on.
+* Each attribute can only be specified **once** (no duplicates).
+
+**Valid attributes:**
+
+| Attribute | Description |
+|-----------|-------------|
+| `name/` | Sort by name |
+| `gamertag/` | Sort by gamertag |
+| `phone/` | Sort by phone number |
+| `email/` | Sort by email address |
+| `group/` | Sort by group |
+| `server/` | Sort by server |
+| `favourite/` | Sort by favourite status (favourites first) |
+| `country/` | Sort by country |
+| `region/` | Sort by region |
+| `note/` | Sort by note |
+
+Examples:
+* `sort` sorts all contacts by gamertag (default).
+* `sort name/` sorts all contacts by name.
+* `sort phone/ gamertag/` sorts all contacts by phone number, using gamertag to break ties.
+* `sort favourite/ name/` sorts favourites before non-favourites, then by name within each group.
+
 ### Deleting a Gamer : `delete`
 
 Deletes the specified gamers from BlockBook.
@@ -152,12 +186,16 @@ Deletes the specified gamers from BlockBook.
 Format: `delete INDEX [INDEX]...`
 
 * Deletes the gamers at each specified `INDEX`.
+* Trying to delete the same index multiple times will only cause that index to be deleted once.
 * The indexes refer to the index numbers shown in the displayed gamer list.
+* The indexes do not have to be in any particular order. e.g. `delete 2 1` is acceptable.
 * Each index **must be a positive integer** 1, 2, 3, ...
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd gamer shown in the list.
 * `find Betsy` followed by `delete 1 2` deletes the 1st and 2nd gamer in the results of the `find` command.
+* `delete 2 1` deletes the 1st and 2nd gamer shown in the list.
+* `delete 1 2 2` deletes only the 1st and 2nd gamers shown in the list. The 2nd gamer is only deleted once.
 
 ### Clearing all entries : `clear`
 
@@ -217,6 +255,6 @@ _Details coming soon ..._
 | **Find**   | `find KEYWORD`<br> e.g., `find James`<br> `find ATTRIBUTE1/KEYWORD1 [ATTRIBUTE2/KEYWORD2]...`<br> e.g., `find name/Steve gamertag/Block` |
 | **View**   | `view gamertag/GAMERTAG` <br> e.g., `view gamertag/SteveMaster99`                                                                        |
 | **List**   | `list`                                                                                                                                   |
-| **Sort**   | `sort [ATTRIBUTE/]…`<br> e.g., `sort name/`, `sort name/ phone/`                                                                         |
+| **Sort**   | `sort [ATTRIBUTE/]...`<br> e.g., `sort`, `sort name/`, `sort phone/ gamertag/`                                                            |
 | **Help**   | `help`                                                                                                                                   |
 
