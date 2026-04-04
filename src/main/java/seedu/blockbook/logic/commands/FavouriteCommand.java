@@ -147,14 +147,14 @@ public class FavouriteCommand extends Command {
         return String.format("Name: %s GamerTag: %s",
                 Messages.formatNullable(gamer.getName()),
                 Messages.formatNullable(gamer.getGamerTag()));
-//                Messages.formatNullable(gamer.getFavourite()));
+        // Messages.formatNullable(gamer.getFavourite()));
     }
 
     private static String formatContactSummaryForUnmark(Gamer gamer) {
         return String.format("Name: %s GamerTag: %s",
                 Messages.formatNullable(gamer.getName()),
                 Messages.formatNullable(gamer.getGamerTag()));
-//                Messages.formatNullable(gamer.getFavourite()));
+        // Messages.formatNullable(gamer.getFavourite()));
     }
 
     @Override
