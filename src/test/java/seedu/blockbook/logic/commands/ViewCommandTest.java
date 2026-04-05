@@ -50,16 +50,7 @@ public class ViewCommandTest {
         expectedModel.updateFilteredGamerList(predicate);
 
         // Construct the exact expected string output based on the ViewCommand logic
-        String expectedMessage = "Name: " + targetGamer.getName()
-                + " Gamertag: " + targetGamer.getGamerTag()
-                + " Phone: " + targetGamer.getPhone()
-                + " Email: " + targetGamer.getEmail()
-                + " Group: " + targetGamer.getGroup()
-                + " Server: " + targetGamer.getServer()
-                + " Favourite: " + targetGamer.getFavourite()
-                + " Country: " + targetGamer.getCountry()
-                + " Region: " + targetGamer.getRegion()
-                + " Note: " + targetGamer.getNote();
+        String expectedMessage = Messages.format(targetGamer);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
@@ -82,16 +73,7 @@ public class ViewCommandTest {
 
         expectedModel.updateFilteredGamerList(predicate);
 
-        String expectedMessage = "Name: " + targetGamer.getName()
-                + " Gamertag: " + targetGamer.getGamerTag()
-                + " Phone: " + targetGamer.getPhone()
-                + " Email: " + targetGamer.getEmail()
-                + " Group: " + targetGamer.getGroup()
-                + " Server: " + targetGamer.getServer()
-                + " Favourite: " + targetGamer.getFavourite()
-                + " Country: " + targetGamer.getCountry()
-                + " Region: " + targetGamer.getRegion()
-                + " Note: " + targetGamer.getNote();
+        String expectedMessage = Messages.format(targetGamer);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
