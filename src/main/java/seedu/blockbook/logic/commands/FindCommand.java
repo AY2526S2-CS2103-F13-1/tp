@@ -2,12 +2,15 @@ package seedu.blockbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.blockbook.commons.util.ToStringBuilder;
 import seedu.blockbook.logic.Messages;
 import seedu.blockbook.model.Model;
+import seedu.blockbook.model.gamer.AnyAttributeContainsKeywordsPredicate;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.SpecificAttributesMatchPredicate;
 
 /**
  * Finds and lists all gamers in the BlockBook whose attributes match the specified keywords.
@@ -42,9 +45,20 @@ public class FindCommand extends Command {
         if (filteredGamerCount == 0) {
             return new CommandResult(Messages.MESSAGE_NO_GAMERS_FOUND_BY_FIND);
         } else {
-            return new CommandResult(
-                    String.format(Messages.MESSAGE_GAMERS_FOUND_BY_FIND, filteredGamerCount));
+            return new CommandResult(buildFoundMessage(filteredGamerCount));
         }
+    }
+
+    private String buildFoundMessage(int filteredGamerCount) {
+        if (predicate instanceof AnyAttributeContainsKeywordsPredicate) {
+            return String.format(Messages.MESSAGE_GAMERS_FOUND_BY_FIND, filteredGamerCount);
+        }
+        if (predicate instanceof SpecificAttributesMatchPredicate) {
+            List<String> labels = ((SpecificAttributesMatchPredicate) predicate).getSearchCriteriaLabels();
+            String criteria = labels.isEmpty() ? "Unknown" : String.join(", ", labels);
+            return String.format(Messages.MESSAGE_GAMERS_FOUND_BY_FIND_SPECIFIC, filteredGamerCount, criteria);
+        }
+        return String.format(Messages.MESSAGE_GAMERS_FOUND_BY_FIND, filteredGamerCount);
     }
 
     @Override
