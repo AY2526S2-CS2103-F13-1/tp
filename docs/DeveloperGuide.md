@@ -6,6 +6,9 @@
 
 
 # BlockBook Developer Guide
+The current Developer guide you see here is a work in progress! 
+It is being developed alongside the implementation of the app, and will be updated iteratively as the implementation progresses. 
+The current content is based on the design decisions we have made so far, and may be updated as we make more design decisions in the future.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -154,6 +157,7 @@ Classes used by multiple components are in the `seedu.blockbook.commons` package
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+(We can add proposed features based off items in the user stories that are not yet implemented.)
 
 ### \[Proposed\] Undo/redo feature
 
@@ -248,10 +252,6 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -313,7 +313,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 (For all use cases below, the **System** is the `BlockBook (BB)` and the **Actor** is the `user`, unless specified otherwise)
 As these represent the expected behaviour of the final iteration, some use cases might not reflect the current functionality of the app.
 
-**UC01 - Add Contact**
+**UC01 - Add a Gamer Contact**
 
 **MSS**
 
@@ -349,7 +349,7 @@ Use case ends.
 - *a1. BB discards all entered data.
 - Use case ends.
 
-**UC02 - List All Contacts**
+**UC02 - List All Gamer Contacts**
 
 **MSS**
 
@@ -391,7 +391,9 @@ Use case ends.
 - 4a1. BB notifies the user that the contact is already a favourite.
 - Use case ends.
 
-**UC04 - Add Profile Picture to Contact**
+(An extension can be added for unfavourite here)
+
+**UC04 - Add Profile Picture to Contact** (TBA)
 
 **MSS**
 
@@ -427,7 +429,7 @@ Use case ends.
 - *a1. BB discards all entered data.
 - Use case ends.
 
-**UC05 - Add Note to Contact**
+**UC05 - Add Note to Contact** (Can be deleted)
 
 **MSS**
 
@@ -460,7 +462,8 @@ Use case ends.
 - *a1. BB discards all unsaved changes.
 - Use case ends.
 
-**UC06 - Sort Contacts by Added Date**
+**UC06 - Sort Gamer Contacts** (Extensions can be added for the optional attribute criteria)
+(Base case as MSS, other sorting criteria can be added as extensions)
 
 **MSS**
 
@@ -475,7 +478,7 @@ Use case ends.
 - 2a1. BB informs the user that there are no contacts.
 - Use case ends.
 
-**UC07 - Update Contact**
+**UC07 - Edit a Gamer Contact** (Change of name from Update)
 
 **MSS**
 
@@ -525,7 +528,25 @@ Use case ends.
 - *a1. BB discards all changes.
 - Use case ends.
 
+**UC08 - Delete a Gamer Contact**
 
+**UC09 - View a Gamer Contact**
+
+**UC10- Find Gamer Contacts**
+
+**UC11 - Clear all Gamer Contacts**
+
+**UC12 - Show Help**
+
+**UC13 - Create a Group (TBA)**
+
+**UC14 - Add a Gamer to a Group (TBA)**
+
+**UC15 - Remove a Gamer from a Group (TBA)**
+
+**UC16 - Delete a Group (TBA)**
+
+**UC17 - List Groups (TBA)**
 
 ### Non-Functional Requirements
 
@@ -592,7 +613,13 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases ... }_
 
-### Deleting a gamer
+### Using the help command
+
+### Adding a gamer contact
+
+### Editing a gamer contact
+
+### Deleting a gamer contact
 
 1. Deleting a gamer while all gamers are being shown
 
@@ -612,7 +639,30 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases ... }_
 
-### Saving data
+### Setting a gamer contact as a favourite contact
+
+### Listing gamer contacts
+
+### Viewing a gamer contact
+
+### Finding a gamer contact
+
+### Sorting gamer contacts
+
+### Clearing all gamer contacts
+
+### Creating a group (TBA)
+
+### Editing a group (TBA)
+
+### Deleting a group (TBA)
+
+### Adding a gamer to a group (TBA)
+
+### Listing groups (TBA)
+
+### Dealing with data
+1. Saving data to `contacts.json`
 
 1. Dealing with missing/corrupted data files
 
