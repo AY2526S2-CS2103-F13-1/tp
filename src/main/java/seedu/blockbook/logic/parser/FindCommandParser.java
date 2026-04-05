@@ -64,8 +64,14 @@ public class FindCommandParser implements Parser<FindCommand> {
                         || argMultimap.getValue(PREFIX_REGION).isPresent()
                         || argMultimap.getValue(PREFIX_NOTE).isPresent();
 
+        String preamble = argMultimap.getPreamble().trim();
+        // Prevent mixed formats
+        if (hasAnyPrefixedArguments && !preamble.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
         if (!hasAnyPrefixedArguments) {
-            String preamble = argMultimap.getPreamble().trim();
             if (preamble.length() > 50) {
                 throw new ParseException("Global search KEYWORD input cannot exceed 50 characters.");
             }
@@ -168,4 +174,3 @@ public class FindCommandParser implements Parser<FindCommand> {
     }
 
 }
-
