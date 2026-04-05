@@ -39,7 +39,7 @@ public class EditCommand extends Command {
             + "[group/GROUP] [server/SERVER] "
             + "[country/COUNTRY] "
             + "[region/REGION] [note/NOTE]\n\n"
-            + "Example: add gamertag/ilovesteve name/Herobrine "
+            + "Example: edit 1 gamertag/ilovesteve name/Herobrine "
             + "phone/99999 email/brine@gmail.com "
             + "group/DestroySteve server/127.0.0.1:8080 "
             + "country/Singapore region/ASIA note/I hate steve";
