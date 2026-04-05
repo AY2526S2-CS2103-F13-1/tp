@@ -157,6 +157,7 @@ Classes used by multiple components are in the `seedu.blockbook.commons` package
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+(We can add proposed features based off items in the user stories that are not yet implemented.)
 
 ### \[Proposed\] Undo/redo feature
 
