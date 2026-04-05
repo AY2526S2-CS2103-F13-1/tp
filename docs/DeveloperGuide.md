@@ -639,13 +639,15 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases ... }_
 
-### Adding a gamer contact as a favourite contact
+### Setting a gamer contact as a favourite contact
 
 ### Listing gamer contacts
 
 ### Viewing a gamer contact
 
 ### Finding a gamer contact
+
+### Sorting gamer contacts
 
 ### Clearing all gamer contacts
 
