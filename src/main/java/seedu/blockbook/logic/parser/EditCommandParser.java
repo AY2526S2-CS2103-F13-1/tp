@@ -14,6 +14,7 @@ import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_REGION;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_SERVER;
 
 import seedu.blockbook.commons.core.index.Index;
+import seedu.blockbook.logic.Messages;
 import seedu.blockbook.logic.commands.EditCommand;
 import seedu.blockbook.logic.commands.EditCommand.EditGamerDescriptor;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
@@ -47,6 +48,10 @@ public class EditCommandParser implements Parser<EditCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
+            String trimmedPreamble = argMultimap.getPreamble().trim();
+            if (trimmedPreamble.matches("-?\\d+")) {
+                throw new ParseException(Messages.MESSAGE_INDEX_OUT_OF_RANGE, pe);
+            }
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
@@ -83,9 +88,9 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (argMultimap.getValue(PREFIX_SERVER).isPresent()) {
             descriptor.setServer(ParserUtil.parseServer(argMultimap.getValue(PREFIX_SERVER).get()));
         }
-        if (argMultimap.getValue(PREFIX_FAVOURITE).isPresent()) {
-            descriptor.setFavourite(ParserUtil.parseFavourite(argMultimap.getValue(PREFIX_FAVOURITE).get()));
-        }
+        // if (argMultimap.getValue(PREFIX_FAVOURITE).isPresent()) {
+        //     descriptor.setFavourite(ParserUtil.parseFavourite(argMultimap.getValue(PREFIX_FAVOURITE).get()));
+        // }
         if (argMultimap.getValue(PREFIX_COUNTRY).isPresent()) {
             descriptor.setCountry(ParserUtil.parseCountry(argMultimap.getValue(PREFIX_COUNTRY).get()));
         }

@@ -13,9 +13,8 @@ public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Lists all the gamers in your BlockBook.\n"
-            + "Format: " + COMMAND_WORD;
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all the gamers in your BlockBook.\n"
+            + "\n\tFormat: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = Messages.MESSAGE_GAMERS_LISTED_OVERVIEW;
 
@@ -27,6 +26,7 @@ public class ListCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         try {
+            model.clearSort();
             model.updateFilteredGamerList(PREDICATE_SHOW_ALL_GAMERS);
             int gamerCount = model.getFilteredGamerList().size();
             if (gamerCount == 0) {
