@@ -104,7 +104,7 @@ public class FindCommandParserTest {
     @Test
     public void parse_invalidLaxEmail_throwsParseException() {
         // Contains spaces
-        assertParseFailure(parser, " " + PREFIX_EMAIL + "john doe@example.com", Email.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, " " + PREFIX_EMAIL + "john doe@example.com", Email.MESSAGE_LAX_CONSTRAINTS);
     }
 
     /**
