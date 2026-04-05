@@ -186,12 +186,16 @@ Deletes the specified gamers from BlockBook.
 Format: `delete INDEX [INDEX]...`
 
 * Deletes the gamers at each specified `INDEX`.
+* Trying to delete the same index multiple times will only cause that index to be deleted once.
 * The indexes refer to the index numbers shown in the displayed gamer list.
+* The indexes do not have to be in any particular order. e.g. `delete 2 1` is acceptable.
 * Each index **must be a positive integer** 1, 2, 3, ...
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd gamer shown in the list.
 * `find Betsy` followed by `delete 1 2` deletes the 1st and 2nd gamer in the results of the `find` command.
+* `delete 2 1` deletes the 1st and 2nd gamer shown in the list.
+* `delete 1 2 2` deletes only the 1st and 2nd gamers shown in the list. The 2nd gamer is only deleted once.
 
 ### Clearing all entries : `clear`
 

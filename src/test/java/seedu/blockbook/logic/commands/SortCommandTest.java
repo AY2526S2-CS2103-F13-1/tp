@@ -96,9 +96,9 @@ public class SortCommandTest {
         // Create a model with a mix of favourite and non-favourite gamers
         BlockBook blockBook = new BlockBook();
         Gamer nonFavGamer = new GamerBuilder().withName("Zack").withGamerTag("zack1")
-                .withFavourite("unfav").build();
+                .withFavourite(false).build();
         Gamer favGamer = new GamerBuilder().withName("Alice").withGamerTag("alice1")
-                .withFavourite("fav").build();
+                .withFavourite(true).build();
         blockBook.addGamer(nonFavGamer);
         blockBook.addGamer(favGamer);
         Model testModel = new ModelManager(blockBook, new UserPrefs());
@@ -116,13 +116,13 @@ public class SortCommandTest {
     public void execute_favouritesGroupedThenSortedByAttribute_success() throws CommandException {
         BlockBook blockBook = new BlockBook();
         Gamer favGamerB = new GamerBuilder().withName("Bob").withGamerTag("bob1")
-                .withFavourite("fav").build();
+                .withFavourite(true).build();
         Gamer favGamerA = new GamerBuilder().withName("Alice").withGamerTag("alice1")
-                .withFavourite("fav").build();
+                .withFavourite(true).build();
         Gamer nonFavGamerD = new GamerBuilder().withName("Dave").withGamerTag("dave1")
-                .withFavourite("unfav").build();
+                .withFavourite(false).build();
         Gamer nonFavGamerC = new GamerBuilder().withName("Charlie").withGamerTag("charlie1")
-                .withFavourite("unfav").build();
+                .withFavourite(false).build();
         blockBook.addGamer(favGamerB);
         blockBook.addGamer(nonFavGamerD);
         blockBook.addGamer(favGamerA);

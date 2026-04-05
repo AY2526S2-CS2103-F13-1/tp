@@ -23,7 +23,7 @@ public class GamerBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_GROUP = "Raid Team";
     public static final String DEFAULT_SERVER = "127.0.0.1:8080";
-    public static final String DEFAULT_FAVOURITE = "fav";
+    public static final Boolean DEFAULT_FAVOURITE = true;
     public static final String DEFAULT_COUNTRY = "Singapore";
     public static final String DEFAULT_REGION = "ASIA";
     public static final String DEFAULT_NOTE = "test_note";
@@ -143,7 +143,7 @@ public class GamerBuilder {
      * @param favourite A valid favourite status.
      * @return This builder.
      */
-    public GamerBuilder withFavourite(String favourite) {
+    public GamerBuilder withFavourite(Boolean favourite) {
         this.favourite = new Favourite(favourite);
         return this;
     }

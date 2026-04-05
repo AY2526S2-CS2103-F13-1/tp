@@ -32,12 +32,12 @@ public class FavouriteCommandTest {
 
         FavouriteCommand favouriteCommand = new FavouriteCommand(INDEX_FIRST_GAMER, false);
 
-        Gamer updatedGamer = new GamerBuilder(gamerToToggle).withFavourite("unfav").build();
+        Gamer updatedGamer = new GamerBuilder(gamerToToggle).withFavourite(false).build();
         Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
         expectedModel.setGamer(gamerToToggle, updatedGamer);
 
         String expectedMessage = String.format(FavouriteCommand.MESSAGE_UNMARK_FAVOURITE_SUCCESS,
-                formatContactSummaryForUnmark(updatedGamer));
+                formatContactSummary(updatedGamer));
 
         assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);
     }
@@ -46,17 +46,17 @@ public class FavouriteCommandTest {
     public void execute_favouriteContact_success() {
         Model model = new ModelManager(getTypicalBlockBook(), new UserPrefs());
         Gamer gamer = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
-        Gamer unfavGamer = new GamerBuilder(gamer).withFavourite("unfav").build();
+        Gamer unfavGamer = new GamerBuilder(gamer).withFavourite(false).build();
         model.setGamer(gamer, unfavGamer);
 
         FavouriteCommand favouriteCommand = new FavouriteCommand(INDEX_FIRST_GAMER, true);
 
-        Gamer favGamer = new GamerBuilder(unfavGamer).withFavourite("fav").build();
+        Gamer favGamer = new GamerBuilder(unfavGamer).withFavourite(true).build();
         Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
         expectedModel.setGamer(unfavGamer, favGamer);
 
         String expectedMessage = String.format(FavouriteCommand.MESSAGE_MARK_FAVOURITE_SUCCESS,
-                formatContactSummaryForMark(favGamer));
+                formatContactSummary(favGamer));
 
         assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);
     }
@@ -77,7 +77,7 @@ public class FavouriteCommandTest {
     public void execute_unfavouriteAlreadyUnfavourite_throwsCommandException() {
         Model model = new ModelManager(getTypicalBlockBook(), new UserPrefs());
         Gamer gamer = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
-        Gamer unfavGamer = new GamerBuilder(gamer).withFavourite("unfav").build();
+        Gamer unfavGamer = new GamerBuilder(gamer).withFavourite(false).build();
         model.setGamer(gamer, unfavGamer);
 
         FavouriteCommand favouriteCommand = new FavouriteCommand(INDEX_FIRST_GAMER, false);
@@ -139,15 +139,8 @@ public class FavouriteCommandTest {
         assertEquals(expected, favouriteCommand.toString());
     }
 
-    private static String formatContactSummaryForMark(Gamer gamer) {
-        return String.format("Name: %s GamerTag: %s Favourite: %s",
-                Messages.formatNullable(gamer.getName()),
-                Messages.formatNullable(gamer.getGamerTag()),
-                Messages.formatNullable(gamer.getFavourite()));
-    }
-
-    private static String formatContactSummaryForUnmark(Gamer gamer) {
-        return String.format("Name: %s GamerTag: %s Favourite: %s",
+    private static String formatContactSummary(Gamer gamer) {
+        return String.format("\n Name: %s\n GamerTag: %s\n Favourite: %s",
                 Messages.formatNullable(gamer.getName()),
                 Messages.formatNullable(gamer.getGamerTag()),
                 Messages.formatNullable(gamer.getFavourite()));
