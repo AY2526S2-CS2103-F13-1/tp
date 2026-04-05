@@ -592,7 +592,13 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases ... }_
 
-### Deleting a gamer
+### Using the help command
+
+### Adding a gamer contact
+
+### Editing a gamer contact
+
+### Deleting a gamer contact
 
 1. Deleting a gamer while all gamers are being shown
 
@@ -612,7 +618,28 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases ... }_
 
-### Saving data
+### Adding a gamer contact as a favourite contact
+
+### Listing gamer contacts
+
+### Viewing a gamer contact
+
+### Finding a gamer contact
+
+### Clearing all gamer contacts
+
+### Creating a group (TBA)
+
+### Editing a group (TBA)
+
+### Deleting a group (TBA)
+
+### Adding a gamer to a group (TBA)
+
+### Listing groups (TBA)
+
+### Dealing with data
+1. Saving data to `contacts.json`
 
 1. Dealing with missing/corrupted data files
 
