@@ -147,11 +147,11 @@ public class ParserUtil {
      */
     public static Group parseGroup(String group) throws ParseException {
         requireNonNull(group);
-        String trimmedGroup = group.trim();
-        if (!Group.isValidGroup(trimmedGroup)) {
+        String normalizedGroup = normalizeSpacedValue(group);
+        if (!Group.isValidGroup(normalizedGroup)) {
             throw new ParseException(Group.MESSAGE_CONSTRAINTS);
         }
-        return new Group(trimmedGroup);
+        return new Group(normalizedGroup);
     }
 
     /**
@@ -177,11 +177,11 @@ public class ParserUtil {
      */
     public static Country parseCountry(String country) throws ParseException {
         requireNonNull(country);
-        String trimmedCountry = country.trim();
-        if (!Country.isValidCountry(trimmedCountry)) {
+        String normalizedCountry = normalizeSpacedValue(country);
+        if (!Country.isValidCountry(normalizedCountry)) {
             throw new ParseException(Country.MESSAGE_CONSTRAINTS);
         }
-        return new Country(trimmedCountry);
+        return new Country(normalizedCountry);
     }
 
     /**
