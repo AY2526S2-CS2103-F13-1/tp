@@ -8,65 +8,73 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-         title="BlockBook" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
-  <icons>
-    <Image url="@/images/blockbook_icon.png" />
-  </icons>
-  <scene>
-    <Scene>
-      <stylesheets>
-        <URL value="@DarkTheme.css" />
-        <URL value="@Extensions.css" />
-      </stylesheets>
+         title="BlockBook" minWidth="750" minHeight="600" onCloseRequest="#handleExit">
+    <icons>
+        <Image url="@/images/blockbook_icon.png"/>
+    </icons>
+    <scene>
+        <Scene>
+            <stylesheets>
+                <URL value="@DarkTheme.css"/>
+                <URL value="@Extensions.css"/>
+            </stylesheets>
 
-      <VBox styleClass="minecraft-root" spacing="8">
-        <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-          <Menu fx:id="exitMenu" mnemonicParsing="false" text="Exit">
-            <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help Menu" />
-            <MenuItem fx:id="websiteMenuItem" mnemonicParsing="false" onAction="#openWebsite" text="BlockBook Website" />
-            <MenuItem fx:id="userGuideMenuItem" mnemonicParsing="false" onAction="#openUserGuide" text="User Guide" />
-            <MenuItem fx:id="developerGuideMenuItem" mnemonicParsing="false" onAction="#openDeveloperGuide" text="Developer Guide" />
-          </Menu>
-        </MenuBar>
+            <VBox styleClass="minecraft-root" spacing="8">
+                <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
+                    <Menu fx:id="exitMenu" mnemonicParsing="false" text="Exit">
+                        <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Help">
+                        <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help Menu"/>
+                        <MenuItem fx:id="websiteMenuItem" mnemonicParsing="false" onAction="#openWebsite" text="BlockBook Website"/>
+                        <MenuItem fx:id="userGuideMenuItem" mnemonicParsing="false" onAction="#openUserGuide" text="User Guide"/>
+                        <MenuItem fx:id="developerGuideMenuItem" mnemonicParsing="false" onAction="#openDeveloperGuide" text="Developer Guide"/>
+                    </Menu>
+                </MenuBar>
 
-        <HBox styleClass="minecraft-header" VBox.vgrow="NEVER">
-          <VBox spacing="2">
-            <Label text="BLOCKBOOK" styleClass="label-header" />
-            <Label text="Manage your fellow Minecrafters' contacts with block-by-block precision." styleClass="label-bright" />
-          </VBox>
-        </HBox>
+                <HBox styleClass="minecraft-header" VBox.vgrow="NEVER">
+                    <VBox spacing="2">
+                        <Label text="BLOCKBOOK" styleClass="label-header"/>
+                        <Label text="Manage your fellow Minecrafters' contacts with block-by-block precision." styleClass="label-bright"/>
+                    </VBox>
+                </HBox>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
+                <SplitPane fx:id="splitPane" dividerPositions="0.5" VBox.vgrow="ALWAYS">
 
-        <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="180" prefHeight="180" maxHeight="180">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
+                    <!-- Left panel: Contacts list (full height) -->
+                    <VBox fx:id="gamerList" styleClass="pane-with-border"
+                          minWidth="200" prefWidth="400">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        <StackPane fx:id="gamerListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                    </VBox>
 
-        <VBox fx:id="gamerList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="gamerListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-        </VBox>
+                    <!-- Right panel: Result display + Command box stacked -->
+                    <VBox minWidth="200" prefWidth="350" spacing="8">
+                        <StackPane fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
+                                   VBox.vgrow="ALWAYS">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                        </StackPane>
 
-        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
-      </VBox>
-    </Scene>
-  </scene>
+                        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
+                            <padding>
+                                <Insets top="5" right="10" bottom="5" left="10"/>
+                            </padding>
+                        </StackPane>
+                    </VBox>
+                </SplitPane>
+
+                <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"/>
+            </VBox>
+        </Scene>
+    </scene>
 </fx:root>
-

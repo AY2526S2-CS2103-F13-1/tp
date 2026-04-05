@@ -73,16 +73,9 @@ public class ViewCommandTest {
         Gamer targetGamer = model.getFilteredGamerList().get(targetIndex.getZeroBased());
         ViewCommand command = new ViewCommand(targetIndex);
 
-        String expectedMessage = "Name: " + Messages.formatNullable(targetGamer.getName())
-                + " Gamertag: " + targetGamer.getGamerTag()
-                + " Phone: " + Messages.formatNullable(targetGamer.getPhone())
-                + " Email: " + Messages.formatNullable(targetGamer.getEmail())
-                + " Group: " + Messages.formatNullable(targetGamer.getGroup())
-                + " Server: " + Messages.formatNullable(targetGamer.getServer())
-                + " Favourite: " + Messages.formatNullable(targetGamer.getFavourite())
-                + " Country: " + Messages.formatNullable(targetGamer.getCountry())
-                + " Region: " + Messages.formatNullable(targetGamer.getRegion())
-                + " Note: " + Messages.formatNullable(targetGamer.getNote());
+        expectedModel.updateFilteredGamerList(predicate);
+
+        String expectedMessage = Messages.format(targetGamer);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
