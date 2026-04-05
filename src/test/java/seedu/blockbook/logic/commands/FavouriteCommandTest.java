@@ -140,9 +140,8 @@ public class FavouriteCommandTest {
     }
 
     private static String formatContactSummary(Gamer gamer) {
-        return String.format("\n Name: %s\n GamerTag: %s\n Favourite: %s",
+        return String.format("\n Name: %s\n GamerTag: %s",
                 Messages.formatNullable(gamer.getName()),
-                Messages.formatNullable(gamer.getGamerTag()),
-                Messages.formatNullable(gamer.getFavourite()));
+                Messages.formatNullable(gamer.getGamerTag()));
     }
 }
