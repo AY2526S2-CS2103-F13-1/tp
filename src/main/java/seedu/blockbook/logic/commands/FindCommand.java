@@ -22,8 +22,8 @@ public class FindCommand extends Command {
             + "\n\tSpecific attribute search is also available via Format 2 and can be stacked.\n"
             + "\n\tFormat 1: " + COMMAND_WORD + " KEYWORD"
             + "\n\tExample: " + COMMAND_WORD + " joe\n"
-            + "\n\tFormat 2: " + COMMAND_WORD + " [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP]"
-            + " [server/SERVER] [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]"
+            + "\n\tFormat 2: " + COMMAND_WORD + " [name/NAME] [gamertag/GAMERTAG] [phone/PHONE] [email/EMAIL]"
+            + " [group/GROUP] [server/SERVER] [favourite/] [country/COUNTRY] [region/REGION] [note/NOTE]"
             + "\n\tExample 1: " + COMMAND_WORD + " name/steve"
             + "\n\tExample 2: " + COMMAND_WORD + " name/steve gamertag/steve";
 
