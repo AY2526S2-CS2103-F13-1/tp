@@ -32,23 +32,13 @@ public class ViewCommand extends Command {
         requireNonNull(model);
         List<Gamer> lastShownList = model.getFilteredGamerList();
         int index = targetIndex.getZeroBased();
-      
+
         if (index < 0 || index >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        }
 
         Gamer specifiedGamer = lastShownList.get(index);
-        String formattedContact = "Name: " + Messages.formatNullable(specifiedGamer.getName())
-                + " Gamertag: " + specifiedGamer.getGamerTag()
-                + " Phone: " + Messages.formatNullable(specifiedGamer.getPhone())
-                + " Email: " + Messages.formatNullable(specifiedGamer.getEmail())
-                + " Group: " + Messages.formatNullable(specifiedGamer.getGroup())
-                + " Server: " + Messages.formatNullable(specifiedGamer.getServer())
-                + " Favourite: " + Messages.formatNullable(specifiedGamer.getFavourite())
-                + " Country: " + Messages.formatNullable(specifiedGamer.getCountry())
-                + " Region: " + Messages.formatNullable(specifiedGamer.getRegion())
-                + " Note: " + Messages.formatNullable(specifiedGamer.getNote());
-        return new CommandResult(formattedContact);
-
+        return new CommandResult(Messages.format(specifiedGamer));
     }
 
     @Override

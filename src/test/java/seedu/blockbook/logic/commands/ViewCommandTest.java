@@ -47,16 +47,7 @@ public class ViewCommandTest {
         ViewCommand command = new ViewCommand(targetIndex);
 
         // Construct the exact expected string output based on the ViewCommand logic
-        String expectedMessage = "Name: " + Messages.formatNullable(targetGamer.getName())
-                + " Gamertag: " + targetGamer.getGamerTag()
-                + " Phone: " + Messages.formatNullable(targetGamer.getPhone())
-                + " Email: " + Messages.formatNullable(targetGamer.getEmail())
-                + " Group: " + Messages.formatNullable(targetGamer.getGroup())
-                + " Server: " + Messages.formatNullable(targetGamer.getServer())
-                + " Favourite: " + Messages.formatNullable(targetGamer.getFavourite())
-                + " Country: " + Messages.formatNullable(targetGamer.getCountry())
-                + " Region: " + Messages.formatNullable(targetGamer.getRegion())
-                + " Note: " + Messages.formatNullable(targetGamer.getNote());
+        String expectedMessage = Messages.format(targetGamer);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
@@ -72,8 +63,6 @@ public class ViewCommandTest {
         Index targetIndex = TypicalIndexes.INDEX_FIRST_GAMER;
         Gamer targetGamer = model.getFilteredGamerList().get(targetIndex.getZeroBased());
         ViewCommand command = new ViewCommand(targetIndex);
-
-        expectedModel.updateFilteredGamerList(predicate);
 
         String expectedMessage = Messages.format(targetGamer);
 
