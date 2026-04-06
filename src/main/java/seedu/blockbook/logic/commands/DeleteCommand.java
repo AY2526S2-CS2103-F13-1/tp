@@ -18,11 +18,13 @@ import seedu.blockbook.model.gamer.Gamer;
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
+    public static final String COMMAND_ALIAS = "d";
+    public static final String COMMAND_WORD_WITH_ALIAS = "(d)elete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the gamer contacts identified by the index numbers used in the displayed gamer list."
             + " Entering duplicate indexes will only delete the contact once.\n"
-            + "\nFormat: delete INDEX [INDEX]..."
+            + "\nFormat: " + COMMAND_WORD_WITH_ALIAS + " INDEX [INDEX]..."
             + "\nExample 1: " + COMMAND_WORD + " 1"
             + "\nExample 2: " + COMMAND_WORD + " 1 2 3"
             + "\nExample 3: " + COMMAND_WORD + " 1 1 1 (Deletes the first contact only once)";

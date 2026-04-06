@@ -20,14 +20,19 @@ import seedu.blockbook.model.gamer.Gamer;
 public class FavouriteCommand extends Command {
 
     public static final String COMMAND_WORD = "favourite";
+    public static final String COMMAND_ALIAS = "fav";
+    public static final String COMMAND_WORD_WITH_ALIAS = "(f)avourite";
+
     public static final String COMMAND_WORD_UNFAVOURITE = "unfavourite";
+    public static final String COMMAND_ALIAS_UNFAVOURITE = "unfav";
+    public static final String COMMAND_WORD_UNFAVOURITE_WITH_ALIAS = "(unfav)ourite";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds a gamer to favourites using the displayed index.\n"
-            + "Format: " + COMMAND_WORD + " INDEX\n"
+            + "Format: " + COMMAND_WORD_WITH_ALIAS + " INDEX\n"
             + "Example: " + COMMAND_WORD + " 2\n\n"
             + COMMAND_WORD_UNFAVOURITE + ": Removes a gamer from favourites using the displayed index.\n"
-            + "Format: " + COMMAND_WORD_UNFAVOURITE + " INDEX\n"
+            + "Format: " + COMMAND_WORD_UNFAVOURITE_WITH_ALIAS + " INDEX\n"
             + "Example: " + COMMAND_WORD_UNFAVOURITE + " 2";
 
     public static final String MESSAGE_MARK_FAVOURITE_SUCCESS =

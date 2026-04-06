@@ -32,14 +32,14 @@ import seedu.blockbook.model.gamer.Server;
 public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_ALIAS = "e";
+    public static final String COMMAND_WORD_WITH_ALIAS = "(e)dit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits a gamer in BlockBook.\n\n"
-            + "Format: edit INDEX [gamertag/GAMERTAG] "
-            + "[name/NAME] [phone/PHONE] [email/EMAIL] "
-            + "[group/GROUP] [server/SERVER] "
-            + "[country/COUNTRY] "
-            + "[region/REGION] [note/NOTE]\n\n"
-            + "Example: edit 1 gamertag/ilovesteve name/Herobrine "
+            + "Format: " + COMMAND_WORD_WITH_ALIAS + " INDEX [gamertag/GAMERTAG] "
+            + "[name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP]"
+            + "[server/SERVER] [country/COUNTRY] [region/REGION] [note/NOTE]\n\n"
+            + "Example: " + COMMAND_WORD + " 1 gamertag/ilovesteve name/Herobrine "
             + "phone/99999 email/brine@gmail.com "
             + "group/DestroySteve server/127.0.0.1:8080 "
             + "country/Singapore region/ASIA note/I hate steve";

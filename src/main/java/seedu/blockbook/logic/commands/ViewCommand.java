@@ -15,9 +15,12 @@ import seedu.blockbook.model.gamer.GamertagContainsKeywordPredicate;
 public class ViewCommand extends Command {
 
     public static final String COMMAND_WORD = "view";
+    public static final String COMMAND_ALIAS = "v";
+    public static final String COMMAND_WORD_WITH_ALIAS = "(v)iew";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the full details of gamers whose gamertag is"
             + " the specified keyword (case-insensitive) and displays them in the command prompt.\n"
-            + "\nFormat: " + COMMAND_WORD + " gamertag/GAMERTAG ";
+            + "\nFormat: " + COMMAND_WORD_WITH_ALIAS + " gamertag/GAMERTAG ";
 
     private final GamertagContainsKeywordPredicate predicate;
 

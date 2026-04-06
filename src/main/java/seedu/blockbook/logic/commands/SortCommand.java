@@ -21,10 +21,12 @@ import seedu.blockbook.model.gamer.Gamer;
 public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
+    public static final String COMMAND_ALIAS = "s";
+    public static final String COMMAND_WORD_WITH_ALIAS = "(s)ort";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts contacts by the specified attributes. Favourite contacts are always shown first.\n"
-            + "\nFormat: " + COMMAND_WORD + " [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP] [server/SERVER]"
+            + "\nFormat: " + COMMAND_WORD_WITH_ALIAS + " [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP] [server/SERVER]"
             + " [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]\n"
             + "\nExample: " + COMMAND_WORD + " name/John phone/98002132";
 
