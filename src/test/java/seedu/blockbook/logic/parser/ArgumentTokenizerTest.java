@@ -3,7 +3,11 @@ package seedu.blockbook.logic.parser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
@@ -142,9 +146,23 @@ public class ArgumentTokenizerTest {
 
         assertEquals(aaa, aaa);
         assertEquals(aaa, new Prefix("aaa", "a"));
+        assertEquals(aaa.hashCode(), new Prefix("aaa", "a").hashCode());
 
         assertNotEquals(aaa, "aaa");
         assertNotEquals(aaa, new Prefix("aab", "a"));
+
+        // Same canonical prefix but different alias should not be equal.
+        assertNotEquals(new Prefix("name/", "n/"), new Prefix("name/", "nm/"));
+
+        // Null/empty alias behavior is intentionally distinct.
+        assertEquals(new Prefix("name/", null), new Prefix("name/", null));
+        assertNotEquals(new Prefix("name/", null), new Prefix("name/", ""));
+
+        // Prefix is used as a map key, so alias must participate in key identity.
+        Map<Prefix, String> prefixMap = new HashMap<>();
+        prefixMap.put(new Prefix("name/", "n/"), "value");
+        assertEquals("value", prefixMap.get(new Prefix("name/", "n/")));
+        assertNull(prefixMap.get(new Prefix("name/", "nm/")));
     }
 
 }
