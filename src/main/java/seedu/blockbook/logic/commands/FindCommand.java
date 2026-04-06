@@ -40,13 +40,14 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateFilteredGamerList(predicate);
-        int filteredGamerCount = model.getFilteredGamerList().size();
-        if (filteredGamerCount == 0) {
+        int matchingGamerCount = (int) model.getBlockBook().getGamerList().stream()
+                .filter(predicate)
+                .count();
+        if (matchingGamerCount == 0) {
             return new CommandResult(Messages.MESSAGE_NO_GAMERS_FOUND_BY_FIND);
-        } else {
-            return new CommandResult(buildFoundMessage(filteredGamerCount));
         }
+        model.updateFilteredGamerList(predicate);
+        return new CommandResult(buildFoundMessage(matchingGamerCount));
     }
 
     private String buildFoundMessage(int filteredGamerCount) {
