@@ -13,6 +13,7 @@ import static seedu.blockbook.testutil.TypicalGamers.CARL;
 import static seedu.blockbook.testutil.TypicalGamers.DANIEL;
 import static seedu.blockbook.testutil.TypicalGamers.ELLE;
 import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
+import static seedu.blockbook.testutil.TypicalGamers.getTypicalGamers;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -89,16 +90,15 @@ public class FindCommandTest {
      */
     @Test
     public void execute_zeroKeywords_noGamerFound() {
-        String expectedMessage = String.format(MESSAGE_NO_GAMERS_FOUND_BY_FIND, 0);
+        String expectedMessage = MESSAGE_NO_GAMERS_FOUND_BY_FIND;
 
         // Testing with Global Search format
         AnyAttributeContainsKeywordsPredicate predicate =
                 new AnyAttributeContainsKeywordsPredicate("NonExistentKeyword");
         FindCommand command = new FindCommand(predicate);
 
-        expectedModel.updateFilteredGamerList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredGamerList());
+        assertEquals(getTypicalGamers(), model.getFilteredGamerList());
     }
 
     /**
@@ -157,14 +157,13 @@ public class FindCommandTest {
     @Test
     public void execute_specificSearchMultipleAttributesOneFails_noGamerFound() {
         // Proves the "AND" logic works: If the name matches but the phone is wrong, it returns 0.
-        String expectedMessage = String.format(MESSAGE_NO_GAMERS_FOUND_BY_FIND, 0);
+        String expectedMessage = MESSAGE_NO_GAMERS_FOUND_BY_FIND;
         SpecificAttributesMatchPredicate predicate = new SpecificAttributesMatchPredicate(
                 "Alice", null, "00000000", null, null, null, null, null, null, null); // 00000000 doesn't exist
         FindCommand command = new FindCommand(predicate);
 
-        expectedModel.updateFilteredGamerList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredGamerList());
+        assertEquals(getTypicalGamers(), model.getFilteredGamerList());
     }
 
     /**
