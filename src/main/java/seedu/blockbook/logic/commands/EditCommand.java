@@ -17,7 +17,6 @@ import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.gamer.Country;
 import seedu.blockbook.model.gamer.Email;
-import seedu.blockbook.model.gamer.Favourite;
 import seedu.blockbook.model.gamer.Gamer;
 import seedu.blockbook.model.gamer.GamerTag;
 import seedu.blockbook.model.gamer.Group;
@@ -40,7 +39,7 @@ public class EditCommand extends Command {
             + "[group/GROUP] [server/SERVER] "
             + "[country/COUNTRY] "
             + "[region/REGION] [note/NOTE]\n\n"
-            + "Example: add gamertag/ilovesteve name/Herobrine "
+            + "Example: edit 1 gamertag/ilovesteve name/Herobrine "
             + "phone/99999 email/brine@gmail.com "
             + "group/DestroySteve server/127.0.0.1:8080 "
             + "country/Singapore region/ASIA note/I hate steve";
@@ -118,7 +117,6 @@ public class EditCommand extends Command {
         Email updatedEmail = editGamerDescriptor.getEmail().orElse(gamerToEdit.getEmail());
         Group updatedGroup = editGamerDescriptor.getGroup().orElse(gamerToEdit.getGroup());
         Server updatedServer = editGamerDescriptor.getServer().orElse(gamerToEdit.getServer());
-        Favourite updatedFavourite = editGamerDescriptor.getFavourite().orElse(gamerToEdit.getFavourite());
         Country updatedCountry = editGamerDescriptor.getCountry().orElse(gamerToEdit.getCountry());
         Region updatedRegion = editGamerDescriptor.getRegion().orElse(gamerToEdit.getRegion());
         Note updatedNote = editGamerDescriptor.getNote().orElse(gamerToEdit.getNote());
@@ -130,7 +128,7 @@ public class EditCommand extends Command {
                 updatedEmail,
                 updatedGroup,
                 updatedServer,
-                updatedFavourite,
+                gamerToEdit.getFavourite(),
                 updatedCountry,
                 updatedRegion,
                 updatedNote
@@ -171,7 +169,6 @@ public class EditCommand extends Command {
         private Email email;
         private Group group;
         private Server server;
-        private Favourite favourite;
         private Country country;
         private Region region;
         private Note note;
@@ -188,7 +185,6 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setGroup(toCopy.group);
             setServer(toCopy.server);
-            setFavourite(toCopy.favourite);
             setCountry(toCopy.country);
             setRegion(toCopy.region);
             setNote(toCopy.note);
@@ -199,7 +195,7 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(
-                    name, gamerTag, phone, email, group, server, favourite, country, region, note);
+                    name, gamerTag, phone, email, group, server, country, region, note);
         }
 
         public void setName(Name name) {
@@ -250,14 +246,6 @@ public class EditCommand extends Command {
             return Optional.ofNullable(server);
         }
 
-        public void setFavourite(Favourite favourite) {
-            this.favourite = favourite;
-        }
-
-        public Optional<Favourite> getFavourite() {
-            return Optional.ofNullable(favourite);
-        }
-
         public void setCountry(Country country) {
             this.country = country;
         }
@@ -299,7 +287,6 @@ public class EditCommand extends Command {
                     && Objects.equals(email, otherDescriptor.email)
                     && Objects.equals(group, otherDescriptor.group)
                     && Objects.equals(server, otherDescriptor.server)
-                    && Objects.equals(favourite, otherDescriptor.favourite)
                     && Objects.equals(country, otherDescriptor.country)
                     && Objects.equals(region, otherDescriptor.region)
                     && Objects.equals(note, otherDescriptor.note);
@@ -314,7 +301,6 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("group", group)
                     .add("server", server)
-                    .add("favourite", favourite)
                     .add("country", country)
                     .add("region", region)
                     .add("note", note)
