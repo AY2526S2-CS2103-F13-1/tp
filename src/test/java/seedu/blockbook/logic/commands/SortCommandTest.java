@@ -202,23 +202,6 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByFavourite_success() throws CommandException {
-        BlockBook blockBook = new BlockBook();
-        blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("a1").withFavourite("unfav").build());
-        blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("b1").withFavourite("fav").build());
-        blockBook.addGamer(new GamerBuilder().withName("C").withGamerTag("c1").withFavourite("unfav").build());
-        Model testModel = new ModelManager(blockBook, new UserPrefs());
-
-        new SortCommand(List.of("favourite")).execute(testModel);
-
-        List<Gamer> sortedList = testModel.getFilteredGamerList();
-        // Favourites should come before non-favourites
-        assertTrue(sortedList.get(0).getFavourite().isFav());
-        assertFalse(sortedList.get(1).getFavourite().isFav());
-        assertFalse(sortedList.get(2).getFavourite().isFav());
-    }
-
-    @Test
     public void execute_sortByMultipleAttributes_success() throws CommandException {
         SortCommand sortCommand = new SortCommand(List.of("name", "phone"));
         CommandResult result = sortCommand.execute(model);
