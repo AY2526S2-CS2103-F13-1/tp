@@ -27,7 +27,7 @@ public class AddCommand extends Command {
             + "[group/GROUP] [server/SERVER] "
             + "[country/COUNTRY] "
             + "[region/REGION] [note/NOTE]\n\n"
-            + "Example: " + COMMAND_WORD + "gamertag/ilovesteve name/Herobrine "
+            + "Example: " + COMMAND_WORD + " gamertag/ilovesteve name/Herobrine "
             + "phone/99999 email/brine@gmail.com "
             + "group/DestroySteve server/127.0.0.1:8080 "
             + "country/Singapore region/ASIA note/I hate steve";
