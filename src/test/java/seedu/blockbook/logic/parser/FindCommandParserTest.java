@@ -104,7 +104,7 @@ public class FindCommandParserTest {
     @Test
     public void parse_invalidLaxEmail_throwsParseException() {
         // Contains spaces
-        assertParseFailure(parser, " " + PREFIX_EMAIL + "john doe@example.com", Email.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, " " + PREFIX_EMAIL + "john doe@example.com", Email.MESSAGE_LAX_CONSTRAINTS);
     }
 
     /**
@@ -159,6 +159,15 @@ public class FindCommandParserTest {
     }
 
     /**
+     * Verifies that mixing global and specific search formats is rejected.
+     */
+    @Test
+    public void parse_mixedGlobalAndSpecific_throwsParseException() {
+        assertParseFailure(parser, "herobrine " + PREFIX_NAME + "Steve",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+    }
+
+    /**
      * Verifies that valid specific search format returns FindCommand with SpecificAttributesMatchPredicate.
      */
     @Test
@@ -178,5 +187,4 @@ public class FindCommandParserTest {
     }
 
 }
-
 

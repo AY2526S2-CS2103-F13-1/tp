@@ -78,7 +78,6 @@ public class EditCommandParserTest {
                 + EMAIL_DESC_BOB
                 + GROUP_DESC_BOB
                 + SERVER_DESC_BOB
-                // + FAVOURITE_DESC_BOB
                 + COUNTRY_DESC_BOB
                 + REGION_DESC_BOB
                 + NOTE_DESC_BOB;
@@ -90,7 +89,6 @@ public class EditCommandParserTest {
                 .withEmail(VALID_EMAIL_BOB)
                 .withGroup(VALID_GROUP_BOB)
                 .withServer(VALID_SERVER_BOB)
-                // .withFavourite(VALID_FAVOURITE_BOB)
                 .withCountry(VALID_COUNTRY_BOB)
                 .withRegion(VALID_REGION_BOB)
                 .withNote(VALID_NOTE_BOB)
@@ -106,5 +104,11 @@ public class EditCommandParserTest {
         String userInput = INDEX_FIRST_GAMER.getOneBased() + NAME_DESC_BOB + NAME_DESC_BOB;
         assertParseFailure(parser, userInput,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
+    }
+
+    @Test
+    public void parse_favouritePrefix_failure() {
+        String userInput = INDEX_FIRST_GAMER.getOneBased() + " favourite/true";
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_FORMAT);
     }
 }

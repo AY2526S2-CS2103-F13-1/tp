@@ -64,8 +64,14 @@ public class FindCommandParser implements Parser<FindCommand> {
                         || argMultimap.getValue(PREFIX_REGION).isPresent()
                         || argMultimap.getValue(PREFIX_NOTE).isPresent();
 
+        String preamble = argMultimap.getPreamble().trim();
+        // Prevent mixed formats
+        if (hasAnyPrefixedArguments && !preamble.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
         if (!hasAnyPrefixedArguments) {
-            String preamble = argMultimap.getPreamble().trim();
             if (preamble.length() > 50) {
                 throw new ParseException("Global search KEYWORD input cannot exceed 50 characters.");
             }
@@ -96,7 +102,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String emailArg = extractAndValidateArg(argMultimap, PREFIX_EMAIL);
         // Lax validation is added here to allow for Partial Search
         if (emailArg != null && !Email.isValidLaxEmail(emailArg)) {
-            throw new ParseException(Email.MESSAGE_CONSTRAINTS);
+            throw new ParseException(Email.MESSAGE_LAX_CONSTRAINTS);
         }
 
         String groupArg = extractAndValidateArg(argMultimap, PREFIX_GROUP);
@@ -168,4 +174,3 @@ public class FindCommandParser implements Parser<FindCommand> {
     }
 
 }
-
