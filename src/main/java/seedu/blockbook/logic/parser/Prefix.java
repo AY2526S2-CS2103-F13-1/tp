@@ -6,13 +6,24 @@ package seedu.blockbook.logic.parser;
  */
 public class Prefix {
     private final String prefix;
+    private final String alias;
 
-    public Prefix(String prefix) {
+    /**
+     * Creates a new Prefix with the specified prefix string and alias.
+     * @param prefix
+     * @param alias
+     */
+    public Prefix(String prefix, String alias) {
         this.prefix = prefix;
+        this.alias = alias;
     }
 
     public String getPrefix() {
         return prefix;
+    }
+
+    public String getAlias() {
+        return alias;
     }
 
     @Override
@@ -37,7 +48,7 @@ public class Prefix {
         }
 
         Prefix otherPrefix = (Prefix) other;
-        return prefix.equals(otherPrefix.prefix);
+        return prefix.equals(otherPrefix.prefix) && alias.equals(otherPrefix.alias);
     }
 }
 
