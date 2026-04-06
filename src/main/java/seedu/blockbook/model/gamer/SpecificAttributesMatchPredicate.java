@@ -61,7 +61,7 @@ public class SpecificAttributesMatchPredicate implements Predicate<Gamer> {
                 && (gamertagKeyword == null || attributeContains(gamer.getGamerTag(), gamertagKeyword))
                 && (phoneKeyword == null || attributeContains(gamer.getPhone(), phoneKeyword))
                 && (emailKeyword == null || attributeContains(gamer.getEmail(), emailKeyword))
-                && (groupKeyword == null || attributeContains(gamer.getGroup(), groupKeyword))
+                && (groupKeyword == null || groupsContain(gamer.getGroups(), groupKeyword))
                 && (serverKeyword == null || attributeContains(gamer.getServer(), serverKeyword))
                 && (favouriteKeyword == null || attributeContains(gamer.getFavourite(), favouriteKeyword))
                 && (countryKeyword == null || attributeContains(gamer.getCountry(), countryKeyword))
@@ -80,6 +80,13 @@ public class SpecificAttributesMatchPredicate implements Predicate<Gamer> {
             return false;
         }
         return attribute.toString().toLowerCase().contains(keyword.toLowerCase());
+    }
+
+    private boolean groupsContain(List<Group> groups, String keyword) {
+        if (groups == null || groups.isEmpty()) {
+            return false;
+        }
+        return groups.stream().anyMatch(group -> attributeContains(group, keyword));
     }
 
     @Override
