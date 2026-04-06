@@ -28,7 +28,7 @@ public class HelpCommandTest {
                 + ClearCommand.MESSAGE_USAGE + "\n\n"
                 + ExitCommand.MESSAGE_USAGE;
 
-        CommandResult expectedCommandResult = new CommandResult(expectedOutput, false, false);
+        CommandResult expectedCommandResult = new CommandResult(expectedOutput, true, false);
 
         assertEquals(expectedCommandResult, new HelpCommand().execute(model));
     }

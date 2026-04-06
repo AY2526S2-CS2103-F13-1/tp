@@ -12,16 +12,19 @@ import seedu.blockbook.model.gamer.Gamer;
  */
 public class Messages {
 
-    public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
-    public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
+    public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command! Type help to view all available commands.";
+    public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n\n%1$s";
     public static final String MESSAGE_GAMERS_LISTED_COUNT = "%1$d gamers listed!";
     public static final String MESSAGE_GAMERTAG_NOT_FOUND = "Gamertag not found. Use a different gamertag instead!";
     public static final String MESSAGE_GAMERS_LISTED_OVERVIEW = "Listed all gamers.";
     public static final String MESSAGE_NO_GAMERS_FOUND_BY_FIND = "BlockBook could not find any"
             + " gamer contacts based on search criteria. Search with a different keyword. ";
-    public static final String MESSAGE_GAMERS_FOUND_BY_FIND = "%1$d gamer(s) found based on search criteria!";
+    public static final String MESSAGE_GAMERS_FOUND_BY_FIND =
+            "%1$d gamer(s) found based on global search criteria.";
+    public static final String MESSAGE_GAMERS_FOUND_BY_FIND_SPECIFIC =
+            "%1$d gamer(s) found based on search criteria: %2$s";
     public static final String MESSAGE_DUPLICATE_FIELDS =
-                "Multiple values specified for the following single-valued field(s): ";
+            "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_EMPTY_CONTACT_LIST = "No contacts to delete. The list is empty.";
     public static final String MESSAGE_NO_CONTACTS = "List loaded but empty.";
     public static final String MESSAGE_DISPLAY_CONTACTS_ERROR = "Error displaying contacts.";
@@ -56,8 +59,6 @@ public class Messages {
                 .append(formatNullable(gamer.getGroup()))
                 .append(" Server: ")
                 .append(formatNullable(gamer.getServer()))
-                .append(" Favourite: ")
-                .append(formatNullable(gamer.getFavourite()))
                 .append(" Country: ")
                 .append(formatNullable(gamer.getCountry()))
                 .append(" Region: ")
@@ -75,4 +76,3 @@ public class Messages {
     }
 
 }
-

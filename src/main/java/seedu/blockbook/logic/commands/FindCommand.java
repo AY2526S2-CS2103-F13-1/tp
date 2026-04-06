@@ -2,12 +2,15 @@ package seedu.blockbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.blockbook.commons.util.ToStringBuilder;
 import seedu.blockbook.logic.Messages;
 import seedu.blockbook.model.Model;
+import seedu.blockbook.model.gamer.AnyAttributeContainsKeywordsPredicate;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.SpecificAttributesMatchPredicate;
 
 /**
  * Finds and lists all gamers in the BlockBook whose attributes match the specified keywords.
@@ -18,16 +21,14 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all gamers whose attributes contain any of "
-            + "the specified keyword (case-insensitive) and displays them as a list with index numbers via Format 1.\n"
-            + "Specific attribute search is also available via Format 2 and can be stacked. \n"
-            + "Format 1: find KEYWORD\n"
-            + "Example: " + COMMAND_WORD + " joe\n"
-            + "Format 2: find ATTRIBUTE1/KEYWORD1 [ATRRIBUTE2/KEYWORD2]... \n"
-            + "find name/NAME\nfind phone/PHONE\nfind email/EMAIL\n"
-            + "find group/GROUP\nfind server/SERVER\nfind favourite/\n"
-            + "find country/COUNTRY\nfind region/REGION\nfind note/NOTE\n"
-            + "Example: find name/steve\n"
-            + "Example: find name/steve gamertag/steve";
+            + "the specified keyword (case-insensitive) and displays them as a list with index numbers via Format 1."
+            + "\n\tSpecific attribute search is also available via Format 2 and can be stacked.\n"
+            + "\n\tFormat 1: " + COMMAND_WORD + " KEYWORD"
+            + "\n\tExample: " + COMMAND_WORD + " joe\n"
+            + "\n\tFormat 2: " + COMMAND_WORD + " [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP]"
+            + " [server/SERVER] [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]"
+            + "\n\tExample 1: " + COMMAND_WORD + " name/steve"
+            + "\n\tExample 2: " + COMMAND_WORD + " name/steve gamertag/steve";
 
     // Use the generic Predicate interface to accept ANY valid gamer predicate
     private final Predicate<Gamer> predicate;
@@ -44,9 +45,20 @@ public class FindCommand extends Command {
         if (filteredGamerCount == 0) {
             return new CommandResult(Messages.MESSAGE_NO_GAMERS_FOUND_BY_FIND);
         } else {
-            return new CommandResult(
-                    String.format(Messages.MESSAGE_GAMERS_FOUND_BY_FIND, filteredGamerCount));
+            return new CommandResult(buildFoundMessage(filteredGamerCount));
         }
+    }
+
+    private String buildFoundMessage(int filteredGamerCount) {
+        if (predicate instanceof AnyAttributeContainsKeywordsPredicate) {
+            return String.format(Messages.MESSAGE_GAMERS_FOUND_BY_FIND, filteredGamerCount);
+        }
+        if (predicate instanceof SpecificAttributesMatchPredicate) {
+            List<String> labels = ((SpecificAttributesMatchPredicate) predicate).getSearchCriteriaLabels();
+            String criteria = labels.isEmpty() ? "Unknown" : String.join(", ", labels);
+            return String.format(Messages.MESSAGE_GAMERS_FOUND_BY_FIND_SPECIFIC, filteredGamerCount, criteria);
+        }
+        return String.format(Messages.MESSAGE_GAMERS_FOUND_BY_FIND, filteredGamerCount);
     }
 
     @Override

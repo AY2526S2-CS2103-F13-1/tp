@@ -3,7 +3,6 @@ package seedu.blockbook.testutil;
 import seedu.blockbook.logic.commands.EditCommand.EditGamerDescriptor;
 import seedu.blockbook.model.gamer.Country;
 import seedu.blockbook.model.gamer.Email;
-import seedu.blockbook.model.gamer.Favourite;
 import seedu.blockbook.model.gamer.Gamer;
 import seedu.blockbook.model.gamer.GamerTag;
 import seedu.blockbook.model.gamer.Group;
@@ -39,7 +38,6 @@ public class EditGamerDescriptorBuilder {
         descriptor.setEmail(gamer.getEmail());
         descriptor.setGroup(gamer.getGroup());
         descriptor.setServer(gamer.getServer());
-        descriptor.setFavourite(gamer.getFavourite());
         descriptor.setCountry(gamer.getCountry());
         descriptor.setRegion(gamer.getRegion());
         descriptor.setNote(gamer.getNote());
@@ -90,14 +88,6 @@ public class EditGamerDescriptorBuilder {
      */
     public EditGamerDescriptorBuilder withServer(String server) {
         descriptor.setServer(new Server(server));
-        return this;
-    }
-
-    /**
-     * Sets the {@code Favourite} of the {@code EditGamerDescriptor} that we are building.
-     */
-    public EditGamerDescriptorBuilder withFavourite(String favourite) {
-        descriptor.setFavourite(new Favourite(favourite));
         return this;
     }
 

@@ -10,12 +10,12 @@ public class HelpCommand extends Command {
     public static final String COMMAND_WORD = "help";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows command usage instructions.\n"
-            + "Format: " + COMMAND_WORD;
+            + "\n\tFormat: " + COMMAND_WORD;
 
-    public static final String SHOWING_HELP_MESSAGE = "The user guide can be found in the help menu above. "
+    public static final String SHOWING_HELP_MESSAGE = "The user guide can be found in the menu bar. "
             + "These are the available commands (case-sensitive):";
 
-    public static final String SEPARATOR = "-------------------------------------------------------------------\n";
+    public static final String SEPARATOR = "\n-------------------------------------------------------------------\n\n";
 
     @Override
     public CommandResult execute(Model model) {
@@ -35,7 +35,7 @@ public class HelpCommand extends Command {
         outputString.append(ClearCommand.MESSAGE_USAGE + "\n\n");
         outputString.append(ExitCommand.MESSAGE_USAGE);
 
-        return new CommandResult(outputString.toString(), false, false);
+        return new CommandResult(outputString.toString(), true, false);
     }
 }
 

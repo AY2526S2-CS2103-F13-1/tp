@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_COUNTRY;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_FAVOURITE;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GAMERTAG;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_NAME;
@@ -39,7 +38,6 @@ public class EditCommandParser implements Parser<EditCommand> {
                 PREFIX_EMAIL,
                 PREFIX_GROUP,
                 PREFIX_SERVER,
-                PREFIX_FAVOURITE,
                 PREFIX_COUNTRY,
                 PREFIX_REGION,
                 PREFIX_NOTE);
@@ -62,7 +60,6 @@ public class EditCommandParser implements Parser<EditCommand> {
                 PREFIX_EMAIL,
                 PREFIX_GROUP,
                 PREFIX_SERVER,
-                PREFIX_FAVOURITE,
                 PREFIX_COUNTRY,
                 PREFIX_REGION,
                 PREFIX_NOTE
@@ -87,9 +84,6 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         if (argMultimap.getValue(PREFIX_SERVER).isPresent()) {
             descriptor.setServer(ParserUtil.parseServer(argMultimap.getValue(PREFIX_SERVER).get()));
-        }
-        if (argMultimap.getValue(PREFIX_FAVOURITE).isPresent()) {
-            descriptor.setFavourite(ParserUtil.parseFavourite(argMultimap.getValue(PREFIX_FAVOURITE).get()));
         }
         if (argMultimap.getValue(PREFIX_COUNTRY).isPresent()) {
             descriptor.setCountry(ParserUtil.parseCountry(argMultimap.getValue(PREFIX_COUNTRY).get()));
