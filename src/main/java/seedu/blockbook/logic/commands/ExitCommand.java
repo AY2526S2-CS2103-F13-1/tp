@@ -10,7 +10,7 @@ public class ExitCommand extends Command {
     public static final String COMMAND_WORD = "exit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exits BlockBook.\n"
-            + "\n\tFormat: " + COMMAND_WORD;
+            + "\nFormat: " + COMMAND_WORD;
 
     public static final String MESSAGE_EXIT_ACKNOWLEDGEMENT = "Exiting BlockBook as requested ...";
 

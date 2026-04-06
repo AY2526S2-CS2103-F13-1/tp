@@ -15,7 +15,7 @@ public class ClearCommand extends Command {
     public static final String COMMAND_WORD = "clear";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Removes every gamer from BlockBook. CANNOT BE UNDONE!\n"
-            + "\n\tFormat: " + COMMAND_WORD;
+            + "\nFormat: " + COMMAND_WORD;
     public static final String CONFIRMATION_MESSAGE = "----- WARNING! -----\n"
             + "THIS COMMAND WILL REMOVE ALL GAMERS FROM BLOCKBOOK!!!\n"
             + "THIS OPERATION CANNOT BE UNDONE!!!\n"
