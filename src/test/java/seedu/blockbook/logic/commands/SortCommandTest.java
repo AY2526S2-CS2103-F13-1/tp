@@ -46,7 +46,7 @@ public class SortCommandTest {
         SortCommand sortCommand = new SortCommand(List.of("name"));
         CommandResult result = sortCommand.execute(model);
 
-        assertEquals(SortCommand.MESSAGE_SORT_SUCCESS, result.getFeedbackToUser());
+        assertEquals(String.format(SortCommand.MESSAGE_SORT_SUCCESS, "name"), result.getFeedbackToUser());
 
         // Verify list is sorted by name (case-insensitive)
         List<Gamer> sortedList = model.getFilteredGamerList();
@@ -78,7 +78,7 @@ public class SortCommandTest {
         SortCommand sortCommand = new SortCommand(List.of("gamertag"));
         CommandResult result = sortCommand.execute(model);
 
-        assertEquals(SortCommand.MESSAGE_SORT_SUCCESS, result.getFeedbackToUser());
+        assertEquals(String.format(SortCommand.MESSAGE_SORT_SUCCESS, "gamertag"), result.getFeedbackToUser());
 
         List<Gamer> sortedList = model.getFilteredGamerList();
         for (int i = 0; i < sortedList.size() - 1; i++) {
@@ -103,6 +103,8 @@ public class SortCommandTest {
         assertEquals("11111111", sortedList.get(0).getPhone().toString());
         assertEquals("55555555", sortedList.get(1).getPhone().toString());
         assertEquals("99999999", sortedList.get(2).getPhone().toString());
+        assertEquals(String.format(SortCommand.MESSAGE_SORT_SUCCESS, "name, gamertag"),
+                result.getFeedbackToUser());
     }
 
     @Test

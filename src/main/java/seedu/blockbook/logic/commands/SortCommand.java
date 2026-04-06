@@ -28,7 +28,7 @@ public class SortCommand extends Command {
             + " [server/] [favourite/] [country/] [region/] [note/]\n"
             + "\nExample: " + COMMAND_WORD + " phone/ gamertag/";
 
-    public static final String MESSAGE_SORT_SUCCESS = "Sorted all contacts.";
+    public static final String MESSAGE_SORT_SUCCESS = "Sorted all contacts by %1$s.";
     public static final String MESSAGE_SORT_DEFAULT_SUCCESS = "Sorted all contacts by gamertag (default).";
     public static final String MESSAGE_EMPTY_LIST = "There are no contacts to sort!";
     public static final String MESSAGE_INVALID_ATTRIBUTES =
@@ -84,7 +84,9 @@ public class SortCommand extends Command {
 
         model.sortGamerList(comparator);
 
-        String successMessage = attributes.isEmpty() ? MESSAGE_SORT_DEFAULT_SUCCESS : MESSAGE_SORT_SUCCESS;
+        String successMessage = attributes.isEmpty()
+                ? MESSAGE_SORT_DEFAULT_SUCCESS
+                : String.format(MESSAGE_SORT_SUCCESS, String.join(", ", attributes));
         logger.info("Sort command executed successfully");
         return new CommandResult(successMessage);
     }
