@@ -645,6 +645,44 @@ testers are expected to do more *exploratory* testing.
 
 ### Viewing a gamer contact
 
+1. Viewing a gamer while all gamers are shown
+
+   1. Prerequisites: List all gamer contacts using the `list` command. Multiple gamer contacts in the list.
+
+   1. Test case: `view 1`<br>
+      Expected: A "Gamer Card" popup opens showing the first gamer contact’s details. A status message shows the
+      full gamer contact details. The list remains unchanged.
+
+   1. Test case: `view 0`<br>
+      Expected: No popup is shown. Error details shown in the status message.
+
+   1. Test case: `view x` (where x is larger than the list size)<br>
+      Expected: No popup is shown. Error details shown in the status message.
+
+1. Viewing a gamer when the list is filtered
+
+   1. Prerequisites: Filter the list to one gamer contact (e.g., `find alex`).
+
+   1. Test case: `view 1`<br>
+      Expected: A "Gamer Card" popup opens showing the filtered gamer contact’s details. A status message shows the
+      full gamer details. The list remains filtered.
+
+1. Viewing a gamer then editing the gamer
+
+   1. Prerequisites: There is at least one gamer contact in the list. Run `view 1` to open the popup.
+
+   1. Test case: `edit 1 name/UpdatedName`<br>
+      Expected: The gamer contact is edited in the list and the popup updates to show the new details (the popup
+      remains open). A status message confirms the edit.
+
+1. Viewing a gamer then deleting the gamer
+
+   1. Prerequisites: There is at least one gamer contact in the list. Run `view 1` to open the popup.
+
+   1. Test case: `delete 1`<br>
+      Expected: The gamer contact is removed from the list and the popup closes automatically. A status message
+      confirms the deletion.
+
 ### Finding a gamer contact
 
 1. Finding gamers with global keyword(s)
