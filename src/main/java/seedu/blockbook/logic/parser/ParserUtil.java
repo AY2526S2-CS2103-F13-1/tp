@@ -192,7 +192,6 @@ public class ParserUtil {
         return new Note(trimmedNote);
     }
 
-
     /**
      * Trims the input and collapses repeated whitespace into a single space.
      */

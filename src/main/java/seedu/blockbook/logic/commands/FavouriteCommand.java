@@ -35,9 +35,9 @@ public class FavouriteCommand extends Command {
     public static final String MESSAGE_UNMARK_FAVOURITE_SUCCESS =
             "Contact removed from favourites: %1$s";
     public static final String MESSAGE_ALREADY_FAVOURITE =
-            "You have already favourite the gamer: %1$s";
+            "This gamer is already a favourite:%1$s";
     public static final String MESSAGE_ALREADY_UNFAVOURITE =
-            "This gamer is already not a favourite: %1$s";
+            "This gamer is already not a favourite:%1$s";
     public static final String MESSAGE_EMPTY_CONTACT_LIST = "No contacts to favourite. The list is empty";
 
     private static final Logger logger = LogsCenter.getLogger(FavouriteCommand.class);
@@ -70,19 +70,17 @@ public class FavouriteCommand extends Command {
         Gamer gamerToToggle = lastShownList.get(index);
         assert gamerToToggle != null;
 
-        String name = Messages.formatNullable(gamerToToggle.getName());
+        String summary = formatContactSummary(gamerToToggle);
         boolean isCurrentlyFavourite = isCurrentlyFavourite(gamerToToggle);
         if (markFavourite && isCurrentlyFavourite) {
-            logger.fine("Favourite failed: already favourite (" + name + ").");
-            throw new CommandException(String.format(MESSAGE_ALREADY_FAVOURITE, name));
+            logger.fine("Favourite failed: already favourite (" + summary + ").");
+            throw new CommandException(String.format(MESSAGE_ALREADY_FAVOURITE, summary));
         }
         if (!markFavourite && !isCurrentlyFavourite) {
-            logger.fine("Unfavourite failed: already unfavourite (" + name + ").");
-            throw new CommandException(String.format(MESSAGE_ALREADY_UNFAVOURITE, name));
+            logger.fine("Unfavourite failed: already unfavourite (" + summary + ").");
+            throw new CommandException(String.format(MESSAGE_ALREADY_UNFAVOURITE, summary));
         }
 
-        // FavouriteStatus updatedStatus = markFavourite ? FavouriteStatus.FAV : FavouriteStatus.UNFAV;
-        // Favourite updatedFavourite = Favourite.fromStatus(updatedStatus);
         Favourite updatedFavourite = new Favourite(markFavourite);
         assert updatedFavourite != null;
 
@@ -90,12 +88,12 @@ public class FavouriteCommand extends Command {
         model.setGamer(gamerToToggle, updatedGamer);
 
         if (!markFavourite) {
-            String summary = formatContactSummaryForUnmark(updatedGamer);
+            summary = formatContactSummary(updatedGamer);
             logger.fine("Unmarked favourite: " + summary);
             return new CommandResult(String.format(MESSAGE_UNMARK_FAVOURITE_SUCCESS, summary));
         }
 
-        String summary = formatContactSummaryForMark(updatedGamer);
+        summary = formatContactSummary(updatedGamer);
         logger.fine("Marked favourite: " + summary);
         return new CommandResult(String.format(MESSAGE_MARK_FAVOURITE_SUCCESS, summary));
     }
@@ -142,18 +140,10 @@ public class FavouriteCommand extends Command {
         );
     }
 
-    private static String formatContactSummaryForMark(Gamer gamer) {
-        return String.format("\n Name: %s\n GamerTag: %s\n Favourite: %s",
+    private static String formatContactSummary(Gamer gamer) {
+        return String.format("\n Name: %s\n GamerTag: %s",
                 Messages.formatNullable(gamer.getName()),
-                Messages.formatNullable(gamer.getGamerTag()),
-                Messages.formatNullable(gamer.getFavourite()));
-    }
-
-    private static String formatContactSummaryForUnmark(Gamer gamer) {
-        return String.format("\n Name: %s\n GamerTag: %s\n Favourite: %s",
-                Messages.formatNullable(gamer.getName()),
-                Messages.formatNullable(gamer.getGamerTag()),
-                Messages.formatNullable(gamer.getFavourite()));
+                Messages.formatNullable(gamer.getGamerTag()));
     }
 
     @Override

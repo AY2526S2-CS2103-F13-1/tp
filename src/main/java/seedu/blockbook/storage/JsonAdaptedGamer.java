@@ -86,17 +86,6 @@ class JsonAdaptedGamer {
         validateRequiredFields();
         validateFieldValues();
 
-        // final Name modelName = new Name(name);
-        // final GamerTag modelGamerTag = new GamerTag(gamerTag);
-        // final Phone modelPhone = new Phone(phone);
-        // final Email modelEmail = new Email(email);
-        // final Group modelGroup = new Group(group);
-        // final Server modelServer = new Server(server);
-        // final Favourite modelFavourite = new Favourite(favourite);
-        // final Country modelCountry = new Country(country);
-        // final Region modelRegion = new Region(region);
-        // final Note modelNote = new Note(note);
-
         // Optional fields can be null when omitted by the user, so we guard object construction to avoid null failures.
         final Name modelName = name != null ? new Name(normalizeCapitalizedWords(name)) : null;
         final GamerTag modelGamerTag = new GamerTag(gamerTag);

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.blockbook.logic.Messages.MESSAGE_GAMERS_FOUND_BY_FIND;
+import static seedu.blockbook.logic.Messages.MESSAGE_GAMERS_FOUND_BY_FIND_SPECIFIC;
 import static seedu.blockbook.logic.Messages.MESSAGE_NO_GAMERS_FOUND_BY_FIND;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.blockbook.testutil.TypicalGamers.ALICE;
@@ -123,7 +124,7 @@ public class FindCommandTest {
     @Test
     public void execute_specificSearch_gamersFound() {
         // Simulates: find name/Kurz
-        String expectedMessage = String.format(MESSAGE_GAMERS_FOUND_BY_FIND, 1);
+        String expectedMessage = String.format(MESSAGE_GAMERS_FOUND_BY_FIND_SPECIFIC, 1, "Name");
 
         SpecificAttributesMatchPredicate predicate = new SpecificAttributesMatchPredicate(
                 "Kurz", null, null, null, null, null, null, null, null, null);
@@ -139,7 +140,7 @@ public class FindCommandTest {
      */
     @Test
     public void execute_specificSearchMultipleAttributes_gamersFound() {
-        String expectedMessage = String.format(MESSAGE_GAMERS_FOUND_BY_FIND, 1);
+        String expectedMessage = String.format(MESSAGE_GAMERS_FOUND_BY_FIND_SPECIFIC, 1, "Name, Phone");
         SpecificAttributesMatchPredicate predicate = new SpecificAttributesMatchPredicate(
                 "Alice", null, "8535", null, null, null, null, null, null, null);
         FindCommand command = new FindCommand(predicate);
@@ -186,7 +187,7 @@ public class FindCommandTest {
      */
     @Test
     public void execute_specificSearchCaseInsensitive_gamersFound() {
-        String expectedMessage = String.format(MESSAGE_GAMERS_FOUND_BY_FIND, 1);
+        String expectedMessage = String.format(MESSAGE_GAMERS_FOUND_BY_FIND_SPECIFIC, 1, "Name");
         SpecificAttributesMatchPredicate predicate = new SpecificAttributesMatchPredicate(
                 "kUrZ", null, null, null, null, null, null, null, null, null);
         FindCommand command = new FindCommand(predicate);
@@ -206,4 +207,3 @@ public class FindCommandTest {
         assertEquals(expected, findCommand.toString());
     }
 }
-
