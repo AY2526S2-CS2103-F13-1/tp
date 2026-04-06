@@ -17,6 +17,7 @@ import java.util.List;
 
 import seedu.blockbook.model.BlockBook;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.Group;
 
 /**
  * A utility class containing a list of {@code Gamer} objects to be used in tests.
@@ -48,6 +49,11 @@ public class TypicalGamers {
     public static BlockBook getTypicalBlockBook() {
         BlockBook blockBook = new BlockBook();
         for (Gamer gamer : getTypicalGamers()) {
+            for (Group group : gamer.getGroups()) {
+                if (!blockBook.hasGroup(group)) {
+                    blockBook.addGroup(group);
+                }
+            }
             blockBook.addGamer(gamer);
         }
         return blockBook;
@@ -57,4 +63,3 @@ public class TypicalGamers {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 }
-
