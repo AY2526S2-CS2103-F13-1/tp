@@ -13,19 +13,27 @@ public class HelpCommandTest {
     public void execute_returnsExpectedHelpOutput() {
         Model model = new ModelManager();
 
-        String expectedOutput = HelpCommand.SHOWING_HELP_MESSAGE + "\n"
-                + HelpCommand.MESSAGE_USAGE + "\n\n"
-                + AddCommand.MESSAGE_USAGE + "\n\n"
-                + EditCommand.MESSAGE_USAGE + "\n\n"
-                + DeleteCommand.MESSAGE_USAGE + "\n\n"
-                + FavouriteCommand.MESSAGE_USAGE + "\n"
+        String expectedOutput = HelpCommand.SHOWING_HELP_MESSAGE + "\n\n"
+                + HelpCommand.MESSAGE_USAGE
                 + HelpCommand.SEPARATOR
-                + ListCommand.MESSAGE_USAGE + "\n\n"
-                + ViewCommand.MESSAGE_USAGE + "\n\n"
-                + SortCommand.MESSAGE_USAGE + "\n\n"
-                + FindCommand.MESSAGE_USAGE + "\n"
+                + AddCommand.MESSAGE_USAGE
                 + HelpCommand.SEPARATOR
-                + ClearCommand.MESSAGE_USAGE + "\n\n"
+                + EditCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
+                + DeleteCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
+                + FavouriteCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
+                + ListCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
+                + ViewCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
+                + SortCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
+                + FindCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
+                + ClearCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
                 + ExitCommand.MESSAGE_USAGE;
 
         CommandResult expectedCommandResult = new CommandResult(expectedOutput, true, false);
