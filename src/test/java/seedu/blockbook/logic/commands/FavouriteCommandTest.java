@@ -68,7 +68,7 @@ public class FavouriteCommandTest {
 
         FavouriteCommand favouriteCommand = new FavouriteCommand(INDEX_FIRST_GAMER, true);
         String expectedMessage = String.format(FavouriteCommand.MESSAGE_ALREADY_FAVOURITE,
-                Messages.formatNullable(gamer.getName()));
+                formatContactSummary(gamer));
 
         assertCommandFailure(favouriteCommand, model, expectedMessage);
     }
@@ -82,7 +82,7 @@ public class FavouriteCommandTest {
 
         FavouriteCommand favouriteCommand = new FavouriteCommand(INDEX_FIRST_GAMER, false);
         String expectedMessage = String.format(FavouriteCommand.MESSAGE_ALREADY_UNFAVOURITE,
-                Messages.formatNullable(unfavGamer.getName()));
+                formatContactSummary(unfavGamer));
 
         assertCommandFailure(favouriteCommand, model, expectedMessage);
     }
@@ -140,9 +140,8 @@ public class FavouriteCommandTest {
     }
 
     private static String formatContactSummary(Gamer gamer) {
-        return String.format("\n Name: %s\n GamerTag: %s\n Favourite: %s",
+        return String.format("\n Name: %s\n GamerTag: %s",
                 Messages.formatNullable(gamer.getName()),
-                Messages.formatNullable(gamer.getGamerTag()),
-                Messages.formatNullable(gamer.getFavourite()));
+                Messages.formatNullable(gamer.getGamerTag()));
     }
 }

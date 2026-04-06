@@ -14,7 +14,7 @@ import seedu.blockbook.commons.core.GuiSettings;
 public class UserPrefs implements ReadOnlyUserPrefs {
 
     private GuiSettings guiSettings = new GuiSettings();
-    private Path contactsFilePath = Paths.get("data" , "contacts.json");
+    private Path contactsFilePath = Paths.get("BlockBook" , "contacts.json");
 
     /**
      * Creates a {@code UserPrefs} with default values.

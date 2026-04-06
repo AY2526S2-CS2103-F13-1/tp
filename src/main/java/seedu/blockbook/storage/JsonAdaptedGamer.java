@@ -86,26 +86,15 @@ class JsonAdaptedGamer {
         validateRequiredFields();
         validateFieldValues();
 
-        // final Name modelName = new Name(name);
-        // final GamerTag modelGamerTag = new GamerTag(gamerTag);
-        // final Phone modelPhone = new Phone(phone);
-        // final Email modelEmail = new Email(email);
-        // final Group modelGroup = new Group(group);
-        // final Server modelServer = new Server(server);
-        // final Favourite modelFavourite = new Favourite(favourite);
-        // final Country modelCountry = new Country(country);
-        // final Region modelRegion = new Region(region);
-        // final Note modelNote = new Note(note);
-
         // Optional fields can be null when omitted by the user, so we guard object construction to avoid null failures.
-        final Name modelName = name != null ? new Name(normalizeSpacedValue(name)) : null;
+        final Name modelName = name != null ? new Name(normalizeCapitalizedWords(name)) : null;
         final GamerTag modelGamerTag = new GamerTag(gamerTag);
         final Phone modelPhone = phone != null ? new Phone(normalizeSpacedValue(phone)) : null;
         final Email modelEmail = email != null ? new Email(email) : null;
         final Group modelGroup = group != null ? new Group(group) : null;
         final Server modelServer = server != null ? new Server(server) : null;
         final Favourite modelFavourite = new Favourite(favourite != null ? favourite : false);
-        final Country modelCountry = country != null ? new Country(normalizeSpacedValue(country)) : null;
+        final Country modelCountry = country != null ? new Country(normalizeCapitalizedWords(country)) : null;
         final Region modelRegion = region != null ? new Region(region) : null;
         final Note modelNote = note != null ? new Note(note) : null;
 
@@ -152,5 +141,28 @@ class JsonAdaptedGamer {
 
     private static String normalizeSpacedValue(String value) {
         return value.trim().replaceAll("\\s+", " ");
+    }
+
+    /**
+     * Trims the input, collapses repeated spaces, and capitalizes each word segment.
+     * Word segments are restarted after spaces, hyphens, and apostrophes.
+     */
+    private static String normalizeCapitalizedWords(String value) {
+        String collapsed = value.trim().replaceAll("\\s+", " ");
+        StringBuilder builder = new StringBuilder(collapsed.length());
+        boolean capitalizeNext = true;
+        for (int i = 0; i < collapsed.length(); i++) {
+            char currentChar = collapsed.charAt(i);
+            if (Character.isLetter(currentChar)) {
+                builder.append(capitalizeNext
+                        ? Character.toUpperCase(currentChar)
+                        : Character.toLowerCase(currentChar));
+                capitalizeNext = false;
+            } else {
+                builder.append(currentChar);
+                capitalizeNext = currentChar == ' ' || currentChar == '-' || currentChar == '\'';
+            }
+        }
+        return builder.toString();
     }
 }

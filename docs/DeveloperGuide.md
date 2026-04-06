@@ -6,6 +6,9 @@
 
 
 # BlockBook Developer Guide
+The current Developer guide you see here is a work in progress! 
+It is being developed alongside the implementation of the app, and will be updated iteratively as the implementation progresses. 
+The current content is based on the design decisions we have made so far, and may be updated as we make more design decisions in the future.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -154,6 +157,7 @@ Classes used by multiple components are in the `seedu.blockbook.commons` package
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+(We can add proposed features based off items in the user stories that are not yet implemented.)
 
 ### \[Proposed\] Undo/redo feature
 
@@ -248,10 +252,6 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -313,7 +313,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 (For all use cases below, the **System** is the `BlockBook (BB)` and the **Actor** is the `user`, unless specified otherwise)
 As these represent the expected behaviour of the final iteration, some use cases might not reflect the current functionality of the app.
 
-**UC01 - Add Contact**
+**UC01 - Add a Gamer Contact**
 
 **MSS**
 
@@ -349,7 +349,7 @@ Use case ends.
 - *a1. BB discards all entered data.
 - Use case ends.
 
-**UC02 - List All Contacts**
+**UC02 - List All Gamer Contacts**
 
 **MSS**
 
@@ -391,7 +391,9 @@ Use case ends.
 - 4a1. BB notifies the user that the contact is already a favourite.
 - Use case ends.
 
-**UC04 - Add Profile Picture to Contact**
+(An extension can be added for unfavourite here)
+
+**UC04 - Add Profile Picture to Contact** (TBA)
 
 **MSS**
 
@@ -427,7 +429,7 @@ Use case ends.
 - *a1. BB discards all entered data.
 - Use case ends.
 
-**UC05 - Add Note to Contact**
+**UC05 - Add Note to Contact** (Can be deleted)
 
 **MSS**
 
@@ -460,7 +462,8 @@ Use case ends.
 - *a1. BB discards all unsaved changes.
 - Use case ends.
 
-**UC06 - Sort Contacts by Added Date**
+**UC06 - Sort Gamer Contacts** (Extensions can be added for the optional attribute criteria)
+(Base case as MSS, other sorting criteria can be added as extensions)
 
 **MSS**
 
@@ -475,7 +478,7 @@ Use case ends.
 - 2a1. BB informs the user that there are no contacts.
 - Use case ends.
 
-**UC07 - Update Contact**
+**UC07 - Edit a Gamer Contact** (Change of name from Update)
 
 **MSS**
 
@@ -525,7 +528,25 @@ Use case ends.
 - *a1. BB discards all changes.
 - Use case ends.
 
+**UC08 - Delete a Gamer Contact**
 
+**UC09 - View a Gamer Contact**
+
+**UC10- Find Gamer Contacts**
+
+**UC11 - Clear all Gamer Contacts**
+
+**UC12 - Show Help**
+
+**UC13 - Create a Group (TBA)**
+
+**UC14 - Add a Gamer to a Group (TBA)**
+
+**UC15 - Remove a Gamer from a Group (TBA)**
+
+**UC16 - Delete a Group (TBA)**
+
+**UC17 - List Groups (TBA)**
 
 ### Non-Functional Requirements
 
@@ -592,7 +613,13 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases ... }_
 
-### Deleting a gamer
+### Using the help command
+
+### Adding a gamer contact
+
+### Editing a gamer contact
+
+### Deleting a gamer contact
 
 1. Deleting a gamer while all gamers are being shown
 
@@ -606,19 +633,180 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `delete 1 2`<br>
       Expected: The first two contacts are deleted from the list. Gamertags of the deleted contacts shown in the status message. Timestamp in the status bar is updated.
-
+4
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
 1. _{ more test cases ... }_
 
-### Saving data
+### Setting a gamer contact as a favourite contact
+
+### Listing gamer contacts
+
+### Viewing a gamer contact
+
+### Finding a gamer contact
+
+1. Finding gamers with global keyword(s)
+
+   1. Prerequisites: There are three gamers in the list (Alex with gamertag `CraftyAlex`, email `alex@craft.net`,
+      group `Explorers`, server `srv1.gamehub.net`, country `USA`, region `NA`, note `builder`,
+      Steve with phone `987654`, email `steve@craft.net`, group `Explorers`, server `srv2.gamehub.net`,
+      country `USA`, note `builder pro`, and Herobrine with favourite status set).
+
+   1. Test case: `find alex`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find al`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find craft`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find hub`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find gamehub`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find explorers`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find craft.net`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find usa`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find builder`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find na`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find 987`<br>
+      Expected: Only Steve is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find alex steve`<br>
+      Expected: No gamer is displayed in the list. A message indicates no gamers were found.
+
+   1. Test case: `find Sean`<br>
+      Expected: No gamer is displayed in the list. A message indicates no gamers were found.
+
+1. Finding gamers with specific prefixes
+
+   1. Prerequisites: There are three gamers in the list (Alex with gamertag `CraftyAlex`, email `alex@craft.net`,
+      group `Explorers`, server `srv1.gamehub.net`, country `USA`, region `NA`, note `builder`,
+      Steve with phone `987654`, email `steve@craft.net`, group `Explorers`, server `srv2.gamehub.net`,
+      country `USA`, note `builder pro`, and Herobrine with favourite status set).
+
+   1. Test case: `find name/Alex`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+   2. 
+   1. Test case: `find name/aLeX`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find gamertag/Craft`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find phone/987`<br>
+      Expected: Only Steve is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find email/alex@craft.net`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find group/Explorers`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find server/srv1.gamehub.net`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find server/gamehub`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find country/USA`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find region/NA`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find note/build`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find favourite/`<br>
+      Expected: Only favourite gamers are displayed in the list. A message indicates the number of gamers found.
+
+   1. Test case: `find name/Alex country/USA`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find group/Explorers country/USA`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+1. Invalid find inputs
+
+   1. Prerequisites: None.
+
+   1. Test case: `find name/`<br>
+      Expected: Error indicating the search keyword for `name/` cannot be empty.
+
+   1. Test case: `find phone/9123abcd`<br>
+      Expected: Error indicating the phone search keyword contains invalid characters.
+
+   1. Test case: `find email/not#email`<br>
+      Expected: Error indicating the email search keyword contains invalid characters.
+
+   1. Test case: `find gamertag/Bad Tag`<br>
+      Expected: Error indicating the gamertag search keyword contains invalid characters.
+
+   1. Test case: `find group/Explorers2`<br>
+      Expected: Error indicating the group search keyword contains invalid characters.
+
+   1. Test case: `find server/srv#1`<br>
+      Expected: Error indicating the server search keyword contains invalid characters.
+
+   1. Test case: `find country/U$A`<br>
+      Expected: Error indicating the country search keyword contains invalid characters.
+
+   1. Test case: `find note/build!`<br>
+      Expected: Error indicating the note search keyword contains invalid characters.
+
+   1. Test case: `find region/XX`<br>
+      Expected: Error indicating the region search keyword is invalid.
+
+   1. Test case: `find alex name/Steve`<br>
+      Expected: Error indicating global and specific searches cannot be combined.
+
+   1. Test case: `find name/Alex name/Steve`<br>
+      Expected: Error indicating duplicate prefixes are not allowed.
+
+   1. Test case: `find favourite/yes`<br>
+      Expected: Error indicating the `favourite/` prefix does not take a value.
+
+   1. Test case: `find aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`<br>
+      Expected: Error indicating global search keyword input cannot exceed 50 characters.
+
+   1. Test case: `find`<br>
+      Expected: Error indicating invalid command format for `find`.
+
+### Sorting gamer contacts
+
+### Clearing all gamer contacts
+
+### Creating a group (TBA)
+
+### Editing a group (TBA)
+
+### Deleting a group (TBA)
+
+### Adding a gamer to a group (TBA)
+
+### Listing groups (TBA)
+
+### Dealing with data
+1. Saving data to `contacts.json`
 
 1. Dealing with missing/corrupted data files
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases ... }_
-
-
-

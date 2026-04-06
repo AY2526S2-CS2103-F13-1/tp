@@ -24,11 +24,11 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts contacts by the specified attributes. Favourite contacts are always shown first.\n"
-            + "\n\tFormat: " + COMMAND_WORD + " [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP] [server/SERVER]"
-            + " [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]"
-            + "\n\tExample: " + COMMAND_WORD + " name/John phone/98002132";
+            + "\nFormat: " + COMMAND_WORD + " [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP] [server/SERVER]"
+            + " [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]\n"
+            + "\nExample: " + COMMAND_WORD + " name/John phone/98002132";
 
-    public static final String MESSAGE_SORT_SUCCESS = "Sorted all contacts.";
+    public static final String MESSAGE_SORT_SUCCESS = "Sorted all contacts by %1$s.";
     public static final String MESSAGE_SORT_DEFAULT_SUCCESS = "Sorted all contacts by gamertag (default).";
     public static final String MESSAGE_EMPTY_LIST = "There are no contacts to sort!";
     public static final String MESSAGE_INVALID_ATTRIBUTES =
@@ -83,7 +83,9 @@ public class SortCommand extends Command {
 
         model.sortGamerList(comparator);
 
-        String successMessage = attributes.isEmpty() ? MESSAGE_SORT_DEFAULT_SUCCESS : MESSAGE_SORT_SUCCESS;
+        String successMessage = attributes.isEmpty()
+                ? MESSAGE_SORT_DEFAULT_SUCCESS
+                : String.format(MESSAGE_SORT_SUCCESS, String.join(", ", attributes));
         logger.info("Sort command executed successfully");
         return new CommandResult(successMessage);
     }
