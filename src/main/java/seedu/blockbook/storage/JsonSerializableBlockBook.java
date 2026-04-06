@@ -1,8 +1,10 @@
 package seedu.blockbook.storage;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -53,7 +55,9 @@ class JsonSerializableBlockBook {
                 .flatMap(gamer -> gamer.getGroups().stream())
                 .collect(Collectors.toList());
         List<Group> groupList = mergeGroups(baseGroups, additionalGroups);
-        blockbookgroups.addAll(groupList.stream().map(Group::toString).collect(Collectors.toList()));
+        blockbookgroups.addAll(groupList.stream()
+                .map(group -> normalizeSpacedValue(group.toString()))
+                .collect(Collectors.toList()));
         gamers.addAll(source.getGamerList().stream()
                 .map(gamer -> new JsonAdaptedGamer(gamer, groupList))
                 .collect(Collectors.toList()));
@@ -98,15 +102,24 @@ class JsonSerializableBlockBook {
     }
 
     private static List<Group> mergeGroups(List<Group> existingGroups, List<Group> candidateGroups) {
-        List<Group> merged = new ArrayList<>(existingGroups);
-        for (Group group : candidateGroups) {
-            boolean exists = merged.stream().anyMatch(existing ->
-                    existing.toString().equalsIgnoreCase(group.toString()));
-            if (!exists) {
+        List<Group> merged = new ArrayList<>();
+        Set<String> seen = new HashSet<>();
+        addGroups(merged, seen, existingGroups);
+        addGroups(merged, seen, candidateGroups);
+        return merged;
+    }
+
+    private static void addGroups(List<Group> merged, Set<String> seenKeys, List<Group> groups) {
+        for (Group group : groups) {
+            String key = normalizeGroupKey(group.toString());
+            if (seenKeys.add(key)) {
                 merged.add(group);
             }
         }
-        return merged;
+    }
+
+    private static String normalizeGroupKey(String value) {
+        return normalizeSpacedValue(value).toLowerCase();
     }
 
 }
