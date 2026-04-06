@@ -20,7 +20,7 @@ public class ViewCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the full details of gamers whose gamertag is"
             + " the specified keyword (case-insensitive) and displays them in the command prompt.\n"
-            + "\nFormat: " + COMMAND_WORD_WITH_ALIAS + " gamertag/GAMERTAG ";
+            + "\nFormat: " + COMMAND_WORD_WITH_ALIAS + " (g)amertag/GAMERTAG ";
 
     private final GamertagContainsKeywordPredicate predicate;
 
