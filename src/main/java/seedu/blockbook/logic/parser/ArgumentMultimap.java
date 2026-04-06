@@ -37,50 +37,22 @@ public class ArgumentMultimap {
 
     /**
      * Returns the last value of {@code prefix}.
-     * Also checks the alias form of the prefix if no value is found for the canonical form.
      */
     public Optional<String> getValue(Prefix prefix) {
         List<String> values = getAllValues(prefix);
-        if (!values.isEmpty()) {
-            return Optional.of(values.get(values.size() - 1));
-        }
-
-        // Check for alias match - search through the map for a prefix with matching alias
-        if (prefix.getAlias() != null && !prefix.getAlias().isEmpty()) {
-            for (Prefix key : argMultimap.keySet()) {
-                if (key.getPrefix().equals(prefix.getAlias())) {
-                    values = argMultimap.get(key);
-                    if (!values.isEmpty()) {
-                        return Optional.of(values.get(values.size() - 1));
-                    }
-                }
-            }
-        }
-
-        return Optional.empty();
+        return values.isEmpty() ? Optional.empty() : Optional.of(values.get(values.size() - 1));
     }
 
     /**
      * Returns all values of {@code prefix}.
      * If the prefix does not exist or has no values, this will return an empty list.
-     * Also checks the alias form of the prefix if no values are found for the canonical form.
      * Modifying the returned list will not affect the underlying data structure of the ArgumentMultimap.
      */
     public List<String> getAllValues(Prefix prefix) {
-        if (argMultimap.containsKey(prefix)) {
-            return new ArrayList<>(argMultimap.get(prefix));
+        if (!argMultimap.containsKey(prefix)) {
+            return new ArrayList<>();
         }
-
-        // Check for alias match - search through the map for a prefix with matching alias
-        if (prefix.getAlias() != null && !prefix.getAlias().isEmpty()) {
-            for (Prefix key : argMultimap.keySet()) {
-                if (key.getPrefix().equals(prefix.getAlias())) {
-                    return new ArrayList<>(argMultimap.get(key));
-                }
-            }
-        }
-
-        return new ArrayList<>();
+        return new ArrayList<>(argMultimap.get(prefix));
     }
 
     /**
@@ -104,4 +76,3 @@ public class ArgumentMultimap {
         }
     }
 }
-
