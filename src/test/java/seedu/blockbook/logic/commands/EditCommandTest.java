@@ -8,7 +8,6 @@ import static seedu.blockbook.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_COUNTRY_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_GAMERTAG_BOB;
-import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_GROUP_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_NOTE_BOB;
 import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -48,7 +47,6 @@ public class EditCommandTest {
                 .withGamerTag(VALID_GAMERTAG_BOB)
                 .withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB)
-                .withGroup(VALID_GROUP_BOB)
                 .withServer(VALID_SERVER_BOB)
                 .withCountry(VALID_COUNTRY_BOB)
                 .withRegion(VALID_REGION_BOB)

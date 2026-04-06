@@ -88,14 +88,14 @@ public class CommandTestUtil {
         DESC_AMY = new EditGamerDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withGamerTag(VALID_GAMERTAG_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withGroup(VALID_GROUP_AMY).withServer(VALID_SERVER_AMY)
+                .withServer(VALID_SERVER_AMY)
                 .withCountry(VALID_COUNTRY_AMY)
                 .withRegion(VALID_REGION_AMY).withNote(VALID_NOTE_AMY)
                 .build();
         DESC_BOB = new EditGamerDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withGamerTag(VALID_GAMERTAG_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withGroup(VALID_GROUP_BOB).withServer(VALID_SERVER_BOB)
+                .withServer(VALID_SERVER_BOB)
                 .withCountry(VALID_COUNTRY_BOB)
                 .withRegion(VALID_REGION_BOB).withNote(VALID_NOTE_BOB)
                 .build();
