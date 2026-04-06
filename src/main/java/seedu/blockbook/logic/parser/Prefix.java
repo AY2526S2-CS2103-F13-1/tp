@@ -1,5 +1,7 @@
 package seedu.blockbook.logic.parser;
 
+import java.util.Objects;
+
 /**
  * A prefix that marks the beginning of an argument in an arguments string.
  * E.g. 't/' in 'add James t/ friend'.
@@ -33,7 +35,7 @@ public class Prefix {
 
     @Override
     public int hashCode() {
-        return prefix == null ? 0 : prefix.hashCode();
+        return Objects.hash(prefix, alias);
     }
 
     @Override
@@ -48,7 +50,7 @@ public class Prefix {
         }
 
         Prefix otherPrefix = (Prefix) other;
-        return prefix.equals(otherPrefix.prefix) && alias.equals(otherPrefix.alias);
+        return Objects.equals(prefix, otherPrefix.prefix)
+                && Objects.equals(alias, otherPrefix.alias);
     }
 }
-
