@@ -29,7 +29,7 @@ class JsonAdaptedGamer {
     private final String email;
     private final String group;
     private final String server;
-    private final String favourite;
+    private final Boolean favourite;
     private final String country;
     private final String region;
     private final String note;
@@ -44,7 +44,7 @@ class JsonAdaptedGamer {
                             @JsonProperty("email") String email,
                             @JsonProperty("group") String group,
                             @JsonProperty("server") String server,
-                            @JsonProperty("favourite") String favourite,
+                            @JsonProperty("favourite") Boolean favourite,
                             @JsonProperty("country") String country,
                             @JsonProperty("region") String region,
                             @JsonProperty("note") String note) {
@@ -70,7 +70,7 @@ class JsonAdaptedGamer {
         email = source.getEmail() != null ? source.getEmail().fullEmail : null;
         group = source.getGroup() != null ? source.getGroup().fullGroup : null;
         server = source.getServer() != null ? source.getServer().fullServer : null;
-        favourite = source.getFavourite() != null ? source.getFavourite().fullFavourite : "unfav";
+        favourite = source.getFavourite() != null ? source.getFavourite().isFav() : false;
         country = source.getCountry() != null ? source.getCountry().fullCountry : null;
         region = source.getRegion() != null ? source.getRegion().fullRegion : null;
         note = source.getNote() != null ? source.getNote().fullNote : null;
@@ -86,26 +86,15 @@ class JsonAdaptedGamer {
         validateRequiredFields();
         validateFieldValues();
 
-        // final Name modelName = new Name(name);
-        // final GamerTag modelGamerTag = new GamerTag(gamerTag);
-        // final Phone modelPhone = new Phone(phone);
-        // final Email modelEmail = new Email(email);
-        // final Group modelGroup = new Group(group);
-        // final Server modelServer = new Server(server);
-        // final Favourite modelFavourite = new Favourite(favourite);
-        // final Country modelCountry = new Country(country);
-        // final Region modelRegion = new Region(region);
-        // final Note modelNote = new Note(note);
-
         // Optional fields can be null when omitted by the user, so we guard object construction to avoid null failures.
-        final Name modelName = name != null ? new Name(name) : null;
+        final Name modelName = name != null ? new Name(normalizeCapitalizedWords(name)) : null;
         final GamerTag modelGamerTag = new GamerTag(gamerTag);
-        final Phone modelPhone = phone != null ? new Phone(phone) : null;
+        final Phone modelPhone = phone != null ? new Phone(normalizeSpacedValue(phone)) : null;
         final Email modelEmail = email != null ? new Email(email) : null;
         final Group modelGroup = group != null ? new Group(group) : null;
         final Server modelServer = server != null ? new Server(server) : null;
-        final Favourite modelFavourite = favourite != null ? new Favourite(favourite) : new Favourite("unfav");
-        final Country modelCountry = country != null ? new Country(country) : null;
+        final Favourite modelFavourite = new Favourite(favourite != null ? favourite : false);
+        final Country modelCountry = country != null ? new Country(normalizeCapitalizedWords(country)) : null;
         final Region modelRegion = region != null ? new Region(region) : null;
         final Note modelNote = note != null ? new Note(note) : null;
 
@@ -139,9 +128,6 @@ class JsonAdaptedGamer {
         if (server != null && !Server.isValidServer(server)) {
             throw new IllegalValueException(Server.MESSAGE_CONSTRAINTS);
         }
-        if (favourite != null && !Favourite.isValidFavourite(favourite)) {
-            throw new IllegalValueException(Favourite.MESSAGE_CONSTRAINTS);
-        }
         if (country != null && !Country.isValidCountry(country)) {
             throw new IllegalValueException(Country.MESSAGE_CONSTRAINTS);
         }
@@ -151,5 +137,32 @@ class JsonAdaptedGamer {
         if (note != null && !Note.isValidNote(note)) {
             throw new IllegalValueException(Note.MESSAGE_CONSTRAINTS);
         }
+    }
+
+    private static String normalizeSpacedValue(String value) {
+        return value.trim().replaceAll("\\s+", " ");
+    }
+
+    /**
+     * Trims the input, collapses repeated spaces, and capitalizes each word segment.
+     * Word segments are restarted after spaces, hyphens, and apostrophes.
+     */
+    private static String normalizeCapitalizedWords(String value) {
+        String collapsed = value.trim().replaceAll("\\s+", " ");
+        StringBuilder builder = new StringBuilder(collapsed.length());
+        boolean capitalizeNext = true;
+        for (int i = 0; i < collapsed.length(); i++) {
+            char currentChar = collapsed.charAt(i);
+            if (Character.isLetter(currentChar)) {
+                builder.append(capitalizeNext
+                        ? Character.toUpperCase(currentChar)
+                        : Character.toLowerCase(currentChar));
+                capitalizeNext = false;
+            } else {
+                builder.append(currentChar);
+                capitalizeNext = currentChar == ' ' || currentChar == '-' || currentChar == '\'';
+            }
+        }
+        return builder.toString();
     }
 }

@@ -1,6 +1,8 @@
 package seedu.blockbook.ui;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,6 +10,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.util.Duration;
 import seedu.blockbook.logic.Messages;
 import seedu.blockbook.model.gamer.Gamer;
 
@@ -43,19 +46,21 @@ public class GamerCard extends UiPart<Region> {
     @FXML
     private ImageView favouriteIcon;
     @FXML
+    private Label phone;
+    @FXML
+    private Label email;
+    @FXML
+    private Label group;
+    @FXML
+    private Label favourite;
+    @FXML
+    private Label country;
+    @FXML
     private Label region;
-    // @FXML
-    // private Label email;
-    // @FXML
-    // private Label phone;
-    // @FXML
-    // private Label group;
-    // @FXML
-    // private Label country;
-    // @FXML
-    // private Label region;
-    // @FXML
-    // private Label note;
+    @FXML
+    private Label note;
+    @FXML
+    private Button copyButton;
 
     /**
      * Creates a {@code GamerCard} with the given {@code Gamer} and index to display.
@@ -66,18 +71,15 @@ public class GamerCard extends UiPart<Region> {
         id.setText("#" + displayedIndex);
         gamerTag.setText("@" + gamer.getGamerTag().fullGamerTag);
         name.setText(Messages.formatNullable(gamer.getName()));
+        phone.setText(Messages.formatNullable(gamer.getPhone()));
+        email.setText(Messages.formatNullable(gamer.getEmail()));
+        group.setText(Messages.formatNullable(gamer.getGroup()));
         server.setText(Messages.formatNullable(gamer.getServer()));
+        favourite.setText(Messages.formatNullable(gamer.getFavourite()));
+        country.setText(Messages.formatNullable(gamer.getCountry()));
         region.setText(Messages.formatNullable(gamer.getRegion()));
+        note.setText(Messages.formatNullable(gamer.getNote()));
         updateFavouriteIcon(gamer.getFavourite().toString());
-        // email.setText("Email: " + Messages.formatNullable(gamer.getEmail()));
-        // phone.setText("Phone: " + Messages.formatNullable(gamer.getPhone()));
-        // group.setText("Group: " + Messages.formatNullable(gamer.getGroup()));
-        // country.setText("Country: " + Messages.formatNullable(gamer.getCountry()));
-        // note.setText("Note: " + Messages.formatNullable(gamer.getNote()));
-
-        // region.setText(gamer.getRegion().fullRegion);
-        // phone.setText(gamer.getPhone().value);
-        // email.setText(gamer.getEmail().value);
     }
 
     /**
@@ -99,5 +101,14 @@ public class GamerCard extends UiPart<Region> {
         final ClipboardContent details = new ClipboardContent();
         details.putString(Messages.format(gamer));
         clipboard.setContent(details);
+
+        // Change button text to indicate copy success
+        String originalText = copyButton.getText();
+        copyButton.setText("Copied!");
+
+        // Revert button text after a short delay
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        pause.setOnFinished(e -> copyButton.setText(originalText));
+        pause.play();
     }
 }

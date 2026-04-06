@@ -84,7 +84,7 @@ alt filteredGamerCount == 0
     deactivate CommandResult
 else filteredGamerCount > 0
     create CommandResult
-    FindCommand -> CommandResult : CommandResult(MESSAGE_GAMERS_FOUND_BY_FIND)
+    FindCommand -> CommandResult : CommandResult(MESSAGE_GAMERS_FOUND_BY_FIND_SPECIFIC)
     activate CommandResult
     CommandResult --> FindCommand : result
     deactivate CommandResult

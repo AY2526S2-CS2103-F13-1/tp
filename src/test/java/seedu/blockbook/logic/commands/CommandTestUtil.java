@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_COUNTRY;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_FAVOURITE;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GAMERTAG;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_NAME;
@@ -43,8 +42,6 @@ public class CommandTestUtil {
     public static final String VALID_GROUP_BOB = "DestroySteve";
     public static final String VALID_SERVER_AMY = "127.0.0.1:8080";
     public static final String VALID_SERVER_BOB = "mc.example.com:25565";
-    public static final String VALID_FAVOURITE_AMY = "fav";
-    public static final String VALID_FAVOURITE_BOB = "unfav";
     public static final String VALID_COUNTRY_AMY = "Singapore";
     public static final String VALID_COUNTRY_BOB = "Malaysia";
     public static final String VALID_REGION_AMY = "ASIA";
@@ -64,8 +61,6 @@ public class CommandTestUtil {
     public static final String GROUP_DESC_BOB = " " + PREFIX_GROUP + VALID_GROUP_BOB;
     public static final String SERVER_DESC_AMY = " " + PREFIX_SERVER + VALID_SERVER_AMY;
     public static final String SERVER_DESC_BOB = " " + PREFIX_SERVER + VALID_SERVER_BOB;
-    public static final String FAVOURITE_DESC_AMY = " " + PREFIX_FAVOURITE + VALID_FAVOURITE_AMY;
-    public static final String FAVOURITE_DESC_BOB = " " + PREFIX_FAVOURITE + VALID_FAVOURITE_BOB;
     public static final String COUNTRY_DESC_AMY = " " + PREFIX_COUNTRY + VALID_COUNTRY_AMY;
     public static final String COUNTRY_DESC_BOB = " " + PREFIX_COUNTRY + VALID_COUNTRY_BOB;
     public static final String REGION_DESC_AMY = " " + PREFIX_REGION + VALID_REGION_AMY;
@@ -79,7 +74,6 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_GROUP_DESC = " " + PREFIX_GROUP + "123";
     public static final String INVALID_SERVER_DESC = " " + PREFIX_SERVER + "server$";
-    public static final String INVALID_FAVOURITE_DESC = " " + PREFIX_FAVOURITE + "maybe";
     public static final String INVALID_COUNTRY_DESC = " " + PREFIX_COUNTRY + "SG1";
     public static final String INVALID_REGION_DESC = " " + PREFIX_REGION + "SEA";
     public static final String INVALID_NOTE_DESC = " " + PREFIX_NOTE + "note$";
@@ -95,14 +89,14 @@ public class CommandTestUtil {
                 .withGamerTag(VALID_GAMERTAG_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withGroup(VALID_GROUP_AMY).withServer(VALID_SERVER_AMY)
-                .withFavourite(VALID_FAVOURITE_AMY).withCountry(VALID_COUNTRY_AMY)
+                .withCountry(VALID_COUNTRY_AMY)
                 .withRegion(VALID_REGION_AMY).withNote(VALID_NOTE_AMY)
                 .build();
         DESC_BOB = new EditGamerDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withGamerTag(VALID_GAMERTAG_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withGroup(VALID_GROUP_BOB).withServer(VALID_SERVER_BOB)
-                .withFavourite(VALID_FAVOURITE_BOB).withCountry(VALID_COUNTRY_BOB)
+                .withCountry(VALID_COUNTRY_BOB)
                 .withRegion(VALID_REGION_BOB).withNote(VALID_NOTE_BOB)
                 .build();
     }

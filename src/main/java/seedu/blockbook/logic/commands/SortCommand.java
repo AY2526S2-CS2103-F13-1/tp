@@ -22,10 +22,10 @@ public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Sorts contacts by the specified attributes. "
-            + "Format: " + COMMAND_WORD + " [name/] [gamertag/] [phone/] [email/] "
-            + "[group/] [server/] [favourite/] [country/] [region/] [note/]\n"
-            + "Example: " + COMMAND_WORD + " phone/ gamertag/";
+            + ": Sorts contacts by the specified attributes.\n"
+            + "\nFormat: " + COMMAND_WORD + " [name/] [phone/] [email/] [group/] [server/]"
+            + " [favourite/] [country/] [region/] [note/]\n"
+            + "\nExample: " + COMMAND_WORD + " phone/ gamertag/";
 
     public static final String MESSAGE_SORT_SUCCESS = "Sorted all contacts.";
     public static final String MESSAGE_SORT_DEFAULT_SUCCESS = "Sorted all contacts by gamertag (default).";

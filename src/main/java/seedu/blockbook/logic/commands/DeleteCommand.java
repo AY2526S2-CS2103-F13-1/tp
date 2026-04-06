@@ -20,9 +20,12 @@ public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the gamer contacts identified by the index numbers used in the displayed gamer list.\n"
-            + "Format: delete INDEX [INDEX]...\n"
-            + "Examples: " + COMMAND_WORD + " 1  |  " + COMMAND_WORD + " 1 2 3";
+            + ": Deletes the gamer contacts identified by the index numbers used in the displayed gamer list."
+            + " Entering duplicate indexes will only delete the contact once.\n"
+            + "\nFormat: delete INDEX [INDEX]..."
+            + "\nExample 1: " + COMMAND_WORD + " 1"
+            + "\nExample 2: " + COMMAND_WORD + " 1 2 3"
+            + "\nExample 3: " + COMMAND_WORD + " 1 1 1 (Deletes the first contact only once)";
 
     public static final String MESSAGE_DELETE_GAMER_SUCCESS = "Contact(s) deleted: %1$s";
 
@@ -49,7 +52,7 @@ public class DeleteCommand extends Command {
         String deletedGamerNames = "";
         for (Index index : indexList) {
             int indexNumber = index.getZeroBased();
-            if (lastIndex == indexNumber) {
+            if (lastIndex == indexNumber) { // Skip duplicate indexes
                 continue;
             }
             lastIndex = indexNumber;

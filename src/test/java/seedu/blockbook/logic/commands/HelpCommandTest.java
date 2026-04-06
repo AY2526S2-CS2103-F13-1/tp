@@ -13,19 +13,30 @@ public class HelpCommandTest {
     public void execute_returnsExpectedHelpOutput() {
         Model model = new ModelManager();
 
-        String expectedOutput = HelpCommand.SHOWING_HELP_MESSAGE + "\n"
-                + HelpCommand.MESSAGE_USAGE + "\n\n"
-                + AddCommand.MESSAGE_USAGE + "\n\n"
-                + EditCommand.MESSAGE_USAGE + "\n\n"
-                + DeleteCommand.MESSAGE_USAGE + "\n"
+        String expectedOutput = HelpCommand.SHOWING_HELP_MESSAGE + "\n\n"
+                + HelpCommand.MESSAGE_USAGE
                 + HelpCommand.SEPARATOR
-                + FindCommand.MESSAGE_USAGE + "\n\n"
-                + ListCommand.MESSAGE_USAGE + "\n"
+                + AddCommand.MESSAGE_USAGE
                 + HelpCommand.SEPARATOR
-                + ClearCommand.MESSAGE_USAGE + "\n\n"
+                + EditCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
+                + DeleteCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
+                + FavouriteCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
+                + ListCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
+                + ViewCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
+                + SortCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
+                + FindCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
+                + ClearCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
                 + ExitCommand.MESSAGE_USAGE;
 
-        CommandResult expectedCommandResult = new CommandResult(expectedOutput, false, false);
+        CommandResult expectedCommandResult = new CommandResult(expectedOutput, true, false);
 
         assertEquals(expectedCommandResult, new HelpCommand().execute(model));
     }
@@ -39,8 +50,13 @@ public class HelpCommandTest {
         assertTrue(output.contains(AddCommand.MESSAGE_USAGE));
         assertTrue(output.contains(EditCommand.MESSAGE_USAGE));
         assertTrue(output.contains(DeleteCommand.MESSAGE_USAGE));
-        assertTrue(output.contains(FindCommand.MESSAGE_USAGE));
+        assertTrue(output.contains(FavouriteCommand.MESSAGE_USAGE));
+
         assertTrue(output.contains(ListCommand.MESSAGE_USAGE));
+        assertTrue(output.contains(ViewCommand.MESSAGE_USAGE));
+        assertTrue(output.contains(SortCommand.MESSAGE_USAGE));
+        assertTrue(output.contains(FindCommand.MESSAGE_USAGE));
+
         assertTrue(output.contains(ClearCommand.MESSAGE_USAGE));
         assertTrue(output.contains(ExitCommand.MESSAGE_USAGE));
     }

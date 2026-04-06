@@ -9,7 +9,6 @@ import seedu.blockbook.commons.util.StringUtil;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
 import seedu.blockbook.model.gamer.Country;
 import seedu.blockbook.model.gamer.Email;
-import seedu.blockbook.model.gamer.Favourite;
 import seedu.blockbook.model.gamer.GamerTag;
 import seedu.blockbook.model.gamer.Group;
 import seedu.blockbook.model.gamer.Name;
@@ -64,33 +63,11 @@ public class ParserUtil {
      */
     public static Name parseName(String name) throws ParseException {
         requireNonNull(name);
-        String normalizedName = normalizeName(name);
+        String normalizedName = normalizeCapitalizedWords(name);
         if (!Name.isValidName(normalizedName)) {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
         return new Name(normalizedName);
-    }
-
-    /**
-     * Normalizes the given name by trimming, collapsing multiple spaces, and applying capitalization.
-     */
-    private static String normalizeName(String name) {
-        String collapsed = name.trim().replaceAll("\\s+", " ");
-        StringBuilder builder = new StringBuilder(collapsed.length());
-        boolean capitalizeNext = true;
-        for (int i = 0; i < collapsed.length(); i++) {
-            char currentChar = collapsed.charAt(i);
-            if (Character.isLetter(currentChar)) {
-                builder.append(capitalizeNext
-                        ? Character.toUpperCase(currentChar)
-                        : Character.toLowerCase(currentChar));
-                capitalizeNext = false;
-            } else {
-                builder.append(currentChar);
-                capitalizeNext = currentChar == ' ' || currentChar == '-' || currentChar == '\'';
-            }
-        }
-        return builder.toString();
     }
 
     /**
@@ -110,17 +87,19 @@ public class ParserUtil {
 
     /**
      * Parses a {@code String phone} into a {@code Phone}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Leading and trailing whitespaces will be trimmed, and repeated internal spaces
+     * will be collapsed into a single space before validation.
      *
      * @throws ParseException if the given {@code phone} is invalid.
      */
     public static Phone parsePhone(String phone) throws ParseException {
         requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
+        String normalizedPhone = normalizeSpacedValue(phone);
+        String error = Phone.getPhoneValidationError(normalizedPhone);
+        if (error != null) {
+            throw new ParseException(error);
         }
-        return new Phone(trimmedPhone);
+        return new Phone(normalizedPhone);
     }
 
     /**
@@ -146,11 +125,11 @@ public class ParserUtil {
      */
     public static Group parseGroup(String group) throws ParseException {
         requireNonNull(group);
-        String trimmedGroup = group.trim();
-        if (!Group.isValidGroup(trimmedGroup)) {
+        String normalizedGroup = normalizeSpacedValue(group);
+        if (!Group.isValidGroup(normalizedGroup)) {
             throw new ParseException(Group.MESSAGE_CONSTRAINTS);
         }
-        return new Group(trimmedGroup);
+        return new Group(normalizedGroup);
     }
 
     /**
@@ -169,21 +148,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String favourite} into a {@code Favourite}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code favourite} is invalid.
-     */
-    public static Favourite parseFavourite(String favourite) throws ParseException {
-        requireNonNull(favourite);
-        String trimmedFavourite = favourite.trim();
-        if (!Favourite.isValidFavourite(trimmedFavourite)) {
-            throw new ParseException(Favourite.MESSAGE_CONSTRAINTS);
-        }
-        return new Favourite(trimmedFavourite);
-    }
-
-    /**
      * Parses a {@code String country} into a {@code Country}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -191,11 +155,11 @@ public class ParserUtil {
      */
     public static Country parseCountry(String country) throws ParseException {
         requireNonNull(country);
-        String trimmedCountry = country.trim();
-        if (!Country.isValidCountry(trimmedCountry)) {
+        String normalizedCountry = normalizeCapitalizedWords(country);
+        if (!Country.isValidCountry(normalizedCountry)) {
             throw new ParseException(Country.MESSAGE_CONSTRAINTS);
         }
-        return new Country(trimmedCountry);
+        return new Country(normalizedCountry);
     }
 
     /**
@@ -228,5 +192,34 @@ public class ParserUtil {
         return new Note(trimmedNote);
     }
 
+    /**
+     * Trims the input and collapses repeated whitespace into a single space.
+     */
+    private static String normalizeSpacedValue(String value) {
+        return value.trim().replaceAll("\\s+", " ");
+    }
+
+    /**
+     * Trims the input, collapses repeated spaces, and capitalizes each word segment.
+     * Word segments are restarted after spaces, hyphens, and apostrophes.
+     */
+    private static String normalizeCapitalizedWords(String value) {
+        String collapsed = normalizeSpacedValue(value);
+        StringBuilder builder = new StringBuilder(collapsed.length());
+        boolean capitalizeNext = true;
+        for (int i = 0; i < collapsed.length(); i++) {
+            char currentChar = collapsed.charAt(i);
+            if (Character.isLetter(currentChar)) {
+                builder.append(capitalizeNext
+                        ? Character.toUpperCase(currentChar)
+                        : Character.toLowerCase(currentChar));
+                capitalizeNext = false;
+            } else {
+                builder.append(currentChar);
+                capitalizeNext = currentChar == ' ' || currentChar == '-' || currentChar == '\'';
+            }
+        }
+        return builder.toString();
+    }
 }
 
