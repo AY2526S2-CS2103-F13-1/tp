@@ -28,14 +28,14 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open this User Guide in a browser window.<br>
+1. Type the command in the command box and press Enter to execute it. e.g. typing **`?`** or **`help`** and pressing Enter will open the built-in help menu, where you can view all the commands available.<br>
    Some example commands you can try:
 
     * `list` : Lists all contacts.
 
     * `add name/John Doe gamertag/JD910` : Adds a contact named `John Doe` to BlockBook with the gamertag `JD910`.
 
-    * `delete 3` : Deletes the 3rd contact shown in the current list.
+    * `d 3` : Deletes the 3rd contact shown in the current list. `d` is a shortcut for `delete`.
 
     * `clear` : Deletes all contacts.
 
@@ -53,6 +53,9 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
     * e.g. in `add name/NAME`, `NAME` is a parameter which can be used as `add name/John Doe`.
+
+* Characters inside brackets `()` can be typed in place of the full command.<br>
+    * e.g. Instead of typing `delete 3` to delete the third contact in the list, the same function can be achieved by typing `d 3`.
 
 * Items in square brackets are optional.<br>
     * e.g `name/NAME [t/TAG]` can be used as `name/John Doe t/friend` or as `name/John Doe`.
@@ -73,14 +76,14 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 
 Opens this User Guide in a browser window.
 
-Format: `help`
+Format: `help` or `?`
 
 
 ### Adding a gamer: `add`
 
 Adds a gamer to BlockBook with a required gamertag and optional details such as name, phone number, email address, group, server, favourite status, region, country, and notes.
 
-Format: `add gamertag/GAMERTAG [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP] [server/SERVER] [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]`
+Format: `(a)dd gamertag/GAMERTAG [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP] [server/SERVER] [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]`
 
 <box type="tip" seamless>
 
@@ -91,21 +94,21 @@ Format: `add gamertag/GAMERTAG [name/NAME] [phone/PHONE] [email/EMAIL] [group/GR
 - `region/` accepts `NA`, `SA`, `EU`, `AFRICA`, `ASIA`, `OCEANIA` or `ME`.
 
 Examples:
-* `add gamertag/ilovesteve name/Herobrine phone/99999 email/brine@gmail.com group/DestroySteve server/127.0.0.1:8080 favourite/fav country/Singapore region/ASIA note/I hate steve`
+* `a gamertag/ilovesteve name/Herobrine phone/99999 email/brine@gmail.com group/DestroySteve server/127.0.0.1:8080 favourite/fav country/Singapore region/ASIA note/I hate steve`
 * `add gamertag/Notch name/Notch phone/+12345 email/notch@example.com group/Redstone Crew server/mc.example.net:25565 favourite/unfav country/Malaysia region/ASIA note/Usually plays survival`
 
 ### Listing all gamers : `list`
 
 Shows a list of all gamers stored in BlockBook.
 
-Format: `list`
+Format: `(l)ist`
 
 ### Editing a gamer : `edit`
 
 Edits an existing gamer stored in BlockBook.
 **TAKE NOTE!** This command does not allow the editing of fields that do not exist, such as `p/`, `e/`, `a/` etc. These fields are a work in progress.
 
-Format: `edit INDEX [name/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
+Format: `(e)dit INDEX [name/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
 
 * Edits the gamer at the specified `INDEX`. The index refers to the index number shown in the displayed gamer list. The index **must be a positive integer** 1, 2, 3, ...
 * At least one of the optional fields must be provided.
@@ -116,25 +119,25 @@ Format: `edit INDEX [name/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st gamer to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 name/Betsy Crower t/` Edits the name of the 2nd gamer to be `Betsy Crower` and clears all existing tags.
+*  `e 2 name/Betsy Crower t/` Edits the name of the 2nd gamer to be `Betsy Crower` and clears all existing tags.
 
-### Editing a gamer’s favourite status : `favourite/unfavourite`
+### Editing a gamer’s favourite status : `favourite`, `unfavourite`
 
 Updates a gamer’s favourite status via index
 
-Format: `favourite INDEX` or `unfavourite INDEX`
+Format: `(fav)ourite INDEX` or `(unfav)ourite INDEX`
 
 * Updates the favourite status of the gamer at the specified `INDEX`. The index refers to the index number shown in the displayed gamer list.
 
 Examples:
-*  `favourite 1` Updates the favourite status of the first gamer to favourite.
+*  `fav 1` Updates the favourite status of the first gamer to favourite.
 *  `unfavourite 1` Remove the first gamer from favourites.
 
 ### Locating gamers by name: `find`
 
 Finds gamers whose names contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `(f)ind KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
@@ -152,7 +155,7 @@ Examples:
 
 Sorts the displayed contact list by one or more attributes.
 
-Format: `sort [ATTRIBUTE/]...`
+Format: `(s)ort [ATTRIBUTE/]...`
 
 * If no attributes are provided, contacts are sorted by **gamertag** by default.
 * When multiple attributes are provided, they are applied in order of priority (left to right). The first attribute is the primary sort key, the second is used to break ties, and so on.
@@ -176,14 +179,14 @@ Format: `sort [ATTRIBUTE/]...`
 Examples:
 * `sort` sorts all contacts by gamertag (default).
 * `sort name/` sorts all contacts by name.
-* `sort phone/ gamertag/` sorts all contacts by phone number, using gamertag to break ties.
+* `s phone/ gamertag/` sorts all contacts by phone number, using gamertag to break ties.
 * `sort favourite/ name/` sorts favourites before non-favourites, then by name within each group.
 
 ### Deleting a Gamer : `delete`
 
 Deletes the specified gamers from BlockBook.
 
-Format: `delete INDEX [INDEX]...`
+Format: `(d)elete INDEX [INDEX]...`
 
 * Deletes the gamers at each specified `INDEX`.
 * Trying to delete the same index multiple times will only cause that index to be deleted once.
@@ -194,7 +197,7 @@ Format: `delete INDEX [INDEX]...`
 Examples:
 * `list` followed by `delete 2` deletes the 2nd gamer shown in the list.
 * `find Betsy` followed by `delete 1 2` deletes the 1st and 2nd gamer in the results of the `find` command.
-* `delete 2 1` deletes the 1st and 2nd gamer shown in the list.
+* `d 2 1` deletes the 1st and 2nd gamer shown in the list.
 * `delete 1 2 2` deletes only the 1st and 2nd gamers shown in the list. The 2nd gamer is only deleted once.
 
 ### Clearing all entries : `clear`
