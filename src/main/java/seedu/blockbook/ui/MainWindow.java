@@ -3,6 +3,7 @@ package seedu.blockbook.ui;
 import java.util.logging.Logger;
 
 import javafx.application.HostServices;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
@@ -18,6 +19,7 @@ import seedu.blockbook.logic.Logic;
 import seedu.blockbook.logic.commands.CommandResult;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
+import seedu.blockbook.model.gamer.Gamer;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -40,6 +42,8 @@ public class MainWindow extends UiPart<Stage> {
     private GamerListPanel gamerListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private ViewWindow viewWindow;
+    private Gamer viewedGamer;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -83,6 +87,8 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerators();
 
         helpWindow = new HelpWindow();
+        viewWindow = new ViewWindow();
+        registerGamerListListener();
     }
 
     public Stage getPrimaryStage() {
@@ -201,6 +207,7 @@ public class MainWindow extends UiPart<Stage> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
+        viewWindow.hide();
         primaryStage.hide();
     }
 
@@ -224,8 +231,63 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    /**
+     * Opens the view popup with the specified gamer details.
+     */
+    private void handleViewPopUp(CommandResult commandResult) {
+        logic.getViewedGamer().ifPresent(gamer -> {
+            viewWindow.setGamer(gamer, getDisplayedIndex(gamer));
+            viewedGamer = gamer;
+            if (!viewWindow.isShowing()) {
+                viewWindow.show();
+            } else {
+                viewWindow.focus();
+            }
+        });
+    }
+
+    /**
+     * Keeps the view popup in sync with list edits and deletions.
+     */
+    private void registerGamerListListener() {
+        logic.getBlockBook().getGamerList().addListener((ListChangeListener<Gamer>) change -> {
+            if (viewedGamer == null) {
+                return;
+            }
+
+            while (change.next()) {
+                if (change.wasRemoved() || change.wasReplaced()) {
+                    boolean removedViewed = change.getRemoved().stream().anyMatch(viewedGamer::equals);
+                    if (!removedViewed) {
+                        continue;
+                    }
+
+                    if (change.wasReplaced() && change.getAddedSize() == 1) {
+                        Gamer updated = change.getAddedSubList().get(0);
+                        viewedGamer = updated;
+                        if (viewWindow.isShowing()) {
+                            viewWindow.setGamer(updated, getDisplayedIndex(updated));
+                        }
+                    } else {
+                        viewedGamer = null;
+                        viewWindow.hide();
+                    }
+                }
+            }
+        });
+    }
+
     public GamerListPanel getGamerListPanel() {
         return gamerListPanel;
+    }
+
+    private int getDisplayedIndex(Gamer gamer) {
+        int filteredIndex = logic.getFilteredGamerList().indexOf(gamer);
+        if (filteredIndex >= 0) {
+            return filteredIndex + 1;
+        }
+        int fullIndex = logic.getBlockBook().getGamerList().indexOf(gamer);
+        return fullIndex >= 0 ? fullIndex + 1 : 1;
     }
 
     /**
@@ -245,6 +307,10 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
+            }
+
+            if (commandResult.isShowView()) {
+                handleViewPopUp(commandResult);
             }
 
             return commandResult;

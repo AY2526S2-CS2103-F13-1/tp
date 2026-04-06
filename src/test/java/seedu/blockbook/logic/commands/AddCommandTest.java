@@ -185,6 +185,16 @@ public class AddCommandTest {
         public void clearSort() {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void setViewedGamer(Gamer gamer) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public java.util.Optional<Gamer> getViewedGamer() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

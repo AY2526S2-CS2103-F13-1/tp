@@ -1,6 +1,7 @@
 package seedu.blockbook.logic;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 import javafx.collections.ObservableList;
 import seedu.blockbook.commons.core.GuiSettings;
@@ -47,6 +48,10 @@ public interface Logic {
      * Set the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
-}
 
+    /**
+     * Returns the currently viewed gamer for the view popup.
+     */
+    Optional<Gamer> getViewedGamer();
+}
 

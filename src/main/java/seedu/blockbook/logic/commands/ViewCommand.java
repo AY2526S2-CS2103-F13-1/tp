@@ -41,7 +41,8 @@ public class ViewCommand extends Command {
         }
 
         Gamer specifiedGamer = lastShownList.get(index);
-        return new CommandResult(Messages.format(specifiedGamer));
+        model.setViewedGamer(specifiedGamer);
+        return new CommandResult(Messages.format(specifiedGamer), false, false, true);
     }
 
     @Override

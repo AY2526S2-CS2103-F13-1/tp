@@ -2,6 +2,7 @@ package seedu.blockbook.model;
 
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -115,4 +116,14 @@ public interface Model {
      * Clears any active sort and returns the list to insertion order.
      */
     void clearSort();
+
+    /**
+     * Updates the currently viewed gamer for the view popup.
+     */
+    void setViewedGamer(Gamer gamer);
+
+    /**
+     * Returns the currently viewed gamer for the view popup.
+     */
+    Optional<Gamer> getViewedGamer();
 }

@@ -3,6 +3,7 @@ package seedu.blockbook.logic;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -85,6 +86,10 @@ public class LogicManager implements Logic {
     public void setGuiSettings(GuiSettings guiSettings) {
         model.setGuiSettings(guiSettings);
     }
-}
 
+    @Override
+    public Optional<Gamer> getViewedGamer() {
+        return model.getViewedGamer();
+    }
+}
 
