@@ -124,7 +124,7 @@ public class EditCommand extends Command {
                 updatedGamerTag,
                 updatedPhone,
                 updatedEmail,
-                gamerToEdit.getGroup(),
+                gamerToEdit.getGroups(),
                 updatedServer,
                 gamerToEdit.getFavourite(),
                 updatedCountry,
