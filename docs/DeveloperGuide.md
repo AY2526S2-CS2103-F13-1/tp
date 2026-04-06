@@ -633,7 +633,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `delete 1 2`<br>
       Expected: The first two contacts are deleted from the list. Gamertags of the deleted contacts shown in the status message. Timestamp in the status bar is updated.
-
+4
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
@@ -646,6 +646,147 @@ testers are expected to do more *exploratory* testing.
 ### Viewing a gamer contact
 
 ### Finding a gamer contact
+
+1. Finding gamers with global keyword(s)
+
+   1. Prerequisites: There are three gamers in the list (Alex with gamertag `CraftyAlex`, email `alex@craft.net`,
+      group `Explorers`, server `srv1.gamehub.net`, country `USA`, region `NA`, note `builder`,
+      Steve with phone `987654`, email `steve@craft.net`, group `Explorers`, server `srv2.gamehub.net`,
+      country `USA`, note `builder pro`, and Herobrine with favourite status set).
+
+   1. Test case: `find alex`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find al`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find craft`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find hub`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find gamehub`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find explorers`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find craft.net`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find usa`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find builder`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find na`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find 987`<br>
+      Expected: Only Steve is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find alex steve`<br>
+      Expected: No gamer is displayed in the list. A message indicates no gamers were found.
+
+   1. Test case: `find Sean`<br>
+      Expected: No gamer is displayed in the list. A message indicates no gamers were found.
+
+1. Finding gamers with specific prefixes
+
+   1. Prerequisites: There are three gamers in the list (Alex with gamertag `CraftyAlex`, email `alex@craft.net`,
+      group `Explorers`, server `srv1.gamehub.net`, country `USA`, region `NA`, note `builder`,
+      Steve with phone `987654`, email `steve@craft.net`, group `Explorers`, server `srv2.gamehub.net`,
+      country `USA`, note `builder pro`, and Herobrine with favourite status set).
+
+   1. Test case: `find name/Alex`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+   2. 
+   1. Test case: `find name/aLeX`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find gamertag/Craft`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find phone/987`<br>
+      Expected: Only Steve is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find email/alex@craft.net`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find group/Explorers`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find server/srv1.gamehub.net`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find server/gamehub`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find country/USA`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find region/NA`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find note/build`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+   1. Test case: `find favourite/`<br>
+      Expected: Only favourite gamers are displayed in the list. A message indicates the number of gamers found.
+
+   1. Test case: `find name/Alex country/USA`<br>
+      Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
+
+   1. Test case: `find group/Explorers country/USA`<br>
+      Expected: Alex and Steve are displayed in the list. A message indicates 2 gamer(s) found.
+
+1. Invalid find inputs
+
+   1. Prerequisites: None.
+
+   1. Test case: `find name/`<br>
+      Expected: Error indicating the search keyword for `name/` cannot be empty.
+
+   1. Test case: `find phone/9123abcd`<br>
+      Expected: Error indicating the phone search keyword contains invalid characters.
+
+   1. Test case: `find email/not#email`<br>
+      Expected: Error indicating the email search keyword contains invalid characters.
+
+   1. Test case: `find gamertag/Bad Tag`<br>
+      Expected: Error indicating the gamertag search keyword contains invalid characters.
+
+   1. Test case: `find group/Explorers2`<br>
+      Expected: Error indicating the group search keyword contains invalid characters.
+
+   1. Test case: `find server/srv#1`<br>
+      Expected: Error indicating the server search keyword contains invalid characters.
+
+   1. Test case: `find country/U$A`<br>
+      Expected: Error indicating the country search keyword contains invalid characters.
+
+   1. Test case: `find note/build!`<br>
+      Expected: Error indicating the note search keyword contains invalid characters.
+
+   1. Test case: `find region/XX`<br>
+      Expected: Error indicating the region search keyword is invalid.
+
+   1. Test case: `find alex name/Steve`<br>
+      Expected: Error indicating global and specific searches cannot be combined.
+
+   1. Test case: `find name/Alex name/Steve`<br>
+      Expected: Error indicating duplicate prefixes are not allowed.
+
+   1. Test case: `find favourite/yes`<br>
+      Expected: Error indicating the `favourite/` prefix does not take a value.
+
+   1. Test case: `find aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`<br>
+      Expected: Error indicating global search keyword input cannot exceed 50 characters.
+
+   1. Test case: `find`<br>
+      Expected: Error indicating invalid command format for `find`.
 
 ### Sorting gamer contacts
 
@@ -669,6 +810,3 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases ... }_
-
-
-
