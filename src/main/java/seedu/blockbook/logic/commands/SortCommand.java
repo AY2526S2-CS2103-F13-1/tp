@@ -23,8 +23,9 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts contacts by the specified attributes.\n"
-            + "\nFormat: " + COMMAND_WORD + " [name/] [phone/] [email/] [group/] [server/]"
-            + " [favourite/] [country/] [region/] [note/]\n"
+            + "\nIf no attributes are specified, results are sorted by gamertag by default.\n"
+            + "\nFormat: " + COMMAND_WORD + " [gamertag/] [name/] [phone/] [email/] [group/]"
+            + " [server/] [favourite/] [country/] [region/] [note/]\n"
             + "\nExample: " + COMMAND_WORD + " phone/ gamertag/";
 
     public static final String MESSAGE_SORT_SUCCESS = "Sorted all contacts.";
@@ -34,7 +35,7 @@ public class SortCommand extends Command {
             "Please ensure all attributes are valid. "
             + "Possible attributes: name, gamertag, phone, email, group, server, favourite, country, region, note";
     public static final String MESSAGE_DUPLICATE_ATTRIBUTE =
-            "Duplicate attribute detected: '%1$s'. Each attribute can only be specified once.";
+            "Duplicate attribute detected: %1$s. Each attribute can only be specified once.";
     public static final String MESSAGE_INVALID_ATTRIBUTE =
             "'%1$s' is not a valid attribute!\n"
             + COMMAND_WORD + ": Sorts contacts by the specified attributes. "
