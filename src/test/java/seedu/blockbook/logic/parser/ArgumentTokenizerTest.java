@@ -165,4 +165,32 @@ public class ArgumentTokenizerTest {
         assertNull(prefixMap.get(new Prefix("name/", "nm/")));
     }
 
+    @Test
+    public void tokenize_aliasOnlyUsage_mapsToCanonicalPrefixKey() {
+        Prefix gamertagPrefix = new Prefix("gamertag/", "g/");
+        Prefix serverPrefix = new Prefix("server/", "s/");
+
+        String argsString = "  preamble g/ proPlayer s/ asia";
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, gamertagPrefix, serverPrefix);
+
+        assertPreamblePresent(argMultimap, "preamble");
+        assertArgumentPresent(argMultimap, gamertagPrefix, "proPlayer");
+        assertArgumentPresent(argMultimap, serverPrefix, "asia");
+        assertArgumentAbsent(argMultimap, pSlash);
+    }
+
+    @Test
+    public void tokenize_mixedCanonicalAndAliasUsage_accumulatesInEncounterOrder() {
+        Prefix namePrefix = new Prefix("name/", "n/");
+        Prefix phonePrefix = new Prefix("phone/", "p/");
+
+        String argsString = " name/ Alice n/ Bob phone/ 111 p/ 222";
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, namePrefix, phonePrefix);
+
+        // Values from canonical and alias forms should be stored under the same canonical Prefix key.
+        assertPreambleEmpty(argMultimap);
+        assertArgumentPresent(argMultimap, namePrefix, "Alice", "Bob");
+        assertArgumentPresent(argMultimap, phonePrefix, "111", "222");
+    }
+
 }
