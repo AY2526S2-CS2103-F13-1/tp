@@ -23,6 +23,7 @@ class JsonSerializableBlockBook {
 
     public static final String MESSAGE_DUPLICATE_GAMER = "Gamers list contains duplicate gamer(s).";
     public static final String MESSAGE_DUPLICATE_GROUP = "Group list contains duplicate group(s).";
+    private static final String MISSING_GROUP_FIELD_MESSAGE = "Group's name field is missing!";
 
     private final List<JsonAdaptedGamer> gamers = new ArrayList<>();
     private final List<String> blockbookgroups = new ArrayList<>();
@@ -33,7 +34,9 @@ class JsonSerializableBlockBook {
     @JsonCreator
     public JsonSerializableBlockBook(@JsonProperty("gamers") List<JsonAdaptedGamer> gamers,
                                      @JsonProperty("blockbookgroups") List<String> blockbookgroups) {
-        this.gamers.addAll(gamers);
+        if (gamers != null) {
+            this.gamers.addAll(gamers);
+        }
         if (blockbookgroups != null) {
             this.blockbookgroups.addAll(blockbookgroups);
         }
@@ -45,7 +48,11 @@ class JsonSerializableBlockBook {
      * @param source future changes to this will not affect the created {@code JsonSerializableBlockBook}.
      */
     public JsonSerializableBlockBook(ReadOnlyBlockBook source) {
-        List<Group> groupList = new ArrayList<>(source.getGroupList());
+        List<Group> baseGroups = new ArrayList<>(source.getGroupList());
+        List<Group> additionalGroups = source.getGamerList().stream()
+                .flatMap(gamer -> gamer.getGroups().stream())
+                .collect(Collectors.toList());
+        List<Group> groupList = mergeGroups(baseGroups, additionalGroups);
         blockbookgroups.addAll(groupList.stream().map(Group::toString).collect(Collectors.toList()));
         gamers.addAll(source.getGamerList().stream()
                 .map(gamer -> new JsonAdaptedGamer(gamer, groupList))
@@ -61,6 +68,9 @@ class JsonSerializableBlockBook {
         BlockBook blockBook = new BlockBook();
 
         for (String groupName : blockbookgroups) {
+            if (groupName == null) {
+                throw new IllegalValueException(MISSING_GROUP_FIELD_MESSAGE);
+            }
             String normalizedGroup = normalizeSpacedValue(groupName);
             if (!Group.isValidGroup(normalizedGroup)) {
                 throw new IllegalValueException(Group.MESSAGE_CONSTRAINTS);
@@ -85,6 +95,18 @@ class JsonSerializableBlockBook {
 
     private static String normalizeSpacedValue(String value) {
         return Objects.requireNonNull(value).trim().replaceAll("\\s+", " ");
+    }
+
+    private static List<Group> mergeGroups(List<Group> existingGroups, List<Group> candidateGroups) {
+        List<Group> merged = new ArrayList<>(existingGroups);
+        for (Group group : candidateGroups) {
+            boolean exists = merged.stream().anyMatch(existing ->
+                    existing.toString().equalsIgnoreCase(group.toString()));
+            if (!exists) {
+                merged.add(group);
+            }
+        }
+        return merged;
     }
 
 }

@@ -1,7 +1,9 @@
 package seedu.blockbook.model.gamer;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.blockbook.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -44,14 +46,15 @@ public class Gamer {
     public Gamer(Name name, GamerTag gamerTag, Phone phone, Email email,
                  List<Group> groups, Server server, Favourite favourite,
                  Country country, Region region, Note note) {
-        requireAllNonNull(gamerTag, groups);
+        requireNonNull(gamerTag);
+        requireAllNonNull(groups);
         this.name = name;
         this.gamerTag = gamerTag;
         this.phone = phone;
         this.email = email;
-        this.groups = Collections.unmodifiableList(groups);
+        this.groups = Collections.unmodifiableList(new ArrayList<>(groups));
         // "group" will be removed once porting is complete
-        this.group = groups.isEmpty() ? null : groups.get(0);
+        this.group = this.groups.isEmpty() ? null : this.groups.get(0);
         this.server = server;
         this.favourite = favourite;
         this.country = country;

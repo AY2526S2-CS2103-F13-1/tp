@@ -88,7 +88,7 @@ public class GamerCard extends UiPart<Region> {
 
     private static String formatGroups(List<Group> groups) {
         if (groups == null || groups.isEmpty()) {
-            return "N/A";
+            return Messages.formatNullable(null);
         }
         return groups.stream()
                 .map(Group::toString)
