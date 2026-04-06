@@ -14,6 +14,7 @@ import javafx.collections.transformation.SortedList;
 import seedu.blockbook.commons.core.GuiSettings;
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.Group;
 
 /**
  * Represents the in-memory model of the BlockBook data.
@@ -98,6 +99,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean hasGroup(Group group) {
+        requireNonNull(group);
+        return blockBook.hasGroup(group);
+    }
+
+    @Override
     public void deleteGamer(Gamer target) {
         blockBook.removeGamer(target);
     }
@@ -106,6 +113,12 @@ public class ModelManager implements Model {
     public void addGamer(Gamer gamer) {
         blockBook.addGamer(gamer);
         updateFilteredGamerList(PREDICATE_SHOW_ALL_GAMERS);
+    }
+
+    @Override
+    public void addGroup(Group group) {
+        requireNonNull(group);
+        blockBook.addGroup(group);
     }
 
     @Override
@@ -123,6 +136,11 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Gamer> getFilteredGamerList() {
         return filteredGamers;
+    }
+
+    @Override
+    public ObservableList<Group> getGroupList() {
+        return blockBook.getGroupList();
     }
 
     @Override
@@ -164,5 +182,3 @@ public class ModelManager implements Model {
     }
 
 }
-
-

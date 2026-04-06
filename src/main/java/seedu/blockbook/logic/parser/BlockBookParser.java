@@ -16,6 +16,7 @@ import seedu.blockbook.logic.commands.EditCommand;
 import seedu.blockbook.logic.commands.ExitCommand;
 import seedu.blockbook.logic.commands.FavouriteCommand;
 import seedu.blockbook.logic.commands.FindCommand;
+import seedu.blockbook.logic.commands.GroupCreateCommand;
 import seedu.blockbook.logic.commands.HelpCommand;
 import seedu.blockbook.logic.commands.ListCommand;
 import seedu.blockbook.logic.commands.SortCommand;
@@ -56,11 +57,11 @@ public class BlockBookParser {
 
         switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+//        case AddCommand.COMMAND_WORD:
+//            return new AddCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+//        case EditCommand.COMMAND_WORD:
+//            return new EditCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
@@ -74,14 +75,14 @@ public class BlockBookParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommandParser().parse(arguments);
 
-        case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+//        case FindCommand.COMMAND_WORD:
+//            return new FindCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
-        case SortCommand.COMMAND_WORD:
-            return new SortCommandParser().parse(arguments);
+//        case SortCommand.COMMAND_WORD:
+//            return new SortCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
@@ -89,8 +90,11 @@ public class BlockBookParser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
-        case ViewCommand.COMMAND_WORD:
-            return new ViewCommandParser().parse(arguments);
+//        case ViewCommand.COMMAND_WORD:
+//            return new ViewCommandParser().parse(arguments);
+
+        case GroupCreateCommand.COMMAND_WORD:
+            return new GroupCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
@@ -99,5 +103,3 @@ public class BlockBookParser {
     }
 
 }
-
-

@@ -2,11 +2,14 @@
   "gamers": [
     {
       "name": "Alice Pauline",
-      "gamerTag": "Herobrine"
+      "gamerTag": "Herobrine",
+      "groups": []
     },
     {
       "name": "Alice Pauline",
-      "gamerTag": "Herobrine"
+      "gamerTag": "Herobrine",
+      "groups": []
     }
-  ]
+  ],
+  "blockbookgroups": []
 }
