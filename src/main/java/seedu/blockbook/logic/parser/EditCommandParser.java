@@ -5,7 +5,6 @@ import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_COUNTRY;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GAMERTAG;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -36,7 +35,6 @@ public class EditCommandParser implements Parser<EditCommand> {
                 PREFIX_NAME,
                 PREFIX_PHONE,
                 PREFIX_EMAIL,
-                PREFIX_GROUP,
                 PREFIX_SERVER,
                 PREFIX_COUNTRY,
                 PREFIX_REGION,
@@ -58,7 +56,6 @@ public class EditCommandParser implements Parser<EditCommand> {
                 PREFIX_NAME,
                 PREFIX_PHONE,
                 PREFIX_EMAIL,
-                PREFIX_GROUP,
                 PREFIX_SERVER,
                 PREFIX_COUNTRY,
                 PREFIX_REGION,
@@ -78,9 +75,6 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
             descriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
-        }
-        if (argMultimap.getValue(PREFIX_GROUP).isPresent()) {
-            descriptor.setGroup(ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP).get()));
         }
         if (argMultimap.getValue(PREFIX_SERVER).isPresent()) {
             descriptor.setServer(ParserUtil.parseServer(argMultimap.getValue(PREFIX_SERVER).get()));
