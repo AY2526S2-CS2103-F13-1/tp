@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.blockbook.commons.core.LogsCenter;
-//import seedu.blockbook.logic.commands.AddCommand;
+import seedu.blockbook.logic.commands.AddCommand;
 import seedu.blockbook.logic.commands.ClearCommand;
 import seedu.blockbook.logic.commands.Command;
 import seedu.blockbook.logic.commands.DeleteCommand;
@@ -57,8 +57,8 @@ public class BlockBookParser {
 
         switch (commandWord) {
 
-        // case AddCommand.COMMAND_WORD:
-        //     return new AddCommandParser().parse(arguments);
+         case AddCommand.COMMAND_WORD:
+             return new AddCommandParser().parse(arguments);
 
         // case EditCommand.COMMAND_WORD:
         //     return new EditCommandParser().parse(arguments);
