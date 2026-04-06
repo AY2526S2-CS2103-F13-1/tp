@@ -63,33 +63,11 @@ public class ParserUtil {
      */
     public static Name parseName(String name) throws ParseException {
         requireNonNull(name);
-        String normalizedName = normalizeName(name);
+        String normalizedName = normalizeCapitalizedWords(name);
         if (!Name.isValidName(normalizedName)) {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
         return new Name(normalizedName);
-    }
-
-    /**
-     * Normalizes the given name by trimming, collapsing multiple spaces, and applying capitalization.
-     */
-    private static String normalizeName(String name) {
-        String collapsed = name.trim().replaceAll("\\s+", " ");
-        StringBuilder builder = new StringBuilder(collapsed.length());
-        boolean capitalizeNext = true;
-        for (int i = 0; i < collapsed.length(); i++) {
-            char currentChar = collapsed.charAt(i);
-            if (Character.isLetter(currentChar)) {
-                builder.append(capitalizeNext
-                        ? Character.toUpperCase(currentChar)
-                        : Character.toLowerCase(currentChar));
-                capitalizeNext = false;
-            } else {
-                builder.append(currentChar);
-                capitalizeNext = currentChar == ' ' || currentChar == '-' || currentChar == '\'';
-            }
-        }
-        return builder.toString();
     }
 
     /**
@@ -177,7 +155,7 @@ public class ParserUtil {
      */
     public static Country parseCountry(String country) throws ParseException {
         requireNonNull(country);
-        String normalizedCountry = normalizeSpacedValue(country);
+        String normalizedCountry = normalizeCapitalizedWords(country);
         if (!Country.isValidCountry(normalizedCountry)) {
             throw new ParseException(Country.MESSAGE_CONSTRAINTS);
         }
@@ -219,6 +197,29 @@ public class ParserUtil {
      */
     private static String normalizeSpacedValue(String value) {
         return value.trim().replaceAll("\\s+", " ");
+    }
+
+    /**
+     * Trims the input, collapses repeated spaces, and capitalizes each word segment.
+     * Word segments are restarted after spaces, hyphens, and apostrophes.
+     */
+    private static String normalizeCapitalizedWords(String value) {
+        String collapsed = normalizeSpacedValue(value);
+        StringBuilder builder = new StringBuilder(collapsed.length());
+        boolean capitalizeNext = true;
+        for (int i = 0; i < collapsed.length(); i++) {
+            char currentChar = collapsed.charAt(i);
+            if (Character.isLetter(currentChar)) {
+                builder.append(capitalizeNext
+                        ? Character.toUpperCase(currentChar)
+                        : Character.toLowerCase(currentChar));
+                capitalizeNext = false;
+            } else {
+                builder.append(currentChar);
+                capitalizeNext = currentChar == ' ' || currentChar == '-' || currentChar == '\'';
+            }
+        }
+        return builder.toString();
     }
 }
 
