@@ -19,7 +19,7 @@ public class GroupCreateCommand extends Command {
             + "Format: " + COMMAND_WORD + " " + SUBCOMMAND_CREATE + " GROUP\n\n"
             + "Example: " + COMMAND_WORD + " " + SUBCOMMAND_CREATE + " Raid Team";
 
-    public static final String MESSAGE_SUCCESS = "Group: `%1$s` added!";
+    public static final String MESSAGE_SUCCESS = "Group: %1$s added!";
     public static final String MESSAGE_DUPLICATE_GROUP =
             "This group already exists! Please use another group name!";
 
