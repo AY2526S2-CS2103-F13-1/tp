@@ -73,7 +73,7 @@ public class JsonUserPrefsStorageTest {
     private UserPrefs getTypicalUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
         userPrefs.setGuiSettings(new GuiSettings(1000, 500, 300, 100));
-        userPrefs.setBlockBookFilePath(Paths.get("data/contacts.json"));
+        userPrefs.setBlockBookFilePath(Paths.get("BlockBook/contacts.json"));
         return userPrefs;
     }
 
