@@ -50,32 +50,28 @@ public class JsonAdaptedGamerTest {
     public void toModelType_invalidName_throwsIllegalValueException() {
         JsonAdaptedGamer gamer = new JsonAdaptedGamer(INVALID_NAME, VALID_GAMER_TAG, VALID_PHONE, VALID_EMAIL,
                 VALID_GROUP_INDICES, VALID_SERVER, VALID_FAVOURITE, VALID_COUNTRY, VALID_REGION, VALID_NOTE);
-        assertThrows(IllegalValueException.class, Name.MESSAGE_CONSTRAINTS,
-                () -> gamer.toModelType(GROUP_LIST));
+        assertThrows(IllegalValueException.class, Name.MESSAGE_CONSTRAINTS, () -> gamer.toModelType(GROUP_LIST));
     }
 
     @Test
     public void toModelType_invalidGamerTag_throwsIllegalValueException() {
         JsonAdaptedGamer gamer = new JsonAdaptedGamer(VALID_NAME, INVALID_GAMER_TAG, VALID_PHONE, VALID_EMAIL,
                 VALID_GROUP_INDICES, VALID_SERVER, VALID_FAVOURITE, VALID_COUNTRY, VALID_REGION, VALID_NOTE);
-        assertThrows(IllegalValueException.class, GamerTag.MESSAGE_CONSTRAINTS,
-                () -> gamer.toModelType(GROUP_LIST));
+        assertThrows(IllegalValueException.class, GamerTag.MESSAGE_CONSTRAINTS, () -> gamer.toModelType(GROUP_LIST));
     }
 
     @Test
     public void toModelType_invalidPhone_throwsIllegalValueException() {
         JsonAdaptedGamer gamer = new JsonAdaptedGamer(VALID_NAME, VALID_GAMER_TAG, INVALID_PHONE, VALID_EMAIL,
                 VALID_GROUP_INDICES, VALID_SERVER, VALID_FAVOURITE, VALID_COUNTRY, VALID_REGION, VALID_NOTE);
-        assertThrows(IllegalValueException.class, Phone.MESSAGE_CONSTRAINTS,
-                () -> gamer.toModelType(GROUP_LIST));
+        assertThrows(IllegalValueException.class, Phone.MESSAGE_CONSTRAINTS, () -> gamer.toModelType(GROUP_LIST));
     }
 
     @Test
     public void toModelType_invalidEmail_throwsIllegalValueException() {
         JsonAdaptedGamer gamer = new JsonAdaptedGamer(VALID_NAME, VALID_GAMER_TAG, VALID_PHONE, INVALID_EMAIL,
                 VALID_GROUP_INDICES, VALID_SERVER, VALID_FAVOURITE, VALID_COUNTRY, VALID_REGION, VALID_NOTE);
-        assertThrows(IllegalValueException.class, Email.MESSAGE_CONSTRAINTS,
-                () -> gamer.toModelType(GROUP_LIST));
+        assertThrows(IllegalValueException.class, Email.MESSAGE_CONSTRAINTS, () -> gamer.toModelType(GROUP_LIST));
     }
 
     // @Test
@@ -93,8 +89,7 @@ public class JsonAdaptedGamerTest {
         JsonAdaptedGamer gamer = new JsonAdaptedGamer(VALID_NAME, null, VALID_PHONE, VALID_EMAIL,
                 VALID_GROUP_INDICES, VALID_SERVER, VALID_FAVOURITE, VALID_COUNTRY, VALID_REGION, VALID_NOTE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, GamerTag.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage,
-                () -> gamer.toModelType(GROUP_LIST));
+        assertThrows(IllegalValueException.class, expectedMessage, () -> gamer.toModelType(GROUP_LIST));
     }
 
     // @Test
