@@ -21,7 +21,7 @@ public class FavouriteCommand extends Command {
 
     public static final String COMMAND_WORD = "favourite";
     public static final String COMMAND_ALIAS = "fav";
-    public static final String COMMAND_WORD_WITH_ALIAS = "(f)avourite";
+    public static final String COMMAND_WORD_WITH_ALIAS = "(fav)ourite";
 
     public static final String COMMAND_WORD_UNFAVOURITE = "unfavourite";
     public static final String COMMAND_ALIAS_UNFAVOURITE = "unfav";
