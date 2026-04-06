@@ -1,5 +1,6 @@
 package seedu.blockbook.model.gamer;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.blockbook.commons.util.ToStringBuilder;
@@ -20,7 +21,7 @@ public class AnyAttributeContainsKeywordsPredicate implements Predicate<Gamer> {
                 || attributeContains(gamer.getGamerTag(), keyword)
                 || attributeContains(gamer.getPhone(), keyword)
                 || attributeContains(gamer.getEmail(), keyword)
-                || attributeContains(gamer.getGroup(), keyword)
+                || groupsContain(gamer.getGroups(), keyword)
                 || attributeContains(gamer.getServer(), keyword)
                 || attributeContains(gamer.getNote(), keyword)
                 // Favourites should not be in the any attribute partial search
@@ -39,6 +40,13 @@ public class AnyAttributeContainsKeywordsPredicate implements Predicate<Gamer> {
             return false;
         }
         return attribute.toString().toLowerCase().contains(keyword.toLowerCase());
+    }
+
+    private boolean groupsContain(List<Group> groups, String keyword) {
+        if (groups == null || groups.isEmpty()) {
+            return false;
+        }
+        return groups.stream().anyMatch(group -> attributeContains(group, keyword));
     }
 
     @Override
@@ -62,4 +70,3 @@ public class AnyAttributeContainsKeywordsPredicate implements Predicate<Gamer> {
         return new ToStringBuilder(this).add("keyword", keyword).toString();
     }
 }
-
