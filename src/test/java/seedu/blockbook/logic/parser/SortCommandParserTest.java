@@ -72,6 +72,8 @@ public class SortCommandParserTest {
                 String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, "name"));
         assertParseFailure(parser, " phone/ email/ phone/",
                 String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, "phone"));
+        assertParseFailure(parser, " gamertag/ gamertag/ name/ name/",
+                String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, "gamertag, name"));
     }
 
     @Test

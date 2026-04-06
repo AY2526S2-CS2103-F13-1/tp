@@ -3,10 +3,14 @@ package seedu.blockbook.logic.parser;
 import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.logic.commands.SortCommand;
@@ -45,6 +49,8 @@ public class SortCommandParser implements Parser<SortCommand> {
 
         // Extract attribute names from the input
         List<String> attributes = new ArrayList<>();
+        Set<String> seenAttributes = new HashSet<>();
+        Set<String> duplicateAttributes = new LinkedHashSet<>();
         Matcher matcher = ATTRIBUTE_PATTERN.matcher(trimmedArgs);
         while (matcher.find()) {
             String attribute = matcher.group(1).toLowerCase();
@@ -52,11 +58,18 @@ public class SortCommandParser implements Parser<SortCommand> {
                 throw new ParseException(
                         String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, attribute));
             }
-            if (attributes.contains(attribute)) {
-                throw new ParseException(
-                        String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, attribute));
+            if (!seenAttributes.add(attribute)) {
+                duplicateAttributes.add(attribute);
+                continue;
             }
             attributes.add(attribute);
+        }
+
+        if (!duplicateAttributes.isEmpty()) {
+            String duplicateNames = duplicateAttributes.stream()
+                    .collect(Collectors.joining(", "));
+            throw new ParseException(
+                    String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, duplicateNames));
         }
 
         if (attributes.isEmpty()) {
