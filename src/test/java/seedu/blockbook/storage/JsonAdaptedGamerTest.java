@@ -31,7 +31,7 @@ public class JsonAdaptedGamerTest {
     private static final String VALID_GAMER_TAG = BENSON.getGamerTag().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
-    private static final String VALID_GROUP = BENSON.getGroup().toString();
+    private static final String VALID_GROUP = BENSON.getGroups().get(0).toString();
     private static final List<Group> GROUP_LIST = List.of(new Group(VALID_GROUP));
     private static final List<Integer> VALID_GROUP_INDICES = List.of(0);
     private static final String VALID_SERVER = BENSON.getServer().toString();

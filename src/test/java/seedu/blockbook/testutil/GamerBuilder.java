@@ -1,5 +1,8 @@
 package seedu.blockbook.testutil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import seedu.blockbook.model.gamer.Country;
 import seedu.blockbook.model.gamer.Email;
 import seedu.blockbook.model.gamer.Favourite;
@@ -32,7 +35,7 @@ public class GamerBuilder {
     private GamerTag gamerTag;
     private Phone phone;
     private Email email;
-    private Group group;
+    private List<Group> groups;
     private Server server;
     private Favourite favourite;
     private Country country;
@@ -47,7 +50,7 @@ public class GamerBuilder {
         gamerTag = new GamerTag(DEFAULT_GAMER_TAG);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
-        group = new Group(DEFAULT_GROUP);
+        groups = new ArrayList<>(List.of(new Group(DEFAULT_GROUP)));
         server = new Server(DEFAULT_SERVER);
         favourite = new Favourite(DEFAULT_FAVOURITE);
         country = new Country(DEFAULT_COUNTRY);
@@ -63,7 +66,7 @@ public class GamerBuilder {
         gamerTag = gamerToCopy.getGamerTag();
         phone = gamerToCopy.getPhone();
         email = gamerToCopy.getEmail();
-        group = gamerToCopy.getGroup();
+        groups = new ArrayList<>(gamerToCopy.getGroups());
         server = gamerToCopy.getServer();
         favourite = gamerToCopy.getFavourite();
         country = gamerToCopy.getCountry();
@@ -122,7 +125,7 @@ public class GamerBuilder {
      * @return This builder.
      */
     public GamerBuilder withGroup(String group) {
-        this.group = new Group(group);
+        this.groups = new ArrayList<>(List.of(new Group(group)));
         return this;
     }
 
@@ -182,7 +185,6 @@ public class GamerBuilder {
     }
 
     public Gamer build() {
-        return new Gamer(name, gamerTag, phone, email, group, server, favourite, country, region, note);
+        return new Gamer(name, gamerTag, phone, email, groups, server, favourite, country, region, note);
     }
 }
-

@@ -134,9 +134,9 @@ public class SortCommandTest {
         new SortCommand(List.of("group")).execute(testModel);
 
         List<Gamer> sortedList = testModel.getFilteredGamerList();
-        assertEquals("Alpha", sortedList.get(0).getGroup().toString());
-        assertEquals("Mike", sortedList.get(1).getGroup().toString());
-        assertEquals("Zeta", sortedList.get(2).getGroup().toString());
+        assertEquals("Alpha", sortedList.get(0).getGroups().get(0).toString());
+        assertEquals("Mike", sortedList.get(1).getGroups().get(0).toString());
+        assertEquals("Zeta", sortedList.get(2).getGroups().get(0).toString());
     }
 
     @Test
