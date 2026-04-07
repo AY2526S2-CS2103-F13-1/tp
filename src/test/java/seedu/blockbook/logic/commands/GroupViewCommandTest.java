@@ -57,8 +57,6 @@ public class GroupViewCommandTest {
 
         Model model = new ModelManager(blockBook, new UserPrefs());
         Model expectedModel = new ModelManager(blockBook, new UserPrefs());
-        expectedModel.updateFilteredGamerList(gamer ->
-                gamer.getGroups().stream().anyMatch(g -> g.toString().equalsIgnoreCase(group.toString())));
 
         GroupViewCommand command = new GroupViewCommand(Index.fromOneBased(1));
         String expectedMessage = String.format(GroupViewCommand.MESSAGE_NO_GAMERS, group);

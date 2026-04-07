@@ -50,14 +50,16 @@ public class GroupViewCommand extends Command {
         }
 
         Group targetGroup = groupList.get(groupIndex.getZeroBased());
-        model.updateFilteredGamerList(gamer -> gamerHasGroup(gamer, targetGroup));
-
-        List<Gamer> filteredGamers = model.getFilteredGamerList();
-        if (filteredGamers.isEmpty()) {
+        List<Gamer> matchingGamers = model.getBlockBook().getGamerList().stream()
+                .filter(gamer -> gamerHasGroup(gamer, targetGroup))
+                .collect(Collectors.toList());
+        if (matchingGamers.isEmpty()) {
             return new CommandResult(String.format(MESSAGE_NO_GAMERS, targetGroup));
         }
 
-        String gamertags = filteredGamers.stream()
+        model.updateFilteredGamerList(gamer -> gamerHasGroup(gamer, targetGroup));
+
+        String gamertags = matchingGamers.stream()
                 .map(gamer -> gamer.getGamerTag().toString())
                 .collect(Collectors.joining(", "));
         return new CommandResult(String.format(MESSAGE_SUCCESS, targetGroup, gamertags));
