@@ -108,7 +108,7 @@ public class BlockBookParser {
 
         case GroupCreateCommand.COMMAND_WORD:
             return new GroupCommandParser().parse(arguments);
-            
+
         case GroupAddCommand.COMMAND_WORD:
         case GroupAddCommand.COMMAND_ALIAS:
             return new GroupAddCommandParser().parse(arguments);
@@ -116,7 +116,7 @@ public class BlockBookParser {
         case GroupRemoveCommand.COMMAND_WORD:
         case GroupRemoveCommand.COMMAND_ALIAS:
             return new GroupRemoveCommandParser().parse(arguments);
-            
+
         case GroupNukeCommand.COMMAND_WORD:
         case GroupNukeCommand.COMMAND_ALIAS:
             return new GroupNukeCommandParser().parse(arguments);
