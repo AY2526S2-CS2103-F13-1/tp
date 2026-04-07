@@ -24,8 +24,8 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 
 1. Copy the file to the folder you want to use as the _home folder_ for BlockBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar BlockBook.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+1. Double click `.jar` file to open BlockBook. Alternatively, open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar blockbook.jar` command to run the application.<br>
+   A GUI similar to the below should appear in a few seconds.<br>
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`?`** or **`help`** and pressing Enter will open the built-in help menu, where you can view all the commands available.<br>
@@ -162,18 +162,18 @@ Format: `(s)ort [(g)amertag/] [(n)ame/] [(p)hone/] [(e)mail/] [(gr)oup/] [(s)erv
 
 **Valid attributes:**
 
-| Attribute | Description |
-|-----------|-------------|
-| `(n)ame/` | Sort by name |
-| `(g)amertag/` | Sort by gamertag |
-| `(p)hone/` | Sort by phone number |
-| `(e)mail/` | Sort by email address |
-| `(gr)oup/` | Sort by group |
-| `(s)erver/` | Sort by server |
-| `(f)avourite/` | Sort by favourite status (favourites first) |
-| `(c)ountry/` | Sort by country |
-| `(r)egion/` | Sort by region |
-| `note/` | Sort by note |
+| Attribute        | Description |
+|------------------|-------------|
+| `(n)ame/`        | Sort by name |
+| `(g)amertag/`    | Sort by gamertag |
+| `(p)hone/`       | Sort by phone number |
+| `(e)mail/`       | Sort by email address |
+| `(gr)oup/`       | Sort by group |
+| `(s)erver/`      | Sort by server |
+| `(fav)avourite/` | Sort by favourite status (favourites first) |
+| `(c)ountry/`     | Sort by country |
+| `(r)egion/`      | Sort by region |
+| `note/`          | Sort by note |
 
 Examples:
 * `sort` sorts all contacts by gamertag (default).
