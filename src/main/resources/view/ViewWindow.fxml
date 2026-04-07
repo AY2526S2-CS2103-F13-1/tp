@@ -14,7 +14,7 @@
         <Image url="@/images/blockbook_icon.png"/>
     </icons>
     <scene>
-        <Scene width="720.0">
+        <Scene width="760.0" height="320.0">
             <stylesheets>
                 <URL value="@DarkTheme.css"/>
                 <URL value="@Extensions.css"/>

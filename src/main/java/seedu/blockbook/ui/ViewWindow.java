@@ -81,7 +81,7 @@ public class ViewWindow extends UiPart<Stage> {
      * Updates the popup to show the specified gamer.
      */
     public void setGamer(Gamer gamer, int displayedIndex) {
-        GamerCard card = new GamerCard(gamer, displayedIndex);
+        GamerPopupCard card = new GamerPopupCard(gamer, displayedIndex);
         Region cardRoot = card.getRoot();
         StackPane.setAlignment(cardRoot, Pos.TOP_LEFT);
         cardPlaceholder.getChildren().setAll(cardRoot);

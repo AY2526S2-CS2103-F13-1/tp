@@ -20,6 +20,7 @@ import seedu.blockbook.logic.commands.CommandResult;
 import seedu.blockbook.logic.commands.FindCommand;
 import seedu.blockbook.logic.commands.ListCommand;
 import seedu.blockbook.logic.commands.SortCommand;
+import seedu.blockbook.logic.commands.ViewCommand;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
 import seedu.blockbook.model.gamer.Gamer;
@@ -148,7 +149,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        gamerListPanel = new GamerListPanel(logic.getFilteredGamerList());
+        gamerListPanel = new GamerListPanel(logic.getFilteredGamerList(), this::handleViewOnGamer);
         gamerListPanelPlaceholder.getChildren().add(gamerListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
@@ -291,6 +292,19 @@ public class MainWindow extends UiPart<Stage> {
         }
         int fullIndex = logic.getBlockBook().getGamerList().indexOf(gamer);
         return fullIndex >= 0 ? fullIndex + 1 : 1;
+    }
+
+    private void handleViewOnGamer(Gamer gamer) {
+        int index = logic.getFilteredGamerList().indexOf(gamer);
+        if (index < 0) {
+            return;
+        }
+        String commandText = ViewCommand.COMMAND_WORD + " " + (index + 1);
+        try {
+            executeCommand(commandText);
+        } catch (CommandException | ParseException e) {
+            logger.info("An error occurred while executing view command from list double-click.");
+        }
     }
 
     /**
