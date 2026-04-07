@@ -17,9 +17,12 @@ import seedu.blockbook.model.gamer.Gamer;
 public class ViewCommand extends Command {
 
     public static final String COMMAND_WORD = "view";
+    public static final String COMMAND_ALIAS = "v";
+    public static final String COMMAND_WORD_WITH_ALIAS = "(v)iew";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the full details of the gamer contact"
             + " identified by the index number used in the displayed gamer list.\n"
-            + "\nFormat: " + COMMAND_WORD + " INDEX";
+            + "\nFormat: " + COMMAND_WORD_WITH_ALIAS + " INDEX";
 
     private final Index targetIndex;
 

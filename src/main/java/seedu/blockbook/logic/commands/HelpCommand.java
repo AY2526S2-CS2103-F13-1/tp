@@ -8,9 +8,10 @@ import seedu.blockbook.model.Model;
 public class HelpCommand extends Command {
 
     public static final String COMMAND_WORD = "help";
+    public static final String COMMAND_ALIAS = "?";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows command usage instructions.\n"
-            + "\nFormat: " + COMMAND_WORD;
+            + "\nFormat: " + COMMAND_ALIAS + " or " + COMMAND_WORD;
 
     public static final String SHOWING_HELP_MESSAGE = "The user guide can be found in the menu bar. "
             + "These are the available commands (case-sensitive):";

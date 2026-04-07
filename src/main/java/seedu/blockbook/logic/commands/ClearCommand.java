@@ -13,6 +13,7 @@ import seedu.blockbook.model.Model;
  */
 public class ClearCommand extends Command {
     public static final String COMMAND_WORD = "clear";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Removes every gamer from BlockBook. CANNOT BE UNDONE!\n"
             + "\nFormat: " + COMMAND_WORD;

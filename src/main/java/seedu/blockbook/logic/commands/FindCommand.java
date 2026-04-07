@@ -19,14 +19,17 @@ import seedu.blockbook.model.gamer.SpecificAttributesMatchPredicate;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_ALIAS = "f";
+    public static final String COMMAND_WORD_WITH_ALIAS = "(f)ind";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all gamers whose attributes contain any of "
             + "the specified keyword (case-insensitive) and displays them as a list with index numbers via Format 1."
-            + "\nFormat 1: " + COMMAND_WORD + " KEYWORD\n"
+            + "\nFormat 1: " + COMMAND_WORD_WITH_ALIAS + " KEYWORD\n"
             + "\nFormat 1 example: " + COMMAND_WORD + " joe\n"
             + "\nSpecific attribute search is also available via Format 2 and can be stacked."
-            + "\nFormat 2: " + COMMAND_WORD + " [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP]"
-            + " [server/SERVER] [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]\n"
+            + "\nFormat 2: " + COMMAND_WORD_WITH_ALIAS + " [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE]"
+            + "[(e)mail/EMAIL] [(gr)oup/GROUP] [(s)erver/SERVER] [(fav)avourite/FAVOURITE] [(c)ountry/COUNTRY]"
+            + "[(r)egion/REGION] [note/NOTE]\n"
             + "\nFormat 2 example 1: " + COMMAND_WORD + " name/steve"
             + "\nFormat 2 example 2: " + COMMAND_WORD + " name/steve gamertag/steve";
 
