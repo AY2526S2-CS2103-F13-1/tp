@@ -17,6 +17,9 @@ import seedu.blockbook.commons.core.GuiSettings;
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.logic.Logic;
 import seedu.blockbook.logic.commands.CommandResult;
+import seedu.blockbook.logic.commands.FindCommand;
+import seedu.blockbook.logic.commands.ListCommand;
+import seedu.blockbook.logic.commands.SortCommand;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
 import seedu.blockbook.model.gamer.Gamer;
@@ -313,6 +316,11 @@ public class MainWindow extends UiPart<Stage> {
                 handleViewPopUp(commandResult);
             }
 
+            if (isFindOrSortCommand(commandText)) {
+                viewedGamer = null;
+                viewWindow.hide();
+            }
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
@@ -323,5 +331,19 @@ public class MainWindow extends UiPart<Stage> {
 
     public void showMessage(String text) { // Ensure this is public
         resultDisplay.setFeedbackToUser(text);
+    }
+
+    private boolean isFindOrSortCommand(String commandText) {
+        String trimmed = commandText.trim();
+        if (trimmed.isEmpty()) {
+            return false;
+        }
+        String commandWord = trimmed.split("\\s+")[0];
+        return FindCommand.COMMAND_WORD.equals(commandWord)
+                || FindCommand.COMMAND_ALIAS.equals(commandWord)
+                || ListCommand.COMMAND_WORD.equals(commandWord)
+                || ListCommand.COMMAND_ALIAS.equals(commandWord)
+                || SortCommand.COMMAND_WORD.equals(commandWord)
+                || SortCommand.COMMAND_ALIAS.equals(commandWord);
     }
 }
