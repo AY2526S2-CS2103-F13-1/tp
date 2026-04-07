@@ -51,7 +51,6 @@
         "storage-component": "Storage component",
         "common-classes": "Common classes",
         "implementation": "Implementation",
-        "proposed-undo-redo-feature": "[Proposed] Undo/redo feature",
         "documentation-logging-testing-configuration-dev-ops": "Documentation, logging, testing, configuration, dev-ops",
         "appendix-requirements": "Appendix: Requirements",
         "product-scope": "Product scope",
@@ -169,7 +168,7 @@
     {
       "src": "team/jj910.md",
       "headings": {
-        "project-blockbook": "Project: BlockBook"
+        "stuff-that-i-worked-on": "Stuff that I worked on"
       },
       "headingKeywords": {}
     },
