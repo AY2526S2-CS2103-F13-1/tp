@@ -1,5 +1,6 @@
 package seedu.blockbook.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_COUNTRY;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -61,6 +62,7 @@ public class SortCommandParser implements Parser<SortCommand> {
      * @throws ParseException if the user input does not conform to the expected format
      */
     public SortCommand parse(String args) throws ParseException {
+        requireNonNull(args);
         logger.fine("Parsing sort command arguments: " + args);
         String trimmedArgs = args.trim();
 
