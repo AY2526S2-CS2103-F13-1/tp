@@ -1,6 +1,7 @@
 package seedu.blockbook.ui;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import seedu.blockbook.model.gamer.Group;
  */
 public class GroupListPanel extends UiPart<Region> {
     private static final String FXML = "GroupListPanel.fxml";
+    private final Consumer<Group> onGroupDoubleClick;
 
     @FXML
     private HBox groupContainer;
@@ -25,10 +27,15 @@ public class GroupListPanel extends UiPart<Region> {
     /**
      * Creates a {@code GroupListPanel} with the given {@code ObservableList}.
      */
-    public GroupListPanel(ObservableList<Group> groupList) {
+    public GroupListPanel(ObservableList<Group> groupList, Consumer<Group> onGroupDoubleClick) {
         super(FXML);
+        this.onGroupDoubleClick = onGroupDoubleClick == null ? group -> { } : onGroupDoubleClick;
         refreshGroupCards(groupList);
         groupList.addListener((ListChangeListener<Group>) change -> refreshGroupCards(groupList));
+    }
+
+    public GroupListPanel(ObservableList<Group> groupList) {
+        this(groupList, null);
     }
 
     @FXML
@@ -52,7 +59,13 @@ public class GroupListPanel extends UiPart<Region> {
         groupContainer.getChildren().clear();
         for (int i = 0; i < groups.size(); i++) {
             Group group = groups.get(i);
-            groupContainer.getChildren().add(new GroupCard(group, i + 1).getRoot());
+            GroupCard card = new GroupCard(group, i + 1);
+            card.getRoot().setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) {
+                    onGroupDoubleClick.accept(group);
+                }
+            });
+            groupContainer.getChildren().add(card.getRoot());
         }
     }
 }
