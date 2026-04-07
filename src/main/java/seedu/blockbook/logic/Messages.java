@@ -1,5 +1,7 @@
 package seedu.blockbook.logic;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -68,6 +70,16 @@ public class Messages {
                 .append(" Note: ")
                 .append(formatNullable(gamer.getNote()));
         return builder.toString();
+    }
+
+    /**
+     * Formats a compact gamer summary for status messages.
+     */
+    public static String formatContactSummary(Gamer gamer) {
+        requireNonNull(gamer);
+        return String.format("\n Name: %s\n GamerTag: %s",
+                formatNullable(gamer.getName()),
+                formatNullable(gamer.getGamerTag()));
     }
 
     /**

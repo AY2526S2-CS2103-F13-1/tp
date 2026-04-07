@@ -11,6 +11,9 @@ import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_REGION;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_SERVER;
 
+import java.util.logging.Logger;
+
+import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.commons.core.index.Index;
 import seedu.blockbook.logic.Messages;
 import seedu.blockbook.logic.commands.EditCommand;
@@ -21,6 +24,7 @@ import seedu.blockbook.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new EditCommand object.
  */
 public class EditCommandParser implements Parser<EditCommand> {
+    private static final Logger logger = LogsCenter.getLogger(EditCommandParser.class);
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
@@ -46,8 +50,10 @@ public class EditCommandParser implements Parser<EditCommand> {
         } catch (ParseException pe) {
             String trimmedPreamble = argMultimap.getPreamble().trim();
             if (trimmedPreamble.matches("-?\\d+")) {
+                logger.finer("Edit parse failed: index out of range (" + trimmedPreamble + ").");
                 throw new ParseException(Messages.MESSAGE_INDEX_OUT_OF_RANGE, pe);
             }
+            logger.finer("Edit parse failed: invalid preamble (" + trimmedPreamble + ").");
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
@@ -90,9 +96,11 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         if (!descriptor.isAnyFieldEdited()) {
+            logger.finer("Edit parse failed: no fields to edit.");
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
+        logger.fine("Parsed edit command for index " + index.getOneBased() + ".");
         return new EditCommand(index, descriptor);
     }
 }

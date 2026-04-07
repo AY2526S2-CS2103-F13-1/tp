@@ -41,6 +41,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
+        // EP: all editable fields provided with valid values
         Gamer gamerToEdit = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
         Gamer editedGamer = new GamerBuilder(gamerToEdit)
                 .withName(VALID_NAME_BOB)
@@ -67,6 +68,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() {
+        // EP: only a subset of fields is provided
         Gamer gamerToEdit = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
         Gamer editedGamer = new GamerBuilder(gamerToEdit)
                 .withName(VALID_NAME_BOB)
@@ -90,6 +92,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_duplicateGamerUnfilteredList_failure() {
+        // EP: duplicate gamer identity (same gamertag as another gamer)
         Gamer secondGamer = model.getFilteredGamerList().get(INDEX_SECOND_GAMER.getZeroBased());
         EditGamerDescriptor descriptor = new EditGamerDescriptorBuilder()
                 .withGamerTag(secondGamer.getGamerTag().fullGamerTag)
@@ -101,6 +104,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_invalidGamerIndexUnfilteredList_failure() {
+        // BV: index just above upper bound in unfiltered list (size + 1)
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredGamerList().size() + 1);
         EditGamerDescriptor descriptor = new EditGamerDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
@@ -114,6 +118,7 @@ public class EditCommandTest {
      */
     @Test
     public void execute_invalidGamerIndexFilteredList_failure() {
+        // EP: index valid in full list but invalid in filtered list
         showGamerAtIndex(model, INDEX_FIRST_GAMER);
         Index outOfBoundIndex = INDEX_SECOND_GAMER;
         assertTrue(outOfBoundIndex.getZeroBased() < model.getBlockBook().getGamerList().size());
@@ -122,6 +127,59 @@ public class EditCommandTest {
                 new EditGamerDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+    }
+
+    @Test
+    public void execute_validGamerIndexAtUpperBoundary_success() {
+        // BV: highest valid index in unfiltered list (size)
+        Index lastIndex = Index.fromOneBased(model.getFilteredGamerList().size());
+        Gamer gamerToEdit = model.getFilteredGamerList().get(lastIndex.getZeroBased());
+        Gamer editedGamer = new GamerBuilder(gamerToEdit)
+                .withPhone(VALID_PHONE_BOB)
+                .build();
+        EditGamerDescriptor descriptor = new EditGamerDescriptorBuilder()
+                .withPhone(VALID_PHONE_BOB)
+                .build();
+        EditCommand editCommand = new EditCommand(lastIndex, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_GAMER_SUCCESS,
+                Messages.format(editedGamer));
+
+        Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
+        expectedModel.setGamer(gamerToEdit, editedGamer);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_validGamerIndexFilteredList_success() {
+        // Mix strategy: combine filtered list state with valid edit input
+        showGamerAtIndex(model, INDEX_FIRST_GAMER);
+        Gamer gamerToEdit = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
+        Gamer editedGamer = new GamerBuilder(gamerToEdit).withName(VALID_NAME_BOB).build();
+        EditGamerDescriptor descriptor = new EditGamerDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_GAMER, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_GAMER_SUCCESS,
+                Messages.format(editedGamer));
+
+        Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
+        expectedModel.setGamer(gamerToEdit, editedGamer);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_upperBoundaryIndexWithDuplicateGamertag_failure() {
+        // Mix strategy: valid boundary index + invalid edited value (duplicate identity)
+        Index lastIndex = Index.fromOneBased(model.getFilteredGamerList().size());
+        Gamer firstGamer = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
+        EditGamerDescriptor descriptor = new EditGamerDescriptorBuilder()
+                .withGamerTag(firstGamer.getGamerTag().fullGamerTag)
+                .build();
+        EditCommand editCommand = new EditCommand(lastIndex, descriptor);
+
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_GAMER);
     }
 
     @Test
