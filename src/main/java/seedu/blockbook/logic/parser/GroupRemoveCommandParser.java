@@ -30,8 +30,15 @@ public class GroupRemoveCommandParser implements Parser<GroupRemoveCommand> {
                     GroupRemoveCommand.MESSAGE_USAGE));
         }
 
-        int gamerIndexValue = Integer.parseInt(parts[0]);
-        int groupIndexValue = Integer.parseInt(parts[1]);
+        // Handle integer overflow
+        int gamerIndexValue;
+        int groupIndexValue;
+        try {
+            gamerIndexValue = Integer.parseInt(parts[0]);
+            groupIndexValue = Integer.parseInt(parts[1]);
+        } catch (NumberFormatException nfe) {
+            throw new ParseException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        }
         if (gamerIndexValue <= 0 || groupIndexValue <= 0) {
             throw new ParseException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
         }
