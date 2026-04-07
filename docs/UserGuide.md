@@ -24,8 +24,8 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 
 1. Copy the file to the folder you want to use as the _home folder_ for BlockBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar BlockBook.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+1. Double click `.jar` file to open BlockBook. Alternatively, open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar blockbook.jar` command to run the application.<br>
+   A GUI similar to the below should appear in a few seconds.<br>
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open this User Guide in a browser window.<br>
