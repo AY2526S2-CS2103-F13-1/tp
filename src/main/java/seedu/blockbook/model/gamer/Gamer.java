@@ -78,10 +78,6 @@ public class Gamer {
         return email;
     }
 
-    public Group getGroup() {
-        return group;
-    }
-
     /**
      * Returns the groups associated with this gamer.
      */
