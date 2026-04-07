@@ -89,6 +89,23 @@ public class Gamer {
         return groups;
     }
 
+    /**
+     * Returns the gamer's groups as a numbered list string (e.g. "1. Alpha, 2. Beta").
+     */
+    public String getGamerNumberedGroups() {
+        if (groups.isEmpty()) {
+            return null;
+        }
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < groups.size(); i++) {
+            if (i > 0) {
+                builder.append(", ");
+            }
+            builder.append(i + 1).append(". ").append(groups.get(i));
+        }
+        return builder.toString();
+    }
+
     public Server getServer() {
         return server;
     }
