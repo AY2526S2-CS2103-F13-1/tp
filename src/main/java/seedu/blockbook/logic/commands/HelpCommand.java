@@ -48,6 +48,8 @@ public class HelpCommand extends Command {
         outputString.append(SEPARATOR);
         outputString.append(GroupRemoveCommand.MESSAGE_USAGE);
         outputString.append(SEPARATOR);
+        outputString.append(GroupViewCommand.MESSAGE_USAGE);
+        outputString.append(SEPARATOR);
         outputString.append(ClearCommand.MESSAGE_USAGE);
         outputString.append(SEPARATOR);
         outputString.append(ExitCommand.MESSAGE_USAGE);
@@ -55,4 +57,3 @@ public class HelpCommand extends Command {
         return new CommandResult(outputString.toString(), true, false);
     }
 }
-
