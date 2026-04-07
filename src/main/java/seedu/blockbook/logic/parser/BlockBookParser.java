@@ -19,7 +19,7 @@ import seedu.blockbook.logic.commands.FindCommand;
 import seedu.blockbook.logic.commands.GroupCreateCommand;
 import seedu.blockbook.logic.commands.HelpCommand;
 import seedu.blockbook.logic.commands.ListCommand;
-//import seedu.blockbook.logic.commands.SortCommand;
+import seedu.blockbook.logic.commands.SortCommand;
 import seedu.blockbook.logic.commands.ViewCommand;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
 
@@ -81,8 +81,8 @@ public class BlockBookParser {
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
-        // case SortCommand.COMMAND_WORD:
-        //     return new SortCommandParser().parse(arguments);
+        case SortCommand.COMMAND_WORD:
+            return new SortCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
