@@ -26,7 +26,7 @@ public class DeleteCommand extends Command {
             + " Entering duplicate indexes will only delete the contact once.\n"
             + "\nFormat: " + COMMAND_WORD_WITH_ALIAS + " INDEX [INDEX]..."
             + "\nExample 1: " + COMMAND_WORD + " 1"
-            + "\nExample 2: " + COMMAND_WORD + " 1 2 3"
+            + "\nExample 2: " + COMMAND_ALIAS + " 1 2 3"
             + "\nExample 3: " + COMMAND_WORD + " 1 1 1 (Deletes the first contact only once)";
 
     public static final String MESSAGE_DELETE_GAMER_SUCCESS = "Contact(s) deleted: %1$s";
