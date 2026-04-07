@@ -162,18 +162,18 @@ Format: `(s)ort [(g)amertag/] [(n)ame/] [(p)hone/] [(e)mail/] [(gr)oup/] [(s)erv
 
 **Valid attributes:**
 
-| Attribute | Description |
-|-----------|-------------|
-| `(n)ame/` | Sort by name |
-| `(g)amertag/` | Sort by gamertag |
-| `(p)hone/` | Sort by phone number |
-| `(e)mail/` | Sort by email address |
-| `(gr)oup/` | Sort by group |
-| `(s)erver/` | Sort by server |
-| `(f)avourite/` | Sort by favourite status (favourites first) |
-| `(c)ountry/` | Sort by country |
-| `(r)egion/` | Sort by region |
-| `note/` | Sort by note |
+| Attribute        | Description |
+|------------------|-------------|
+| `(n)ame/`        | Sort by name |
+| `(g)amertag/`    | Sort by gamertag |
+| `(p)hone/`       | Sort by phone number |
+| `(e)mail/`       | Sort by email address |
+| `(gr)oup/`       | Sort by group |
+| `(s)erver/`      | Sort by server |
+| `(fav)avourite/` | Sort by favourite status (favourites first) |
+| `(c)ountry/`     | Sort by country |
+| `(r)egion/`      | Sort by region |
+| `note/`          | Sort by note |
 
 Examples:
 * `sort` sorts all contacts by gamertag (default).
