@@ -1,8 +1,5 @@
 package seedu.blockbook.ui;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,7 +13,6 @@ import javafx.scene.layout.Region;
 import javafx.util.Duration;
 import seedu.blockbook.logic.Messages;
 import seedu.blockbook.model.gamer.Gamer;
-import seedu.blockbook.model.gamer.Group;
 
 /**
  * An UI component that displays information of a {@code Gamer}.
@@ -77,22 +73,13 @@ public class GamerCard extends UiPart<Region> {
         name.setText(Messages.formatNullable(gamer.getName()));
         phone.setText(Messages.formatNullable(gamer.getPhone()));
         email.setText(Messages.formatNullable(gamer.getEmail()));
-        group.setText(formatGroups(gamer.getGroups()));
+        group.setText(Messages.formatNullable(gamer.getGamerNumberedGroups()));
         server.setText(Messages.formatNullable(gamer.getServer()));
         favourite.setText(Messages.formatNullable(gamer.getFavourite()));
         country.setText(Messages.formatNullable(gamer.getCountry()));
         region.setText(Messages.formatNullable(gamer.getRegion()));
         note.setText(Messages.formatNullable(gamer.getNote()));
         updateFavouriteIcon(gamer.getFavourite().toString());
-    }
-
-    private static String formatGroups(List<Group> groups) {
-        if (groups == null || groups.isEmpty()) {
-            return Messages.formatNullable(null);
-        }
-        return groups.stream()
-                .map(Group::toString)
-                .collect(Collectors.joining(", "));
     }
 
     /**

@@ -11,7 +11,10 @@ public class Phone {
     public static final String MESSAGE_CONSTRAINTS =
             "Phone number should only contain digits, spaces, hyphens, and an optional plus sign (+), "
                     + "must contain at least 3 digits, cannot exceed 15 digits, and be at most 30 characters long.";
-    public static final String VALIDATION_LAX_REGEX = "^[0-9+()\\- ]+$";
+    public static final String MESSAGE_LAX_CONSTRAINTS =
+            "Phone search keyword should only contain digits, spaces, hyphens, and plus signs (+), "
+                    + "and be at most 30 characters long.";
+    public static final String VALIDATION_LAX_REGEX = "^[0-9+\\- ]+$";
     public final String fullPhone;
 
     /**
@@ -97,9 +100,15 @@ public class Phone {
 
     /**
      * Returns true if a given string is a valid lax phone number, where it will allow search
-     * if keyword has numbers, spaces, hyphens, plus signs (+), and parentheses
+     * if keyword has numbers, spaces, hyphens, and plus signs (+).
      */
     public static boolean isValidLaxPhone(String test) {
+        if (test == null) {
+            return false;
+        }
+        if (test.isEmpty() || test.length() > 30) {
+            return false;
+        }
         return test.matches(VALIDATION_LAX_REGEX);
     }
 
@@ -129,4 +138,3 @@ public class Phone {
     }
 
 }
-

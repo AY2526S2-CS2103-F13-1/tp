@@ -16,8 +16,10 @@ import seedu.blockbook.logic.commands.EditCommand;
 import seedu.blockbook.logic.commands.ExitCommand;
 import seedu.blockbook.logic.commands.FavouriteCommand;
 import seedu.blockbook.logic.commands.FindCommand;
+import seedu.blockbook.logic.commands.GroupAddCommand;
 import seedu.blockbook.logic.commands.GroupCreateCommand;
 import seedu.blockbook.logic.commands.GroupNukeCommand;
+import seedu.blockbook.logic.commands.GroupRemoveCommand;
 import seedu.blockbook.logic.commands.HelpCommand;
 import seedu.blockbook.logic.commands.ListCommand;
 import seedu.blockbook.logic.commands.SortCommand;
@@ -106,7 +108,15 @@ public class BlockBookParser {
 
         case GroupCreateCommand.COMMAND_WORD:
             return new GroupCommandParser().parse(arguments);
+            
+        case GroupAddCommand.COMMAND_WORD:
+        case GroupAddCommand.COMMAND_ALIAS:
+            return new GroupAddCommandParser().parse(arguments);
 
+        case GroupRemoveCommand.COMMAND_WORD:
+        case GroupRemoveCommand.COMMAND_ALIAS:
+            return new GroupRemoveCommandParser().parse(arguments);
+            
         case GroupNukeCommand.COMMAND_WORD:
         case GroupNukeCommand.COMMAND_ALIAS:
             return new GroupNukeCommandParser().parse(arguments);
