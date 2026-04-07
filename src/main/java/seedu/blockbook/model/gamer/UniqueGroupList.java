@@ -9,6 +9,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.blockbook.model.gamer.exceptions.DuplicateGroupException;
+import seedu.blockbook.model.gamer.exceptions.GroupNotFoundException;
 
 /**
  * A list of groups that enforces uniqueness between its elements and does not allow nulls.
@@ -38,6 +39,18 @@ public class UniqueGroupList implements Iterable<Group> {
             throw new DuplicateGroupException();
         }
         internalList.add(toAdd);
+    }
+
+    /**
+     * Removes the equivalent group from the list.
+     * The group must exist in the list.
+     */
+    public void remove(Group toRemove) {
+        requireNonNull(toRemove);
+        boolean removed = internalList.removeIf(group -> isSameGroup(group, toRemove));
+        if (!removed) {
+            throw new GroupNotFoundException();
+        }
     }
 
     /**

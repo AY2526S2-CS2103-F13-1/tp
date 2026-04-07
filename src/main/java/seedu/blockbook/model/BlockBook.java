@@ -104,6 +104,14 @@ public class BlockBook implements ReadOnlyBlockBook {
     }
 
     /**
+     * Removes a group from the BlockBook.
+     * The group must exist in the BlockBook.
+     */
+    public void removeGroup(Group group) {
+        groups.remove(group);
+    }
+
+    /**
      * Replaces the given gamer {@code target} in the list with {@code editedGamer}.
      * {@code target} must exist in the BlockBook.
      * The gamer identity of {@code editedGamer} must not be the same as another existing gamer in the BlockBook.
