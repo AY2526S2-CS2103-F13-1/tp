@@ -129,7 +129,7 @@ public class SortCommand extends Command {
         case "note":
             return gamer.getNote() == null ? null : gamer.getNote().toString();
         default:
-            return null;
+            throw new IllegalArgumentException("Unsupported sort attribute: " + attribute);
         }
     }
 
