@@ -14,15 +14,16 @@ import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_REGION;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_SERVER;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.logic.commands.SortCommand;
@@ -42,7 +43,7 @@ public class SortCommandParser implements Parser<SortCommand> {
 
     private static final Logger logger = LogsCenter.getLogger(SortCommandParser.class);
     private static final Pattern ATTRIBUTE_PATTERN = Pattern.compile("(\\w+)/");
-    private static final Set<String> VALID_SORT_ATTRIBUTES = Stream.of(
+    private static final List<Prefix> SORT_PREFIXES = List.of(
             PREFIX_GAMERTAG,
             PREFIX_NAME,
             PREFIX_PHONE,
@@ -53,9 +54,13 @@ public class SortCommandParser implements Parser<SortCommand> {
             PREFIX_COUNTRY,
             PREFIX_REGION,
             PREFIX_NOTE
-    ).map(Prefix::getPrefix)
+    );
+    private static final Set<String> VALID_SORT_ATTRIBUTES = SORT_PREFIXES.stream()
+            .map(Prefix::getPrefix)
             .map(SortCommandParser::toAttributeName)
             .collect(Collectors.toUnmodifiableSet());
+    private static final Map<String, String> ATTRIBUTE_TOKEN_TO_CANONICAL_ATTRIBUTE =
+            buildAttributeTokenToCanonicalMap();
 
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
@@ -95,7 +100,8 @@ public class SortCommandParser implements Parser<SortCommand> {
         List<String> attributes = new ArrayList<>();
         Matcher matcher = ATTRIBUTE_PATTERN.matcher(trimmedArgs);
         while (matcher.find()) {
-            attributes.add(matcher.group(1));
+            String token = matcher.group(1);
+            attributes.add(ATTRIBUTE_TOKEN_TO_CANONICAL_ATTRIBUTE.getOrDefault(token, token));
         }
         return attributes;
     }
@@ -144,6 +150,20 @@ public class SortCommandParser implements Parser<SortCommand> {
 
     private static String toAttributeName(String prefix) {
         return prefix.substring(0, prefix.length() - 1);
+    }
+
+    private static Map<String, String> buildAttributeTokenToCanonicalMap() {
+        Map<String, String> tokenMap = new HashMap<>();
+        for (Prefix prefix : SORT_PREFIXES) {
+            String canonicalAttribute = toAttributeName(prefix.getPrefix());
+            tokenMap.put(canonicalAttribute, canonicalAttribute);
+
+            String alias = prefix.getAlias();
+            if (alias != null && !alias.isEmpty()) {
+                tokenMap.put(toAttributeName(alias), canonicalAttribute);
+            }
+        }
+        return Map.copyOf(tokenMap);
     }
 
     /**

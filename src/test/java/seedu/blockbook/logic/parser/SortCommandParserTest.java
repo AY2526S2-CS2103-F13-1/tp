@@ -40,6 +40,19 @@ public class SortCommandParserTest {
     }
 
     @Test
+    public void parse_singleValidAliasAttribute_success() {
+        assertParseSuccess(parser, " g/", new SortCommand(List.of("gamertag")));
+        assertParseSuccess(parser, " n/", new SortCommand(List.of("name")));
+        assertParseSuccess(parser, " p/", new SortCommand(List.of("phone")));
+        assertParseSuccess(parser, " e/", new SortCommand(List.of("email")));
+        assertParseSuccess(parser, " gr/", new SortCommand(List.of("group")));
+        assertParseSuccess(parser, " s/", new SortCommand(List.of("server")));
+        assertParseSuccess(parser, " fav/", new SortCommand(List.of("favourite")));
+        assertParseSuccess(parser, " c/", new SortCommand(List.of("country")));
+        assertParseSuccess(parser, " r/", new SortCommand(List.of("region")));
+    }
+
+    @Test
     public void parse_multipleValidAttributes_success() {
         assertParseSuccess(parser, " name/ phone/",
                 new SortCommand(List.of("name", "phone")));
@@ -47,6 +60,8 @@ public class SortCommandParserTest {
                 new SortCommand(List.of("phone", "gamertag")));
         assertParseSuccess(parser, " name/ phone/ email/",
                 new SortCommand(List.of("name", "phone", "email")));
+        assertParseSuccess(parser, " n/ phone/ g/",
+                new SortCommand(List.of("name", "phone", "gamertag")));
     }
 
     @Test
@@ -87,6 +102,8 @@ public class SortCommandParserTest {
                 String.format(SortCommandParser.MESSAGE_DUPLICATE_ATTRIBUTE, "phone"));
         assertParseFailure(parser, " gamertag/ gamertag/ name/ name/",
                 String.format(SortCommandParser.MESSAGE_DUPLICATE_ATTRIBUTE, "gamertag, name"));
+        assertParseFailure(parser, " gamertag/ g/",
+                String.format(SortCommandParser.MESSAGE_DUPLICATE_ATTRIBUTE, "gamertag"));
     }
 
     @Test
