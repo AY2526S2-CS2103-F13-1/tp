@@ -32,6 +32,8 @@ import seedu.blockbook.logic.parser.exceptions.ParseException;
  */
 public class SortCommandParser implements Parser<SortCommand> {
 
+    public static final String MESSAGE_INVALID_ATTRIBUTES =
+            "Invalid attributes detected: %1$s. Please provide only valid sort attributes.";
     public static final String MESSAGE_DUPLICATE_ATTRIBUTE =
             "Duplicate attribute detected: %1$s. Each attribute can only be specified once.";
 
@@ -116,12 +118,24 @@ public class SortCommandParser implements Parser<SortCommand> {
      * @throws ParseException If any attribute is invalid.
      */
     private void verifyValidAttributes(List<String> attributes) throws ParseException {
+        Set<String> invalidAttributes = new LinkedHashSet<>();
         for (String attribute : attributes) {
             if (!VALID_SORT_ATTRIBUTES.contains(attribute)) {
-                throw new ParseException(
-                        String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, attribute));
+                invalidAttributes.add(attribute);
             }
         }
+
+        if (invalidAttributes.isEmpty()) {
+            return;
+        }
+
+        if (invalidAttributes.size() == 1) {
+            throw new ParseException(
+                    String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, invalidAttributes.iterator().next()));
+        }
+
+        String invalidAttributeNames = String.join(", ", invalidAttributes);
+        throw new ParseException(String.format(MESSAGE_INVALID_ATTRIBUTES, invalidAttributeNames));
     }
 
     private static String toAttributeName(String prefix) {

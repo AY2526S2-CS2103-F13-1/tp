@@ -70,6 +70,16 @@ public class SortCommandParserTest {
     }
 
     @Test
+    public void parse_multipleInvalidAttributes_throwsParseException() {
+        assertParseFailure(parser, " invalid/ address/",
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTES, "invalid, address"));
+        assertParseFailure(parser, " name/ invalid/ address/",
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTES, "invalid, address"));
+        assertParseFailure(parser, " NAME/ EMAIL/",
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTES, "NAME, EMAIL"));
+    }
+
+    @Test
     public void parse_duplicateAttribute_throwsParseException() {
         assertParseFailure(parser, " name/ name/",
                 String.format(SortCommandParser.MESSAGE_DUPLICATE_ATTRIBUTE, "name"));
