@@ -5,7 +5,6 @@ import seedu.blockbook.model.gamer.Country;
 import seedu.blockbook.model.gamer.Email;
 import seedu.blockbook.model.gamer.Gamer;
 import seedu.blockbook.model.gamer.GamerTag;
-import seedu.blockbook.model.gamer.Group;
 import seedu.blockbook.model.gamer.Name;
 import seedu.blockbook.model.gamer.Note;
 import seedu.blockbook.model.gamer.Phone;
@@ -36,7 +35,6 @@ public class EditGamerDescriptorBuilder {
         descriptor.setGamerTag(gamer.getGamerTag());
         descriptor.setPhone(gamer.getPhone());
         descriptor.setEmail(gamer.getEmail());
-        descriptor.setGroup(gamer.getGroup());
         descriptor.setServer(gamer.getServer());
         descriptor.setCountry(gamer.getCountry());
         descriptor.setRegion(gamer.getRegion());
@@ -72,14 +70,6 @@ public class EditGamerDescriptorBuilder {
      */
     public EditGamerDescriptorBuilder withEmail(String email) {
         descriptor.setEmail(new Email(email));
-        return this;
-    }
-
-    /**
-     * Sets the {@code Group} of the {@code EditGamerDescriptor} that we are building.
-     */
-    public EditGamerDescriptorBuilder withGroup(String group) {
-        descriptor.setGroup(new Group(group));
         return this;
     }
 

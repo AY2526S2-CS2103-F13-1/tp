@@ -1,5 +1,13 @@
 package seedu.blockbook.storage;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -27,7 +35,7 @@ class JsonAdaptedGamer {
     private final String gamerTag;
     private final String phone;
     private final String email;
-    private final String group;
+    private final List<Integer> groups = new ArrayList<>();
     private final String server;
     private final Boolean favourite;
     private final String country;
@@ -42,7 +50,7 @@ class JsonAdaptedGamer {
                             @JsonProperty("gamerTag") String gamerTag,
                             @JsonProperty("phone") String phone,
                             @JsonProperty("email") String email,
-                            @JsonProperty("group") String group,
+                            @JsonProperty("groups") List<Integer> groups,
                             @JsonProperty("server") String server,
                             @JsonProperty("favourite") Boolean favourite,
                             @JsonProperty("country") String country,
@@ -52,7 +60,9 @@ class JsonAdaptedGamer {
         this.gamerTag = gamerTag;
         this.phone = phone;
         this.email = email;
-        this.group = group;
+        if (groups != null) {
+            this.groups.addAll(groups);
+        }
         this.server = server;
         this.favourite = favourite;
         this.country = country;
@@ -63,43 +73,69 @@ class JsonAdaptedGamer {
     /**
      * Converts a given {@code Gamer} into this class for Jackson use.
      */
-    public JsonAdaptedGamer(Gamer source) {
+    public JsonAdaptedGamer(Gamer source, List<Group> groupList) {
         name = source.getName() != null ? source.getName().fullName : null;
         gamerTag = source.getGamerTag() != null ? source.getGamerTag().fullGamerTag : null;
         phone = source.getPhone() != null ? source.getPhone().fullPhone : null;
         email = source.getEmail() != null ? source.getEmail().fullEmail : null;
-        group = source.getGroup() != null ? source.getGroup().fullGroup : null;
         server = source.getServer() != null ? source.getServer().fullServer : null;
         favourite = source.getFavourite() != null ? source.getFavourite().isFav() : false;
         country = source.getCountry() != null ? source.getCountry().fullCountry : null;
         region = source.getRegion() != null ? source.getRegion().fullRegion : null;
         note = source.getNote() != null ? source.getNote().fullNote : null;
-    }
 
+        Map<String, Integer> groupIndexMap = new HashMap<>();
+        for (int i = 0; i < groupList.size(); i++) {
+            groupIndexMap.put(groupList.get(i).toString().toLowerCase(), i);
+        }
+
+        for (Group group : source.getGroups()) {
+            Integer index = groupIndexMap.get(group.toString().toLowerCase());
+            if (index == null) {
+                throw new IllegalArgumentException("Unknown group referenced by gamer: " + group);
+            }
+            groups.add(index);
+        }
+    }
 
     /**
      * Converts this Jackson-friendly adapted gamer object into the model's {@code Gamer} object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted gamer.
      */
-    public Gamer toModelType() throws IllegalValueException {
+    public Gamer toModelType(List<Group> groupList) throws IllegalValueException {
         validateRequiredFields();
         validateFieldValues();
+        Objects.requireNonNull(groupList);
+
+        List<Group> modelGroups = new ArrayList<>();
+        Set<Integer> seen = new HashSet<>();
+        for (Integer index : groups) {
+            if (index == null) {
+                throw new IllegalValueException("Group index cannot be null.");
+            }
+            if (index < 0 || index >= groupList.size()) {
+                throw new IllegalValueException("Group index out of range: " + index);
+            }
+            if (!seen.add(index)) {
+                throw new IllegalValueException("Duplicate group index: " + index);
+            }
+            modelGroups.add(groupList.get(index));
+        }
 
         // Optional fields can be null when omitted by the user, so we guard object construction to avoid null failures.
-        final Name modelName = name != null ? new Name(normalizeSpacedValue(name)) : null;
+        final Name modelName = name != null ? new Name(normalizeCapitalizedWords(name)) : null;
         final GamerTag modelGamerTag = new GamerTag(gamerTag);
         final Phone modelPhone = phone != null ? new Phone(normalizeSpacedValue(phone)) : null;
         final Email modelEmail = email != null ? new Email(email) : null;
-        final Group modelGroup = group != null ? new Group(group) : null;
         final Server modelServer = server != null ? new Server(server) : null;
         final Favourite modelFavourite = new Favourite(favourite != null ? favourite : false);
-        final Country modelCountry = country != null ? new Country(normalizeSpacedValue(country)) : null;
+        final Country modelCountry = country != null ? new Country(normalizeCapitalizedWords(country)) : null;
         final Region modelRegion = region != null ? new Region(region) : null;
         final Note modelNote = note != null ? new Note(note) : null;
 
         return new Gamer(modelName, modelGamerTag, modelPhone, modelEmail,
-                modelGroup, modelServer, modelFavourite, modelCountry, modelRegion, modelNote);
+                modelGroups, modelServer, modelFavourite, modelCountry, modelRegion, modelNote);
     }
 
     private void validateRequiredFields() throws IllegalValueException {
@@ -122,9 +158,6 @@ class JsonAdaptedGamer {
         if (email != null && !Email.isValidEmail(email)) {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
         }
-        if (group != null && !Group.isValidGroup(group)) {
-            throw new IllegalValueException(Group.MESSAGE_CONSTRAINTS);
-        }
         if (server != null && !Server.isValidServer(server)) {
             throw new IllegalValueException(Server.MESSAGE_CONSTRAINTS);
         }
@@ -141,5 +174,28 @@ class JsonAdaptedGamer {
 
     private static String normalizeSpacedValue(String value) {
         return value.trim().replaceAll("\\s+", " ");
+    }
+
+    /**
+     * Trims the input, collapses repeated spaces, and capitalizes each word segment.
+     * Word segments are restarted after spaces, hyphens, and apostrophes.
+     */
+    private static String normalizeCapitalizedWords(String value) {
+        String collapsed = value.trim().replaceAll("\\s+", " ");
+        StringBuilder builder = new StringBuilder(collapsed.length());
+        boolean capitalizeNext = true;
+        for (int i = 0; i < collapsed.length(); i++) {
+            char currentChar = collapsed.charAt(i);
+            if (Character.isLetter(currentChar)) {
+                builder.append(capitalizeNext
+                        ? Character.toUpperCase(currentChar)
+                        : Character.toLowerCase(currentChar));
+                capitalizeNext = false;
+            } else {
+                builder.append(currentChar);
+                capitalizeNext = currentChar == ' ' || currentChar == '-' || currentChar == '\'';
+            }
+        }
+        return builder.toString();
     }
 }

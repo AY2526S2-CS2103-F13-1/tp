@@ -12,9 +12,11 @@ import seedu.blockbook.model.Model;
 public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
+    public static final String COMMAND_ALIAS = "l";
+    public static final String COMMAND_WORD_WITH_ALIAS = "(l)ist";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all the gamers in your BlockBook.\n"
-            + "\nFormat: " + COMMAND_WORD;
+            + "\nFormat: " + COMMAND_WORD_WITH_ALIAS;
 
     public static final String MESSAGE_SUCCESS = Messages.MESSAGE_GAMERS_LISTED_OVERVIEW;
 

@@ -33,19 +33,25 @@ public class GamerListPanel extends UiPart<Region> {
      * Custom {@code ListCell} that displays the graphics of a {@code Gamer} using a {@code GamerCard}.
      */
     class GamerListViewCell extends ListCell<Gamer> {
+        private GamerCard card;
+
         @Override
         protected void updateItem(Gamer gamer, boolean empty) {
             super.updateItem(gamer, empty);
 
             if (empty || gamer == null) {
+                card = null;
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new GamerCard(gamer, getIndex() + 1).getRoot());
+                // Update card only if there is changes to the gamer.
+                if (card == null || card.gamer != gamer) {
+                    card = new GamerCard(gamer, getIndex() + 1);
+                }
+                setGraphic(card.getRoot());
             }
         }
     }
 
 }
-
 

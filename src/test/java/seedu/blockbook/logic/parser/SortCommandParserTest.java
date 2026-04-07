@@ -67,6 +67,16 @@ public class SortCommandParserTest {
     }
 
     @Test
+    public void parse_duplicateAttribute_throwsParseException() {
+        assertParseFailure(parser, " name/ name/",
+                String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, "name"));
+        assertParseFailure(parser, " phone/ email/ phone/",
+                String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, "phone"));
+        assertParseFailure(parser, " gamertag/ gamertag/ name/ name/",
+                String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, "gamertag, name"));
+    }
+
+    @Test
     public void parse_invalidFormat_throwsParseException() {
         // No trailing slash
         assertParseFailure(parser, " name",

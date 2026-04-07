@@ -6,7 +6,9 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import seedu.blockbook.commons.util.ToStringBuilder;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.Group;
 import seedu.blockbook.model.gamer.UniqueGamerList;
+import seedu.blockbook.model.gamer.UniqueGroupList;
 
 /**
  * Wraps all data at the BlockBook level.
@@ -15,6 +17,7 @@ import seedu.blockbook.model.gamer.UniqueGamerList;
 public class BlockBook implements ReadOnlyBlockBook {
 
     private final UniqueGamerList gamers;
+    private final UniqueGroupList groups;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -25,6 +28,7 @@ public class BlockBook implements ReadOnlyBlockBook {
      */
     {
         gamers = new UniqueGamerList();
+        groups = new UniqueGroupList();
     }
 
     public BlockBook() {}
@@ -53,7 +57,16 @@ public class BlockBook implements ReadOnlyBlockBook {
     public void resetData(ReadOnlyBlockBook newData) {
         requireNonNull(newData);
 
+        setGroups(newData.getGroupList());
         setGamers(newData.getGamerList());
+    }
+
+    /**
+     * Replaces the contents of the group list with {@code groups}.
+     * {@code groups} must not contain duplicate groups.
+     */
+    public void setGroups(List<Group> groups) {
+        this.groups.setGroups(groups);
     }
 
     //// gamer-level operations
@@ -67,11 +80,27 @@ public class BlockBook implements ReadOnlyBlockBook {
     }
 
     /**
+     * Returns true if a group with the same name as {@code group} exists in the BlockBook (case-insensitive).
+     */
+    public boolean hasGroup(Group group) {
+        requireNonNull(group);
+        return groups.contains(group);
+    }
+
+    /**
      * Adds a gamer to the BlockBook.
      * The gamer must not already exist in the BlockBook.
      */
     public void addGamer(Gamer p) {
         gamers.add(p);
+    }
+
+    /**
+     * Adds a group to the BlockBook.
+     * The group must not already exist in the BlockBook.
+     */
+    public void addGroup(Group group) {
+        groups.add(group);
     }
 
     /**
@@ -107,6 +136,14 @@ public class BlockBook implements ReadOnlyBlockBook {
         return gamers.asUnmodifiableObservableList();
     }
 
+    /**
+     * Returns an unmodifiable view of the group list.
+     */
+    @Override
+    public ObservableList<Group> getGroupList() {
+        return groups.asUnmodifiableObservableList();
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -119,12 +156,12 @@ public class BlockBook implements ReadOnlyBlockBook {
         }
 
         BlockBook otherBlockBook = (BlockBook) other;
-        return gamers.equals(otherBlockBook.gamers);
+        return gamers.equals(otherBlockBook.gamers)
+                && groups.equals(otherBlockBook.groups);
     }
 
     @Override
     public int hashCode() {
-        return gamers.hashCode();
+        return java.util.Objects.hash(gamers, groups);
     }
 }
-
