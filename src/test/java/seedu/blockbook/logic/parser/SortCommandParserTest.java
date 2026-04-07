@@ -16,7 +16,7 @@ import seedu.blockbook.logic.commands.SortCommand;
  */
 public class SortCommandParserTest {
 
-    private SortCommandParser parser = new SortCommandParser();
+    private final SortCommandParser parser = new SortCommandParser();
 
     @Test
     public void parse_emptyArgs_returnsDefaultSortCommand() {
@@ -40,6 +40,19 @@ public class SortCommandParserTest {
     }
 
     @Test
+    public void parse_singleValidAliasAttribute_success() {
+        assertParseSuccess(parser, " g/", new SortCommand(List.of("gamertag")));
+        assertParseSuccess(parser, " n/", new SortCommand(List.of("name")));
+        assertParseSuccess(parser, " p/", new SortCommand(List.of("phone")));
+        assertParseSuccess(parser, " e/", new SortCommand(List.of("email")));
+        assertParseSuccess(parser, " gr/", new SortCommand(List.of("group")));
+        assertParseSuccess(parser, " s/", new SortCommand(List.of("server")));
+        assertParseSuccess(parser, " fav/", new SortCommand(List.of("favourite")));
+        assertParseSuccess(parser, " c/", new SortCommand(List.of("country")));
+        assertParseSuccess(parser, " r/", new SortCommand(List.of("region")));
+    }
+
+    @Test
     public void parse_multipleValidAttributes_success() {
         assertParseSuccess(parser, " name/ phone/",
                 new SortCommand(List.of("name", "phone")));
@@ -47,33 +60,50 @@ public class SortCommandParserTest {
                 new SortCommand(List.of("phone", "gamertag")));
         assertParseSuccess(parser, " name/ phone/ email/",
                 new SortCommand(List.of("name", "phone", "email")));
+        assertParseSuccess(parser, " n/ phone/ g/",
+                new SortCommand(List.of("name", "phone", "gamertag")));
     }
 
     @Test
-    public void parse_caseInsensitive_success() {
-        assertParseSuccess(parser, " NAME/", new SortCommand(List.of("name")));
-        assertParseSuccess(parser, " Phone/", new SortCommand(List.of("phone")));
-        assertParseSuccess(parser, " EMAIL/", new SortCommand(List.of("email")));
+    public void parse_caseSensitiveMixedCase_throwsParseException() {
+        assertParseFailure(parser, " NAME/",
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTE, "NAME"));
+        assertParseFailure(parser, " Phone/",
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTE, "Phone"));
+        assertParseFailure(parser, " EMAIL/",
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTE, "EMAIL"));
     }
 
     @Test
     public void parse_invalidAttribute_throwsParseException() {
         assertParseFailure(parser, " invalid/",
-                String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, "invalid"));
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTE, "invalid"));
         assertParseFailure(parser, " address/",
-                String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, "address"));
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTE, "address"));
         assertParseFailure(parser, " name/ invalid/",
-                String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, "invalid"));
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTE, "invalid"));
+    }
+
+    @Test
+    public void parse_multipleInvalidAttributes_throwsParseException() {
+        assertParseFailure(parser, " invalid/ address/",
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTES, "invalid, address"));
+        assertParseFailure(parser, " name/ invalid/ address/",
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTES, "invalid, address"));
+        assertParseFailure(parser, " NAME/ EMAIL/",
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTES, "NAME, EMAIL"));
     }
 
     @Test
     public void parse_duplicateAttribute_throwsParseException() {
         assertParseFailure(parser, " name/ name/",
-                String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, "name"));
+                String.format(SortCommandParser.MESSAGE_DUPLICATE_ATTRIBUTE, "name"));
         assertParseFailure(parser, " phone/ email/ phone/",
-                String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, "phone"));
+                String.format(SortCommandParser.MESSAGE_DUPLICATE_ATTRIBUTE, "phone"));
         assertParseFailure(parser, " gamertag/ gamertag/ name/ name/",
-                String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, "gamertag, name"));
+                String.format(SortCommandParser.MESSAGE_DUPLICATE_ATTRIBUTE, "gamertag, name"));
+        assertParseFailure(parser, " gamertag/ g/",
+                String.format(SortCommandParser.MESSAGE_DUPLICATE_ATTRIBUTE, "gamertag"));
     }
 
     @Test

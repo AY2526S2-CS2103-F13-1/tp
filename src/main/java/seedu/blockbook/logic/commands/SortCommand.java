@@ -35,17 +35,6 @@ public class SortCommand extends Command {
     public static final String MESSAGE_SORT_SUCCESS = "Sorted all contacts by %1$s.";
     public static final String MESSAGE_SORT_DEFAULT_SUCCESS = "Sorted all contacts by gamertag (default).";
     public static final String MESSAGE_EMPTY_LIST = "There are no contacts to sort!";
-    public static final String MESSAGE_INVALID_ATTRIBUTES =
-            "Please ensure all attributes are valid. "
-            + "Possible attributes: name, gamertag, phone, email, group, server, favourite, country, region, note";
-    public static final String MESSAGE_DUPLICATE_ATTRIBUTE =
-            "Duplicate attribute detected: %1$s. Each attribute can only be specified once.";
-    public static final String MESSAGE_INVALID_ATTRIBUTE =
-            "'%1$s' is not a valid attribute!\n";
-
-    public static final List<String> VALID_ATTRIBUTES = List.of(
-            "name", "phone", "email", "group", "server", "favourite", "country", "region", "note", "gamertag"
-    );
 
     private static final Logger logger = LogsCenter.getLogger(SortCommand.class);
 
@@ -59,7 +48,7 @@ public class SortCommand extends Command {
      */
     public SortCommand(List<String> attributes) {
         requireNonNull(attributes);
-        this.attributes = attributes;
+        this.attributes = List.copyOf(attributes);
     }
 
     @Override
@@ -71,16 +60,7 @@ public class SortCommand extends Command {
             throw new CommandException(MESSAGE_EMPTY_LIST);
         }
 
-        // Validate attributes
-        for (String attr : attributes) {
-            if (!VALID_ATTRIBUTES.contains(attr)) {
-                throw new CommandException(MESSAGE_INVALID_ATTRIBUTES);
-            }
-        }
-
-        // Build comparator based only on specified attributes (or gamertag by default).
         Comparator<Gamer> comparator = buildComparator();
-        assert comparator != null : "Comparator should not be null after building";
 
         model.sortGamerList(comparator);
 
@@ -97,7 +77,6 @@ public class SortCommand extends Command {
     private Comparator<Gamer> buildComparator() {
         List<String> sortAttributes = attributes.isEmpty()
                 ? List.of("gamertag") : attributes;
-        assert !sortAttributes.isEmpty() : "Sort attributes should never be empty";
 
         Comparator<Gamer> comparator = getAttributeComparator(sortAttributes.get(0));
         for (int i = 1; i < sortAttributes.size(); i++) {
@@ -113,7 +92,6 @@ public class SortCommand extends Command {
      * Null values are sorted to the end.
      */
     private Comparator<Gamer> getAttributeComparator(String attribute) {
-        assert VALID_ATTRIBUTES.contains(attribute) : "Attribute should be valid at this point: " + attribute;
         if ("favourite".equals(attribute)) {
             // Explicit favourite sorting places favourites before non-favourites.
             return Comparator.comparing((Gamer g) -> g.getFavourite() == null ? null : g.getFavourite().isFav(),
@@ -151,7 +129,7 @@ public class SortCommand extends Command {
         case "note":
             return gamer.getNote() == null ? null : gamer.getNote().toString();
         default:
-            return null;
+            throw new IllegalArgumentException("Unsupported sort attribute: " + attribute);
         }
     }
 
