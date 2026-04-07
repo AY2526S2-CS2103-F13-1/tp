@@ -10,7 +10,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_EMAIL = new Prefix("email/", "e/");
     public static final Prefix PREFIX_GROUP = new Prefix("group/", "gr/");
     public static final Prefix PREFIX_SERVER = new Prefix("server/", "s/");
-    public static final Prefix PREFIX_FAVOURITE = new Prefix("favourite/", "f/");
+    public static final Prefix PREFIX_FAVOURITE = new Prefix("favourite/", "fav/");
     public static final Prefix PREFIX_COUNTRY = new Prefix("country/", "c/");
     public static final Prefix PREFIX_REGION = new Prefix("region/", "r/");
     public static final Prefix PREFIX_NOTE = new Prefix("note/", null);

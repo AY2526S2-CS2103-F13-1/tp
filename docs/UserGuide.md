@@ -154,7 +154,7 @@ Examples:
 
 Sorts the displayed contact list by one or more attributes.
 
-Format: `(s)ort [(g)amertag/] [(n)ame/] [(p)hone/] [(e)mail/] [(gr)oup/] [(s)erver/] [(f)avourite/] [(c)ountry/] [(r)egion/] [note/]`
+Format: `(s)ort [(g)amertag/] [(n)ame/] [(p)hone/] [(e)mail/] [(gr)oup/] [(s)erver/] [(fav)ourite/] [(c)ountry/] [(r)egion/] [note/]`
 
 * If no attributes are provided, contacts are sorted by **gamertag** by default.
 * When multiple attributes are provided, they are applied in order of priority (left to right). The first attribute is the primary sort key, the second is used to break ties, and so on.
