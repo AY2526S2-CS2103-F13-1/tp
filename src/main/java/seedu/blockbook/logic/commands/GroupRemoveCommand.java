@@ -21,11 +21,13 @@ import seedu.blockbook.model.gamer.Group;
 public class GroupRemoveCommand extends Command {
 
     public static final String COMMAND_WORD = "groupremove";
+    public static final String COMMAND_ALIAS = "gr";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Removes a gamer from a group using the displayed indexes.\n"
-            + "Format: " + COMMAND_WORD + " GAMER_INDEX GROUP_INDEX\n"
-            + "Example: " + COMMAND_WORD + " 1 2";
+            + ": Removes a gamer from a group using the displayed indexes.\n\n"
+            + "Format: " + COMMAND_WORD + " GAMER_INDEX GAMER_GROUP_INDEX "
+            + "or " + COMMAND_ALIAS + " GAMER_INDEX GAMER_GROUP_INDEX\n\n"
+            + "Example: " + COMMAND_WORD + " 1 2\n";
 
     public static final String MESSAGE_SUCCESS = "Gamertag: %1$s removed from Group: %2$s !";
 
