@@ -18,7 +18,8 @@ public class GroupCreateCommand extends Command {
     public static final String COMMAND_WORD = "groupcreate";
     public static final String COMMAND_ALIAS = "gc";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a new group in BlockBook.\n\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_ALIAS + ")"
+            + ": Creates a new group in BlockBook.\n\n"
             + "Format: " + COMMAND_WORD + " GROUP" + " or " + COMMAND_ALIAS + " GROUP\n\n"
             + "Example: " + COMMAND_WORD + " iLoveSteve";
 
