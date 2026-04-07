@@ -547,6 +547,46 @@ testers are expected to do more *exploratory* testing.
 
 ### Viewing a gamer contact
 
+1. Viewing a gamer by index
+
+   1. Prerequisites: List all gamers using the `list` command. There is at least 1 gamer in the list.
+
+   1. Test case: `view 1`<br>
+      Expected: The command result displays the full details of the first gamer in the currently displayed list. A pop-up window containing all the gamer's information is also shown.
+
+   1. Test case: `v 1`<br>
+      Expected: Same result as `view 1`.
+
+1. Viewing from a filtered list
+
+   1. Prerequisites: Filter the list to a single gamer using `find name/Alex`.
+
+   1. Test case: `view 1`<br>
+      Expected: The command result displays the full details of the filtered gamer given by the list index.
+
+1. Invalid index
+
+   1. Prerequisites: The list contains 1 gamer.
+
+   1. Test case: `view 2`<br>
+      Expected: Error indicating index is out of range.
+
+   1. Test case: `view 0`<br>
+      Expected: Error indicating index is out of range.
+
+   1. Test case: `view -1`<br>
+      Expected: Error indicating index is out of range.
+
+1. Invalid command format
+
+   1. Prerequisites: None.
+
+   1. Test case: `view`<br>
+      Expected: Error indicating invalid command format for `view`.
+
+   1. Test case: `view one`<br>
+      Expected: Error indicating invalid command format for `view`.
+
 ### Finding a gamer contact
 
 1. Finding gamers with global keyword(s)
@@ -707,8 +747,21 @@ testers are expected to do more *exploratory* testing.
 ### Dealing with data
 1. Saving data to `contacts.json`
 
+   1. Test case: Add a gamer (e.g., `add gamertag/steve1`).<br>
+      Expected: `contacts.json` is updated with the new gamer entry.
+
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Missing data file
 
-1. _{ more test cases ... }_
+      1. Prerequisites: Delete or rename `contacts.json`.
+
+      1. Expected: BlockBook starts with an empty list. The result will display that no file was found and that BlockBook will be starting with an empty Gamer Contact list instead.
+       A new `contacts.json` file is created at the specified path after a command that invokes saving is executed or on app exit.
+
+   1. Corrupted data file
+
+      1. Prerequisites: Edit `contacts.json` to an invalid JSON (e.g., remove a closing brace).
+
+      1. Expected: BlockBook starts with an empty list. The result will display that data could not be loaded from the file and that BlockBook will be starting with an empty Gamer Contact list instead. 
+         A new `contacts.json` file will be created to replace the corrupted `contacts.json` file after a command that invokes saving is executed or on app exit.
