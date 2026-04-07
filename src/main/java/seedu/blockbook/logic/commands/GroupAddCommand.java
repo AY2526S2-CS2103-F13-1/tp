@@ -23,7 +23,7 @@ public class GroupAddCommand extends Command {
     public static final String COMMAND_WORD = "groupadd";
     public static final String COMMAND_ALIAS = "ga";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_ALIAS + ")"
             + ": Adds a gamer to a group using the displayed indexes.\n\n"
             + "Format: " + COMMAND_WORD + " GAMER_INDEX BLOCKBOOK_GROUP_INDEX "
             + "or " + COMMAND_ALIAS + " GAMER_INDEX BLOCKBOOK_GROUP_INDEX\n\n"

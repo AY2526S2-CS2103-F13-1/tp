@@ -23,7 +23,7 @@ public class GroupRemoveCommand extends Command {
     public static final String COMMAND_WORD = "groupremove";
     public static final String COMMAND_ALIAS = "gr";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_ALIAS + ")"
             + ": Removes a gamer from a group using the displayed indexes.\n\n"
             + "Format: " + COMMAND_WORD + " GAMER_INDEX GAMER_GROUP_INDEX "
             + "or " + COMMAND_ALIAS + " GAMER_INDEX GAMER_GROUP_INDEX\n\n"
