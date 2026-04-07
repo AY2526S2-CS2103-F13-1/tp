@@ -18,7 +18,7 @@ import seedu.blockbook.model.UserPrefs;
 import seedu.blockbook.model.gamer.Gamer;
 import seedu.blockbook.model.gamer.Group;
 
-public class GroupRenameCommandTest {
+public class GroupEditCommandTest {
 
     @Test
     public void execute_renameGroup_success() {
@@ -27,7 +27,7 @@ public class GroupRenameCommandTest {
         Group groupToRename = model.getGroupList().get(groupIndex.getZeroBased());
         Group newGroup = new Group("Alpha Squad");
 
-        GroupRenameCommand command = new GroupRenameCommand(groupIndex, newGroup);
+        GroupEditCommand command = new GroupEditCommand(groupIndex, newGroup);
 
         List<Group> updatedGroups = new ArrayList<>(model.getGroupList());
         updatedGroups.set(groupIndex.getZeroBased(), newGroup);
@@ -67,7 +67,7 @@ public class GroupRenameCommandTest {
         Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
         expectedModel.setBlockBook(updatedBlockBook);
 
-        String expectedMessage = String.format(GroupRenameCommand.MESSAGE_SUCCESS, groupToRename, newGroup);
+        String expectedMessage = String.format(GroupEditCommand.MESSAGE_SUCCESS, groupToRename, newGroup);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
@@ -77,7 +77,7 @@ public class GroupRenameCommandTest {
         Index outOfBounds = Index.fromOneBased(model.getGroupList().size() + 1);
         Group newGroup = new Group("Alpha Squad");
 
-        GroupRenameCommand command = new GroupRenameCommand(outOfBounds, newGroup);
+        GroupEditCommand command = new GroupEditCommand(outOfBounds, newGroup);
         assertCommandFailure(command, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
     }
 
@@ -88,7 +88,7 @@ public class GroupRenameCommandTest {
         model.addGroup(existingGroup);
 
         Index groupIndex = Index.fromOneBased(1);
-        GroupRenameCommand command = new GroupRenameCommand(groupIndex, existingGroup);
+        GroupEditCommand command = new GroupEditCommand(groupIndex, existingGroup);
         assertCommandFailure(command, model, GroupCreateCommand.MESSAGE_DUPLICATE_GROUP);
     }
 }

@@ -2,7 +2,6 @@ package seedu.blockbook.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
 
 import seedu.blockbook.model.Model;
@@ -34,7 +33,7 @@ public class HelpCommandTest {
                 + HelpCommand.SEPARATOR
                 + GroupCreateCommand.MESSAGE_USAGE
                 + HelpCommand.SEPARATOR
-                + GroupRenameCommand.MESSAGE_USAGE
+                + GroupEditCommand.MESSAGE_USAGE
                 + HelpCommand.SEPARATOR
                 + GroupAddCommand.MESSAGE_USAGE
                 + HelpCommand.SEPARATOR
