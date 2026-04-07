@@ -3,16 +3,20 @@ package seedu.blockbook.logic.parser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
 public class ArgumentTokenizerTest {
 
-    private final Prefix unknownPrefix = new Prefix("--u");
-    private final Prefix pSlash = new Prefix("p/");
-    private final Prefix dashT = new Prefix("-t");
-    private final Prefix hatQ = new Prefix("^Q");
+    private final Prefix unknownPrefix = new Prefix("--u", null);
+    private final Prefix pSlash = new Prefix("p/", null);
+    private final Prefix dashT = new Prefix("-t", null);
+    private final Prefix hatQ = new Prefix("^Q", null);
 
     @Test
     public void tokenize_emptyArgsString_noValues() {
@@ -138,14 +142,55 @@ public class ArgumentTokenizerTest {
 
     @Test
     public void equalsMethod() {
-        Prefix aaa = new Prefix("aaa");
+        Prefix aaa = new Prefix("aaa", "a");
 
         assertEquals(aaa, aaa);
-        assertEquals(aaa, new Prefix("aaa"));
+        assertEquals(aaa, new Prefix("aaa", "a"));
+        assertEquals(aaa.hashCode(), new Prefix("aaa", "a").hashCode());
 
         assertNotEquals(aaa, "aaa");
-        assertNotEquals(aaa, new Prefix("aab"));
+        assertNotEquals(aaa, new Prefix("aab", "a"));
+
+        // Same canonical prefix but different alias should not be equal.
+        assertNotEquals(new Prefix("name/", "n/"), new Prefix("name/", "nm/"));
+
+        // Null/empty alias behavior is intentionally distinct.
+        assertEquals(new Prefix("name/", null), new Prefix("name/", null));
+        assertNotEquals(new Prefix("name/", null), new Prefix("name/", ""));
+
+        // Prefix is used as a map key, so alias must participate in key identity.
+        Map<Prefix, String> prefixMap = new HashMap<>();
+        prefixMap.put(new Prefix("name/", "n/"), "value");
+        assertEquals("value", prefixMap.get(new Prefix("name/", "n/")));
+        assertNull(prefixMap.get(new Prefix("name/", "nm/")));
+    }
+
+    @Test
+    public void tokenize_aliasOnlyUsage_mapsToCanonicalPrefixKey() {
+        Prefix gamertagPrefix = new Prefix("gamertag/", "g/");
+        Prefix serverPrefix = new Prefix("server/", "s/");
+
+        String argsString = "  preamble g/ proPlayer s/ asia";
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, gamertagPrefix, serverPrefix);
+
+        assertPreamblePresent(argMultimap, "preamble");
+        assertArgumentPresent(argMultimap, gamertagPrefix, "proPlayer");
+        assertArgumentPresent(argMultimap, serverPrefix, "asia");
+        assertArgumentAbsent(argMultimap, pSlash);
+    }
+
+    @Test
+    public void tokenize_mixedCanonicalAndAliasUsage_accumulatesInEncounterOrder() {
+        Prefix namePrefix = new Prefix("name/", "n/");
+        Prefix phonePrefix = new Prefix("phone/", "p/");
+
+        String argsString = " name/ Alice n/ Bob phone/ 111 p/ 222";
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, namePrefix, phonePrefix);
+
+        // Values from canonical and alias forms should be stored under the same canonical Prefix key.
+        assertPreambleEmpty(argMultimap);
+        assertArgumentPresent(argMultimap, namePrefix, "Alice", "Bob");
+        assertArgumentPresent(argMultimap, phonePrefix, "111", "222");
     }
 
 }
-

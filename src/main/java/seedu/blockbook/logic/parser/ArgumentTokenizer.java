@@ -47,11 +47,22 @@ public class ArgumentTokenizer {
     private static List<PrefixPosition> findPrefixPositions(String argsString, Prefix prefix) {
         List<PrefixPosition> positions = new ArrayList<>();
 
+        // Check canonical prefix form
         int prefixPosition = findPrefixPosition(argsString, prefix.getPrefix(), 0);
         while (prefixPosition != -1) {
             PrefixPosition extendedPrefix = new PrefixPosition(prefix, prefixPosition);
             positions.add(extendedPrefix);
             prefixPosition = findPrefixPosition(argsString, prefix.getPrefix(), prefixPosition);
+        }
+
+        // Check alias form if it exists
+        if (prefix.getAlias() != null && !prefix.getAlias().isEmpty()) {
+            prefixPosition = findPrefixPosition(argsString, prefix.getAlias(), 0);
+            while (prefixPosition != -1) {
+                PrefixPosition extendedPrefix = new PrefixPosition(prefix, prefixPosition);
+                positions.add(extendedPrefix);
+                prefixPosition = findPrefixPosition(argsString, prefix.getAlias(), prefixPosition);
+            }
         }
 
         return positions;
@@ -90,11 +101,11 @@ public class ArgumentTokenizer {
         prefixPositions.sort((prefix1, prefix2) -> prefix1.getStartPosition() - prefix2.getStartPosition());
 
         // Insert a PrefixPosition to represent the preamble
-        PrefixPosition preambleMarker = new PrefixPosition(new Prefix(""), 0);
+        PrefixPosition preambleMarker = new PrefixPosition(new Prefix("", ""), 0);
         prefixPositions.add(0, preambleMarker);
 
         // Add a dummy PrefixPosition to represent the end of the string
-        PrefixPosition endPositionMarker = new PrefixPosition(new Prefix(""), argsString.length());
+        PrefixPosition endPositionMarker = new PrefixPosition(new Prefix("", ""), argsString.length());
         prefixPositions.add(endPositionMarker);
 
         // Map prefixes to their argument values (if any)
@@ -117,8 +128,21 @@ public class ArgumentTokenizer {
                                         PrefixPosition currentPrefixPosition,
                                         PrefixPosition nextPrefixPosition) {
         Prefix prefix = currentPrefixPosition.getPrefix();
+        int valueStartPos;
 
-        int valueStartPos = currentPrefixPosition.getStartPosition() + prefix.getPrefix().length();
+        // Determine which form (canonical or alias) is used at this position
+        String prefixStr = argsString.substring(currentPrefixPosition.getStartPosition(),
+                currentPrefixPosition.getStartPosition() + Math.min(prefix.getPrefix().length(),
+                argsString.length() - currentPrefixPosition.getStartPosition()));
+
+        if (prefixStr.equals(prefix.getPrefix())) {
+            valueStartPos = currentPrefixPosition.getStartPosition() + prefix.getPrefix().length();
+        } else if (prefix.getAlias() != null && !prefix.getAlias().isEmpty()) {
+            valueStartPos = currentPrefixPosition.getStartPosition() + prefix.getAlias().length();
+        } else {
+            valueStartPos = currentPrefixPosition.getStartPosition() + prefix.getPrefix().length();
+        }
+
         String value = argsString.substring(valueStartPos, nextPrefixPosition.getStartPosition());
 
         return value.trim();
