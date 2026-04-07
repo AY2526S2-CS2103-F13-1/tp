@@ -212,13 +212,6 @@ public class SortCommandTest {
     //    }
 
     @Test
-    public void execute_invalidAttribute_throwsCommandException() {
-        SortCommand sortCommand = new SortCommand(List.of("invalid"));
-
-        assertCommandFailure(sortCommand, model, SortCommand.MESSAGE_INVALID_ATTRIBUTES);
-    }
-
-    @Test
     public void execute_sessionBasedSort_doesNotModifyStorage() throws CommandException {
         BlockBook originalBlockBook = new BlockBook(model.getBlockBook());
 

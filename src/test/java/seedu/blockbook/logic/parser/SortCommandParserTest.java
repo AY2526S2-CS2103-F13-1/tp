@@ -52,21 +52,21 @@ public class SortCommandParserTest {
     @Test
     public void parse_caseSensitiveMixedCase_throwsParseException() {
         assertParseFailure(parser, " NAME/",
-                String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, "NAME"));
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTE, "NAME"));
         assertParseFailure(parser, " Phone/",
-                String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, "Phone"));
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTE, "Phone"));
         assertParseFailure(parser, " EMAIL/",
-                String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, "EMAIL"));
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTE, "EMAIL"));
     }
 
     @Test
     public void parse_invalidAttribute_throwsParseException() {
         assertParseFailure(parser, " invalid/",
-                String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, "invalid"));
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTE, "invalid"));
         assertParseFailure(parser, " address/",
-                String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, "address"));
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTE, "address"));
         assertParseFailure(parser, " name/ invalid/",
-                String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, "invalid"));
+                String.format(SortCommandParser.MESSAGE_INVALID_ATTRIBUTE, "invalid"));
     }
 
     @Test

@@ -33,6 +33,8 @@ import seedu.blockbook.logic.parser.exceptions.ParseException;
  */
 public class SortCommandParser implements Parser<SortCommand> {
 
+    public static final String MESSAGE_INVALID_ATTRIBUTE =
+            "Invalid attribute detected: %1$s. Please provide a valid sort attribute.";
     public static final String MESSAGE_INVALID_ATTRIBUTES =
             "Invalid attributes detected: %1$s. Please provide only valid sort attributes.";
     public static final String MESSAGE_DUPLICATE_ATTRIBUTE =
@@ -133,7 +135,7 @@ public class SortCommandParser implements Parser<SortCommand> {
 
         if (invalidAttributes.size() == 1) {
             throw new ParseException(
-                    String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, invalidAttributes.iterator().next()));
+                    String.format(MESSAGE_INVALID_ATTRIBUTE, invalidAttributes.iterator().next()));
         }
 
         String invalidAttributeNames = String.join(", ", invalidAttributes);
