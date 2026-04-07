@@ -23,6 +23,7 @@ import seedu.blockbook.model.Model;
 import seedu.blockbook.model.ReadOnlyBlockBook;
 import seedu.blockbook.model.ReadOnlyUserPrefs;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.Group;
 import seedu.blockbook.testutil.GamerBuilder;
 
 public class AddCommandTest {
@@ -136,6 +137,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean hasGroup(Group group) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void deleteGamer(Gamer target) {
             throw new AssertionError("This method should not be called.");
         }
@@ -146,12 +152,22 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addGroup(Group group) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setGamer(Gamer target, Gamer editedGamer) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public ObservableList<Gamer> getFilteredGamerList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Group> getGroupList() {
             throw new AssertionError("This method should not be called.");
         }
 

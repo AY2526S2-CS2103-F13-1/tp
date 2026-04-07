@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.blockbook.commons.core.GuiSettings;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.Group;
 
 /**
  * The API of the Model component.
@@ -60,6 +61,11 @@ public interface Model {
     boolean hasGamer(Gamer gamer);
 
     /**
+     * Returns true if a group with the same name as {@code group} exists in the BlockBook.
+     */
+    boolean hasGroup(Group group);
+
+    /**
      * Deletes the given gamer.
      * The gamer must exist in the BlockBook.
      */
@@ -72,11 +78,22 @@ public interface Model {
     void addGamer(Gamer gamer);
 
     /**
+     * Adds the given group.
+     * {@code group} must not already exist in the BlockBook.
+     */
+    void addGroup(Group group);
+
+    /**
      * Replaces the given gamer {@code target} with {@code editedGamer}.
      * {@code target} must exist in the BlockBook.
      * The gamer identity of {@code editedGamer} must not be the same as another existing gamer in the BlockBook.
      */
     void setGamer(Gamer target, Gamer editedGamer);
+
+    /**
+     * Returns an unmodifiable view of the group list.
+     */
+    ObservableList<Group> getGroupList();
 
     /** Returns an unmodifiable view of the filtered gamer list */
     ObservableList<Gamer> getFilteredGamerList();
@@ -99,5 +116,3 @@ public interface Model {
      */
     void clearSort();
 }
-
-

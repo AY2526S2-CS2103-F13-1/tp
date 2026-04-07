@@ -19,7 +19,6 @@ import seedu.blockbook.model.gamer.Country;
 import seedu.blockbook.model.gamer.Email;
 import seedu.blockbook.model.gamer.Gamer;
 import seedu.blockbook.model.gamer.GamerTag;
-import seedu.blockbook.model.gamer.Group;
 import seedu.blockbook.model.gamer.Name;
 import seedu.blockbook.model.gamer.Note;
 import seedu.blockbook.model.gamer.Phone;
@@ -36,13 +35,10 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD_WITH_ALIAS = "(e)dit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits a gamer in BlockBook.\n\n"
-            + "Format: " + COMMAND_WORD_WITH_ALIAS + " INDEX [(g)amertag/GAMERTAG] "
-            + "[(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(gr)oup/GROUP] "
-            + "[(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]\n\n"
-            + "Example: " + COMMAND_WORD + " 1 gamertag/ilovesteve name/Herobrine "
-            + "phone/99999 email/brine@gmail.com "
-            + "group/DestroySteve server/127.0.0.1:8080 "
-            + "country/Singapore region/ASIA note/I hate steve";
+            + "Format: " + COMMAND_WORD_WITH_ALIAS + " INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE]"
+            + " [(e)mail/EMAIL] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]\n\n"
+            + "Example: " + COMMAND_WORD + " 1 gamertag/ilovesteve name/Herobrine phone/99999 email/brine@gmail.com"
+            + " server/127.0.0.1:8080 country/Singapore region/ASIA note/I hate steve";
 
     public static final String MESSAGE_EDIT_GAMER_SUCCESS = "Contact edited: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -115,7 +111,6 @@ public class EditCommand extends Command {
         GamerTag updatedGamerTag = editGamerDescriptor.getGamerTag().orElse(gamerToEdit.getGamerTag());
         Phone updatedPhone = editGamerDescriptor.getPhone().orElse(gamerToEdit.getPhone());
         Email updatedEmail = editGamerDescriptor.getEmail().orElse(gamerToEdit.getEmail());
-        Group updatedGroup = editGamerDescriptor.getGroup().orElse(gamerToEdit.getGroup());
         Server updatedServer = editGamerDescriptor.getServer().orElse(gamerToEdit.getServer());
         Country updatedCountry = editGamerDescriptor.getCountry().orElse(gamerToEdit.getCountry());
         Region updatedRegion = editGamerDescriptor.getRegion().orElse(gamerToEdit.getRegion());
@@ -126,7 +121,7 @@ public class EditCommand extends Command {
                 updatedGamerTag,
                 updatedPhone,
                 updatedEmail,
-                updatedGroup,
+                gamerToEdit.getGroups(),
                 updatedServer,
                 gamerToEdit.getFavourite(),
                 updatedCountry,
@@ -167,7 +162,6 @@ public class EditCommand extends Command {
         private GamerTag gamerTag;
         private Phone phone;
         private Email email;
-        private Group group;
         private Server server;
         private Country country;
         private Region region;
@@ -183,7 +177,6 @@ public class EditCommand extends Command {
             setGamerTag(toCopy.gamerTag);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
-            setGroup(toCopy.group);
             setServer(toCopy.server);
             setCountry(toCopy.country);
             setRegion(toCopy.region);
@@ -195,7 +188,7 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(
-                    name, gamerTag, phone, email, group, server, country, region, note);
+                    name, gamerTag, phone, email, server, country, region, note);
         }
 
         public void setName(Name name) {
@@ -228,14 +221,6 @@ public class EditCommand extends Command {
 
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
-        }
-
-        public void setGroup(Group group) {
-            this.group = group;
-        }
-
-        public Optional<Group> getGroup() {
-            return Optional.ofNullable(group);
         }
 
         public void setServer(Server server) {
@@ -285,7 +270,6 @@ public class EditCommand extends Command {
                     && Objects.equals(gamerTag, otherDescriptor.gamerTag)
                     && Objects.equals(phone, otherDescriptor.phone)
                     && Objects.equals(email, otherDescriptor.email)
-                    && Objects.equals(group, otherDescriptor.group)
                     && Objects.equals(server, otherDescriptor.server)
                     && Objects.equals(country, otherDescriptor.country)
                     && Objects.equals(region, otherDescriptor.region)
@@ -299,7 +283,6 @@ public class EditCommand extends Command {
                     .add("gamerTag", gamerTag)
                     .add("phone", phone)
                     .add("email", email)
-                    .add("group", group)
                     .add("server", server)
                     .add("country", country)
                     .add("region", region)

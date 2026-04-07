@@ -16,6 +16,7 @@ import seedu.blockbook.logic.commands.EditCommand;
 import seedu.blockbook.logic.commands.ExitCommand;
 import seedu.blockbook.logic.commands.FavouriteCommand;
 import seedu.blockbook.logic.commands.FindCommand;
+import seedu.blockbook.logic.commands.GroupCreateCommand;
 import seedu.blockbook.logic.commands.HelpCommand;
 import seedu.blockbook.logic.commands.ListCommand;
 import seedu.blockbook.logic.commands.SortCommand;
@@ -102,6 +103,9 @@ public class BlockBookParser {
         case ViewCommand.COMMAND_ALIAS:
             return new ViewCommandParser().parse(arguments);
 
+        case GroupCreateCommand.COMMAND_WORD:
+            return new GroupCommandParser().parse(arguments);
+
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
@@ -109,5 +113,3 @@ public class BlockBookParser {
     }
 
 }
-
-

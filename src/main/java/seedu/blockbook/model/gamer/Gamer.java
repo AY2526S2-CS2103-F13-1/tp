@@ -1,7 +1,11 @@
 package seedu.blockbook.model.gamer;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.blockbook.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import seedu.blockbook.commons.util.ToStringBuilder;
@@ -18,6 +22,7 @@ public class Gamer {
     private final Phone phone;
     private final Email email;
     private final Group group;
+    private final List<Group> groups;
     private final Server server;
     private final Favourite favourite;
     private final Country country;
@@ -30,12 +35,26 @@ public class Gamer {
     public Gamer(Name name, GamerTag gamerTag, Phone phone, Email email,
                  Group group, Server server, Favourite favourite,
                  Country country, Region region, Note note) {
-        requireAllNonNull(gamerTag);
+        this(name, gamerTag, phone, email,
+                group == null ? Collections.emptyList() : List.of(group),
+                server, favourite, country, region, note);
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Gamer(Name name, GamerTag gamerTag, Phone phone, Email email,
+                 List<Group> groups, Server server, Favourite favourite,
+                 Country country, Region region, Note note) {
+        requireNonNull(gamerTag);
+        requireAllNonNull(groups);
         this.name = name;
         this.gamerTag = gamerTag;
         this.phone = phone;
         this.email = email;
-        this.group = group;
+        this.groups = Collections.unmodifiableList(new ArrayList<>(groups));
+        // "group" will be removed once porting is complete
+        this.group = this.groups.isEmpty() ? null : this.groups.get(0);
         this.server = server;
         this.favourite = favourite;
         this.country = country;
@@ -61,6 +80,13 @@ public class Gamer {
 
     public Group getGroup() {
         return group;
+    }
+
+    /**
+     * Returns the groups associated with this gamer.
+     */
+    public List<Group> getGroups() {
+        return groups;
     }
 
     public Server getServer() {
@@ -119,6 +145,7 @@ public class Gamer {
                 && Objects.equals(phone, otherGamer.phone)
                 && Objects.equals(email, otherGamer.email)
                 && Objects.equals(group, otherGamer.group)
+                && Objects.equals(groups, otherGamer.groups)
                 && Objects.equals(server, otherGamer.server)
                 && Objects.equals(favourite, otherGamer.favourite)
                 && Objects.equals(country, otherGamer.country)
@@ -130,7 +157,8 @@ public class Gamer {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         // return Objects.hash(name, gamerTag);
-        return Objects.hash(name, gamerTag, phone, email, group, server, favourite, country, region, note);
+        return Objects.hash(name, gamerTag, phone, email, group, groups,
+                server, favourite, country, region, note);
     }
 
     @Override
@@ -141,6 +169,7 @@ public class Gamer {
                 .add("phone", phone)
                 .add("email", email)
                 .add("group", group)
+                .add("groups", groups)
                 .add("server", server)
                 .add("favourite", favourite)
                 .add("country", country)
@@ -150,4 +179,3 @@ public class Gamer {
     }
 
 }
-

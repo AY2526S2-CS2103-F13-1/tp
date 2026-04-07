@@ -1,11 +1,13 @@
 package seedu.blockbook.logic;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.blockbook.logic.parser.Prefix;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.Group;
 
 /**
  * Container for user visible messages.
@@ -56,7 +58,7 @@ public class Messages {
                 .append(" Email: ")
                 .append(formatNullable(gamer.getEmail()))
                 .append(" Group: ")
-                .append(formatNullable(gamer.getGroup()))
+                .append(formatGroups(gamer.getGroups()))
                 .append(" Server: ")
                 .append(formatNullable(gamer.getServer()))
                 .append(" Country: ")
@@ -66,6 +68,18 @@ public class Messages {
                 .append(" Note: ")
                 .append(formatNullable(gamer.getNote()));
         return builder.toString();
+    }
+
+    /**
+     * Formats a list of groups for display.
+     */
+    private static String formatGroups(List<Group> groups) {
+        if (groups == null || groups.isEmpty()) {
+            return formatNullable(null);
+        }
+        return groups.stream()
+                .map(Group::toString)
+                .collect(Collectors.joining(", "));
     }
 
     /**

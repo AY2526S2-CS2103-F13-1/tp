@@ -24,12 +24,12 @@ public class AddCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a gamer to BlockBook.\n\n"
             + "Format: " + COMMAND_WORD_WITH_ALIAS + " gamertag/GAMERTAG "
             + "[name/NAME] [phone/PHONE] [email/EMAIL] "
-            + "[group/GROUP] [server/SERVER] "
+            + "[server/SERVER] "
             + "[country/COUNTRY] "
             + "[region/REGION] [note/NOTE]\n\n"
             + "Example: " + COMMAND_WORD + " gamertag/ilovesteve name/Herobrine "
             + "phone/99999 email/brine@gmail.com "
-            + "group/DestroySteve server/127.0.0.1:8080 "
+            + "server/127.0.0.1:8080 "
             + "country/Singapore region/ASIA note/I hate steve";
 
     public static final String MESSAGE_SUCCESS = "Contact added: %1$s";

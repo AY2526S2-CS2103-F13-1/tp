@@ -6,16 +6,17 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.commons.util.ToStringBuilder;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.Group;
 
 /**
  * Sorts the contact list in BlockBook by the specified attributes.
- * Favourite contacts are always shown first.
  * Sorting is session-based and does not persist to storage.
  */
 public class SortCommand extends Command {
@@ -25,24 +26,22 @@ public class SortCommand extends Command {
     public static final String COMMAND_WORD_WITH_ALIAS = "(s)ort";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Sorts contacts by the specified attributes. Favourite contacts are always shown first.\n"
-            + "\nFormat: " + COMMAND_WORD_WITH_ALIAS + " [name/NAME] [phone/PHONE] [email/EMAIL] [group/GROUP]"
-            + " [server/SERVER] [favourite/FAVOURITE] [country/COUNTRY] [region/REGION] [note/NOTE]\n"
-            + "\nExample: " + COMMAND_WORD + " name/John phone/98002132";
+            + ": Sorts contacts by the specified attributes.\n"
+            + "\nIf no attributes are specified, results are sorted by gamertag by default.\n"
+            + "\nFormat: " + COMMAND_WORD_WITH_ALIAS + " [gamertag/] [name/] [phone/] [email/] [group/]"
+            + " [server/] [favourite/] [country/] [region/] [note/]\n"
+            + "\nExample: " + COMMAND_WORD + " phone/ gamertag/";
 
     public static final String MESSAGE_SORT_SUCCESS = "Sorted all contacts by %1$s.";
     public static final String MESSAGE_SORT_DEFAULT_SUCCESS = "Sorted all contacts by gamertag (default).";
     public static final String MESSAGE_EMPTY_LIST = "There are no contacts to sort!";
     public static final String MESSAGE_INVALID_ATTRIBUTES =
             "Please ensure all attributes are valid. "
-            + "Possible attributes: name, phone, email, group, server, favourite, country, region, note";
+            + "Possible attributes: name, gamertag, phone, email, group, server, favourite, country, region, note";
+    public static final String MESSAGE_DUPLICATE_ATTRIBUTE =
+            "Duplicate attribute detected: %1$s. Each attribute can only be specified once.";
     public static final String MESSAGE_INVALID_ATTRIBUTE =
-            "'%1$s' is not a valid attribute!\n"
-            + COMMAND_WORD + ": Sorts contacts by the specified attributes. "
-            + "Favourite contacts are always shown first.\n"
-            + "Format: " + COMMAND_WORD + " [name/] [phone/] [email/] "
-            + "[group/] [server/] [favourite/] [country/] [region/] [note/]\n"
-            + "Example: " + COMMAND_WORD + " name/ phone/";
+            "'%1$s' is not a valid attribute!\n";
 
     public static final List<String> VALID_ATTRIBUTES = List.of(
             "name", "phone", "email", "group", "server", "favourite", "country", "region", "note", "gamertag"
@@ -79,7 +78,7 @@ public class SortCommand extends Command {
             }
         }
 
-        // Build comparator: favourites first, then by specified attributes
+        // Build comparator based only on specified attributes (or gamertag by default).
         Comparator<Gamer> comparator = buildComparator();
         assert comparator != null : "Comparator should not be null after building";
 
@@ -93,22 +92,16 @@ public class SortCommand extends Command {
     }
 
     /**
-     * Builds a comparator that sorts favourites first, then by the specified attributes.
+     * Builds a comparator from the specified sort attributes.
      */
     private Comparator<Gamer> buildComparator() {
-        // Favourites always come first
-        Comparator<Gamer> comparator = Comparator.comparing((Gamer g) -> {
-            if (g.getFavourite() == null) {
-                return 1; // non-favourite (null) goes after
-            }
-            return g.getFavourite().toString().equalsIgnoreCase("Yes") ? 0 : 1;
-        });
-
         List<String> sortAttributes = attributes.isEmpty()
                 ? List.of("gamertag") : attributes;
         assert !sortAttributes.isEmpty() : "Sort attributes should never be empty";
 
-        for (String attr : sortAttributes) {
+        Comparator<Gamer> comparator = getAttributeComparator(sortAttributes.get(0));
+        for (int i = 1; i < sortAttributes.size(); i++) {
+            String attr = sortAttributes.get(i);
             comparator = comparator.thenComparing(getAttributeComparator(attr));
         }
 
@@ -121,6 +114,13 @@ public class SortCommand extends Command {
      */
     private Comparator<Gamer> getAttributeComparator(String attribute) {
         assert VALID_ATTRIBUTES.contains(attribute) : "Attribute should be valid at this point: " + attribute;
+        if ("favourite".equals(attribute)) {
+            // Explicit favourite sorting places favourites before non-favourites.
+            return Comparator.comparing((Gamer g) -> g.getFavourite() == null ? null : g.getFavourite().isFav(),
+                    Comparator.nullsLast(Comparator.reverseOrder())
+            );
+        }
+
         return Comparator.comparing((Gamer g) -> getAttributeValue(g, attribute),
                 Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER)
         );
@@ -141,11 +141,9 @@ public class SortCommand extends Command {
         case "email":
             return gamer.getEmail() == null ? null : gamer.getEmail().toString();
         case "group":
-            return gamer.getGroup() == null ? null : gamer.getGroup().toString();
+            return getGroupSortKey(gamer.getGroups());
         case "server":
             return gamer.getServer() == null ? null : gamer.getServer().toString();
-        case "favourite":
-            return gamer.getFavourite() == null ? null : gamer.getFavourite().toString();
         case "country":
             return gamer.getCountry() == null ? null : gamer.getCountry().toString();
         case "region":
@@ -155,6 +153,16 @@ public class SortCommand extends Command {
         default:
             return null;
         }
+    }
+
+    private String getGroupSortKey(List<Group> groups) {
+        if (groups == null || groups.isEmpty()) {
+            return null;
+        }
+        return groups.stream()
+                .map(Group::toString)
+                .sorted(String.CASE_INSENSITIVE_ORDER)
+                .collect(Collectors.joining(", "));
     }
 
     @Override

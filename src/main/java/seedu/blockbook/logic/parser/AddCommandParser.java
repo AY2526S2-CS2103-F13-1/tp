@@ -4,13 +4,14 @@ import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_COUNTRY;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GAMERTAG;
-import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_REGION;
 import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_SERVER;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import seedu.blockbook.logic.commands.AddCommand;
@@ -58,7 +59,6 @@ public class AddCommandParser implements Parser<AddCommand> {
                 PREFIX_NAME,
                 PREFIX_PHONE,
                 PREFIX_EMAIL,
-                PREFIX_GROUP,
                 PREFIX_SERVER,
                 PREFIX_COUNTRY,
                 PREFIX_REGION,
@@ -89,7 +89,6 @@ public class AddCommandParser implements Parser<AddCommand> {
                 PREFIX_NAME,
                 PREFIX_PHONE,
                 PREFIX_EMAIL,
-                PREFIX_GROUP,
                 PREFIX_SERVER,
                 PREFIX_COUNTRY,
                 PREFIX_REGION,
@@ -112,7 +111,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         Name name = parseOptionalName(argMultimap);
         Phone phone = parseOptionalPhone(argMultimap);
         Email email = parseOptionalEmail(argMultimap);
-        Group group = parseOptionalGroup(argMultimap);
+        // Group group = parseOptionalGroup(argMultimap);
+        List<Group> groups = new ArrayList<>();
         Server server = parseOptionalServer(argMultimap);
         Favourite favourite = new Favourite(false);
         Country country = parseOptionalCountry(argMultimap);
@@ -124,7 +124,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 gamerTag,
                 phone,
                 email,
-                group,
+                groups,
                 server,
                 favourite,
                 country,
@@ -155,12 +155,12 @@ public class AddCommandParser implements Parser<AddCommand> {
         return null;
     }
 
-    private Group parseOptionalGroup(ArgumentMultimap argMultimap) throws ParseException {
-        if (argMultimap.getValue(PREFIX_GROUP).isPresent()) {
-            return ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP).get());
-        }
-        return null;
-    }
+    // private Group parseOptionalGroup(ArgumentMultimap argMultimap) throws ParseException {
+    //     if (argMultimap.getValue(PREFIX_GROUP).isPresent()) {
+    //         return ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP).get());
+    //     }
+    //     return null;
+    // }
 
     private Server parseOptionalServer(ArgumentMultimap argMultimap) throws ParseException {
         if (argMultimap.getValue(PREFIX_SERVER).isPresent()) {
