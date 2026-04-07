@@ -6,7 +6,7 @@
 
 
 # BlockBook Developer Guide
-The developer guide will be updated iteratively as the implementation progresses. 
+The developer guide will be updated iteratively as the implementation progresses.
 The current content is based on the design decisions we have made so far, and may be updated as we make more design decisions in the future.
 
 <!-- * Table of Contents -->
@@ -265,7 +265,7 @@ Use case ends.
 
 2a. The contact list is empty.
 
-- 2a1. BB informs the user that no contacts are currently stored. 
+- 2a1. BB informs the user that no contacts are currently stored.
 - Use case ends.
 
 **UC03 - Favourite a Contact**
@@ -604,7 +604,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `find name/Alex`<br>
       Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
-   2. 
+
    1. Test case: `find name/aLeX`<br>
       Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
 
