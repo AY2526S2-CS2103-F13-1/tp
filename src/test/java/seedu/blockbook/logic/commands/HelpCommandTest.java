@@ -34,6 +34,8 @@ public class HelpCommandTest {
                 + HelpCommand.SEPARATOR
                 + GroupCreateCommand.MESSAGE_USAGE
                 + HelpCommand.SEPARATOR
+                + GroupRenameCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
                 + GroupAddCommand.MESSAGE_USAGE
                 + HelpCommand.SEPARATOR
                 + GroupRemoveCommand.MESSAGE_USAGE
