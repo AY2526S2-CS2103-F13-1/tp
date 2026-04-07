@@ -40,6 +40,7 @@ public class MainWindow extends UiPart<Stage> {
     private GamerListPanel gamerListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private GroupListPanel groupListPanel;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -58,6 +59,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane gamerListPanelPlaceholder;
+
+    @FXML
+    private StackPane groupListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -141,6 +145,9 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         gamerListPanel = new GamerListPanel(logic.getFilteredGamerList());
         gamerListPanelPlaceholder.getChildren().add(gamerListPanel.getRoot());
+
+        groupListPanel = new GroupListPanel(logic.getGroupList());
+        groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
