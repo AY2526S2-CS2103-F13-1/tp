@@ -32,7 +32,12 @@ public class GroupEditCommandParser implements Parser<GroupEditCommand> {
                     GroupEditCommand.MESSAGE_USAGE));
         }
 
-        int groupIndexValue = Integer.parseInt(parts[0]);
+        final int groupIndexValue;
+        try {
+            groupIndexValue = Integer.parseInt(parts[0]);
+        } catch (NumberFormatException nfe) {
+            throw new ParseException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        }
         if (groupIndexValue <= 0) {
             throw new ParseException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
         }
