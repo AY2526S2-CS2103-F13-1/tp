@@ -136,7 +136,7 @@ public class FavouriteCommand extends Command {
                 gamerToEdit.getGamerTag(),
                 gamerToEdit.getPhone(),
                 gamerToEdit.getEmail(),
-                gamerToEdit.getGroup(),
+                gamerToEdit.getGroups(),
                 gamerToEdit.getServer(),
                 updatedFavourite,
                 gamerToEdit.getCountry(),
