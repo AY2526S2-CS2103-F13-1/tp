@@ -34,14 +34,21 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_nullModel_throwsNullPointerException() {
+        Gamer validGamer = new GamerBuilder().build();
+        AddCommand addCommand = new AddCommand(validGamer);
+
+        assertThrows(NullPointerException.class, () -> addCommand.execute(null));
+    }
+
+    @Test
     public void execute_gamerAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingGamerAdded modelStub = new ModelStubAcceptingGamerAdded();
         Gamer validGamer = new GamerBuilder().build();
 
         CommandResult commandResult = new AddCommand(validGamer).execute(modelStub);
 
-        String expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS,
-                Messages.format(validGamer));
+        String expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validGamer));
         assertEquals(expectedMessage, commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validGamer), modelStub.gamersAdded);
     }
@@ -50,33 +57,28 @@ public class AddCommandTest {
     public void execute_duplicateGamer_throwsCommandException() {
         Gamer validGamer = new GamerBuilder().build();
         AddCommand addCommand = new AddCommand(validGamer);
-        ModelStub modelStub = new ModelStubWithGamer(validGamer);
+        ModelStubWithGamer modelStub = new ModelStubWithGamer(validGamer);
 
         assertThrows(CommandException.class,
                 AddCommand.MESSAGE_DUPLICATE_GAMERTAG, () -> addCommand.execute(modelStub));
+        assertFalse(modelStub.addGamerCalled);
     }
 
     @Test
     public void equals() {
         Gamer alice = new GamerBuilder().withName("Alice").withGamerTag("alice_tag").build();
         Gamer bob = new GamerBuilder().withName("Bob").withGamerTag("bob_tag").build();
+
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 
-        // same object -> returns true
         assertTrue(addAliceCommand.equals(addAliceCommand));
 
-        // same values -> returns true
         AddCommand addAliceCommandCopy = new AddCommand(alice);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
-        // different types -> returns false
         assertFalse(addAliceCommand.equals(1));
-
-        // null -> returns false
         assertFalse(addAliceCommand.equals(null));
-
-        // different gamer -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
@@ -192,6 +194,7 @@ public class AddCommandTest {
      */
     private class ModelStubWithGamer extends ModelStub {
         private final Gamer gamer;
+        private boolean addGamerCalled;
 
         ModelStubWithGamer(Gamer gamer) {
             requireNonNull(gamer);
@@ -202,6 +205,11 @@ public class AddCommandTest {
         public boolean hasGamer(Gamer gamer) {
             requireNonNull(gamer);
             return this.gamer.isSameGamer(gamer);
+        }
+
+        @Override
+        public void addGamer(Gamer gamer) {
+            addGamerCalled = true;
         }
     }
 
