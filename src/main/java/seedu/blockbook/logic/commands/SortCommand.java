@@ -22,11 +22,13 @@ import seedu.blockbook.model.gamer.Group;
 public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
+    public static final String COMMAND_ALIAS = "s";
+    public static final String COMMAND_WORD_WITH_ALIAS = "(s)ort";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts contacts by the specified attributes.\n"
             + "\nIf no attributes are specified, results are sorted by gamertag by default.\n"
-            + "\nFormat: " + COMMAND_WORD + " [gamertag/] [name/] [phone/] [email/] [group/]"
+            + "\nFormat: " + COMMAND_WORD_WITH_ALIAS + " [gamertag/] [name/] [phone/] [email/] [group/]"
             + " [server/] [favourite/] [country/] [region/] [note/]\n"
             + "\nExample: " + COMMAND_WORD + " phone/ gamertag/";
 

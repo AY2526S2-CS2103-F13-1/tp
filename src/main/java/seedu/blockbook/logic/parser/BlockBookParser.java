@@ -58,39 +58,49 @@ public class BlockBookParser {
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
+        case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
         case FavouriteCommand.COMMAND_WORD:
+        case FavouriteCommand.COMMAND_ALIAS:
             return new FavouriteCommandParser(true).parse(arguments);
 
         case FavouriteCommand.COMMAND_WORD_UNFAVOURITE:
+        case FavouriteCommand.COMMAND_ALIAS_UNFAVOURITE:
             return new FavouriteCommandParser(false).parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommandParser().parse(arguments);
 
         case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
         case SortCommand.COMMAND_WORD:
+        case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
+        case HelpCommand.COMMAND_ALIAS:
             return new HelpCommand();
 
         case ViewCommand.COMMAND_WORD:
+        case ViewCommand.COMMAND_ALIAS:
             return new ViewCommandParser().parse(arguments);
 
         case GroupCreateCommand.COMMAND_WORD:
