@@ -16,7 +16,7 @@ import seedu.blockbook.logic.commands.SortCommand;
  */
 public class SortCommandParserTest {
 
-    private SortCommandParser parser = new SortCommandParser();
+    private final SortCommandParser parser = new SortCommandParser();
 
     @Test
     public void parse_emptyArgs_returnsDefaultSortCommand() {
@@ -50,10 +50,13 @@ public class SortCommandParserTest {
     }
 
     @Test
-    public void parse_caseInsensitive_success() {
-        assertParseSuccess(parser, " NAME/", new SortCommand(List.of("name")));
-        assertParseSuccess(parser, " Phone/", new SortCommand(List.of("phone")));
-        assertParseSuccess(parser, " EMAIL/", new SortCommand(List.of("email")));
+    public void parse_caseSensitive_invalidMixedCase_throwsParseException() {
+        assertParseFailure(parser, " NAME/",
+                String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, "NAME"));
+        assertParseFailure(parser, " Phone/",
+                String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, "Phone"));
+        assertParseFailure(parser, " EMAIL/",
+                String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, "EMAIL"));
     }
 
     @Test
@@ -69,11 +72,11 @@ public class SortCommandParserTest {
     @Test
     public void parse_duplicateAttribute_throwsParseException() {
         assertParseFailure(parser, " name/ name/",
-                String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, "name"));
+                String.format(SortCommandParser.MESSAGE_DUPLICATE_ATTRIBUTE, "name"));
         assertParseFailure(parser, " phone/ email/ phone/",
-                String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, "phone"));
+                String.format(SortCommandParser.MESSAGE_DUPLICATE_ATTRIBUTE, "phone"));
         assertParseFailure(parser, " gamertag/ gamertag/ name/ name/",
-                String.format(SortCommand.MESSAGE_DUPLICATE_ATTRIBUTE, "gamertag, name"));
+                String.format(SortCommandParser.MESSAGE_DUPLICATE_ATTRIBUTE, "gamertag, name"));
     }
 
     @Test
