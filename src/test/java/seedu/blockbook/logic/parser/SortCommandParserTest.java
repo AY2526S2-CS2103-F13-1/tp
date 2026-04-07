@@ -50,7 +50,7 @@ public class SortCommandParserTest {
     }
 
     @Test
-    public void parse_caseSensitive_invalidMixedCase_throwsParseException() {
+    public void parse_caseSensitiveMixedCase_throwsParseException() {
         assertParseFailure(parser, " NAME/",
                 String.format(SortCommand.MESSAGE_INVALID_ATTRIBUTE, "NAME"));
         assertParseFailure(parser, " Phone/",
