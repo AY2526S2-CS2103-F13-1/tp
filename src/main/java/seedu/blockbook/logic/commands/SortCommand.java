@@ -6,12 +6,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.commons.util.ToStringBuilder;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.Group;
 
 /**
  * Sorts the contact list in BlockBook by the specified attributes.
@@ -141,7 +143,7 @@ public class SortCommand extends Command {
         case "email":
             return gamer.getEmail() == null ? null : gamer.getEmail().toString();
         case "group":
-            return gamer.getGroup() == null ? null : gamer.getGroup().toString();
+            return getGroupSortKey(gamer.getGroups());
         case "server":
             return gamer.getServer() == null ? null : gamer.getServer().toString();
         case "country":
@@ -153,6 +155,16 @@ public class SortCommand extends Command {
         default:
             return null;
         }
+    }
+
+    private String getGroupSortKey(List<Group> groups) {
+        if (groups == null || groups.isEmpty()) {
+            return null;
+        }
+        return groups.stream()
+                .map(Group::toString)
+                .sorted(String.CASE_INSENSITIVE_ORDER)
+                .collect(Collectors.joining(", "));
     }
 
     @Override
