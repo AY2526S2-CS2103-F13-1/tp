@@ -395,20 +395,35 @@ Use case ends.
 - *a1. BB discards all unsaved changes.
 - Use case ends.
 
-**UC06 - Sort Gamer Contacts** (Extensions can be added for the optional attribute criteria)
-(Base case as MSS, other sorting criteria can be added as extensions)
+**UC06 - Sort Gamer Contacts**
 
 **MSS**
 
-1. User chooses to sort contacts by added date.
-2. BB displays all contacts sorted in chronological order by added date, from most recent.
+1. User requests to sort contacts by one or more attributes.
+2. BB sorts and displays the currently displayed contacts by the specified attributes in priority order.
 
 Use case ends.
 
 **Extensions**
 
-2a. BB finds no contacts.
-- 2a1. BB informs the user that there are no contacts.
+1a. User does not specify any attributes.
+
+- 1a1. BB uses gamertag as the default sort attribute.
+- Use case resumes from step 2.
+
+1b. User specifies an invalid attribute.
+
+- 1b1. BB shows an error message.
+- Use case ends.
+
+1c. User specifies duplicate attributes.
+
+- 1c1. BB shows an error message.
+- Use case ends.
+
+2a. There are no currently displayed contacts to sort.
+
+- 2a1. BB informs the user that there are no contacts to sort.
 - Use case ends.
 
 **UC07 - Edit a Gamer Contact** (Change of name from Update)
@@ -722,6 +737,57 @@ testers are expected to do more *exploratory* testing.
       Expected: Error indicating invalid command format for `find`.
 
 ### Sorting gamer contacts
+
+1. Sorting gamers by default (gamertag)
+
+   1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
+
+   1. Test case: `sort`<br>
+      Expected: All contacts are sorted alphabetically by gamertag (case-insensitive). Status message shows "Sorted all contacts by gamertag (default)."
+
+1. Sorting gamers by a single attribute
+
+   1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list, some with missing optional fields.
+
+   1. Test case: `sort name/`<br>
+      Expected: All contacts are sorted alphabetically by name (case-insensitive). Contacts with no name are placed at the end. Status message shows "Sorted all contacts by name."
+
+   1. Test case: `sort favourite/`<br>
+      Expected: Favourite contacts appear before non-favourite contacts. Status message shows "Sorted all contacts by favourite."
+
+1. Sorting gamers by multiple attributes
+
+   1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
+
+   1. Test case: `sort country/ name/`<br>
+      Expected: Contacts are sorted by country first, then by name for contacts with the same country. Status message shows "Sorted all contacts by country, name."
+
+1. Sorting gamers using attribute aliases
+
+   1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
+
+   1. Test case: `sort n/`<br>
+      Expected: Same result as `sort name/`. Contacts are sorted alphabetically by name.
+
+1. Sorting gamers with invalid input
+
+   1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
+
+   1. Test case: `sort xyz/`<br>
+      Expected: No sorting occurs. Error message indicates invalid attribute detected.
+
+   1. Test case: `sort name/ name/`<br>
+      Expected: No sorting occurs. Error message indicates duplicate attribute detected.
+
+   1. Test case: `sort abc`<br>
+      Expected: No sorting occurs. Error message indicates invalid command format.
+
+1. Sorting with no contacts displayed
+
+   1. Prerequisites: Use a `find` command that returns no results, so the displayed list is empty.
+
+   1. Test case: `sort`<br>
+      Expected: No sorting occurs. Error message indicates there are no contacts to sort.
 
 ### Clearing all gamer contacts
 
