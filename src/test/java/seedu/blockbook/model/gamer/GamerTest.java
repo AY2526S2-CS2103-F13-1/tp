@@ -112,17 +112,18 @@ public class GamerTest {
         );
 
         assertEquals(groups, gamer.getGroups());
-        assertEquals(new Group("Raid Team"), gamer.getGroup());
+        assertEquals(new Group("Raid Team"), gamer.getGroups().get(0));
     }
 
     @Test
     public void toStringMethod() {
+        Group firstGroup = ALICE.getGroups().isEmpty() ? null : ALICE.getGroups().get(0);
         String expected = Gamer.class.getCanonicalName()
                 + "{name=" + ALICE.getName()
                 + ", gamertag=" + ALICE.getGamerTag()
                 + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail()
-                + ", group=" + ALICE.getGroup()
+                + ", group=" + firstGroup
                 + ", groups=" + ALICE.getGroups()
                 + ", server=" + ALICE.getServer()
                 + ", favourite=" + ALICE.getFavourite()
