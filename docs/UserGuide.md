@@ -105,6 +105,8 @@ Shows a list of all gamers stored in BlockBook.
 
 Format: `(l)ist`
 
+* Clears any active filter (e.g., from `find`) and any active `sort`, restoring original order.
+
 ### Editing a gamer : `edit`
 
 Edits an existing gamer stored in BlockBook.
@@ -152,13 +154,20 @@ Examples:
 
 ### Sorting gamers : `sort`
 
-Sorts the displayed contact list by one or more attributes.
+Sorts gamers by one or more attributes.
 
 Format: `(s)ort [(g)amertag/] [(n)ame/] [(p)hone/] [(e)mail/] [(gr)oup/] [(s)erver/] [(fav)ourite/] [(c)ountry/] [(r)egion/] [note/]`
 
-* If no attributes are provided, contacts are sorted by **gamertag** by default.
-* When multiple attributes are provided, they are applied in order of priority (left to right). The first attribute is the primary sort key, the second is used to break ties, and so on.
-* Each attribute can only be specified **once** (no duplicates).
+* If no attributes are provided, gamers are sorted by **gamertag** by default.
+* Attributes are applied in priority order from left to right (first attribute = primary sort key).
+* Each attribute can only be specified **once** (including alias/canonical duplicates such as `g/ gamertag/`).
+* Attribute tokens are case-sensitive and must be lowercase (e.g., `name/`, not `NAME/`).
+* For optional attributes (`name`, `phone`, `email`, `group`, `server`, `country`, `region`, `note`), gamers without that value appear after gamers with a value.
+* `favourite/` places favourited gamers before non-favourited gamers.
+* `group/` sorts by a gamer's full group set (group names are alphabetically ordered before comparison).
+* If a filter is active (e.g., after `find`), the filtered results are shown in the active sort order.
+* Sorting is session-based and is not persisted to storage.
+* `list` resets sorting and returns to original order.
 
 **Valid attributes:**
 
@@ -176,10 +185,18 @@ Format: `(s)ort [(g)amertag/] [(n)ame/] [(p)hone/] [(e)mail/] [(gr)oup/] [(s)erv
 | `note/`          | Sort by note |
 
 Examples:
-* `sort` sorts all contacts by gamertag (default).
-* `sort name/` sorts all contacts by name.
-* `s p/ g/` sorts all contacts by phone number, using gamertag to break ties.
-* `sort favourite/ name/` sorts favourites before non-favourites, then by name within each group.
+* `sort` sorts gamers by gamertag (default).
+* `sort name/` sorts gamers by name.
+* `s p/ g/` sorts gamers by phone number, then by gamertag.
+* `sort favourite/ name/` sorts favourites before non-favourites, then by name within each favourite-status group.
+
+Before running `sort favourite/ name/`:
+
+  ![Before sort by favourite then name](images/beforesortss.png)
+
+After running `sort favourite/ name/`:
+
+  ![After sort by favourite then name](images/aftersortss.png)
 
 ### Deleting a Gamer : `delete`
 
@@ -259,4 +276,3 @@ _Details coming soon ..._
 | **List**   | `(l)ist`                                                                                                                   |
 | **Sort**   | `(s)ort [(g)amertag/] [(n)ame/]...`<br> e.g., `sort`, `sort n/`, `sort p/ g/`                                              |
 | **Help**   | `help`, `?`                                                                                                                 |
-
