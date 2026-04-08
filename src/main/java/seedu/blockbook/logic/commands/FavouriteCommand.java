@@ -70,12 +70,15 @@ public class FavouriteCommand extends Command {
         validateFavouriteIndex(lastShownList);
 
         int index = targetIndex.getZeroBased();
-        assert index < lastShownList.size();
+        if (index < 0 || index >= lastShownList.size()) {
+            logger.warning("Favourite failed unexpectedly: invalid index after validation (" + index + ").");
+            throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        }
 
         Gamer gamerToToggle = lastShownList.get(index);
         assert gamerToToggle != null;
 
-        String summary = formatContactSummary(gamerToToggle);
+        String summary = Messages.formatContactSummary(gamerToToggle);
         boolean isCurrentlyFavourite = isCurrentlyFavourite(gamerToToggle);
         if (markFavourite && isCurrentlyFavourite) {
             logger.fine("Favourite failed: already favourite (" + summary + ").");
@@ -87,18 +90,17 @@ public class FavouriteCommand extends Command {
         }
 
         Favourite updatedFavourite = new Favourite(markFavourite);
-        assert updatedFavourite != null;
 
         Gamer updatedGamer = createToggledGamer(gamerToToggle, updatedFavourite);
         model.setGamer(gamerToToggle, updatedGamer);
 
         if (!markFavourite) {
-            summary = formatContactSummary(updatedGamer);
+            summary = Messages.formatContactSummary(updatedGamer);
             logger.fine("Unmarked favourite: " + summary);
             return new CommandResult(String.format(MESSAGE_UNMARK_FAVOURITE_SUCCESS, summary));
         }
 
-        summary = formatContactSummary(updatedGamer);
+        summary = Messages.formatContactSummary(updatedGamer);
         logger.fine("Marked favourite: " + summary);
         return new CommandResult(String.format(MESSAGE_MARK_FAVOURITE_SUCCESS, summary));
     }
@@ -116,7 +118,7 @@ public class FavouriteCommand extends Command {
         }
 
         int index = targetIndex.getZeroBased();
-        if (index >= gamerList.size()) {
+        if (index < 0 || index >= gamerList.size()) {
             logger.finer("Favourite failed: index out of range (" + index + ").");
             throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
         }
@@ -136,19 +138,13 @@ public class FavouriteCommand extends Command {
                 gamerToEdit.getGamerTag(),
                 gamerToEdit.getPhone(),
                 gamerToEdit.getEmail(),
-                gamerToEdit.getGroup(),
+                gamerToEdit.getGroups(),
                 gamerToEdit.getServer(),
                 updatedFavourite,
                 gamerToEdit.getCountry(),
                 gamerToEdit.getRegion(),
                 gamerToEdit.getNote()
         );
-    }
-
-    private static String formatContactSummary(Gamer gamer) {
-        return String.format("\n Name: %s\n GamerTag: %s",
-                Messages.formatNullable(gamer.getName()),
-                Messages.formatNullable(gamer.getGamerTag()));
     }
 
     @Override

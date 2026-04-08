@@ -1,9 +1,11 @@
 package seedu.blockbook.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.blockbook.logic.commands.CommandTestUtil.showGamerAtIndex;
 import static seedu.blockbook.model.Model.PREDICATE_SHOW_ALL_GAMERS;
+import static seedu.blockbook.testutil.TypicalGamers.ALICE;
 import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
 
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import seedu.blockbook.model.BlockBook;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.ModelManager;
 import seedu.blockbook.model.UserPrefs;
+import seedu.blockbook.model.gamer.AnyAttributeContainsKeywordsPredicate;
 import seedu.blockbook.model.gamer.Gamer;
 import seedu.blockbook.testutil.TypicalIndexes;
 
@@ -42,6 +45,7 @@ public class ListCommandTest {
      */
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
+        // EP: non-empty unfiltered list
         expectedModel.updateFilteredGamerList(PREDICATE_SHOW_ALL_GAMERS);
         assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
@@ -51,9 +55,23 @@ public class ListCommandTest {
      */
     @Test
     public void execute_listIsFiltered_showsEverything() {
+        // EP: non-empty filtered list
         showGamerAtIndex(model, TypicalIndexes.INDEX_FIRST_GAMER);
         expectedModel.updateFilteredGamerList(PREDICATE_SHOW_ALL_GAMERS);
         assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_afterFind_listClearsFindFilterAndRestoresOriginalOrder() {
+        // Mix strategy: apply find filter first, then verify list restores full insertion-order view
+        ArrayList<Gamer> originalOrder = new ArrayList<>(model.getFilteredGamerList());
+        FindCommand findCommand = new FindCommand(new AnyAttributeContainsKeywordsPredicate("Kurz"));
+        findCommand.execute(model);
+        assertNotEquals(originalOrder, new ArrayList<>(model.getFilteredGamerList()));
+
+        expectedModel.updateFilteredGamerList(PREDICATE_SHOW_ALL_GAMERS);
+        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertEquals(originalOrder, new ArrayList<>(model.getFilteredGamerList()));
     }
 
     /**
@@ -61,6 +79,7 @@ public class ListCommandTest {
      */
     @Test
     public void execute_sortedList_resetsToInsertionOrder() {
+        // EP: non-empty sorted list
         ArrayList<Gamer> originalOrder = new ArrayList<>(model.getFilteredGamerList());
         model.sortGamerList(Comparator.comparing((Gamer gamer) -> gamer.getName().toString()).reversed());
         assertNotEquals(originalOrder, new ArrayList<>(model.getFilteredGamerList()));
@@ -69,13 +88,36 @@ public class ListCommandTest {
         assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
+    @Test
+    public void execute_filteredAndSorted_resetsToFullInsertionOrder() {
+        // Mix strategy: combine filtered state and sorted state
+        ArrayList<Gamer> originalOrder = new ArrayList<>(model.getFilteredGamerList());
+        model.sortGamerList(Comparator.comparing((Gamer gamer) -> gamer.getName().toString()).reversed());
+        showGamerAtIndex(model, TypicalIndexes.INDEX_FIRST_GAMER);
+        assertNotEquals(originalOrder, new ArrayList<>(model.getFilteredGamerList()));
+
+        expectedModel.updateFilteredGamerList(PREDICATE_SHOW_ALL_GAMERS);
+        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertEquals(originalOrder, new ArrayList<>(model.getFilteredGamerList()));
+    }
+
     /**
      * Verifies list shows the no-contacts message when there are no contacts.
      */
     @Test
     public void execute_noContacts_showsMessage() {
+        // EP: empty list
         Model emptyModel = new ModelManager(new BlockBook(), new UserPrefs());
         assertCommandSuccess(new ListCommand(), emptyModel, Messages.MESSAGE_NO_CONTACTS, emptyModel);
+    }
+
+    @Test
+    public void execute_singleContact_showsSuccess() {
+        // BV: size = 1 (just above empty-list boundary)
+        BlockBook singleContactBook = new BlockBook();
+        singleContactBook.addGamer(ALICE);
+        Model singleContactModel = new ModelManager(singleContactBook, new UserPrefs());
+        assertCommandSuccess(new ListCommand(), singleContactModel, ListCommand.MESSAGE_SUCCESS, singleContactModel);
     }
 }
 

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.blockbook.logic.commands.CommandTestUtil.showGamerAtIndex;
 import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
 import static seedu.blockbook.testutil.TypicalIndexes.INDEX_FIRST_GAMER;
 import static seedu.blockbook.testutil.TypicalIndexes.INDEX_SECOND_GAMER;
@@ -27,6 +28,7 @@ public class FavouriteCommandTest {
 
     @Test
     public void execute_unfavouriteContact_success() {
+        // EP: gamer is currently favourite and should be unfavourited
         Model model = new ModelManager(getTypicalBlockBook(), new UserPrefs());
         Gamer gamerToToggle = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
 
@@ -37,13 +39,14 @@ public class FavouriteCommandTest {
         expectedModel.setGamer(gamerToToggle, updatedGamer);
 
         String expectedMessage = String.format(FavouriteCommand.MESSAGE_UNMARK_FAVOURITE_SUCCESS,
-                formatContactSummary(updatedGamer));
+                Messages.formatContactSummary(updatedGamer));
 
         assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_favouriteContact_success() {
+        // EP: gamer is currently not favourite and should be favourited
         Model model = new ModelManager(getTypicalBlockBook(), new UserPrefs());
         Gamer gamer = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
         Gamer unfavGamer = new GamerBuilder(gamer).withFavourite(false).build();
@@ -56,25 +59,27 @@ public class FavouriteCommandTest {
         expectedModel.setGamer(unfavGamer, favGamer);
 
         String expectedMessage = String.format(FavouriteCommand.MESSAGE_MARK_FAVOURITE_SUCCESS,
-                formatContactSummary(favGamer));
+                Messages.formatContactSummary(favGamer));
 
         assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_favouriteAlreadyFavourite_throwsCommandException() {
+        // EP: gamer is already favourite
         Model model = new ModelManager(getTypicalBlockBook(), new UserPrefs());
         Gamer gamer = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
 
         FavouriteCommand favouriteCommand = new FavouriteCommand(INDEX_FIRST_GAMER, true);
         String expectedMessage = String.format(FavouriteCommand.MESSAGE_ALREADY_FAVOURITE,
-                formatContactSummary(gamer));
+                Messages.formatContactSummary(gamer));
 
         assertCommandFailure(favouriteCommand, model, expectedMessage);
     }
 
     @Test
     public void execute_unfavouriteAlreadyUnfavourite_throwsCommandException() {
+        // EP: gamer is already not favourite
         Model model = new ModelManager(getTypicalBlockBook(), new UserPrefs());
         Gamer gamer = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
         Gamer unfavGamer = new GamerBuilder(gamer).withFavourite(false).build();
@@ -82,13 +87,14 @@ public class FavouriteCommandTest {
 
         FavouriteCommand favouriteCommand = new FavouriteCommand(INDEX_FIRST_GAMER, false);
         String expectedMessage = String.format(FavouriteCommand.MESSAGE_ALREADY_UNFAVOURITE,
-                formatContactSummary(unfavGamer));
+                Messages.formatContactSummary(unfavGamer));
 
         assertCommandFailure(favouriteCommand, model, expectedMessage);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
+        // BV: index just above upper bound in unfiltered list (size + 1)
         Model model = new ModelManager(getTypicalBlockBook(), new UserPrefs());
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredGamerList().size() + 1);
         FavouriteCommand favouriteCommand = new FavouriteCommand(outOfBoundIndex, true);
@@ -98,10 +104,62 @@ public class FavouriteCommandTest {
 
     @Test
     public void execute_emptyList_throwsCommandException() {
+        // EP: empty list
         Model emptyModel = new ModelManager();
         FavouriteCommand favouriteCommand = new FavouriteCommand(Index.fromOneBased(1), true);
 
         assertCommandFailure(favouriteCommand, emptyModel, FavouriteCommand.MESSAGE_EMPTY_CONTACT_LIST);
+    }
+
+    @Test
+    public void execute_validIndexAtUpperBoundary_success() {
+        // BV: highest valid index in unfiltered list (size)
+        Model model = new ModelManager(getTypicalBlockBook(), new UserPrefs());
+        Index lastIndex = Index.fromOneBased(model.getFilteredGamerList().size());
+        Gamer gamerToToggle = model.getFilteredGamerList().get(lastIndex.getZeroBased());
+
+        FavouriteCommand favouriteCommand = new FavouriteCommand(lastIndex, false);
+
+        Gamer updatedGamer = new GamerBuilder(gamerToToggle).withFavourite(false).build();
+        Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
+        expectedModel.setGamer(gamerToToggle, updatedGamer);
+
+        String expectedMessage = String.format(FavouriteCommand.MESSAGE_UNMARK_FAVOURITE_SUCCESS,
+                Messages.formatContactSummary(updatedGamer));
+
+        assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_filteredListValidIndex_success() {
+        // Mix strategy: combine filtered list state with valid favourite operation
+        Model model = new ModelManager(getTypicalBlockBook(), new UserPrefs());
+        showGamerAtIndex(model, INDEX_FIRST_GAMER);
+        Gamer gamerToToggle = model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased());
+        Gamer unfavGamer = new GamerBuilder(gamerToToggle).withFavourite(false).build();
+        model.setGamer(gamerToToggle, unfavGamer);
+
+        FavouriteCommand favouriteCommand = new FavouriteCommand(INDEX_FIRST_GAMER, true);
+
+        Gamer favGamer = new GamerBuilder(unfavGamer).withFavourite(true).build();
+        Model expectedModel = new ModelManager(model.getBlockBook(), new UserPrefs());
+        showGamerAtIndex(expectedModel, INDEX_FIRST_GAMER);
+        expectedModel.setGamer(unfavGamer, favGamer);
+
+        String expectedMessage = String.format(FavouriteCommand.MESSAGE_MARK_FAVOURITE_SUCCESS,
+                Messages.formatContactSummary(favGamer));
+
+        assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_filteredListOutOfRangeIndex_failure() {
+        // Mix strategy: filtered list state + out-of-range index for that filtered list
+        Model model = new ModelManager(getTypicalBlockBook(), new UserPrefs());
+        showGamerAtIndex(model, INDEX_FIRST_GAMER);
+        FavouriteCommand favouriteCommand = new FavouriteCommand(INDEX_SECOND_GAMER, true);
+
+        assertCommandFailure(favouriteCommand, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
     }
 
     @Test
@@ -139,9 +197,4 @@ public class FavouriteCommandTest {
         assertEquals(expected, favouriteCommand.toString());
     }
 
-    private static String formatContactSummary(Gamer gamer) {
-        return String.format("\n Name: %s\n GamerTag: %s",
-                Messages.formatNullable(gamer.getName()),
-                Messages.formatNullable(gamer.getGamerTag()));
-    }
 }
