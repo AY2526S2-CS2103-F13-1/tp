@@ -438,7 +438,7 @@ Use case ends.
 
 **MSS**
 
-1. User chooses to find gamer contacts using either global keyword(s) or specific attribute prefixes.
+1. User chooses to find gamer contacts using either global keyword or specific attribute prefixes.
 2. BB parses and validates the find criteria.
 3. BB filters the gamer list based on the criteria.
 4. BB displays the filtered list and a message indicating the number of gamers found.
@@ -447,11 +447,11 @@ Use case ends.
 
 **Notes**
 
-- BB performs case-insensitive partial (substring) matching for both global keywords and prefixed attributes.
+- BB performs case-insensitive partial (substring) matching for both global keyword and prefixed attributes.
 
 **Extensions**
 
-2a. User input is empty or mixes global keywords with prefixed arguments.
+2a. User input is empty or mixes global keyword with prefixed arguments.
 
 - 2a1. BB displays an invalid command format message and the correct usage.
 - Use case ends.
@@ -579,7 +579,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Finding a gamer contact
 
-1. Finding gamers with global keyword(s)
+1. Finding gamers with global keyword
 
    1. Prerequisites: There are three gamers in the list (Alex with gamertag `CraftyAlex`, email `alex@craft.net`,
       group `Explorers`, server `srv1.gamehub.net`, country `USA`, region `NA`, note `builder`,
