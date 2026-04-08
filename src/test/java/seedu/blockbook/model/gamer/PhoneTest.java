@@ -61,13 +61,13 @@ public class PhoneTest {
 
     @Test
     public void isValidLaxPhone() {
-        assertThrows(NullPointerException.class, () -> Phone.isValidLaxPhone(null));
-
+        assertFalse(Phone.isValidLaxPhone(""));
         assertFalse(Phone.isValidLaxPhone("abc"));
         assertFalse(Phone.isValidLaxPhone("123_ext"));
 
+        assertTrue(Phone.isValidLaxPhone("+65 9312-1534"));
         assertTrue(Phone.isValidLaxPhone("9312-1534"));
-        assertTrue(Phone.isValidLaxPhone("+919"));
+        assertTrue(Phone.isValidLaxPhone("123 456 789"));
     }
 
     @Test
