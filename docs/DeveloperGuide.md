@@ -155,7 +155,38 @@ Classes used by multiple components are in the `seedu.blockbook.commons` package
 
 ## **Implementation**
 
-This section is WIP
+### Add gamer feature
+
+The Add feature allows users to create a new gamer contact in BlockBook by entering an `add` command with a required gamertag and optional fields such as name, phone number, email address, server, country, region, and note. This feature allows users to record gamer contacts efficiently while ensuring that the updated data is saved after a successful add operation.
+
+The sequence diagram below illustrates the main interactions that take place when an `add` command is executed.
+
+<puml src="diagrams/AddCommandSequenceDiagram.puml" width="300" />
+
+**User enters command:**  
+The process begins when the user types an `add` command into the UI.
+
+**UI passes command to Logic:**  
+After receiving the command, the UI forwards it to the Logic component for processing.
+
+**Logic parses the command:**  
+Within the Logic component, the command is recognized as an `add` command. The input is then parsed internally, where the command arguments are validated and converted into the corresponding gamer attribute objects before an `AddCommand` is created.
+
+**Logic updates the Model:**  
+The `AddCommand` is executed using the current Model. During this step, BlockBook checks whether a gamer with the same gamertag already exists. If no duplicate is found, the new gamer contact is added to the Model.
+
+**Logic saves the updated data:**  
+Once the gamer has been added successfully, the Logic component calls the Storage component to persist the updated BlockBook data.
+
+**Storage writes data to file:**  
+The Storage component saves the updated data to file so that the newly added gamer contact is retained after the application closes.
+
+**Logic returns the result:**  
+After the save operation is completed, Logic produces a `CommandResult` describing the outcome of the operation.
+
+**UI shows the outcome:**  
+Finally, the UI displays the result to the user, such as a success message when the gamer is added or an error message if the operation fails.
+
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
