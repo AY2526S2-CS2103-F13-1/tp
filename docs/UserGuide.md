@@ -160,29 +160,14 @@ Format: `(s)ort [(g)amertag/] [(n)ame/] [(p)hone/] [(e)mail/] [(gr)oup/] [(s)erv
 
 * If no attributes are provided, gamers are sorted by **gamertag** by default.
 * Attributes are applied in priority order from left to right (first attribute = primary sort key).
-* Each attribute can only be specified **once** (including alias/canonical duplicates such as `g/ gamertag/`).
+* Each attribute can only be specified **once** (e.g., `g/` and `gamertag/` count as the same attribute).
 * Attribute tokens are case-sensitive and must be lowercase (e.g., `name/`, not `NAME/`).
 * For optional attributes (`name`, `phone`, `email`, `group`, `server`, `country`, `region`, `note`), gamers without that value appear after gamers with a value.
 * `favourite/` places favourited gamers before non-favourited gamers.
 * `group/` sorts by a gamer's full group set (group names are alphabetically ordered before comparison).
 * If a filter is active (e.g., after `find`), the filtered results are shown in the active sort order.
 * Sorting is session-based and is not persisted to storage.
-* `list` resets sorting and returns to original order.
-
-**Valid attributes:**
-
-| Attribute        | Description |
-|------------------|-------------|
-| `(n)ame/`        | Sort by name |
-| `(g)amertag/`    | Sort by gamertag |
-| `(p)hone/`       | Sort by phone number |
-| `(e)mail/`       | Sort by email address |
-| `(gr)oup/`       | Sort by group |
-| `(s)erver/`      | Sort by server |
-| `(fav)avourite/` | Sort by favourite status (favourites first) |
-| `(c)ountry/`     | Sort by country |
-| `(r)egion/`      | Sort by region |
-| `note/`          | Sort by note |
+* `list` resets sorting and returns to insertion order.
 
 Examples:
 * `sort` sorts gamers by gamertag (default).
@@ -197,6 +182,39 @@ Before running `sort favourite/ name/`:
 After running `sort favourite/ name/`:
 
   ![After sort by favourite then name](images/aftersortss.png)
+
+In the `after` screenshot, verify:
+* Favourited gamers appear before non-favourited gamers.
+* Names are sorted alphabetically (case-insensitive) within the favourited group.
+* Names are sorted alphabetically (case-insensitive) within the non-favourited group.
+
+**Common errors you may encounter:**
+
+* **Duplicate attributes**
+  Each sort attribute can only be entered once. Short and long forms of the same attribute count as duplicates.
+  Example: `sort gamertag/ g/`
+  Error shown: `Duplicate attribute detected: gamertag. Each attribute can only be specified once.`
+* **Invalid attribute name**
+  Unsupported attributes are rejected.
+  Example: `sort rank/`
+  Error shown: `Invalid attribute detected: rank. Please provide a valid sort attribute.`
+* **Multiple invalid attributes**
+  If more than one invalid attribute is provided, all invalid attributes are reported together.
+  Example: `sort rank/ level/`
+  Error shown: `Invalid attributes detected: rank, level. Please provide only valid sort attributes.`
+* **Invalid format**
+  Every attribute token must end with `/`.
+  Example: `sort name`
+  Error shown: `Invalid command format!` followed by the sort usage format.
+* **No gamers to sort**
+  `sort` cannot run when the gamer list is empty.
+  Error shown: `There are no contacts to sort!`
+
+**Notes:**
+
+* You can mix long and short forms in one command. Example: `sort name/ p/`.
+* `note/` has no short alias.
+* For whole-list sorting after `find`, run `list`, then run `sort` again.
 
 ### Deleting a Gamer : `delete`
 
