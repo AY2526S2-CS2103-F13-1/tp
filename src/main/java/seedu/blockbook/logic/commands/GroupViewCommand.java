@@ -57,7 +57,13 @@ public class GroupViewCommand extends Command {
             return new CommandResult(String.format(MESSAGE_NO_GAMERS, targetGroup));
         }
 
-        model.updateFilteredGamerList(gamer -> gamerHasGroup(gamer, targetGroup));
+        model.updateFilteredGamerList(gamer -> {
+            Group currentGroup = getCurrentGroup(model);
+            if (currentGroup == null) {
+                return true; // If group no longer exists, clear the filter.
+            }
+            return gamerHasGroup(gamer, currentGroup);
+        });
 
         String gamertags = matchingGamers.stream()
                 .map(gamer -> gamer.getGamerTag().toString())
@@ -71,6 +77,14 @@ public class GroupViewCommand extends Command {
         }
         return gamer.getGroups().stream()
                 .anyMatch(group -> group.toString().equalsIgnoreCase(targetGroup.toString()));
+    }
+
+    private Group getCurrentGroup(Model model) {
+        List<Group> groups = model.getGroupList();
+        if (groups.isEmpty() || groupIndex.getZeroBased() >= groups.size()) {
+            return null;
+        }
+        return groups.get(groupIndex.getZeroBased());
     }
 
     @Override
