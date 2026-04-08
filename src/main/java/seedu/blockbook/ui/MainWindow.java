@@ -356,7 +356,7 @@ public class MainWindow extends UiPart<Stage> {
                 handleViewPopUp(commandResult);
             }
 
-            if (isFindOrSortCommand(commandText)) {
+            if (shouldCloseViewPopup(commandText)) {
                 viewedGamer = null;
                 viewWindow.hide();
             }
@@ -373,19 +373,13 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplay.setFeedbackToUser(text);
     }
 
-    private boolean isFindOrSortCommand(String commandText) {
+    private boolean shouldCloseViewPopup(String commandText) {
         String trimmed = commandText.trim();
         if (trimmed.isEmpty()) {
             return false;
         }
         String commandWord = trimmed.split("\\s+")[0];
-        return FindCommand.COMMAND_WORD.equals(commandWord)
-                || FindCommand.COMMAND_ALIAS.equals(commandWord)
-                || ListCommand.COMMAND_WORD.equals(commandWord)
-                || ListCommand.COMMAND_ALIAS.equals(commandWord)
-                || SortCommand.COMMAND_WORD.equals(commandWord)
-                || SortCommand.COMMAND_ALIAS.equals(commandWord)
-                || DeleteCommand.COMMAND_WORD.equals(commandWord)
-                || DeleteCommand.COMMAND_ALIAS.equals(commandWord);
+        return !ViewCommand.COMMAND_WORD.equals(commandWord)
+                && !ViewCommand.COMMAND_ALIAS.equals(commandWord);
     }
 }
