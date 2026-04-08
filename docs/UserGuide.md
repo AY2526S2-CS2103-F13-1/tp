@@ -152,6 +152,20 @@ Examples:
 * `find name/alex region/ASIA`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+### Viewing gamers full details: `view`
+
+Shows the full details of a gamer based on the index shown in the current list.
+
+Format: `(v)iew INDEX`
+
+* The `INDEX` refers to the index number shown in the currently displayed list.
+* The index must be a positive integer.
+
+Example:
+* `view 2`<br>
+  Displays the full details of the 2nd gamer in the current list.
+
+
 ### Sorting gamers : `sort`
 
 Sorts gamers by one or more attributes.
@@ -290,7 +304,7 @@ _Details coming soon ..._
 | **Delete** | `(d)elete INDEX [INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                                                             |
 | **Edit**   | `(e)dit INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME]...`<br> e.g., `edit 2 n/James Lee`                                       |
 | **Find**   | `(f)ind KEYWORD`<br> e.g., `find James`<br> `find [(n)ame/NAME] [(g)amertag/GAMERTAG]...`<br> e.g., `find n/Steve g/Block` |
-| **View**   | `(v)iew (g)amertag/GAMERTAG` <br> e.g., `view g/SteveMaster99`                                                             |
+| **View**   | `(v)iew INDEX` <br> e.g., `view 2`                                                                              |
 | **List**   | `(l)ist`                                                                                                                   |
 | **Sort**   | `(s)ort [(g)amertag/] [(n)ame/]...`<br> e.g., `sort`, `sort n/`, `sort p/ g/`                                              |
-| **Help**   | `help`, `?`                                                                                                                 |
+| **Help**   | `help`, `?`                                                                                                                |
