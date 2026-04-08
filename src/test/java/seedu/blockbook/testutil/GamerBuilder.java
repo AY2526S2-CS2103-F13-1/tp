@@ -1,5 +1,6 @@
 package seedu.blockbook.testutil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,7 +52,7 @@ public class GamerBuilder {
         gamerTag = new GamerTag(DEFAULT_GAMER_TAG);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
-        groups = List.of(new Group(DEFAULT_GROUP));
+        groups = new ArrayList<>(List.of(new Group(DEFAULT_GROUP)));
         server = new Server(DEFAULT_SERVER);
         favourite = new Favourite(DEFAULT_FAVOURITE);
         country = new Country(DEFAULT_COUNTRY);
@@ -67,7 +68,7 @@ public class GamerBuilder {
         gamerTag = gamerToCopy.getGamerTag();
         phone = gamerToCopy.getPhone();
         email = gamerToCopy.getEmail();
-        groups = gamerToCopy.getGroups();
+        groups = new ArrayList<>(gamerToCopy.getGroups());
         server = gamerToCopy.getServer();
         favourite = gamerToCopy.getFavourite();
         country = gamerToCopy.getCountry();
@@ -194,4 +195,3 @@ public class GamerBuilder {
         return new Gamer(name, gamerTag, phone, email, groups, server, favourite, country, region, note);
     }
 }
-

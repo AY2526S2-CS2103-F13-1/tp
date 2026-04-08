@@ -14,7 +14,7 @@ import seedu.blockbook.model.ModelManager;
 import seedu.blockbook.model.UserPrefs;
 import seedu.blockbook.model.gamer.Group;
 
-public class GroupCommandTest {
+public class GroupCreateCommandTest {
 
     @Test
     public void constructor_nullGroup_throwsNullPointerException() {
@@ -50,20 +50,11 @@ public class GroupCommandTest {
         GroupCreateCommand addRaidCommand = new GroupCreateCommand(new Group("Raid Team"));
         GroupCreateCommand addAlphaCommand = new GroupCreateCommand(new Group("Alpha"));
 
-        // same object -> returns true
         assertTrue(addRaidCommand.equals(addRaidCommand));
-
-        // same values -> returns true
         GroupCreateCommand addRaidCommandCopy = new GroupCreateCommand(new Group("Raid Team"));
         assertTrue(addRaidCommand.equals(addRaidCommandCopy));
-
-        // different types -> returns false
         assertFalse(addRaidCommand.equals(1));
-
-        // null -> returns false
         assertFalse(addRaidCommand.equals(null));
-
-        // different group -> returns false
         assertFalse(addRaidCommand.equals(addAlphaCommand));
     }
 
@@ -74,5 +65,4 @@ public class GroupCommandTest {
         String expected = GroupCreateCommand.class.getCanonicalName() + "{group=" + group + "}";
         assertEquals(expected, groupCreateCommand.toString());
     }
-
 }

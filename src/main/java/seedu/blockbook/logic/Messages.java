@@ -19,6 +19,8 @@ public class Messages {
     public static final String MESSAGE_GAMERS_LISTED_COUNT = "%1$d gamers listed!";
     public static final String MESSAGE_GAMERTAG_NOT_FOUND = "Gamertag not found. Use a different gamertag instead!";
     public static final String MESSAGE_GAMERS_LISTED_OVERVIEW = "Listed all gamers.";
+    public static final String MESSAGE_GROUPS_LISTED_OVERVIEW = "Listed all groups: %1$s";
+    public static final String MESSAGE_GROUPS_LISTED_NO_GROUP = "No groups found! Create a group first!";
     public static final String MESSAGE_NO_GAMERS_FOUND_BY_FIND = "BlockBook could not find any"
             + " gamer contacts based on search criteria. Search with a different keyword. ";
     public static final String MESSAGE_GAMERS_FOUND_BY_FIND =

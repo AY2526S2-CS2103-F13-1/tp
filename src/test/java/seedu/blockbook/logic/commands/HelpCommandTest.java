@@ -34,6 +34,8 @@ public class HelpCommandTest {
                 + HelpCommand.SEPARATOR
                 + GroupCreateCommand.MESSAGE_USAGE
                 + HelpCommand.SEPARATOR
+                + GroupListCommand.MESSAGE_USAGE
+                + HelpCommand.SEPARATOR
                 + GroupEditCommand.MESSAGE_USAGE
                 + HelpCommand.SEPARATOR
                 + GroupAddCommand.MESSAGE_USAGE
@@ -70,6 +72,7 @@ public class HelpCommandTest {
         assertTrue(output.contains(FindCommand.MESSAGE_USAGE));
 
         assertTrue(output.contains(GroupCreateCommand.MESSAGE_USAGE));
+        assertTrue(output.contains(GroupListCommand.MESSAGE_USAGE));
         assertTrue(output.contains(GroupAddCommand.MESSAGE_USAGE));
         assertTrue(output.contains(GroupRemoveCommand.MESSAGE_USAGE));
         assertTrue(output.contains(GroupViewCommand.MESSAGE_USAGE));
