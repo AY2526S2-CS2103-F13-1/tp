@@ -136,5 +136,4 @@ public class BlockBookParser {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
-
 }
