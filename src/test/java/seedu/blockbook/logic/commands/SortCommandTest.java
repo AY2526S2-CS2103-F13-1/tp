@@ -104,9 +104,6 @@ public class SortCommandTest {
 
         List<Gamer> sortedList = testModel.getFilteredGamerList();
 
-        // assertEquals("Alpha", sortedList.get(0).getGroups().get(0).toString());
-        // assertEquals("Mike", sortedList.get(1).getGroups().get(0).toString());
-        // assertEquals("Zeta", sortedList.get(2).getGroups().get(0).toString());
         // "Alpha, Beta" < "Alpha, Zeta" < "Beta"
         assertEquals("c1", sortedList.get(0).getGamerTag().toString());
         assertEquals("a1", sortedList.get(1).getGamerTag().toString());

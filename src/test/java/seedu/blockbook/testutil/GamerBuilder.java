@@ -1,7 +1,7 @@
 package seedu.blockbook.testutil;
 
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -126,10 +126,6 @@ public class GamerBuilder {
      * @param groups Valid group names.
      * @return This builder.
      */
-    public GamerBuilder withGroup(String group) {
-        this.groups = new ArrayList<>(List.of(new Group(group)));
-    }
-  
     public GamerBuilder withGroups(String... groups) {
         this.groups = Arrays.stream(groups)
                 .map(Group::new)
