@@ -49,7 +49,9 @@ public class ViewCommandTest {
         // Construct the exact expected string output based on the ViewCommand logic
         String expectedMessage = Messages.format(targetGamer);
 
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        CommandResult expectedResult = new CommandResult(expectedMessage, false, false, true);
+        expectedModel.setViewedGamer(targetGamer);
+        assertCommandSuccess(command, model, expectedResult, expectedModel);
     }
 
     /**
@@ -66,7 +68,9 @@ public class ViewCommandTest {
 
         String expectedMessage = Messages.format(targetGamer);
 
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        CommandResult expectedResult = new CommandResult(expectedMessage, false, false, true);
+        expectedModel.setViewedGamer(targetGamer);
+        assertCommandSuccess(command, model, expectedResult, expectedModel);
     }
 
     /**

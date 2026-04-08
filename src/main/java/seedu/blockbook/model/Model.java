@@ -2,6 +2,7 @@ package seedu.blockbook.model;
 
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -84,6 +85,12 @@ public interface Model {
     void addGroup(Group group);
 
     /**
+     * Removes the given group.
+     * {@code group} must exist in the BlockBook.
+     */
+    void removeGroup(Group group);
+
+    /**
      * Replaces the given gamer {@code target} with {@code editedGamer}.
      * {@code target} must exist in the BlockBook.
      * The gamer identity of {@code editedGamer} must not be the same as another existing gamer in the BlockBook.
@@ -115,4 +122,14 @@ public interface Model {
      * Clears any active sort and returns the list to insertion order.
      */
     void clearSort();
+
+    /**
+     * Updates the currently viewed gamer for the view popup.
+     */
+    void setViewedGamer(Gamer gamer);
+
+    /**
+     * Returns the currently viewed gamer for the view popup.
+     */
+    Optional<Gamer> getViewedGamer();
 }

@@ -3,6 +3,7 @@ package seedu.blockbook.ui;
 import java.util.logging.Logger;
 
 import javafx.application.HostServices;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
@@ -16,8 +17,12 @@ import seedu.blockbook.commons.core.GuiSettings;
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.logic.Logic;
 import seedu.blockbook.logic.commands.CommandResult;
+import seedu.blockbook.logic.commands.GroupViewCommand;
+import seedu.blockbook.logic.commands.ViewCommand;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
+import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.Group;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -40,6 +45,9 @@ public class MainWindow extends UiPart<Stage> {
     private GamerListPanel gamerListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private ViewWindow viewWindow;
+    private Gamer viewedGamer;
+    private GroupListPanel groupListPanel;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -58,6 +66,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane gamerListPanelPlaceholder;
+
+    @FXML
+    private StackPane groupListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -83,6 +94,8 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerators();
 
         helpWindow = new HelpWindow();
+        viewWindow = new ViewWindow();
+        registerGamerListListener();
     }
 
     public Stage getPrimaryStage() {
@@ -139,8 +152,11 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        gamerListPanel = new GamerListPanel(logic.getFilteredGamerList());
+        gamerListPanel = new GamerListPanel(logic.getFilteredGamerList(), this::handleViewOnGamer);
         gamerListPanelPlaceholder.getChildren().add(gamerListPanel.getRoot());
+
+        groupListPanel = new GroupListPanel(logic.getGroupList(), this::handleGroupView);
+        groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -201,6 +217,7 @@ public class MainWindow extends UiPart<Stage> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
+        viewWindow.hide();
         primaryStage.hide();
     }
 
@@ -224,8 +241,92 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    /**
+     * Opens the view popup with the specified gamer details.
+     */
+    private void handleViewPopUp(CommandResult commandResult) {
+        logic.getViewedGamer().ifPresent(gamer -> {
+            viewWindow.setGamer(gamer, getDisplayedIndex(gamer));
+            viewedGamer = gamer;
+            if (!viewWindow.isShowing()) {
+                viewWindow.show();
+            } else {
+                viewWindow.focus();
+            }
+        });
+    }
+
+    /**
+     * Keeps the view popup in sync with list edits and deletions.
+     */
+    private void registerGamerListListener() {
+        logic.getBlockBook().getGamerList().addListener((ListChangeListener<Gamer>) change -> {
+            if (viewedGamer == null) {
+                return;
+            }
+
+            while (change.next()) {
+                if (change.wasRemoved() || change.wasReplaced()) {
+                    boolean removedViewed = change.getRemoved().stream().anyMatch(viewedGamer::equals);
+                    if (!removedViewed) {
+                        continue;
+                    }
+
+                    if (change.wasReplaced() && change.getAddedSize() == 1) {
+                        Gamer updated = change.getAddedSubList().get(0);
+                        viewedGamer = updated;
+                        if (viewWindow.isShowing()) {
+                            viewWindow.setGamer(updated, getDisplayedIndex(updated));
+                        }
+                    } else {
+                        viewedGamer = null;
+                        viewWindow.hide();
+                    }
+                }
+            }
+        });
+    }
+
     public GamerListPanel getGamerListPanel() {
         return gamerListPanel;
+    }
+
+    private int getDisplayedIndex(Gamer gamer) {
+        int filteredIndex = logic.getFilteredGamerList().indexOf(gamer);
+        if (filteredIndex >= 0) {
+            return filteredIndex + 1;
+        }
+        int fullIndex = logic.getBlockBook().getGamerList().indexOf(gamer);
+        return fullIndex >= 0 ? fullIndex + 1 : 1;
+    }
+
+    private void handleViewOnGamer(Gamer gamer) {
+        int index = logic.getFilteredGamerList().indexOf(gamer);
+        if (index < 0) {
+            return;
+        }
+        String commandText = ViewCommand.COMMAND_WORD + " " + (index + 1);
+        try {
+            executeCommand(commandText);
+        } catch (CommandException | ParseException e) {
+            logger.info("An error occurred while executing view command from list double-click.");
+        }
+    }
+
+    private void handleGroupView(Group group) {
+        if (group == null) {
+            return;
+        }
+        int index = logic.getGroupList().indexOf(group);
+        if (index < 0) {
+            return;
+        }
+        String commandText = GroupViewCommand.COMMAND_WORD + " " + (index + 1);
+        try {
+            executeCommand(commandText);
+        } catch (CommandException | ParseException e) {
+            logger.info("An error occurred while executing groupview command from group card double-click.");
+        }
     }
 
     /**
@@ -247,6 +348,15 @@ public class MainWindow extends UiPart<Stage> {
                 handleHelp();
             }
 
+            if (commandResult.isShowView()) {
+                handleViewPopUp(commandResult);
+            }
+
+            if (shouldCloseViewPopup(commandText)) {
+                viewedGamer = null;
+                viewWindow.hide();
+            }
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
@@ -257,5 +367,15 @@ public class MainWindow extends UiPart<Stage> {
 
     public void showMessage(String text) { // Ensure this is public
         resultDisplay.setFeedbackToUser(text);
+    }
+
+    private boolean shouldCloseViewPopup(String commandText) {
+        String trimmed = commandText.trim();
+        if (trimmed.isEmpty()) {
+            return false;
+        }
+        String commandWord = trimmed.split("\\s+")[0];
+        return !ViewCommand.COMMAND_WORD.equals(commandWord)
+                && !ViewCommand.COMMAND_ALIAS.equals(commandWord);
     }
 }

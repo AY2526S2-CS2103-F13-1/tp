@@ -1,7 +1,9 @@
 package seedu.blockbook.testutil;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import seedu.blockbook.model.gamer.Country;
 import seedu.blockbook.model.gamer.Email;
@@ -119,13 +121,19 @@ public class GamerBuilder {
     }
 
     /**
-     * Sets the {@code Group} of the {@code Gamer} that we are building.
+     * Sets the {@code Groups} of the {@code Gamer} that we are building.
      *
-     * @param group A valid group.
+     * @param groups Valid group names.
      * @return This builder.
      */
     public GamerBuilder withGroup(String group) {
         this.groups = new ArrayList<>(List.of(new Group(group)));
+    }
+  
+    public GamerBuilder withGroups(String... groups) {
+        this.groups = Arrays.stream(groups)
+                .map(Group::new)
+                .collect(Collectors.toList());
         return this;
     }
 
@@ -184,6 +192,9 @@ public class GamerBuilder {
         return this;
     }
 
+    /**
+     * Builds and returns the {@code Gamer} with the configured fields.
+     */
     public Gamer build() {
         return new Gamer(name, gamerTag, phone, email, groups, server, favourite, country, region, note);
     }

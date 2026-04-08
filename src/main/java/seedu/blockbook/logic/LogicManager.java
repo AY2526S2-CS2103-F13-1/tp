@@ -3,6 +3,7 @@ package seedu.blockbook.logic;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import seedu.blockbook.logic.parser.exceptions.ParseException;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.ReadOnlyBlockBook;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.Group;
 import seedu.blockbook.storage.Storage;
 
 /**
@@ -72,6 +74,11 @@ public class LogicManager implements Logic {
     }
 
     @Override
+    public ObservableList<Group> getGroupList() {
+        return model.getGroupList();
+    }
+
+    @Override
     public Path getBlockBookFilePath() {
         return model.getBlockBookFilePath();
     }
@@ -85,6 +92,10 @@ public class LogicManager implements Logic {
     public void setGuiSettings(GuiSettings guiSettings) {
         model.setGuiSettings(guiSettings);
     }
-}
 
+    @Override
+    public Optional<Gamer> getViewedGamer() {
+        return model.getViewedGamer();
+    }
+}
 

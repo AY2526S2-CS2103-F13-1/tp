@@ -42,11 +42,17 @@ public class HelpCommand extends Command {
         outputString.append(SEPARATOR);
         outputString.append(GroupCreateCommand.MESSAGE_USAGE);
         outputString.append(SEPARATOR);
+        outputString.append(GroupListCommand.MESSAGE_USAGE);
+        outputString.append(SEPARATOR);
+        outputString.append(GroupEditCommand.MESSAGE_USAGE);
+        outputString.append(SEPARATOR);
         outputString.append(GroupAddCommand.MESSAGE_USAGE);
         outputString.append(SEPARATOR);
         outputString.append(GroupRemoveCommand.MESSAGE_USAGE);
         outputString.append(SEPARATOR);
-        outputString.append(GroupListCommand.MESSAGE_USAGE);
+        outputString.append(GroupViewCommand.MESSAGE_USAGE);
+        outputString.append(SEPARATOR);
+        outputString.append(GroupNukeCommand.MESSAGE_USAGE);
         outputString.append(SEPARATOR);
         outputString.append(ClearCommand.MESSAGE_USAGE);
         outputString.append(SEPARATOR);

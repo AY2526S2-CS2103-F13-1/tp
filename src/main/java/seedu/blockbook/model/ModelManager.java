@@ -5,6 +5,8 @@ import static seedu.blockbook.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -26,6 +28,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final SortedList<Gamer> sortedGamers;
     private final FilteredList<Gamer> filteredGamers;
+    private Gamer viewedGamer;
 
     /**
      * Initializes a ModelManager with the given block book data and user prefs.
@@ -122,6 +125,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void removeGroup(Group group) {
+        requireNonNull(group);
+        blockBook.removeGroup(group);
+    }
+
+    @Override
     public void setGamer(Gamer target, Gamer editedGamer) {
         requireAllNonNull(target, editedGamer);
 
@@ -165,6 +174,17 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setViewedGamer(Gamer gamer) {
+        requireNonNull(gamer);
+        this.viewedGamer = gamer;
+    }
+
+    @Override
+    public Optional<Gamer> getViewedGamer() {
+        return Optional.ofNullable(viewedGamer);
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
@@ -178,7 +198,8 @@ public class ModelManager implements Model {
         ModelManager otherModelManager = (ModelManager) other;
         return blockBook.equals(otherModelManager.blockBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredGamers.equals(otherModelManager.filteredGamers);
+                && filteredGamers.equals(otherModelManager.filteredGamers)
+                && Objects.equals(viewedGamer, otherModelManager.viewedGamer);
     }
 
 }

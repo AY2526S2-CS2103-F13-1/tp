@@ -1,6 +1,7 @@
 package seedu.blockbook.logic;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 import javafx.collections.ObservableList;
 import seedu.blockbook.commons.core.GuiSettings;
@@ -9,6 +10,7 @@ import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
 import seedu.blockbook.model.ReadOnlyBlockBook;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.Group;
 
 /**
  * API of the Logic component
@@ -33,6 +35,9 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of gamers */
     ObservableList<Gamer> getFilteredGamerList();
 
+    /** Returns an unmodifiable view of the group list */
+    ObservableList<Group> getGroupList();
+
     /**
      * Returns the user prefs' BlockBook file path.
      */
@@ -47,6 +52,10 @@ public interface Logic {
      * Set the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
-}
 
+    /**
+     * Returns the currently viewed gamer for the view popup.
+     */
+    Optional<Gamer> getViewedGamer();
+}
 

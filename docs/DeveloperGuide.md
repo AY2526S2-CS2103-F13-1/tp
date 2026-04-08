@@ -6,8 +6,7 @@
 
 
 # BlockBook Developer Guide
-The current Developer guide you see here is a work in progress! 
-It is being developed alongside the implementation of the app, and will be updated iteratively as the implementation progresses. 
+The developer guide will be updated iteratively as the implementation progresses.
 The current content is based on the design decisions we have made so far, and may be updated as we make more design decisions in the future.
 
 <!-- * Table of Contents -->
@@ -156,104 +155,7 @@ Classes used by multiple components are in the `seedu.blockbook.commons` package
 
 ## **Implementation**
 
-This section describes some noteworthy details on how certain features are implemented.
-(We can add proposed features based off items in the user stories that are not yet implemented.)
-
-### \[Proposed\] Undo/redo feature
-
-#### Proposed Implementation
-
-The proposed undo/redo mechanism will be facilitated by `VersionedBlockBook`. It will extend `BlockBook` with an undo/redo history, stored internally as an `blockBookStateList` and `currentStatePointer`. Additionally, it should implement the following operations:
-
-* `VersionedBlockBook#commit()` - Saves the current BlockBook state in its history.
-* `VersionedBlockBook#undo()` - Restores the previous BlockBook state from its history.
-* `VersionedBlockBook#redo()` - Restores a previously undone BlockBook state from its history.
-
-These operations should be exposed in the `Model` interface as `Model#commitBlockBook()`, `Model#undoBlockBook()` and `Model#redoBlockBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedBlockBook` will be initialized with the initial BlockBook state, and the `currentStatePointer` pointing to that single BlockBook state.
-
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
-
-Step 2. The user executes `delete 5` command to delete the 5th gamer in BlockBook. The `delete` command calls `Model#commitBlockBook()`, causing the modified state of BlockBook after the `delete 5` command executes to be saved in the `blockBookStateList`, and the `currentStatePointer` is shifted to the newly inserted BlockBook state.
-
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
-
-Step 3. The user executes `add name/David …` to add a new gamer. The `add` command also calls `Model#commitBlockBook()`, causing another modified BlockBook state to be saved into the `blockBookStateList`.
-
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
-
-<box type="info" seamless>
-
-**Note:** If a command fails its execution, it will not call `Model#commitBlockBook()`, so the BlockBook state will not be saved into the `blockBookStateList`.
-
-</box>
-
-Step 4. The user now decides that adding the gamer was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoBlockBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous BlockBook state, and restores BlockBook to that state.
-
-<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
-
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial BlockBook state, then there are no previous BlockBook states to restore. The `undo` command uses `Model#canUndoBlockBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</box>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-<puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
-
-<box type="info" seamless>
-
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</box>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-<puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
-
-The `redo` command does the opposite — it calls `Model#redoBlockBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores BlockBook to that state.
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index `blockBookStateList.size() - 1`, pointing to the latest BlockBook state, then there are no undone BlockBook states to restore. The `redo` command uses `Model#canRedoBlockBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</box>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify BlockBook, such as `list`, will usually not call `Model#commitBlockBook()`, `Model#undoBlockBook()` or `Model#redoBlockBook()`. Thus, the `blockBookStateList` remains unchanged.
-
-<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
-
-Step 6. The user executes `clear`, which calls `Model#commitBlockBook()`. Since the `currentStatePointer` is not pointing at the end of the `blockBookStateList`, all BlockBook states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add` command. This is the behavior that most modern desktop applications follow.
-
-<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire BlockBook.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the gamer being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
-
---------------------------------------------------------------------------------------------------------------------
+This section is WIP
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
@@ -363,7 +265,7 @@ Use case ends.
 
 2a. The contact list is empty.
 
-- 2a1. BB informs the user that no contacts are currently stored. 
+- 2a1. BB informs the user that no contacts are currently stored.
 - Use case ends.
 
 **UC03 - Favourite a Contact**
@@ -702,7 +604,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `find name/Alex`<br>
       Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
-   2. 
+
    1. Test case: `find name/aLeX`<br>
       Expected: Only Alex is displayed in the list. A message indicates 1 gamer(s) found.
 

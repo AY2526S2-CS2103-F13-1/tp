@@ -1,5 +1,6 @@
 package seedu.blockbook.ui;
 
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import seedu.blockbook.model.gamer.Gamer;
 public class GamerListPanel extends UiPart<Region> {
     private static final String FXML = "GamerListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(GamerListPanel.class);
+    private final Consumer<Gamer> onGamerDoubleClick;
 
     @FXML
     private ListView<Gamer> gamerListView;
@@ -23,8 +25,9 @@ public class GamerListPanel extends UiPart<Region> {
     /**
      * Creates a {@code GamerListPanel} with the given {@code ObservableList}.
      */
-    public GamerListPanel(ObservableList<Gamer> gamerList) {
+    public GamerListPanel(ObservableList<Gamer> gamerList, Consumer<Gamer> onGamerDoubleClick) {
         super(FXML);
+        this.onGamerDoubleClick = onGamerDoubleClick;
         gamerListView.setItems(gamerList);
         gamerListView.setCellFactory(listView -> new GamerListViewCell());
     }
@@ -34,6 +37,14 @@ public class GamerListPanel extends UiPart<Region> {
      */
     class GamerListViewCell extends ListCell<Gamer> {
         private GamerCard card;
+
+        GamerListViewCell() {
+            setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !isEmpty()) {
+                    onGamerDoubleClick.accept(getItem());
+                }
+            });
+        }
 
         @Override
         protected void updateItem(Gamer gamer, boolean empty) {
@@ -54,4 +65,3 @@ public class GamerListPanel extends UiPart<Region> {
     }
 
 }
-
