@@ -4,12 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.blockbook.logic.commands.exceptions.CommandException;
@@ -26,13 +26,6 @@ import seedu.blockbook.testutil.GamerBuilder;
  */
 public class SortCommandTest {
 
-    private Model model;
-
-    @BeforeEach
-    public void setUp() {
-        model = new ModelManager(getTypicalBlockBook(), new UserPrefs());
-    }
-
     @Test
     public void execute_emptyList_throwsCommandException() {
         Model emptyModel = new ModelManager();
@@ -43,183 +36,185 @@ public class SortCommandTest {
 
     @Test
     public void execute_sortByName_success() throws CommandException {
-        SortCommand sortCommand = new SortCommand(List.of("name"));
-        CommandResult result = sortCommand.execute(model);
-
-        assertEquals(String.format(SortCommand.MESSAGE_SORT_SUCCESS, "name"), result.getFeedbackToUser());
-
-        // Verify list is sorted by name (case-insensitive)
-        List<Gamer> sortedList = model.getFilteredGamerList();
-        for (int i = 0; i < sortedList.size() - 1; i++) {
-            String currentName = sortedList.get(i).getName().toString();
-            String nextName = sortedList.get(i + 1).getName().toString();
-            assertTrue(currentName.compareToIgnoreCase(nextName) <= 0,
-                    "List should be sorted by name: " + currentName + " should come before " + nextName);
-        }
+        assertSortByStringAttribute("name",
+                GamerBuilder::withName, g -> g.getName().toString(),
+                "Alice", "Ben", "Charlie");
     }
 
     @Test
     public void execute_defaultSort_sortsByGamertag() throws CommandException {
-        SortCommand sortCommand = new SortCommand(new ArrayList<>());
-        sortCommand.execute(model);
+        BlockBook blockBook = new BlockBook();
+        blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("zulu").build());
+        blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("alpha").build());
+        blockBook.addGamer(new GamerBuilder().withName("C").withGamerTag("mike").build());
+        Model testModel = new ModelManager(blockBook, new UserPrefs());
 
-        // Verify list is sorted by gamertag (default)
-        List<Gamer> sortedList = model.getFilteredGamerList();
-        for (int i = 0; i < sortedList.size() - 1; i++) {
-            String currentTag = sortedList.get(i).getGamerTag().toString();
-            String nextTag = sortedList.get(i + 1).getGamerTag().toString();
-            assertTrue(currentTag.compareToIgnoreCase(nextTag) <= 0,
-                    "List should be sorted by gamertag: " + currentTag + " should come before " + nextTag);
-        }
+        CommandResult result = new SortCommand(new ArrayList<>()).execute(testModel);
+        assertEquals(SortCommand.MESSAGE_SORT_DEFAULT_SUCCESS, result.getFeedbackToUser());
+
+        List<Gamer> sortedList = testModel.getFilteredGamerList();
+        assertEquals("alpha", sortedList.get(0).getGamerTag().toString());
+        assertEquals("mike", sortedList.get(1).getGamerTag().toString());
+        assertEquals("zulu", sortedList.get(2).getGamerTag().toString());
     }
 
     @Test
     public void execute_sortByGamertag_success() throws CommandException {
-        SortCommand sortCommand = new SortCommand(List.of("gamertag"));
-        CommandResult result = sortCommand.execute(model);
-
-        assertEquals(String.format(SortCommand.MESSAGE_SORT_SUCCESS, "gamertag"), result.getFeedbackToUser());
-
-        List<Gamer> sortedList = model.getFilteredGamerList();
-        for (int i = 0; i < sortedList.size() - 1; i++) {
-            String currentTag = sortedList.get(i).getGamerTag().toString();
-            String nextTag = sortedList.get(i + 1).getGamerTag().toString();
-            assertTrue(currentTag.compareToIgnoreCase(nextTag) <= 0,
-                    "List should be sorted by gamertag: " + currentTag + " should come before " + nextTag);
-        }
+        assertSortByStringAttribute("gamertag",
+                GamerBuilder::withGamerTag, g -> g.getGamerTag().toString(),
+                "alpha", "mike", "zulu");
     }
 
-    //    @Test
-    //    public void execute_sortByPhone_success() throws CommandException {
-    //        BlockBook blockBook = new BlockBook();
-    //        blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("a1").withPhone("99999999").build());
-    //        blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("b1").withPhone("11111111").build());
-    //        blockBook.addGamer(new GamerBuilder().withName("C").withGamerTag("c1").withPhone("55555555").build());
-    //        Model testModel = new ModelManager(blockBook, new UserPrefs());
-    //
-    //        new SortCommand(List.of("phone")).execute(testModel);
-    //
-    //        List<Gamer> sortedList = testModel.getFilteredGamerList();
-    //        assertEquals("11111111", sortedList.get(0).getPhone().toString());
-    //        assertEquals("55555555", sortedList.get(1).getPhone().toString());
-    //        assertEquals("99999999", sortedList.get(2).getPhone().toString());
-    //        assertEquals(String.format(SortCommand.MESSAGE_SORT_SUCCESS, "name, gamertag"),
-    //                result.getFeedbackToUser());
-    //    }
+    @Test
+    public void execute_sortByPhone_success() throws CommandException {
+        assertSortByStringAttribute("phone",
+                GamerBuilder::withPhone, g -> g.getPhone().toString(),
+                "11111111", "55555555", "99999999");
+    }
 
     @Test
     public void execute_sortByEmail_success() throws CommandException {
-        BlockBook blockBook = new BlockBook();
-        blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("a1").withEmail("zulu@test.com").build());
-        blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("b1").withEmail("adam@test.com").build());
-        blockBook.addGamer(new GamerBuilder().withName("C").withGamerTag("c1").withEmail("mike@test.com").build());
-        Model testModel = new ModelManager(blockBook, new UserPrefs());
-
-        new SortCommand(List.of("email")).execute(testModel);
-
-        List<Gamer> sortedList = testModel.getFilteredGamerList();
-        assertEquals("adam@test.com", sortedList.get(0).getEmail().toString());
-        assertEquals("mike@test.com", sortedList.get(1).getEmail().toString());
-        assertEquals("zulu@test.com", sortedList.get(2).getEmail().toString());
+        assertSortByStringAttribute("email",
+                GamerBuilder::withEmail, g -> g.getEmail().toString(),
+                "adam@test.com", "mike@test.com", "zulu@test.com");
     }
 
     @Test
     public void execute_sortByGroup_success() throws CommandException {
+        assertSortByStringAttribute("group",
+                GamerBuilder::withGroup, g -> g.getGroup().toString(),
+                "Alpha", "Mike", "Zeta");
+    }
+
+    @Test
+    public void execute_sortByMultipleGroups_success() throws CommandException {
         BlockBook blockBook = new BlockBook();
-        blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("a1").withGroup("Zeta").build());
-        blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("b1").withGroup("Alpha").build());
-        blockBook.addGamer(new GamerBuilder().withName("C").withGamerTag("c1").withGroup("Mike").build());
+        // Gamer with groups [Zeta, Alpha] → sort key "Alpha, Zeta"
+        blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("a1")
+                .withGroups("Zeta", "Alpha").build());
+        // Gamer with groups [Beta] → sort key "Beta"
+        blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("b1")
+                .withGroups("Beta").build());
+        // Gamer with groups [Alpha, Beta] → sort key "Alpha, Beta"
+        blockBook.addGamer(new GamerBuilder().withName("C").withGamerTag("c1")
+                .withGroups("Alpha", "Beta").build());
         Model testModel = new ModelManager(blockBook, new UserPrefs());
 
         new SortCommand(List.of("group")).execute(testModel);
 
         List<Gamer> sortedList = testModel.getFilteredGamerList();
-        assertEquals("Alpha", sortedList.get(0).getGroup().toString());
-        assertEquals("Mike", sortedList.get(1).getGroup().toString());
-        assertEquals("Zeta", sortedList.get(2).getGroup().toString());
+        // "Alpha, Beta" < "Alpha, Zeta" < "Beta"
+        assertEquals("c1", sortedList.get(0).getGamerTag().toString());
+        assertEquals("a1", sortedList.get(1).getGamerTag().toString());
+        assertEquals("b1", sortedList.get(2).getGamerTag().toString());
     }
 
     @Test
     public void execute_sortByServer_success() throws CommandException {
-        BlockBook blockBook = new BlockBook();
-        blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("a1").withServer("us-west").build());
-        blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("b1").withServer("eu-central").build());
-        blockBook.addGamer(new GamerBuilder().withName("C").withGamerTag("c1").withServer("sea").build());
-        Model testModel = new ModelManager(blockBook, new UserPrefs());
-
-        new SortCommand(List.of("server")).execute(testModel);
-
-        List<Gamer> sortedList = testModel.getFilteredGamerList();
-        assertEquals("eu-central", sortedList.get(0).getServer().toString());
-        assertEquals("sea", sortedList.get(1).getServer().toString());
-        assertEquals("us-west", sortedList.get(2).getServer().toString());
+        assertSortByStringAttribute("server",
+                GamerBuilder::withServer, g -> g.getServer().toString(),
+                "eu-central", "sea", "us-west");
     }
 
     @Test
     public void execute_sortByCountry_success() throws CommandException {
-        BlockBook blockBook = new BlockBook();
-        blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("a1").withCountry("US").build());
-        blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("b1").withCountry("DE").build());
-        blockBook.addGamer(new GamerBuilder().withName("C").withGamerTag("c1").withCountry("JP").build());
-        Model testModel = new ModelManager(blockBook, new UserPrefs());
-
-        new SortCommand(List.of("country")).execute(testModel);
-
-        List<Gamer> sortedList = testModel.getFilteredGamerList();
-        assertEquals("DE", sortedList.get(0).getCountry().toString());
-        assertEquals("JP", sortedList.get(1).getCountry().toString());
-        assertEquals("US", sortedList.get(2).getCountry().toString());
+        assertSortByStringAttribute("country",
+                GamerBuilder::withCountry, g -> g.getCountry().toString(),
+                "DE", "JP", "US");
     }
 
     @Test
     public void execute_sortByRegion_success() throws CommandException {
-        BlockBook blockBook = new BlockBook();
-        blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("a1").withRegion("SA").build());
-        blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("b1").withRegion("EU").build());
-        blockBook.addGamer(new GamerBuilder().withName("C").withGamerTag("c1").withRegion("NA").build());
-        Model testModel = new ModelManager(blockBook, new UserPrefs());
-
-        new SortCommand(List.of("region")).execute(testModel);
-
-        List<Gamer> sortedList = testModel.getFilteredGamerList();
-        assertEquals("EU", sortedList.get(0).getRegion().toString());
-        assertEquals("NA", sortedList.get(1).getRegion().toString());
-        assertEquals("SA", sortedList.get(2).getRegion().toString());
+        assertSortByStringAttribute("region",
+                GamerBuilder::withRegion, g -> g.getRegion().toString(),
+                "EU", "NA", "SA");
     }
 
     @Test
     public void execute_sortByNote_success() throws CommandException {
-        BlockBook blockBook = new BlockBook();
-        blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("a1").withNote("Zulu note").build());
-        blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("b1").withNote("Alpha note").build());
-        blockBook.addGamer(new GamerBuilder().withName("C").withGamerTag("c1").withNote("Mike note").build());
-        Model testModel = new ModelManager(blockBook, new UserPrefs());
-
-        new SortCommand(List.of("note")).execute(testModel);
-
-        List<Gamer> sortedList = testModel.getFilteredGamerList();
-        assertEquals("Alpha note", sortedList.get(0).getNote().toString());
-        assertEquals("Mike note", sortedList.get(1).getNote().toString());
-        assertEquals("Zulu note", sortedList.get(2).getNote().toString());
+        assertSortByStringAttribute("note",
+                GamerBuilder::withNote, g -> g.getNote().toString(),
+                "Alpha note", "Mike note", "Zulu note");
     }
 
-    //    @Test
-    //    public void execute_sortByMultipleAttributes_success() throws CommandException {
-    //        SortCommand sortCommand = new SortCommand(List.of("name", "phone"));
-    //        CommandResult result = sortCommand.execute(model);
-    //
-    //        assertEquals(SortCommand.MESSAGE_SORT_SUCCESS, result.getFeedbackToUser());
-    //    }
+    @Test
+    public void execute_sortByFavourite_success() throws CommandException {
+        BlockBook blockBook = new BlockBook();
+        blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("a1").withFavourite(false).build());
+        blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("b1").withFavourite(true).build());
+        blockBook.addGamer(new GamerBuilder().withName("C").withGamerTag("c1").withFavourite(false).build());
+        Model testModel = new ModelManager(blockBook, new UserPrefs());
+
+        CommandResult result = new SortCommand(List.of("favourite")).execute(testModel);
+        assertEquals(String.format(SortCommand.MESSAGE_SORT_SUCCESS, "favourite"), result.getFeedbackToUser());
+
+        List<Gamer> sortedList = testModel.getFilteredGamerList();
+        assertTrue(sortedList.get(0).getFavourite().isFav());
+        assertFalse(sortedList.get(1).getFavourite().isFav());
+        assertFalse(sortedList.get(2).getFavourite().isFav());
+    }
+
+    @Test
+    public void execute_sortByMultipleAttributes_success() throws CommandException {
+        BlockBook blockBook = new BlockBook();
+        blockBook.addGamer(new GamerBuilder().withName("Alex").withGamerTag("t1").withPhone("99999999").build());
+        blockBook.addGamer(new GamerBuilder().withName("Alex").withGamerTag("t2").withPhone("11111111").build());
+        blockBook.addGamer(new GamerBuilder().withName("Ben").withGamerTag("t3").withPhone("55555555").build());
+        Model testModel = new ModelManager(blockBook, new UserPrefs());
+
+        CommandResult result = new SortCommand(List.of("name", "phone")).execute(testModel);
+        assertEquals(String.format(SortCommand.MESSAGE_SORT_SUCCESS, "name, phone"), result.getFeedbackToUser());
+
+        List<Gamer> sortedList = testModel.getFilteredGamerList();
+        assertEquals("Alex", sortedList.get(0).getName().toString());
+        assertEquals("11111111", sortedList.get(0).getPhone().toString());
+        assertEquals("Alex", sortedList.get(1).getName().toString());
+        assertEquals("99999999", sortedList.get(1).getPhone().toString());
+        assertEquals("Ben", sortedList.get(2).getName().toString());
+    }
+
+    @Test
+    public void execute_sortByFavouriteThenGroup_success() throws CommandException {
+        BlockBook blockBook = new BlockBook();
+        blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("a1")
+                .withFavourite(false).withGroup("Alpha").build());
+        blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("b1")
+                .withFavourite(true).withGroup("Zeta").build());
+        blockBook.addGamer(new GamerBuilder().withName("C").withGamerTag("c1")
+                .withFavourite(true).withGroup("Alpha").build());
+        blockBook.addGamer(new GamerBuilder().withName("D").withGamerTag("d1")
+                .withFavourite(false).withGroup("Zeta").build());
+        Model testModel = new ModelManager(blockBook, new UserPrefs());
+
+        CommandResult result = new SortCommand(List.of("favourite", "group")).execute(testModel);
+        assertEquals(String.format(SortCommand.MESSAGE_SORT_SUCCESS, "favourite, group"),
+                result.getFeedbackToUser());
+
+        List<Gamer> sortedList = testModel.getFilteredGamerList();
+        // Favourites first, then sorted by group within each group
+        assertTrue(sortedList.get(0).getFavourite().isFav());
+        assertEquals("Alpha", sortedList.get(0).getGroup().toString());
+        assertTrue(sortedList.get(1).getFavourite().isFav());
+        assertEquals("Zeta", sortedList.get(1).getGroup().toString());
+        assertFalse(sortedList.get(2).getFavourite().isFav());
+        assertEquals("Alpha", sortedList.get(2).getGroup().toString());
+        assertFalse(sortedList.get(3).getFavourite().isFav());
+        assertEquals("Zeta", sortedList.get(3).getGroup().toString());
+    }
 
     @Test
     public void execute_sessionBasedSort_doesNotModifyStorage() throws CommandException {
-        BlockBook originalBlockBook = new BlockBook(model.getBlockBook());
+        BlockBook blockBook = new BlockBook();
+        blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("b1").build());
+        blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("a1").build());
+        Model testModel = new ModelManager(blockBook, new UserPrefs());
 
-        SortCommand sortCommand = new SortCommand(List.of("name"));
-        sortCommand.execute(model);
+        BlockBook originalBlockBook = new BlockBook(testModel.getBlockBook());
+
+        new SortCommand(List.of("name")).execute(testModel);
 
         // The underlying BlockBook data should remain unchanged
-        assertEquals(originalBlockBook, model.getBlockBook());
+        assertEquals(originalBlockBook, testModel.getBlockBook());
     }
 
     @Test
@@ -257,5 +252,32 @@ public class SortCommandTest {
         SortCommand sortCommand = new SortCommand(List.of("name", "phone"));
         String expected = SortCommand.class.getCanonicalName() + "{attributes=[name, phone]}";
         assertEquals(expected, sortCommand.toString());
+    }
+
+    /**
+     * Helper that verifies sorting by a single string attribute.
+     * Values are provided in expected sorted order; gamers are added in reverse
+     * to ensure the sort actually reorders them.
+     */
+    private void assertSortByStringAttribute(String attribute,
+            BiFunction<GamerBuilder, String, GamerBuilder> withAttribute,
+            Function<Gamer, String> getAttribute,
+            String expectedFirst, String expectedSecond, String expectedThird) throws CommandException {
+        BlockBook blockBook = new BlockBook();
+        blockBook.addGamer(withAttribute.apply(
+                new GamerBuilder().withName("A").withGamerTag("a1"), expectedThird).build());
+        blockBook.addGamer(withAttribute.apply(
+                new GamerBuilder().withName("B").withGamerTag("b1"), expectedFirst).build());
+        blockBook.addGamer(withAttribute.apply(
+                new GamerBuilder().withName("C").withGamerTag("c1"), expectedSecond).build());
+        Model testModel = new ModelManager(blockBook, new UserPrefs());
+
+        CommandResult result = new SortCommand(List.of(attribute)).execute(testModel);
+        assertEquals(String.format(SortCommand.MESSAGE_SORT_SUCCESS, attribute), result.getFeedbackToUser());
+
+        List<Gamer> sortedList = testModel.getFilteredGamerList();
+        assertEquals(expectedFirst, getAttribute.apply(sortedList.get(0)));
+        assertEquals(expectedSecond, getAttribute.apply(sortedList.get(1)));
+        assertEquals(expectedThird, getAttribute.apply(sortedList.get(2)));
     }
 }
