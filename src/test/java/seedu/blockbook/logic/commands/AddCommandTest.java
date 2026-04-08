@@ -157,6 +157,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void removeGroup(Group group) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setGamer(Gamer target, Gamer editedGamer) {
             throw new AssertionError("This method should not be called.");
         }

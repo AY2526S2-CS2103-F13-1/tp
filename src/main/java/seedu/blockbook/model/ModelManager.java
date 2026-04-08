@@ -125,6 +125,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void removeGroup(Group group) {
+        requireNonNull(group);
+        blockBook.removeGroup(group);
+    }
+
+    @Override
     public void setGamer(Gamer target, Gamer editedGamer) {
         requireAllNonNull(target, editedGamer);
 

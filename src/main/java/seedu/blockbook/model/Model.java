@@ -85,6 +85,12 @@ public interface Model {
     void addGroup(Group group);
 
     /**
+     * Removes the given group.
+     * {@code group} must exist in the BlockBook.
+     */
+    void removeGroup(Group group);
+
+    /**
      * Replaces the given gamer {@code target} with {@code editedGamer}.
      * {@code target} must exist in the BlockBook.
      * The gamer identity of {@code editedGamer} must not be the same as another existing gamer in the BlockBook.

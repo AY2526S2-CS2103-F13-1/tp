@@ -158,6 +158,44 @@
     -fx-min-height: 0;
 }
 
+.group-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-min-height: 102;
+    -fx-pref-height: 102;
+    -fx-max-height: 102;
+}
+
+.group-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.group-card-container {
+    -fx-padding: 6 8 6 8;
+    -fx-min-height: 90;
+    -fx-max-height: 90;
+    -fx-alignment: center-left;
+}
+
+.group-card {
+    -fx-alignment: center-left;
+    -fx-padding: 6 10 6 10;
+    -fx-min-width: 150;
+    -fx-pref-width: 150;
+    -fx-max-width: 150;
+    -fx-min-height: 90;
+    -fx-pref-height: 90;
+    -fx-max-height: 90;
+    -fx-background-image: url("/images/dirt.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color:
+        linear-gradient(to bottom, #7ebf59, #5d9441);
+    -fx-background-insets: 0, 0 0 0 6;
+    -fx-border-color: #6e7783 #1c2127 #14191e #5a636f;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.42), 4, 0.2, 0, 2);
+}
+
 #gamerList {
     -fx-background-color:
         linear-gradient(to bottom, -fx-mc-grass-400, -fx-mc-grass-500),

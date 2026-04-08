@@ -2,8 +2,7 @@ package seedu.blockbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Random;
-
+import seedu.blockbook.commons.util.ConfirmationCodeUtil;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.model.BlockBook;
 import seedu.blockbook.model.Model;
@@ -35,28 +34,12 @@ public class ClearCommand extends Command {
         this.userInput = userInput;
     }
 
-    /**
-     * Generates a random confirmation code consisting of
-     * 6 alphanumeric characters, prefixed with a space.
-     */
-    public String generateConfirmationCode() {
-        String characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder confirmationCode = new StringBuilder();
-        confirmationCode.append(" ");
-        Random random = new Random();
-        for (int i = 0; i < 6; i++) {
-            int index = random.nextInt(characters.length());
-            confirmationCode.append(characters.charAt(index));
-        }
-        return confirmationCode.toString();
-    }
-
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
         if (confirmationCode == null || !confirmationCode.equals(userInput)) {
-            confirmationCode = generateConfirmationCode(); // Randomize the code
+            confirmationCode = ConfirmationCodeUtil.generateConfirmationCode(); // Randomize the code
             throw new CommandException(CONFIRMATION_MESSAGE + confirmationCode);
         }
 
@@ -65,4 +48,3 @@ public class ClearCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
-
