@@ -13,12 +13,18 @@ Class ModelManager
 Class UserPrefs
 
 Class UniqueGamerList
+Class UniqueGroupList
 Class Gamer
-Class Address
+Class GamerTag
 Class Email
 Class Name
 Class Phone
-Class Tag
+Class Group
+Class Server
+Class Favourite
+Class Country
+Class Region
+Class Note
 
 Class I #FFFFFF
 }
@@ -36,19 +42,30 @@ ModelManager -right-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
 
 BlockBook *--> "1" UniqueGamerList
+BlockBook *--> "1" UniqueGroupList
 UniqueGamerList --> "~* all" Gamer
-Gamer *--> Name
-Gamer *--> Phone
-Gamer *--> Email
-Gamer *--> Address
-Gamer *--> "*" Tag
+UniqueGroupList --> "~* all" Group
+Gamer *--> "0..1" Name
+Gamer *--> "1" GamerTag
+Gamer *--> "0..1" Phone
+Gamer *--> "0..1" Email
+Gamer *--> "0..1" Server
+Gamer *--> "0..1" Favourite
+Gamer *--> "0..1" Country
+Gamer *--> "0..1" Region
+Gamer *--> "0..1" Note
+Gamer *--> "*" Group
 
 Gamer -[hidden]up--> I
 UniqueGamerList -[hidden]right-> I
 
-Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
+Name -[hidden]right-> GamerTag
+GamerTag -[hidden]right-> Phone
+Phone -[hidden]right-> Email
+Server -[hidden]right-> Favourite
+Favourite -[hidden]right-> Country
+Country -[hidden]right-> Region
+Region -[hidden]right-> Note
 
 ModelManager --> "~* filtered" Gamer
 @enduml
