@@ -32,7 +32,7 @@ public class GamerTest {
                 .withName("Alice Pauline")
                 .withPhone("91234567")
                 .withEmail("alice2@example.com")
-                .withGroup("Arena Team")
+                .withGroups("Arena Team")
                 .withServer("10.0.0.1:25565")
                 .withFavourite(false)
                 .withCountry("Malaysia")
@@ -76,7 +76,7 @@ public class GamerTest {
         editedAlice = new GamerBuilder(ALICE).withEmail("alice2@example.com").build();
         assertFalse(ALICE.equals(editedAlice));
 
-        editedAlice = new GamerBuilder(ALICE).withGroup("Arena Team").build();
+        editedAlice = new GamerBuilder(ALICE).withGroups("Arena Team").build();
         assertFalse(ALICE.equals(editedAlice));
 
         editedAlice = new GamerBuilder(ALICE).withServer("10.0.0.1:25565").build();
