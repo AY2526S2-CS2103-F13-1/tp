@@ -108,8 +108,19 @@ class JsonAdaptedGamer {
         validateFieldValues();
         Objects.requireNonNull(groupList);
 
+        List<Group> modelGroups = resolveGroups(groupList);
+
+        // Optional fields can be null when omitted by the user, so we guard object construction to avoid null failures.
+        Gamer modelGamer = buildModelGamer(modelGroups);
+
+        assert modelGamer.getGamerTag() != null : "Model gamer must have a non-null gamertag";
+        return modelGamer;
+    }
+
+    private List<Group> resolveGroups(List<Group> groupList) throws IllegalValueException {
         List<Group> modelGroups = new ArrayList<>();
         Set<Integer> seen = new HashSet<>();
+
         for (Integer index : groups) {
             if (index == null) {
                 throw new IllegalValueException("Group index cannot be null.");
@@ -123,7 +134,10 @@ class JsonAdaptedGamer {
             modelGroups.add(groupList.get(index));
         }
 
-        // Optional fields can be null when omitted by the user, so we guard object construction to avoid null failures.
+        return modelGroups;
+    }
+
+    private Gamer buildModelGamer(List<Group> modelGroups) {
         final Name modelName = name != null ? new Name(normalizeCapitalizedWords(name)) : null;
         final GamerTag modelGamerTag = new GamerTag(gamerTag);
         final Phone modelPhone = phone != null ? new Phone(normalizeSpacedValue(phone)) : null;
