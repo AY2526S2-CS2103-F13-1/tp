@@ -25,9 +25,9 @@ public class GroupEditCommand extends Command {
     public static final String COMMAND_ALIAS = "ge";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_ALIAS + ")"
-            + ": Edits an existing group's name in BlockBook.\n"
+            + ": Edits an existing group's name in BlockBook.\n\n"
             + "Format: " + COMMAND_WORD + " BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME "
-            + "or " + COMMAND_ALIAS + " BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME\n"
+            + "or " + COMMAND_ALIAS + " BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME\n\n"
             + "Example: " + COMMAND_WORD + " 1 I Love Alex Group";
 
     public static final String MESSAGE_SUCCESS = "Group: %1$s name edited to %2$s!";
