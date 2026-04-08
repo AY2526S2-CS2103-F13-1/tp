@@ -134,7 +134,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         Note note = parseOptionalNote(argMultimap);
 
         logger.fine(String.format(
-                "Built add command fields: gamertag=%s, name=%s, phone=%s, email=%s, server=%s, country=%s, region=%s, note=%s",
+                "Built add command fields: gamertag=%s, name=%s, phone=%s, email=%s, server=%s,"
+                        + " country=%s, region=%s, note=%s",
                 gamerTag, name, phone, email, server, country, region, note));
 
         Gamer gamer = new Gamer(
