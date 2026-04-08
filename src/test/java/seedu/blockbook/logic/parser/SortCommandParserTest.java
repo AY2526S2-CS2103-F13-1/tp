@@ -137,7 +137,7 @@ public class SortCommandParserTest {
     }
 
     @Test
-    public void parse_duplicateAttribute_aliasThenCanonical_throwsParseException() {
+    public void parse_duplicateAliasThenCanonical_throwsParseException() {
         // EP (invalid duplicate): detection should be independent of alias/canonical order.
         assertParseFailure(parser, " g/ gamertag/",
                 String.format(SortCommandParser.MESSAGE_DUPLICATE_ATTRIBUTE, "gamertag"));
