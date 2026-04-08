@@ -84,20 +84,58 @@ Format: `help` or `?`
 
 ### Adding a gamer: `add`
 
-Adds a gamer to BlockBook with a required gamertag and optional details such as name, phone number, email address, group, server, region, country, and notes.
+Adds a gamer to BlockBook with a required gamertag and optional details such as name, phone number, email address, server, region, country, and notes.
 
-Format: `(a)dd (g)amertag/GAMERTAG [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(gr)oup/GROUP] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`
+Format: `(a)dd (g)amertag/GAMERTAG [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`
+
+Examples:
+* `a g/ilovesteve n/Herobrine p/99999 e/brine@gmail.com s/127.0.0.1:8080 c/Singapore r/ASIA note/I hate steve`
+* `add gamertag/Notch name/Notch phone/+12345 email/notch@example.com server/mc.example.net:25565 country/Malaysia region/ASIA note/Usually plays survival`
+
+<img width="1249" height="781" alt="Screenshot 2026-04-08 at 9 21 41 PM" src="https://github.com/user-attachments/assets/6f07bf84-b438-4ff0-9b6f-2fd9044914ad" />
 
 <box type="tip" seamless>
 
 **Tip:** Only `gamertag/` is required. All other fields are optional.
 </box>
-- `email/`, must be a valid email in the format `local-part@domain`.
-- `region/` accepts `NA`, `SA`, `EU`, `AFRICA`, `ASIA`, `OCEANIA` or `ME`.
 
-Examples:
-* `a g/ilovesteve n/Herobrine p/99999 e/brine@gmail.com gr/DestroySteve s/127.0.0.1:8080 c/Singapore r/ASIA note/I hate steve`
-* `add gamertag/Notch name/Notch phone/+12345 email/notch@example.com group/Redstone Crew server/mc.example.net:25565 country/Malaysia region/ASIA note/Usually plays survival`
+<box type="info" seamless>
+
+- `gamertag/`: letters, numbers, underscores only, max 50 chars.
+- `name/`: letters, spaces, hyphens, apostrophes only, max 50 chars.
+- `phone/`: optional leading `+`, digits/spaces/hyphens, at least 3 digits, at most 15 digits.
+- `email/`: must be a valid email in the format `local-part@domain`.
+- `server/`: letters, numbers, `.`, `-`, `:`, max 50 chars.
+- `country/`: letters, spaces, hyphens only, max 50 chars.
+- `region/`: accepts `NA`, `SA`, `EU`, `AFRICA`, `ASIA`, `OCEANIA` or `ME`.
+- `note/`: letters, numbers, spaces, underscores, hyphens, apostrophes, max 50 chars.
+</box>
+
+**Common errors you may encounter:**
+
+- **Duplicate gamertag**  
+  You cannot add two gamers with the same gamertag.  
+  Gamertags are treated as **case-insensitive**, so `banana`, `Banana`, and `BaNaNa` are all treated as the same gamertag.
+
+- **Missing required gamertag**  
+  The `add` command requires a `gamertag/` or `g/` field.  
+  Example: `add n/Steve`
+
+- **Repeated prefixes**  
+  Each single-value field can only be entered once in the same `add` command.  
+  Example: `add g/Steve123 g/Alex456`
+
+- **Invalid gamertag format**  
+  Gamertags cannot contain spaces or special characters other than underscores.  
+  Example: `g/steve boy`
+
+**Notes:**
+- Names and countries are automatically normalized by collapsing repeated spaces and standardizing capitalization.
+  For example, `n/jOhN doE` will be stored as `John Doe`.
+- Region input is case-insensitive, but will be stored and displayed in uppercase.
+  For example, `r/asia` will be stored as `ASIA`.
+- Notes are **not** auto-normalized in the same way, so they are stored more closely to how you entered them.
+- Newly added gamers are **not favourited** by default.
 
 ### Listing all gamers : `list`
 
