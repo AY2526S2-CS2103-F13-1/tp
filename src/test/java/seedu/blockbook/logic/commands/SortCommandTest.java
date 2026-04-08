@@ -103,6 +103,7 @@ public class SortCommandTest {
         new SortCommand(List.of("group")).execute(testModel);
 
         List<Gamer> sortedList = testModel.getFilteredGamerList();
+
         // "Alpha, Beta" < "Alpha, Zeta" < "Beta"
         assertEquals("c1", sortedList.get(0).getGamerTag().toString());
         assertEquals("a1", sortedList.get(1).getGamerTag().toString());
