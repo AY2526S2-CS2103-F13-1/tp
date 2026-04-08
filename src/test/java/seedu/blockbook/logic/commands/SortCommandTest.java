@@ -82,7 +82,7 @@ public class SortCommandTest {
     @Test
     public void execute_sortByGroup_success() throws CommandException {
         assertSortByStringAttribute("group",
-                GamerBuilder::withGroup, g -> g.getGroup().toString(),
+                GamerBuilder::withGroups, g -> g.getGroups().get(0).toString(),
                 "Alpha", "Mike", "Zeta");
     }
 
@@ -177,13 +177,13 @@ public class SortCommandTest {
     public void execute_sortByFavouriteThenGroup_success() throws CommandException {
         BlockBook blockBook = new BlockBook();
         blockBook.addGamer(new GamerBuilder().withName("A").withGamerTag("a1")
-                .withFavourite(false).withGroup("Alpha").build());
+                .withFavourite(false).withGroups("Alpha").build());
         blockBook.addGamer(new GamerBuilder().withName("B").withGamerTag("b1")
-                .withFavourite(true).withGroup("Zeta").build());
+                .withFavourite(true).withGroups("Zeta").build());
         blockBook.addGamer(new GamerBuilder().withName("C").withGamerTag("c1")
-                .withFavourite(true).withGroup("Alpha").build());
+                .withFavourite(true).withGroups("Alpha").build());
         blockBook.addGamer(new GamerBuilder().withName("D").withGamerTag("d1")
-                .withFavourite(false).withGroup("Zeta").build());
+                .withFavourite(false).withGroups("Zeta").build());
         Model testModel = new ModelManager(blockBook, new UserPrefs());
 
         CommandResult result = new SortCommand(List.of("favourite", "group")).execute(testModel);
@@ -193,13 +193,13 @@ public class SortCommandTest {
         List<Gamer> sortedList = testModel.getFilteredGamerList();
         // Favourites first, then sorted by group within each group
         assertTrue(sortedList.get(0).getFavourite().isFav());
-        assertEquals("Alpha", sortedList.get(0).getGroup().toString());
+        assertEquals("Alpha", sortedList.get(0).getGroups().get(0).toString());
         assertTrue(sortedList.get(1).getFavourite().isFav());
-        assertEquals("Zeta", sortedList.get(1).getGroup().toString());
+        assertEquals("Zeta", sortedList.get(1).getGroups().get(0).toString());
         assertFalse(sortedList.get(2).getFavourite().isFav());
-        assertEquals("Alpha", sortedList.get(2).getGroup().toString());
+        assertEquals("Alpha", sortedList.get(2).getGroups().get(0).toString());
         assertFalse(sortedList.get(3).getFavourite().isFav());
-        assertEquals("Zeta", sortedList.get(3).getGroup().toString());
+        assertEquals("Zeta", sortedList.get(3).getGroups().get(0).toString());
     }
 
     @Test

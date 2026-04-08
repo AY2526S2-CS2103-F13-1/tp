@@ -36,7 +36,6 @@ public class GamerBuilder {
     private GamerTag gamerTag;
     private Phone phone;
     private Email email;
-    private Group group;
     private List<Group> groups;
     private Server server;
     private Favourite favourite;
@@ -52,7 +51,7 @@ public class GamerBuilder {
         gamerTag = new GamerTag(DEFAULT_GAMER_TAG);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
-        group = new Group(DEFAULT_GROUP);
+        groups = List.of(new Group(DEFAULT_GROUP));
         server = new Server(DEFAULT_SERVER);
         favourite = new Favourite(DEFAULT_FAVOURITE);
         country = new Country(DEFAULT_COUNTRY);
@@ -68,7 +67,7 @@ public class GamerBuilder {
         gamerTag = gamerToCopy.getGamerTag();
         phone = gamerToCopy.getPhone();
         email = gamerToCopy.getEmail();
-        group = gamerToCopy.getGroup();
+        groups = gamerToCopy.getGroups();
         server = gamerToCopy.getServer();
         favourite = gamerToCopy.getFavourite();
         country = gamerToCopy.getCountry();
@@ -117,17 +116,6 @@ public class GamerBuilder {
      */
     public GamerBuilder withEmail(String email) {
         this.email = new Email(email);
-        return this;
-    }
-
-    /**
-     * Sets the {@code Group} of the {@code Gamer} that we are building.
-     *
-     * @param group A valid group.
-     * @return This builder.
-     */
-    public GamerBuilder withGroup(String group) {
-        this.group = new Group(group);
         return this;
     }
 
@@ -201,14 +189,9 @@ public class GamerBuilder {
 
     /**
      * Builds and returns the {@code Gamer} with the configured fields.
-     * Uses the multi-group constructor if {@code withGroups} was called,
-     * otherwise uses the single-group constructor.
      */
     public Gamer build() {
-        if (groups != null) {
-            return new Gamer(name, gamerTag, phone, email, groups, server, favourite, country, region, note);
-        }
-        return new Gamer(name, gamerTag, phone, email, group, server, favourite, country, region, note);
+        return new Gamer(name, gamerTag, phone, email, groups, server, favourite, country, region, note);
     }
 }
 
