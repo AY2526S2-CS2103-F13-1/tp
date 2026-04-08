@@ -86,7 +86,7 @@ public class DeleteCommand extends Command {
         }
         for (Index index : targetIndexes) {
             if (index.getZeroBased() >= gamerList.size()) {
-                throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+                throw new CommandException(Messages.MESSAGE_MULTIPLE_INDEXES_INVALID);
             }
         }
     }
