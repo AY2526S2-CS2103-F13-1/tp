@@ -12,8 +12,10 @@ import static seedu.blockbook.logic.parser.CliSyntax.PREFIX_SERVER;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
+import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.logic.commands.AddCommand;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
 import seedu.blockbook.model.gamer.Country;
@@ -33,15 +35,21 @@ import seedu.blockbook.model.gamer.Server;
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
+    private static final Logger logger = LogsCenter.getLogger(AddCommandParser.class);
+
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
+        logger.fine("Parsing add command args: " + args);
+
         ArgumentMultimap argMultimap = tokenizeArguments(args);
         validateRequiredPrefixes(argMultimap);
         verifyNoDuplicatePrefixes(argMultimap);
+
+        assert argMultimap.getValue(PREFIX_GAMERTAG).isPresent() : "Gamertag must be present after validation";
 
         Gamer gamer = buildGamer(argMultimap);
         return new AddCommand(gamer);
@@ -73,6 +81,7 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     private void validateRequiredPrefixes(ArgumentMultimap argMultimap) throws ParseException {
         if (!arePrefixesPresent(argMultimap, PREFIX_GAMERTAG) || !argMultimap.getPreamble().isEmpty()) {
+            logger.warning("Invalid add command format: missing required gamertag or non-empty preamble");
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
     }
@@ -84,16 +93,21 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException If duplicate prefixes are found.
      */
     private void verifyNoDuplicatePrefixes(ArgumentMultimap argMultimap) throws ParseException {
-        argMultimap.verifyNoDuplicatePrefixesFor(
-                PREFIX_GAMERTAG,
-                PREFIX_NAME,
-                PREFIX_PHONE,
-                PREFIX_EMAIL,
-                PREFIX_SERVER,
-                PREFIX_COUNTRY,
-                PREFIX_REGION,
-                PREFIX_NOTE
-        );
+        try {
+            argMultimap.verifyNoDuplicatePrefixesFor(
+                    PREFIX_GAMERTAG,
+                    PREFIX_NAME,
+                    PREFIX_PHONE,
+                    PREFIX_EMAIL,
+                    PREFIX_SERVER,
+                    PREFIX_COUNTRY,
+                    PREFIX_REGION,
+                    PREFIX_NOTE
+            );
+        } catch (ParseException pe) {
+            logger.warning("Duplicate prefixes detected in add command: " + pe.getMessage());
+            throw pe;
+        }
     }
 
     /**
@@ -118,6 +132,11 @@ public class AddCommandParser implements Parser<AddCommand> {
         Country country = parseOptionalCountry(argMultimap);
         Region region = parseOptionalRegion(argMultimap);
         Note note = parseOptionalNote(argMultimap);
+
+        logger.fine(String.format(
+                "Built add command fields: gamertag=%s, name=%s, phone=%s, email=%s, server=%s,"
+                        + " country=%s, region=%s, note=%s",
+                gamerTag, name, phone, email, server, country, region, note));
 
         Gamer gamer = new Gamer(
                 name,

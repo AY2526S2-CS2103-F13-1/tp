@@ -1,103 +1,154 @@
 package seedu.blockbook.model.gamer;
 
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
-//import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-//import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-//import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-//import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-//import static seedu.blockbook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-//import static seedu.blockbook.testutil.Assert.assertThrows;
-//import static seedu.blockbook.testutil.TypicalGamers.ALICE;
-//import static seedu.blockbook.testutil.TypicalGamers.BOB;
-//
-//import org.junit.jupiter.api.Test;
-//
-//import seedu.blockbook.testutil.GamerBuilder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.blockbook.testutil.Assert.assertThrows;
+import static seedu.blockbook.testutil.TypicalGamers.ALICE;
+import static seedu.blockbook.testutil.TypicalGamers.BENSON;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import seedu.blockbook.testutil.GamerBuilder;
 
 public class GamerTest {
 
-//    @Test
-//    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-//        Gamer Gamer = new GamerBuilder().build();
-//        assertThrows(UnsupportedOperationException.class, () -> Gamer.getTags().remove(0));
-//    }
-//
-//    @Test
-//    public void isSameGamer() {
-//        // same object -> returns true
-//        assertTrue(ALICE.isSameGamer(ALICE));
-//
-//        // null -> returns false
-//        assertFalse(ALICE.isSameGamer(null));
-//
-//        // same name, all other attributes different -> returns true
-//        Gamer editedAlice = new GamerBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-//                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
-//        assertTrue(ALICE.isSameGamer(editedAlice));
-//
-//        // different name, all other attributes same -> returns false
-//        editedAlice = new GamerBuilder(ALICE).withName(VALID_NAME_BOB).build();
-//        assertFalse(ALICE.isSameGamer(editedAlice));
-//
-//        // name differs in case, all other attributes same -> returns false
-//        Gamer editedBob = new GamerBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
-//        assertFalse(BOB.isSameGamer(editedBob));
-//
-//        // name has trailing spaces, all other attributes same -> returns false
-//        String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
-//        editedBob = new GamerBuilder(BOB).withName(nameWithTrailingSpaces).build();
-//        assertFalse(BOB.isSameGamer(editedBob));
-//    }
-//
-//    @Test
-//    public void equals() {
-//        // same values -> returns true
-//        Gamer aliceCopy = new GamerBuilder(ALICE).build();
-//        assertTrue(ALICE.equals(aliceCopy));
-//
-//        // same object -> returns true
-//        assertTrue(ALICE.equals(ALICE));
-//
-//        // null -> returns false
-//        assertFalse(ALICE.equals(null));
-//
-//        // different type -> returns false
-//        assertFalse(ALICE.equals(5));
-//
-//        // different Gamer -> returns false
-//        assertFalse(ALICE.equals(BOB));
-//
-//        // different name -> returns false
-//        Gamer editedAlice = new GamerBuilder(ALICE).withName(VALID_NAME_BOB).build();
-//        assertFalse(ALICE.equals(editedAlice));
-//
-//        // different phone -> returns false
-//        editedAlice = new GamerBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
-//        assertFalse(ALICE.equals(editedAlice));
-//
-//        // different email -> returns false
-//        editedAlice = new GamerBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
-//        assertFalse(ALICE.equals(editedAlice));
-//
-//        // different address -> returns false
-//        editedAlice = new GamerBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
-//        assertFalse(ALICE.equals(editedAlice));
-//
-//        // different tags -> returns false
-//        editedAlice = new GamerBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
-//        assertFalse(ALICE.equals(editedAlice));
-//    }
-//
-//    @Test
-//    public void toStringMethod() {
-//        String expected = Gamer.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
-//                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
-//                + ", tags=" + ALICE.getTags() + "}";
-//        assertEquals(expected, ALICE.toString());
-//    }
+    @Test
+    public void getGroups_modifyList_throwsUnsupportedOperationException() {
+        Gamer gamer = new GamerBuilder().build();
+        assertThrows(UnsupportedOperationException.class, () -> gamer.getGroups().remove(0));
+    }
+
+    @Test
+    public void isSameGamer() {
+        assertTrue(ALICE.isSameGamer(ALICE));
+
+        assertFalse(ALICE.isSameGamer(null));
+
+        Gamer editedAlice = new GamerBuilder(ALICE)
+                .withName("Alice Pauline")
+                .withPhone("91234567")
+                .withEmail("alice2@example.com")
+                .withGroup("Arena Team")
+                .withServer("10.0.0.1:25565")
+                .withFavourite(false)
+                .withCountry("Malaysia")
+                .withRegion("EU")
+                .withNote("updated_note")
+                .build();
+        assertTrue(ALICE.isSameGamer(editedAlice));
+
+        editedAlice = new GamerBuilder(ALICE).withGamerTag("heroBrine").build();
+        assertTrue(ALICE.isSameGamer(editedAlice));
+
+        editedAlice = new GamerBuilder(ALICE).withGamerTag("DifferentTag").build();
+        assertFalse(ALICE.isSameGamer(editedAlice));
+
+        Gamer editedBenson = new GamerBuilder(BENSON).withGamerTag("herobrine2x").build();
+        assertFalse(BENSON.isSameGamer(editedBenson));
+    }
+
+    @Test
+    public void equals() {
+        Gamer aliceCopy = new GamerBuilder(ALICE).build();
+        assertTrue(ALICE.equals(aliceCopy));
+
+        assertTrue(ALICE.equals(ALICE));
+
+        assertFalse(ALICE.equals(null));
+
+        assertFalse(ALICE.equals(5));
+
+        assertFalse(ALICE.equals(BENSON));
+
+        Gamer editedAlice = new GamerBuilder(ALICE).withName("Alicia Pauline").build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        editedAlice = new GamerBuilder(ALICE).withGamerTag("DifferentTag").build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        editedAlice = new GamerBuilder(ALICE).withPhone("91234567").build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        editedAlice = new GamerBuilder(ALICE).withEmail("alice2@example.com").build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        editedAlice = new GamerBuilder(ALICE).withGroup("Arena Team").build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        editedAlice = new GamerBuilder(ALICE).withServer("10.0.0.1:25565").build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        editedAlice = new GamerBuilder(ALICE).withFavourite(false).build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        editedAlice = new GamerBuilder(ALICE).withCountry("Malaysia").build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        editedAlice = new GamerBuilder(ALICE).withRegion("EU").build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        editedAlice = new GamerBuilder(ALICE).withNote("updated_note").build();
+        assertFalse(ALICE.equals(editedAlice));
+    }
+
+    @Test
+    public void constructor_withGroupList_setsFieldsCorrectly() {
+        List<Group> groups = List.of(new Group("Raid Team"), new Group("Arena Team"));
+        Gamer gamer = new Gamer(
+                new Name("Alice Pauline"),
+                new GamerTag("HerobrineX"),
+                new Phone("91234567"),
+                new Email("alice@example.com"),
+                groups,
+                new Server("127.0.0.1:8080"),
+                new Favourite(true),
+                new Country("Singapore"),
+                new Region("ASIA"),
+                new Note("test_note")
+        );
+
+        assertEquals(groups, gamer.getGroups());
+        assertEquals(new Group("Raid Team"), gamer.getGroup());
+    }
+
+    @Test
+    public void toStringMethod() {
+        String expected = Gamer.class.getCanonicalName()
+                + "{name=" + ALICE.getName()
+                + ", gamertag=" + ALICE.getGamerTag()
+                + ", phone=" + ALICE.getPhone()
+                + ", email=" + ALICE.getEmail()
+                + ", group=" + ALICE.getGroup()
+                + ", groups=" + ALICE.getGroups()
+                + ", server=" + ALICE.getServer()
+                + ", favourite=" + ALICE.getFavourite()
+                + ", country=" + ALICE.getCountry()
+                + ", region=" + ALICE.getRegion()
+                + ", note=" + ALICE.getNote()
+                + "}";
+
+        assertEquals(expected, ALICE.toString());
+    }
+
+    @Test
+    public void hashCode_equalObjects_sameHashCode() {
+        Gamer gamer1 = new GamerBuilder(ALICE).build();
+        Gamer gamer2 = new GamerBuilder(ALICE).build();
+
+        assertEquals(gamer1, gamer2);
+        assertEquals(gamer1.hashCode(), gamer2.hashCode());
+    }
+
+    @Test
+    public void hashCode_differentObjects_differentHashCode() {
+        Gamer gamer1 = new GamerBuilder(ALICE).build();
+        Gamer gamer2 = new GamerBuilder(ALICE).withGamerTag("DifferentTag").build();
+
+        assertNotEquals(gamer1, gamer2);
+        assertNotEquals(gamer1.hashCode(), gamer2.hashCode());
+    }
 }
-
-
-
