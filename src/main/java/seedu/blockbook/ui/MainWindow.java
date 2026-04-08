@@ -17,6 +17,7 @@ import seedu.blockbook.commons.core.GuiSettings;
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.logic.Logic;
 import seedu.blockbook.logic.commands.CommandResult;
+import seedu.blockbook.logic.commands.DeleteCommand;
 import seedu.blockbook.logic.commands.FindCommand;
 import seedu.blockbook.logic.commands.GroupViewCommand;
 import seedu.blockbook.logic.commands.ListCommand;
@@ -383,6 +384,8 @@ public class MainWindow extends UiPart<Stage> {
                 || ListCommand.COMMAND_WORD.equals(commandWord)
                 || ListCommand.COMMAND_ALIAS.equals(commandWord)
                 || SortCommand.COMMAND_WORD.equals(commandWord)
-                || SortCommand.COMMAND_ALIAS.equals(commandWord);
+                || SortCommand.COMMAND_ALIAS.equals(commandWord)
+                || DeleteCommand.COMMAND_WORD.equals(commandWord)
+                || DeleteCommand.COMMAND_ALIAS.equals(commandWord);
     }
 }

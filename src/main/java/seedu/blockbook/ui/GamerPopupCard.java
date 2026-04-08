@@ -77,7 +77,7 @@ public class GamerPopupCard extends UiPart<Region> {
         region.setText(Messages.formatNullable(gamer.getRegion()));
         note.setText(Messages.formatNullable(gamer.getNote()));
 
-        updateFavouriteIcon(gamer.getFavourite().toString());
+        updateFavouriteIcon(gamer.getFavourite() == null ? "N/A" : gamer.getFavourite().toString());
         populateGroupList(gamer);
         groupScrollPane.setFitToWidth(true);
     }
