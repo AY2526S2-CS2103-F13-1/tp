@@ -105,6 +105,8 @@ Shows a list of all gamers stored in BlockBook.
 
 Format: `(l)ist`
 
+* Clears any active filter (e.g., from `find`) and any active `sort`, restoring original order.
+
 ### Editing a gamer : `edit`
 
 Edits an existing gamer stored in BlockBook.
@@ -152,34 +154,67 @@ Examples:
 
 ### Sorting gamers : `sort`
 
-Sorts the displayed contact list by one or more attributes.
+Sorts gamers by one or more attributes.
 
 Format: `(s)ort [(g)amertag/] [(n)ame/] [(p)hone/] [(e)mail/] [(gr)oup/] [(s)erver/] [(fav)ourite/] [(c)ountry/] [(r)egion/] [note/]`
 
-* If no attributes are provided, contacts are sorted by **gamertag** by default.
-* When multiple attributes are provided, they are applied in order of priority (left to right). The first attribute is the primary sort key, the second is used to break ties, and so on.
-* Each attribute can only be specified **once** (no duplicates).
-
-**Valid attributes:**
-
-| Attribute        | Description |
-|------------------|-------------|
-| `(n)ame/`        | Sort by name |
-| `(g)amertag/`    | Sort by gamertag |
-| `(p)hone/`       | Sort by phone number |
-| `(e)mail/`       | Sort by email address |
-| `(gr)oup/`       | Sort by group |
-| `(s)erver/`      | Sort by server |
-| `(fav)avourite/` | Sort by favourite status (favourites first) |
-| `(c)ountry/`     | Sort by country |
-| `(r)egion/`      | Sort by region |
-| `note/`          | Sort by note |
+* If no attributes are provided, gamers are sorted by **gamertag** by default.
+* Attributes are applied in priority order from left to right (first attribute = primary sort key).
+* Each attribute can only be specified **once** (e.g., `g/` and `gamertag/` count as the same attribute).
+* Attribute tokens are case-sensitive and must be lowercase (e.g., `name/`, not `NAME/`).
+* For optional attributes (`name`, `phone`, `email`, `group`, `server`, `country`, `region`, `note`), gamers without that value appear after gamers with a value.
+* `favourite/` places favourited gamers before non-favourited gamers.
+* `group/` sorts by a gamer's full group set (group names are alphabetically ordered before comparison).
+* If a filter is active (e.g., after `find`), the filtered results are shown in the active sort order.
+* Sorting is session-based and is not persisted to storage.
+* `list` resets sorting and returns to insertion order.
 
 Examples:
-* `sort` sorts all contacts by gamertag (default).
-* `sort name/` sorts all contacts by name.
-* `s p/ g/` sorts all contacts by phone number, using gamertag to break ties.
-* `sort favourite/ name/` sorts favourites before non-favourites, then by name within each group.
+* `sort` sorts gamers by gamertag (default).
+* `sort name/` sorts gamers by name.
+* `s p/ g/` sorts gamers by phone number, then by gamertag.
+* `sort favourite/ name/` sorts favourites before non-favourites, then by name within each favourite-status group.
+
+Before running `sort favourite/ name/`:
+
+  ![Before sort by favourite then name](images/beforesortss.png)
+
+After running `sort favourite/ name/`:
+
+  ![After sort by favourite then name](images/aftersortss.png)
+
+In the `after` screenshot, verify:
+* Favourited gamers appear before non-favourited gamers.
+* Names are sorted alphabetically (case-insensitive) within the favourited group.
+* Names are sorted alphabetically (case-insensitive) within the non-favourited group.
+
+**Common errors you may encounter:**
+
+* **Duplicate attributes**
+  Each sort attribute can only be entered once. Short and long forms of the same attribute count as duplicates.
+  Example: `sort gamertag/ g/`
+  Error shown: `Duplicate attribute detected: gamertag. Each attribute can only be specified once.`
+* **Invalid attribute name**
+  Unsupported attributes are rejected.
+  Example: `sort rank/`
+  Error shown: `Invalid attribute detected: rank. Please provide a valid sort attribute.`
+* **Multiple invalid attributes**
+  If more than one invalid attribute is provided, all invalid attributes are reported together.
+  Example: `sort rank/ level/`
+  Error shown: `Invalid attributes detected: rank, level. Please provide only valid sort attributes.`
+* **Invalid format**
+  Every attribute token must end with `/`.
+  Example: `sort name`
+  Error shown: `Invalid command format!` followed by the sort usage format.
+* **No gamers to sort**
+  `sort` cannot run when the gamer list is empty.
+  Error shown: `There are no contacts to sort!`
+
+**Notes:**
+
+* You can mix long and short forms in one command. Example: `sort name/ p/`.
+* `note/` has no short alias.
+* For whole-list sorting after `find`, run `list`, then run `sort` again.
 
 ### Deleting a Gamer : `delete`
 

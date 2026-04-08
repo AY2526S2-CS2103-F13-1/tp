@@ -28,8 +28,9 @@ public class SortCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts contacts by the specified attributes.\n"
             + "\nIf no attributes are specified, results are sorted by gamertag by default.\n"
-            + "\nFormat: " + COMMAND_WORD_WITH_ALIAS + " [gamertag/] [name/] [phone/] [email/] [group/]"
-            + " [server/] [favourite/] [country/] [region/] [note/]\n"
+            + "\nFormat: " + COMMAND_WORD_WITH_ALIAS
+            + " [(g)amertag/] [(n)ame/] [(p)hone/] [(e)mail/] [(gr)oup/]"
+            + " [(s)erver/] [(fav)ourite/] [(c)ountry/] [(r)egion/] [note/]\n"
             + "\nExample: " + COMMAND_WORD + " phone/ gamertag/";
 
     public static final String MESSAGE_SORT_SUCCESS = "Sorted all contacts by %1$s.";
