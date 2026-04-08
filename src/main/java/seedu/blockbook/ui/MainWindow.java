@@ -16,8 +16,10 @@ import seedu.blockbook.commons.core.GuiSettings;
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.logic.Logic;
 import seedu.blockbook.logic.commands.CommandResult;
+import seedu.blockbook.logic.commands.GroupViewCommand;
 import seedu.blockbook.logic.commands.exceptions.CommandException;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
+import seedu.blockbook.model.gamer.Group;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -40,6 +42,7 @@ public class MainWindow extends UiPart<Stage> {
     private GamerListPanel gamerListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private GroupListPanel groupListPanel;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -58,6 +61,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane gamerListPanelPlaceholder;
+
+    @FXML
+    private StackPane groupListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -141,6 +147,9 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         gamerListPanel = new GamerListPanel(logic.getFilteredGamerList());
         gamerListPanelPlaceholder.getChildren().add(gamerListPanel.getRoot());
+
+        groupListPanel = new GroupListPanel(logic.getGroupList(), this::handleGroupView);
+        groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -226,6 +235,22 @@ public class MainWindow extends UiPart<Stage> {
 
     public GamerListPanel getGamerListPanel() {
         return gamerListPanel;
+    }
+
+    private void handleGroupView(Group group) {
+        if (group == null) {
+            return;
+        }
+        int index = logic.getGroupList().indexOf(group);
+        if (index < 0) {
+            return;
+        }
+        String commandText = GroupViewCommand.COMMAND_WORD + " " + (index + 1);
+        try {
+            executeCommand(commandText);
+        } catch (CommandException | ParseException e) {
+            logger.info("An error occurred while executing groupview command from group card double-click.");
+        }
     }
 
     /**

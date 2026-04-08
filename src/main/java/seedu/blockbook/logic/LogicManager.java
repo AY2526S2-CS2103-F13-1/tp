@@ -16,6 +16,7 @@ import seedu.blockbook.logic.parser.exceptions.ParseException;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.ReadOnlyBlockBook;
 import seedu.blockbook.model.gamer.Gamer;
+import seedu.blockbook.model.gamer.Group;
 import seedu.blockbook.storage.Storage;
 
 /**
@@ -72,6 +73,11 @@ public class LogicManager implements Logic {
     }
 
     @Override
+    public ObservableList<Group> getGroupList() {
+        return model.getGroupList();
+    }
+
+    @Override
     public Path getBlockBookFilePath() {
         return model.getBlockBookFilePath();
     }
@@ -86,5 +92,4 @@ public class LogicManager implements Logic {
         model.setGuiSettings(guiSettings);
     }
 }
-
 
