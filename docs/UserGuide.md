@@ -88,6 +88,12 @@ Adds a gamer to BlockBook with a required gamertag and optional details such as 
 
 Format: `(a)dd (g)amertag/GAMERTAG [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`
 
+Examples:
+* `a g/ilovesteve n/Herobrine p/99999 e/brine@gmail.com s/127.0.0.1:8080 c/Singapore r/ASIA note/I hate steve`
+* `add gamertag/Notch name/Notch phone/+12345 email/notch@example.com server/mc.example.net:25565 country/Malaysia region/ASIA note/Usually plays survival`
+
+<img width="1249" height="781" alt="Screenshot 2026-04-08 at 9 21 41 PM" src="https://github.com/user-attachments/assets/6f07bf84-b438-4ff0-9b6f-2fd9044914ad" />
+
 <box type="tip" seamless>
 
 **Tip:** Only `gamertag/` is required. All other fields are optional.
@@ -130,11 +136,6 @@ Format: `(a)dd (g)amertag/GAMERTAG [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL]
   For example, `r/asia` will be stored as `ASIA`.
 - Notes are **not** auto-normalized in the same way, so they are stored more closely to how you entered them.
 - Newly added gamers are **not favourited** by default.
-
-
-Examples:
-* `a g/ilovesteve n/Herobrine p/99999 e/brine@gmail.com s/127.0.0.1:8080 c/Singapore r/ASIA note/I hate steve`
-* `add gamertag/Notch name/Notch phone/+12345 email/notch@example.com server/mc.example.net:25565 country/Malaysia region/ASIA note/Usually plays survival`
 
 ### Listing all gamers : `list`
 
