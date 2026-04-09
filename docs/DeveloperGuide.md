@@ -15,6 +15,7 @@ The current content is based on the design decisions we have made so far, and ma
 --------------------------------------------------------------------------------------------------------------------
 ## **Acknowledgements**
 * BlockBook is based on the AB-3 codebase.
+* Some of the graphic assets are [Minecraft textures](https://github.com/Mojang/bedrock-samples).
 * The UI mockup was generated with ChatGPT using the following [input](https://chatgpt.com/share/69a2747d-cb94-800c-bb01-49b78ced58b4).
 
 ## **Setting up and getting started**
