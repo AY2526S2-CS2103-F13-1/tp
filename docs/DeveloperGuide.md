@@ -297,31 +297,30 @@ As these represent the expected behaviour of the final iteration, some use cases
 **MSS**
 
 1.  User chooses to add a new gamer contact.
-2.  BB prompts for the contact details required to create the gamer contact.
-3.  User provides the required gamertag and any optional fields.
-4.  BB validates the provided details.
-5.  BB saves the new gamer contact and displays a success message with the updated contact list.
+2.  User provides the required gamertag and any optional fields.
+3.  BB validates the provided details.
+4.  BB saves the new gamer contact and displays a success message with the updated contact list.
 
 Use case ends.
 
 **Extensions**
 
-4a. The required gamertag field is missing.
+3a. The required gamertag field is missing.
 
-- 4a1. BB displays an error message showing the correct command format.
-- 4a2. User re-enters the add command with corrected input.
+- 3a1. BB displays an error message showing the correct command format.
+- 3a2. User re-enters the add command with corrected input.
 - Use case resumes at step 1.
 
-4b. One or more specified fields contain invalid values.
+3b. One or more specified fields contain invalid values.
 
-- 4b1. BB displays an error message indicating that the input is invalid.
-- 4b2. User re-enters the add command with corrected input.
+- 3b1. BB displays an error message indicating that the input is invalid.
+- 3b2. User re-enters the add command with corrected input.
 - Use case resumes at step 1.
 
-4c. A contact with the same gamertag already exists.
+3c. A contact with the same gamertag already exists.
 
-- 4c1. BB displays an error message indicating that the gamertag is already in use.
-- 4c2. User re-enters the add command with a different gamertag.
+- 3c1. BB displays an error message indicating that the gamertag is already in use.
+- 3c2. User re-enters the add command with a different gamertag.
 - Use case resumes at step 1.
 
 #### UC02 - List All Gamer Contacts
