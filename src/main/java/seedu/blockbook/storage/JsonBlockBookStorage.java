@@ -51,7 +51,7 @@ public class JsonBlockBookStorage implements BlockBookStorage {
 
         try {
             return Optional.of(jsonBlockBook.get().toModelType());
-        } catch (IllegalValueException ive) {
+        } catch (Exception ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataLoadingException(ive);
         }
