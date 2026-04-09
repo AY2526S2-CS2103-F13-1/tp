@@ -364,78 +364,7 @@ Use case ends.
 - 4a1. BB notifies the user that the contact is already a favourite.
 - Use case ends.
 
-(An extension can be added for unfavourite here)
-
-#### UC04 - Add Profile Picture to Contact
-
-**MSS**
-
-1. User chooses to add a profile picture to a contact.
-2. BB requests the contact's gamertag.
-3. User enters the gamertag.
-4. BB requests the image to use as the profile picture.
-5. User provides the image.
-6. BB requests confirmation.
-7. User confirms.
-8. BB saves the profile picture and displays the updated contact profile.
-
-Use case ends.
-
-**Extensions**
-
-3a. BB detects that the gamertag is empty or contains invalid characters.
-
-- 3a1. BB displays an error and requests correct data.
-- 3a2. User enters new data.
-- Steps 3a1-3a2 are repeated until the data entered is correct.
-- Use case resumes from step 4.
-
-5a. BB detects that the provided image is invalid or cannot be accessed.
-
-- 5a1. BB displays an error and requests a valid image.
-- 5a2. User provides new image data.
-- Steps 5a1-5a2 are repeated until the data entered is correct.
-- Use case resumes from step 6.
-
-*a. At any time, User chooses to cancel.
-
-- *a1. BB discards all entered data.
-- Use case ends.
-
-#### UC05 - Add Note to Contact (Can be deleted)
-
-**MSS**
-
-1. User chooses to add a note to an existing contact.
-2. BB requests the gamertag of the target contact.
-3. User enters the gamertag.
-4. BB displays the contact's current details.
-5. User enters the note to be added.
-6. BB saves the note and displays the updated contact profile.
-
-Use case ends.
-
-**Extensions**
-
-3a. BB cannot find a contact matching the entered gamertag.
-
-- 3a1. BB displays an error and requests a valid gamertag.
-- 3a2. User enters a new gamertag.
-- Steps 3a1-3a2 are repeated until a match is found.
-- Use case resumes from step 4.
-
-5a. User enters a note that exceeds the maximum character limit.
-
-- 5a1. BB displays an error indicating the limit and requests a shorter note.
-- 5a2. User enters a new note.
-- Use case resumes from step 6.
-
-*a. At any time, User chooses to cancel.
-
-- *a1. BB discards all unsaved changes.
-- Use case ends.
-
-#### UC06 - Sort Gamer Contacts
+#### UC04 - Sort Gamer Contacts
 
 **MSS**
 
@@ -466,7 +395,7 @@ Use case ends.
 - 2a1. BB informs the user that there are no contacts to sort.
 - Use case ends.
 
-#### UC07 - Edit a Gamer Contact (Change of name from Update)
+#### UC05 - Edit a Gamer Contact (Change of name from Update)
 
 **MSS**
 
@@ -516,7 +445,7 @@ Use case ends.
 - *a1. BB discards all changes.
 - Use case ends.
 
-#### UC08 - Delete a Gamer Contact
+#### UC06 - Delete a Gamer Contact
 **Preconditions**
 - User knows the index of the contact they wish to delete (e.g. having previously executed UC02)
 - User has at least one contact saved in BlockBook.
@@ -531,7 +460,7 @@ Use case ends.
 - 1a1. BB displays an error message.
 - Use case ends.
 
-#### UC09 - View a Gamer Contact
+#### UC07 - View a Gamer Contact
 
 **Preconditions**
 - User has a list of gamer contacts displayed and knows the index of the contact to view (e.g. after UC02).
@@ -555,7 +484,7 @@ Use case ends.
 - 1b1. BB displays an error message.
 - Use case ends.
 
-#### UC10 - Find Gamer Contacts
+#### UC08 - Find Gamer Contacts
 
 **MSS**
 
@@ -581,7 +510,7 @@ Use case ends.
 - 2a1. BB displays a “no gamers found” message and does not update the current list.
 - Use case ends.
 
-#### UC11 - Clear all Gamer Contacts
+#### UC09 - Clear all Gamer Contacts
 **Preconditions**
 - User has at least one contact saved in BlockBook.
 
@@ -598,14 +527,14 @@ Use case ends.
 - 3a1. BB displays an error message and prompts the user for confirmation again.
 - Use case resumes from step 3.
 
-#### UC12 - Show Help
+#### UC10 - Show Help
 **MSS**
 1. User requests to view the help message.
 2. BB displays a help message that includes a summary of all available commands and their usage.
 
 Use case ends.
 
-#### UC13 - Create a Group
+#### UC11 - Create a Group
 
 **MSS**
 1. User requests to create a group with a group name.
@@ -622,7 +551,7 @@ Use case ends.
 - 1b1. BB displays an error message.
 - Use case ends.
 
-#### UC14 - Edit a Group
+#### UC12 - Edit a Group
 
 **MSS**
 1. User requests to edit a group by its index and provides a new group name.
@@ -643,7 +572,7 @@ Use case ends.
 - 1c1. BB displays an error message.
 - Use case ends.
 
-#### UC15 - Delete a Group
+#### UC13 - Delete a Group
 
 **MSS**
 1. User requests to delete a group by its index.
@@ -666,7 +595,7 @@ Use case ends.
 - 3a1. BB displays an error message and prompts the user for confirmation again with a new code.
 - Use case resumes from step 3.
 
-#### UC16 - Add a Gamer to a Group
+#### UC14 - Add a Gamer to a Group
 
 **MSS**
 1. User requests to add a gamer to a group by providing the gamer index and group index.
@@ -683,7 +612,7 @@ Use case ends.
 - 1b1. BB displays an error message.
 - Use case ends.
 
-#### UC17 - Remove a Gamer from a Group
+#### UC15 - Remove a Gamer from a Group
 
 **MSS**
 1. User requests to remove a gamer from a group by providing the gamer index and the gamer's group index.
@@ -696,7 +625,7 @@ Use case ends.
 - 1a1. BB displays an error message.
 - Use case ends.
 
-#### UC18 - List all Groups
+#### UC16 - List all Groups
 
 **MSS**
 1. User requests to list all groups.
@@ -709,7 +638,7 @@ Use case ends.
 - 1a1. BB informs the user that no groups are currently stored.
 - Use case ends.
 
-#### UC19 - View a Group
+#### UC17 - View a Group
 
 **MSS**
 1. User requests to view a group by its index.
@@ -1126,15 +1055,232 @@ testers are expected to do more *exploratory* testing.
    4. Test case: `clear` followed by `clear`<br>
       Expected: The confirmation code for the first `clear` command is different from the second `clear` command. No contacts are deleted.
 
-### Creating a group (TBA)
+### Creating a group
 
-### Editing a group (TBA)
+1. Creating a new group
 
-### Deleting a group (TBA)
+    1. Prerequisites: The group list does not contain a group named `i love steve group`.
 
-### Adding a gamer to a group (TBA)
+    1. Test case: `groupcreate i love steve group`<br>
+       Expected: A success message is shown: `Group: i love steve group added!`. The group list includes `i love steve group`.
 
-### Listing groups (TBA)
+    1. Test case: `gc i love steve group`<br>
+       Expected: Same result as `groupcreate i love steve group`.
+
+    1. Test case: `groupcreate i love steve       group`<br>
+       Expected: A success message is shown and the group is stored as `i love steve group` (extra spaces are collapsed).
+
+1. Duplicate group (case-insensitive)
+
+    1. Prerequisites: The group list already contains `i love steve group`.
+
+    1. Test case: `groupcreate i love steve group`<br>
+       Expected: Error indicating the group already exists.
+
+1. Invalid group name / format
+
+    1. Prerequisites: None.
+
+    1. Test case: `groupcreate i_love_steve_group`<br>
+       Expected: Error indicating the group name must contain only letters, spaces, hyphens, and apostrophes,
+       and be at most 50 characters.
+
+    1. Test case: `groupcreate`<br>
+       Expected: Error indicating invalid command format for `groupcreate`.
+
+### Editing a group's name
+
+1. Editing an existing group
+
+    1. Prerequisites: The group list contains `i love steve group` at index 1.
+
+    1. Test case: `groupedit 1 I love Alex group`<br>
+       Expected: A success message is shown, showing the old group name has been edited to the new group name of `I love Alex group`. The group list includes `I love Alex group` instead of `i love steve group`.
+
+    1. Test case: `ge 1 I love Alex group`<br>
+       Expected: Same result as `groupedit 1 I love Alex group`.
+
+1. Invalid index
+
+    1. Prerequisites: The group list has fewer than 99 groups.
+
+    1. Test case: `groupedit 99 I love Alex group`<br>
+       Expected: Error indicating index is out of range.
+
+1. Duplicate group (case-insensitive)
+
+    1. Prerequisites: The group list already contains `I love Alex`.
+
+    1. Test case: `groupedit 1 I love Alex`<br>
+       Expected: Error indicating the group already exists.
+
+1. Invalid group name / format
+
+    1. Prerequisites: None.
+
+    1. Test case: `groupedit 1 I_love_Alex`<br>
+       Expected: Error indicating the group name must contain only letters, spaces, hyphens, and apostrophes,
+       and be at most 50 characters.
+
+    1. Test case: `groupedit`<br>
+       Expected: Error indicating invalid command format for `groupedit`.
+
+### Deleting a group
+
+1. Deleting an existing group
+
+    1. Prerequisites: The group list contains `Explorers` at index 1, and at least one gamer belongs to `Explorers`. For this example we have 2 gamer contacts with gamertags `AlexTag` and `SteveTag` in `Explorers`.
+
+    1. Test case: `groupnuke 1`<br>
+       Expected: A warning message is shown with a confirmation code (e.g., `groupnuke 1 abc123`).
+
+    1. Test case: `groupnuke 1 abc123`<br>
+       Expected: A success message is shown, showing that the group `Explorers` is deleted and the gamertags of the gamers that belonged to `Explorers` (e.g., `AlexTag`, `SteveTag`) are no longer in that group. The group list no longer includes `Explorers`.
+
+    1. Test case: `gn 1`<br>
+       Expected: Same result as `groupnuke 1` (warning prompt).
+
+1. Invalid index
+
+    1. Prerequisites: The group list contains 1 group.
+
+    1. Test case: `groupnuke 2`<br>
+       Expected: Error indicating index is out of range.
+
+1. Invalid command format
+
+    1. Prerequisites: None.
+
+    1. Test case: `groupnuke`<br>
+       Expected: Error indicating invalid command format for `groupnuke`.
+
+    1. Test case: `groupnuke one`<br>
+       Expected: Error indicating invalid command format for `groupnuke`.
+
+### Adding a gamer to a group
+
+1. Adding a gamer to an existing group
+
+    1. Prerequisites: The gamer list contains `Alex` with gamertag `AlexTag` at index 1. The group list contains `Explorers` at index 1.
+       `Alex` is not already in `Explorers`.
+
+    1. Test case: `groupadd 1 1`<br>
+       Expected: A success message is shown, where it shows the gamertag of the gamer (e.g., `AlexTag`) is added to the group `Explorers`.
+       The gamer at index 1 now has `Explorers` in their group list and is considered to be in the group.
+
+    1. Test case: `ga 1 1`<br>
+       Expected: Same result as `groupadd 1 1`.
+
+1. Gamer already in group
+
+    1. Prerequisites: The gamer list contains `Alex` at index 1. The group list contains `Explorers` at index 1.
+       `Alex` is already in `Explorers`.
+
+    1. Test case: `groupadd 1 1`<br>
+       Expected: Error indicating the gamer contact is already in the group.
+
+1. Invalid index
+
+    1. Prerequisites: The gamer list contains 1 gamer and the group list contains 1 group.
+
+    1. Test case: `groupadd 2 1`<br>
+       Expected: Error indicating index is out of range.
+
+    1. Test case: `groupadd 1 2`<br>
+       Expected: Error indicating index is out of range.
+
+1. Invalid command format
+
+    1. Prerequisites: None.
+
+    1. Test case: `groupadd`<br>
+       Expected: Error indicating invalid command format for `groupadd`.
+
+    1. Test case: `groupadd one 1`<br>
+       Expected: Error indicating invalid command format for `groupadd`.
+
+### Removing a gamer from a group
+
+1. Removing a gamer from a group
+
+    1. Prerequisites: The gamer list contains `Alex` at index 1. `Alex` has groups listed, and the first group in
+       Alex's group list is `Explorers`.
+
+    1. Test case: `groupremove 1 1`<br>
+       Expected: A success message is shown, where it shows the gamertag of the gamer (e.g., `AlexTag`) is removed from the group `Explorers`. The gamer at index 1 no longer has `Explorers` in their group list and is no longer considered to be in the group.
+       The first group is removed from Alex's group list.
+
+    1. Test case: `gr 1 1`<br>
+       Expected: Same result as `groupremove 1 1`.
+
+1. Invalid index
+
+    1. Prerequisites: The gamer list contains 1 gamer, and the gamer at index 1 has 1 group.
+
+    1. Test case: `groupremove 2 1`<br>
+       Expected: Error indicating index is out of range.
+
+    1. Test case: `groupremove 1 2`<br>
+       Expected: Error indicating index is out of range.
+
+1. Invalid command format
+
+    1. Prerequisites: None.
+
+    1. Test case: `groupremove`<br>
+       Expected: Error indicating invalid command format for `groupremove`.
+
+    1. Test case: `groupremove one 1`<br>
+       Expected: Error indicating invalid command format for `groupremove`.
+
+### Listing all groups
+
+1. Listing all groups
+
+    1. Prerequisites: The group list contains `Explorers` and `Raid Team`.
+
+    1. Test case: `grouplist`<br>
+       Expected: The group list displays `Explorers` and `Raid Team`.
+
+    1. Test case: `gl`<br>
+       Expected: Same result as `grouplist`.
+
+### Viewing a group
+
+1. Viewing a group with no gamers
+
+    1. Prerequisites: The group list contains `Explorers` at index 1. No gamers belong to `Explorers`.
+       The gamer list is currently filtered (e.g., via `find name/Alex`).
+
+    1. Test case: `groupview 1`<br>
+       Expected: A message indicates there are no associated gamers, and the gamer contact list remains unchanged
+       (still showing the results of the previous command).
+
+1. Viewing an existing group
+
+    1. Prerequisites: The group list contains `Explorers` at index 1. The gamer list contains `Alex` with gamertag `AlexTag` and `Steve` with gamertag `SteveTag`. Both `Alex` and `Steve` are in the group `Explorers`.
+
+    1. Test case: `groupview 1`<br>
+       Expected: A success message is shown, showing the group name (e.g., `Explorers`) and the gamertags of the gamers in that group (e.g., `AlexTag`, `SteveTag`). The gamer contact list also updates and displays `Alex` and `Steve`.
+
+    1. Test case: `gv 1`<br>
+       Expected: Same result as `groupview 1`.
+
+1. Invalid index
+    1. Prerequisites: The group list contains 1 group.
+
+    1. Test case: `groupview 2`<br>
+       Expected: Error indicating index is out of range.
+
+1. Invalid command format
+
+    1. Prerequisites: None.
+
+    1. Test case: `groupview`<br>
+       Expected: Error indicating invalid command format for `groupview`.
+
+    1. Test case: `groupview one`<br>
+       Expected: Error indicating invalid command format for `groupview`.
 
 ### Dealing with data
 1. Saving data to `contacts.json`
