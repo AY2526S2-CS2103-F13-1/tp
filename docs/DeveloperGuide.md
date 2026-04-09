@@ -604,7 +604,7 @@ testers are expected to do more *exploratory* testing.
 
 2. Invalid inputs
 
-   i. Prerequisites: Launch the application. The contact list is visible. At least one gamer with gamertag `Steve123` already exists for duplicate-gamertag test cases.
+   i. Prerequisites: Launch the application. The contact list is visible.
 
    ii. Test case: `add n/Steve`  
    Expected: No gamer is added. An error message indicates invalid command format because the required `gamertag/` prefix is missing.
