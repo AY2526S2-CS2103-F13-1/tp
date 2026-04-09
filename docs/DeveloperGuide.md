@@ -613,6 +613,8 @@ testers are expected to do more *exploratory* testing.
 1. _{ more test cases ... }_
 
 ### Using the help command
+1. Typing `help` in the command box and pressing Enter should display a help message that includes a summary of all available commands and their usage.
+2. A new window should pop up showing the same help message.
 
 ### Adding a gamer contact
 
