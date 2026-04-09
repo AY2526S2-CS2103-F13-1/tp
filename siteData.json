@@ -81,7 +81,8 @@
         "removing-a-gamer-from-a-group": "Removing a gamer from a group",
         "listing-all-groups": "Listing all groups",
         "viewing-a-group": "Viewing a group",
-        "dealing-with-data": "Dealing with data"
+        "dealing-with-data": "Dealing with data",
+        "effort": "Effort"
       },
       "headingKeywords": {}
     },
@@ -137,7 +138,7 @@
         "viewing-gamers-full-details-view": "Viewing gamers full details: view",
         "sorting-gamers-sort": "Sorting gamers : sort",
         "deleting-a-gamer-delete": "Deleting a Gamer : delete",
-        "clearing-all-entries-clear-confirmation-code": "Clearing all entries : clear [CONFIRMATION_CODE]",
+        "clearing-all-entries-clear": "Clearing all entries : clear",
         "creating-a-group-groupcreate": "Creating a group : groupcreate",
         "editing-a-group-s-name-groupedit": "Editing a group's name : groupedit",
         "deleting-a-group-groupnuke-blockbook-group-index-confirmation-code": "Deleting a group : groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]",
@@ -191,7 +192,7 @@
       "src": "team/tehdrink.md",
       "title": "Kester's Project Portfolio Page",
       "headings": {
-        "project-blockbook": "Project: BlockBook"
+        "stuff-that-i-worked-on": "Stuff that I worked on"
       },
       "headingKeywords": {}
     },
