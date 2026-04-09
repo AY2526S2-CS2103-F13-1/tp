@@ -1303,3 +1303,12 @@ testers are expected to do more *exploratory* testing.
 
       1. Expected: BlockBook starts with an empty list. The result will display that data could not be loaded from the file and that BlockBook will be starting with an empty Gamer Contact list instead. 
          A new `contacts.json` file will be created to replace the corrupted `contacts.json` file after a command that invokes saving is executed or on app exit.
+
+--------------------------------------------------------------------------------------------------------------------
+
+### Effort
+As a team, the most challenging part of adapting AB‑3 to BlockBook was reshaping the data model to fit our domain. 
+Introducing new fields and a group structure required coordinated changes across storage, model, logic, UI, and tests, and affected many existing assumptions in the AB‑3 codebase.
+Implementing the group features was also demanding because it had to work within the existing architecture and indexing rules while keeping behavior consistent across commands.
+Smaller enhancements such as find, multi‑index delete, and sorting were comparatively straightforward, but a large portion of our effort went into writing and updating test cases, 
+diagnosing regressions, and fixing bugs that propagated across components after refactors.
