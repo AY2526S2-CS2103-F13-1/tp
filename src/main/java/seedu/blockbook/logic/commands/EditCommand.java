@@ -35,7 +35,7 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD_WITH_ALIAS = "(e)dit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits a gamer in BlockBook.\n\n"
-            + "Format: " + COMMAND_WORD_WITH_ALIAS + " INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE]"
+            + "Format: " + COMMAND_WORD_WITH_ALIAS + " GAMER_INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE]"
             + " [(e)mail/EMAIL] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]\n\n"
             + "Example: " + COMMAND_WORD + " 1 gamertag/ilovesteve name/Herobrine phone/99999 email/brine@gmail.com"
             + " server/127.0.0.1:8080 country/Singapore region/ASIA note/I hate steve";

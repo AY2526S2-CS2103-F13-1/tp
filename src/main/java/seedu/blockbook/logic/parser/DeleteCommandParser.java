@@ -1,10 +1,9 @@
 package seedu.blockbook.logic.parser;
 
-import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
 import java.util.ArrayList;
 
 import seedu.blockbook.commons.core.index.Index;
+import seedu.blockbook.logic.Messages;
 import seedu.blockbook.logic.commands.DeleteCommand;
 import seedu.blockbook.logic.parser.exceptions.ParseException;
 
@@ -23,8 +22,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             ArrayList<Index> indexes = ParserUtil.parseMultipleIndexes(args);
             return new DeleteCommand(indexes);
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(Messages.MESSAGE_MULTIPLE_INDEXES_INVALID, pe);
         }
     }
 

@@ -122,14 +122,14 @@ How the parsing works:
 
 The `Model` component,
 
-* stores contact data i.e., all `Gamer` objects (which are contained in a `UniqueGamerList` object).
-  * stores the currently 'selected' `Gamer` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Gamer>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores contact data i.e., all `Gamer` objects (which are contained in a `UniqueGamerList` object) and all `Group` objects (which are contained in a `UniqueGroupList` object).
+  * stores the currently 'selected' `Gamer` objects (e.g., results of a search query) as a separate _sorted_ and _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Gamer>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPrefs` object that represents the user's preferences. This is exposed to the outside as a `ReadOnlyUserPrefs` object.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
 <box type="info" seamless>
 
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `BlockBook`, which `Gamer` references. This allows `BlockBook` to only require one `Tag` object per unique tag, instead of each `Gamer` needing their own `Tag` objects.<br>
+**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Group` list in the `BlockBook`, which `Gamer` references. This allows `BlockBook` to only require one `Group` object per unique group, instead of each `Gamer` needing their own `Group` objects.<br>
 
 <puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
 
@@ -155,7 +155,38 @@ Classes used by multiple components are in the `seedu.blockbook.commons` package
 
 ## **Implementation**
 
-This section is WIP
+### Add gamer feature
+
+The Add feature allows users to create a new gamer contact in BlockBook by entering an `add` command with a required gamertag and optional fields such as name, phone number, email address, server, country, region, and note. This feature allows users to record gamer contacts efficiently while ensuring that the updated data is saved after a successful add operation.
+
+The sequence diagram below illustrates the main interactions that take place when an `add` command is executed.
+
+<puml src="diagrams/AddCommandSequenceDiagram.puml" width="300" />
+
+**User enters command:**  
+The process begins when the user types an `add` command into the UI.
+
+**UI passes command to Logic:**  
+After receiving the command, the UI forwards it to the Logic component for processing.
+
+**Logic parses the command:**  
+Within the Logic component, the command is recognized as an `add` command. The input is then parsed internally, where the command arguments are validated and converted into the corresponding gamer attribute objects before an `AddCommand` is created.
+
+**Logic updates the Model:**  
+The `AddCommand` is executed using the current Model. During this step, BlockBook checks whether a gamer with the same gamertag already exists. If no duplicate is found, the new gamer contact is added to the Model.
+
+**Logic saves the updated data:**  
+Once the gamer has been added successfully, the Logic component calls the Storage component to persist the updated BlockBook data.
+
+**Storage writes data to file:**  
+The Storage component saves the updated data to file so that the newly added gamer contact is retained after the application closes.
+
+**Logic returns the result:**  
+After the save operation is completed, Logic produces a `CommandResult` describing the outcome of the operation.
+
+**UI shows the outcome:**  
+Finally, the UI displays the result to the user, such as a success message when the gamer is added or an error message if the operation fails.
+
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
@@ -219,37 +250,33 @@ As these represent the expected behaviour of the final iteration, some use cases
 
 **MSS**
 
-1.  User chooses to add a new contact.
-2.  BB requests the contact's details (gamertag, server name, optional label).
-3.  User enters the requested details.
-4.  BB requests confirmation.
-5.   User confirms.
-6.    BB saves the new contact and displays the updated contact list.
+1.  User chooses to add a new gamer contact.
+2.  BB prompts for the contact details required to create the gamer contact.
+3.  User provides the required gamertag and any optional fields.
+4.  BB validates the provided details.
+5.  BB saves the new gamer contact and displays a success message with the updated contact list.
 
 Use case ends.
 
 **Extensions**
 
-3a. BB detects that the gamertag field is empty or contains invalid characters.
+4a. The required gamertag field is missing.
 
-- 3a1. BB displays an error and requests correct data.
+- 4a1. BB displays an error message showing the correct command format.
+- 4a2. User re-enters the add command with corrected input.
+- Use case resumes at step 1.
 
-- 3a2. User enters new data.
+4b. One or more specified fields contain invalid values.
 
-- Steps 3a1-3a2 are repeated until the data entered is correct.
+- 4b1. BB displays an error message indicating that the input is invalid.
+- 4b2. User re-enters the add command with corrected input.
+- Use case resumes at step 1.
 
-- Use case resumes from step 4.
+4c. A contact with the same gamertag already exists.
 
-3b. BB detects that a contact with the same gamertag already exists.
-
-- 3b1. BB warns the user of the duplicate entry and asks whether to proceed.
-- 3b2. User chooses to proceed or cancel.
-- If User cancels, use case ends. Otherwise, use case resumes from step 4.
-
-*a. At any time, User chooses to cancel adding the contact.
-
-- *a1. BB discards all entered data.
-- Use case ends.
+- 4c1. BB displays an error message indicating that the gamertag is already in use.
+- 4c2. User re-enters the add command with a different gamertag.
+- Use case resumes at step 1.
 
 **UC02 - List All Gamer Contacts**
 
@@ -364,20 +391,35 @@ Use case ends.
 - *a1. BB discards all unsaved changes.
 - Use case ends.
 
-**UC06 - Sort Gamer Contacts** (Extensions can be added for the optional attribute criteria)
-(Base case as MSS, other sorting criteria can be added as extensions)
+**UC06 - Sort Gamer Contacts**
 
 **MSS**
 
-1. User chooses to sort contacts by added date.
-2. BB displays all contacts sorted in chronological order by added date, from most recent.
+1. User requests to sort contacts by one or more attributes.
+2. BB sorts and displays the currently displayed contacts by the specified attributes in priority order.
 
 Use case ends.
 
 **Extensions**
 
-2a. BB finds no contacts.
-- 2a1. BB informs the user that there are no contacts.
+1a. User does not specify any attributes.
+
+- 1a1. BB uses gamertag as the default sort attribute.
+- Use case resumes from step 2.
+
+1b. User specifies one or more invalid attributes.
+
+- 1b1. BB displays an error message indicating that one or more sort attributes are invalid.
+- Use case ends.
+
+1c. User specifies duplicate attributes.
+
+- 1c1. BB displays an error message indicating that duplicate sort attributes are not allowed.
+- Use case ends.
+
+2a. There are no currently displayed contacts to sort.
+
+- 2a1. BB informs the user that there are no contacts to sort.
 - Use case ends.
 
 **UC07 - Edit a Gamer Contact** (Change of name from Update)
@@ -434,7 +476,29 @@ Use case ends.
 
 **UC09 - View a Gamer Contact**
 
-**UC10- Find Gamer Contacts**
+**Preconditions**
+- User has a list of gamer contacts displayed and knows the index of the contact to view (e.g. after UC02).
+
+**MSS**
+
+1. User requests to view a gamer contact by its index in the current list.
+2. BB displays the contact's full profile details.
+
+Use case ends.
+
+**Extensions**
+
+1a. User enters a non-numeric index.
+
+- 1a1. BB displays an error message.
+- Use case ends.
+
+1b. Index is out of range.
+
+- 1b1. BB displays an error message.
+- Use case ends.
+
+**UC10 - Find Gamer Contacts**
 
 **UC11 - Clear all Gamer Contacts**
 
@@ -519,6 +583,59 @@ testers are expected to do more *exploratory* testing.
 
 ### Adding a gamer contact
 
+1. Valid inputs
+
+   i. Prerequisites: Launch the application. The contact list is visible.
+
+   ii. Test case: `add g/Steve123`  
+   Expected: A new gamer with gamertag `Steve123` is added successfully.
+
+   iii. Test case: `add g/Alex99 n/Alex`  
+   Expected: A new gamer with gamertag `Alex99` and name `Alex` is added successfully.
+
+   iv. Test case: `add g/BuilderPro p/91234567 e/builder@example.com`  
+   Expected: A new gamer with gamertag `BuilderPro`, phone number `91234567`, and email `builder@example.com` is added successfully.
+
+   v. Test case: `add g/NetherKing s/mc.example.net c/Singapore r/ASIA note/Friendly player`  
+   Expected: A new gamer is added successfully with the server, country, region, and note fields stored correctly.
+
+   vi. Test case: `add g/Herobrine n/Herobrine p/99999 e/brine@gmail.com s/127.0.0.1:8080 c/Singapore r/ASIA note/I hate steve`  
+   Expected: A new gamer with all provided fields is added successfully.
+
+2. Invalid inputs
+
+   i. Prerequisites: Launch the application. The contact list is visible.
+
+   ii. Test case: `add n/Steve`  
+   Expected: No gamer is added. An error message indicates invalid command format because the required `gamertag/` prefix is missing.
+
+   iii. Test case: `add g/Bad Tag`  
+   Expected: No gamer is added. An error message indicates that the gamertag is invalid.
+
+   iv. Test case: `add g/FreshUser1 e/not-an-email`  
+   Expected: No gamer is added. An error message indicates that the email is invalid.
+
+   v. Test case: `add g/FreshUser2 p/abcde`  
+   Expected: No gamer is added. An error message indicates that the phone number is invalid.
+
+   vi. Test case: `add g/FreshUser3 c/Sing@pore`  
+   Expected: No gamer is added. An error message indicates that the country is invalid.
+
+   vii. Test case: `add g/FreshUser4 r/XYZ`  
+   Expected: No gamer is added. An error message indicates that the region is invalid.
+
+   viii. Test case: `add g/FreshUser5 s/server#1`  
+   Expected: No gamer is added. An error message indicates that the server is invalid.
+
+   ix. Test case: `add g/FreshUser6 n/Steve n/Stephen`  
+   Expected: No gamer is added. An error message indicates that duplicate prefixes are not allowed.
+
+   x. Test case: `add g/UniqueSteve123` followed by `add g/UniqueSteve123`  
+   Expected: The first command adds the gamer successfully. The second command does not add a gamer. An error message indicates that the gamertag is already used by someone in BlockBook.
+
+   xi. Test case: `add hello g/FreshUser7`  
+   Expected: No gamer is added. An error message indicates invalid command format because extra preamble text is not allowed.
+
 ### Editing a gamer contact
 
 ### Deleting a gamer contact
@@ -546,6 +663,46 @@ testers are expected to do more *exploratory* testing.
 ### Listing gamer contacts
 
 ### Viewing a gamer contact
+
+1. Viewing a gamer by index
+
+   1. Prerequisites: List all gamers using the `list` command. There is at least 1 gamer in the list.
+
+   1. Test case: `view 1`<br>
+      Expected: The command result displays the full details of the first gamer in the currently displayed list. A pop-up window containing the gamer's information is shown. The list remains unchanged.
+
+   1. Test case: `v 1`<br>
+      Expected: Same result as `view 1`.
+
+1. Viewing from a filtered list
+
+   1. Prerequisites: Filter the list to a single gamer using `find name/Alex`.
+
+   1. Test case: `view 1`<br>
+      Expected: The command result displays the full details of the filtered gamer given by the list index. A pop-up window containing the gamer's full information is shown. The list remains filtered.
+
+1. Invalid index
+
+   1. Prerequisites: The list contains 1 gamer.
+
+   1. Test case: `view 2`<br>
+      Expected: Error indicating index is out of range.
+
+   1. Test case: `view 0`<br>
+      Expected: Error indicating index is out of range.
+
+   1. Test case: `view -1`<br>
+      Expected: Error indicating index is out of range.
+
+1. Invalid command format
+
+   1. Prerequisites: None.
+
+   1. Test case: `view`<br>
+      Expected: Error indicating invalid command format for `view`.
+
+   1. Test case: `view one`<br>
+      Expected: Error indicating invalid command format for `view`.
 
 ### Finding a gamer contact
 
@@ -692,6 +849,57 @@ testers are expected to do more *exploratory* testing.
 
 ### Sorting gamer contacts
 
+1. Sorting gamers by default (gamertag)
+
+   1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
+
+   1. Test case: `sort`<br>
+      Expected: Displayed contacts are sorted alphabetically by gamertag (case-insensitive). Status message shows "Sorted all contacts by gamertag (default)."
+
+1. Sorting gamers by a single attribute
+
+   1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list, some with missing optional fields.
+
+   1. Test case: `sort name/`<br>
+      Expected: Displayed contacts are sorted alphabetically by name (case-insensitive). Contacts with no name are placed at the end. Status message shows "Sorted all contacts by name."
+
+   1. Test case: `sort favourite/`<br>
+      Expected: Displayed contacts with favourite status appear before non-favourite contacts. Status message shows "Sorted all contacts by favourite."
+
+1. Sorting gamers by multiple attributes
+
+   1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
+
+   1. Test case: `sort country/ name/`<br>
+      Expected: Displayed contacts are sorted by country first, then by name for contacts with the same country. Status message shows "Sorted all contacts by country, name."
+
+1. Sorting gamers using attribute aliases
+
+   1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
+
+   1. Test case: `sort n/`<br>
+      Expected: Same result as `sort name/`. Displayed contacts are sorted alphabetically by name.
+
+1. Sorting gamers with invalid input
+
+   1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
+
+   1. Test case: `sort xyz/`<br>
+      Expected: No sorting occurs. Error message indicates invalid attribute detected.
+
+   1. Test case: `sort name/ name/`<br>
+      Expected: No sorting occurs. Error message indicates duplicate attribute detected.
+
+   1. Test case: `sort abc`<br>
+      Expected: No sorting occurs. Error message indicates invalid command format.
+
+1. Sorting with no contacts displayed
+
+   1. Prerequisites: There are no contacts in BlockBook (e.g., start with empty data or run `clear` with confirmation). Do not use a `find` command with no matches for this precondition, because `find` retains the current displayed list when no results are found.
+
+   1. Test case: `sort`<br>
+      Expected: No sorting occurs. Error message indicates there are no contacts to sort.
+
 ### Clearing all gamer contacts
 
 ### Creating a group (TBA)
@@ -707,8 +915,21 @@ testers are expected to do more *exploratory* testing.
 ### Dealing with data
 1. Saving data to `contacts.json`
 
+   1. Test case: Add a gamer (e.g., `add gamertag/steve1`).<br>
+      Expected: `contacts.json` is updated with the new gamer entry.
+
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Missing data file
 
-1. _{ more test cases ... }_
+      1. Prerequisites: Delete or rename `contacts.json`.
+
+      1. Expected: BlockBook starts with an empty list. The result will display that no file was found and that BlockBook will be starting with an empty Gamer Contact list instead.
+       A new `contacts.json` file is created at the specified path after a command that invokes saving is executed or on app exit.
+
+   1. Corrupted data file
+
+      1. Prerequisites: Edit `contacts.json` to an invalid JSON (e.g., remove a closing brace).
+
+      1. Expected: BlockBook starts with an empty list. The result will display that data could not be loaded from the file and that BlockBook will be starting with an empty Gamer Contact list instead. 
+         A new `contacts.json` file will be created to replace the corrupted `contacts.json` file after a command that invokes saving is executed or on app exit.

@@ -1,7 +1,7 @@
 package seedu.blockbook.logic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.blockbook.logic.Messages.MESSAGE_INDEX_OUT_OF_RANGE;
+import static seedu.blockbook.logic.Messages.MESSAGE_MULTIPLE_INDEXES_INVALID;
 import static seedu.blockbook.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.blockbook.logic.commands.CommandTestUtil.GAMERTAG_DESC_AMY;
 import static seedu.blockbook.logic.commands.CommandTestUtil.NAME_DESC_AMY;
@@ -62,7 +62,7 @@ public class LogicManagerTest {
     public void execute_commandExecutionError_throwsCommandException() {
         model.addGamer(new GamerBuilder(AMY).build());
         String deleteCommand = "delete 9";
-        assertCommandException(deleteCommand, MESSAGE_INDEX_OUT_OF_RANGE);
+        assertCommandException(deleteCommand, MESSAGE_MULTIPLE_INDEXES_INVALID);
     }
 
     @Test
