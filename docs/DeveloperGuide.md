@@ -196,6 +196,45 @@ Finally, the UI displays the result to the user, such as a success message when 
 * [Configuration guide](Configuration.md)
 * [DevOps guide](DevOps.md)
 
+## **Future Developments**
+In the future, we plan to implement the following features and enhancements to further improve the functionality and user experience of BlockBook.
+
+### Planned Enhancements
+These are some enhancements that we plan to implement in the future.
+
+#### Command History Log
+**Purpose**: Allows the user to view a history of previously sent commands
+**Outputs**: Commands are added to a log file
+
+#### Profile Picture Support
+**Purpose**: Allows the user to upload an image for each gamer contact card in the contacts via a button in GUI/(Or via CLI add?).
+**Acceptable values**: IMAGESRC → Compulsory, path to the image file source.
+**Error messages**:
+- Invalid file format: “BlockBook only supports a valid .png/.jpg file. Please choose another file. ”
+- Missing/Corrupted file: “Profile picture file cannot be found or is corrupted. Reverting to default image. ”
+  Outputs:
+
+**Success**: "Profile picture updated to the image located at {IMAGESRC}"
+**Possible errors**:
+- Invalid file format 
+- Missing file 
+- Corrupted file
+
+#### Theme Customization
+Allow the user to customize the theme of the app (e.g., light mode, dark mode, etc.) via a `theme` command in CLI or a button in GUI.
+The user can choose from predefined themes or create their own custom theme by specifying colors for different UI elements.
+**Purpose**: Allows the user to customize the theme of the app (e.g., light mode, dark mode, etc.)
+**Acceptable values**: THEME → Compulsory, the theme to set the app to. Possible values include "light", "dark", and "custom".
+
+#### Better `contact.json` Handling
+The current implementation that handles `contact.json` will render the entire file invalid once a single entry has an error.
+Improve the handling of the `contact.json` file to allow valid entries to be shown in BlockBook while ignoring invalid entries.
+
+### Known Bugs
+These are some known bugs that we have identified but have not yet fixed.
+
+**Validation of Invalid Prefixes**: For example, entering `edit 1 region/na er/asd` returns `invalid region` instead of `invalid command format`. Updating the parser implementation to handle this will solve the issue.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Requirements**
