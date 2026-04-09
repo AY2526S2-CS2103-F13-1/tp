@@ -103,7 +103,7 @@ Examples:
 
 - `gamertag/`: letters, numbers, underscores only, max 50 chars.
 - `name/`: letters, spaces, hyphens, apostrophes only, max 50 chars.
-- `phone/`: optional leading `+`, digits/spaces/hyphens, at least 3 digits, at most 15 digits.
+- `phone/`: optional leading `+`, digits/spaces/hyphens, at least 3 digits, at most 15 digits, max 30 chars.
 - `email/`: must be a valid email in the format `local-part@domain`.
 - `server/`: letters, numbers, `.`, `-`, `:`, max 50 chars.
 - `country/`: letters, spaces, hyphens only, max 50 chars.
@@ -169,7 +169,7 @@ Examples:
 
 - `gamertag/`: letters, numbers, underscores only, max 50 chars.
 - `name/`: letters, spaces, hyphens, apostrophes only, max 50 chars.
-- `phone/`: optional leading `+`, digits/spaces/hyphens, at least 3 digits, at most 15 digits.
+- `phone/`: optional leading `+`, digits/spaces/hyphens, at least 3 digits, at most 15 digits, max 30 chars.
 - `email/`: must be a valid email in the format `local-part@domain`.
 - `server/`: letters, numbers, `.`, `-`, `:`, max 50 chars.
 - `country/`: letters, spaces, hyphens only, max 50 chars.
