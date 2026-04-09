@@ -241,6 +241,8 @@ Improve the handling of the `contact.json` file to allow valid entries to be sho
 These are some known bugs that we have identified but have not yet fixed.
 
 **Validation of Invalid Prefixes**: For example, entering `edit 1 region/na er/asd` returns `invalid region` instead of `invalid command format`. Updating the parser implementation to handle this will solve the issue.
+**Not handling null values in the gamer's group array**: This can cause the app to crash when trying to access the group information of a gamer that has a null value for their group array. Adding null checks before accessing the group information will prevent this issue.
+**Not handling Whitespace-only values for the `country` and `name` attributes**: This can cause the app to crash when trying to access the attributes associated to the gamer. Implementing input validation to check for non-empty and non-whitespace-only values will address this issue.
 
 --------------------------------------------------------------------------------------------------------------------
 
