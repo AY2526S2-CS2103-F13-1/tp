@@ -74,11 +74,13 @@
         "finding-a-gamer-contact": "Finding a gamer contact",
         "sorting-gamer-contacts": "Sorting gamer contacts",
         "clearing-all-gamer-contacts": "Clearing all gamer contacts",
-        "creating-a-group-tba": "Creating a group (TBA)",
-        "editing-a-group-tba": "Editing a group (TBA)",
-        "deleting-a-group-tba": "Deleting a group (TBA)",
-        "adding-a-gamer-to-a-group-tba": "Adding a gamer to a group (TBA)",
-        "listing-groups-tba": "Listing groups (TBA)",
+        "creating-a-group": "Creating a group",
+        "editing-a-group-s-name": "Editing a group's name",
+        "deleting-a-group": "Deleting a group",
+        "adding-a-gamer-to-a-group": "Adding a gamer to a group",
+        "removing-a-gamer-from-a-group": "Removing a gamer from a group",
+        "listing-all-groups": "Listing all groups",
+        "viewing-a-group": "Viewing a group",
         "dealing-with-data": "Dealing with data"
       },
       "headingKeywords": {}
