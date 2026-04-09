@@ -501,6 +501,21 @@ Use case ends.
 **UC10 - Find Gamer Contacts**
 
 **UC11 - Clear all Gamer Contacts**
+**Preconditions**
+- User has at least one contact saved in BlockBook.
+
+**MSS**
+1. User requests to clear all contacts.
+2. BB prompts the user for confirmation.
+3. User confirms.
+4. BB deletes all contacts and displays a success message.
+
+**Extensions**
+2a. User does not follow through with confirmation.
+   Use case ends
+3a. User used the wrong confirmation input.
+   3a1. BB displays an error message and prompts the user for confirmation again.
+   Use case resumes from step 3.
 
 **UC12 - Show Help**
 
