@@ -246,7 +246,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 (For all use cases below, the **System** is the `BlockBook (BB)` and the **Actor** is the `user`, unless specified otherwise)
 As these represent the expected behaviour of the final iteration, some use cases might not reflect the current functionality of the app.
 
-**UC01 - Add a Gamer Contact**
+#### UC01 - Add a Gamer Contact
 
 **MSS**
 
@@ -278,7 +278,7 @@ Use case ends.
 - 4c2. User re-enters the add command with a different gamertag.
 - Use case resumes at step 1.
 
-**UC02 - List All Gamer Contacts**
+#### UC02 - List All Gamer Contacts
 
 **MSS**
 
@@ -295,7 +295,7 @@ Use case ends.
 - 2a1. BB informs the user that no contacts are currently stored.
 - Use case ends.
 
-**UC03 - Favourite a Contact**
+#### UC03 - Favourite a Contact
 
 **MSS**
 
@@ -322,7 +322,7 @@ Use case ends.
 
 (An extension can be added for unfavourite here)
 
-**UC04 - Add Profile Picture to Contact** (TBA)
+#### UC04 - Add Profile Picture to Contact
 
 **MSS**
 
@@ -358,7 +358,7 @@ Use case ends.
 - *a1. BB discards all entered data.
 - Use case ends.
 
-**UC05 - Add Note to Contact** (Can be deleted)
+#### UC05 - Add Note to Contact (Can be deleted)
 
 **MSS**
 
@@ -391,7 +391,7 @@ Use case ends.
 - *a1. BB discards all unsaved changes.
 - Use case ends.
 
-**UC06 - Sort Gamer Contacts**
+#### UC06 - Sort Gamer Contacts
 
 **MSS**
 
@@ -422,7 +422,7 @@ Use case ends.
 - 2a1. BB informs the user that there are no contacts to sort.
 - Use case ends.
 
-**UC07 - Edit a Gamer Contact** (Change of name from Update)
+#### UC07 - Edit a Gamer Contact (Change of name from Update)
 
 **MSS**
 
@@ -472,9 +472,10 @@ Use case ends.
 - *a1. BB discards all changes.
 - Use case ends.
 
-**UC08 - Delete a Gamer Contact**
+#### UC08 - Delete a Gamer Contact
 
-**UC09 - View a Gamer Contact**
+
+#### UC09 - View a Gamer Contact
 
 **Preconditions**
 - User knows the index of the contact they wish to view (e.g. having previously executed UC02)
@@ -498,7 +499,7 @@ Use case ends.
 - 1b1. BB displays an error message.
 - Use case ends.
 
-**UC10 - Find Gamer Contacts**
+#### UC10 - Find Gamer Contacts**
 
 **UC11 - Clear all Gamer Contacts**
 **Preconditions**
@@ -517,22 +518,22 @@ Use case ends.
    3a1. BB displays an error message and prompts the user for confirmation again.
    Use case resumes from step 3.
 
-**UC12 - Show Help**
+#### UC12 - Show Help
 **MSS**
 1. User requests to view the help message.
 2. BB displays a help message that includes a summary of all available commands and their usage.
 
 Use case ends.
 
-**UC13 - Create a Group (TBA)**
+#### UC13 - Create a Group (TBA)
 
-**UC14 - Add a Gamer to a Group (TBA)**
+#### UC14 - Add a Gamer to a Group (TBA)
 
-**UC15 - Remove a Gamer from a Group (TBA)**
+#### UC15 - Remove a Gamer from a Group (TBA)
 
-**UC16 - Delete a Group (TBA)**
+#### UC16 - Delete a Group (TBA)
 
-**UC17 - List Groups (TBA)**
+#### UC17 - List Groups (TBA)
 
 ### Non-Functional Requirements
 
