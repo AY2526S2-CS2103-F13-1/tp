@@ -518,6 +518,11 @@ Use case ends.
    Use case resumes from step 3.
 
 **UC12 - Show Help**
+**MSS**
+1. User requests to view the help message.
+2. BB displays a help message that includes a summary of all available commands and their usage.
+
+Use case ends.
 
 **UC13 - Create a Group (TBA)**
 
