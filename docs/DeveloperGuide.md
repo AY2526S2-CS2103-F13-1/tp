@@ -361,76 +361,7 @@ Use case ends.
 
 (An extension can be added for unfavourite here)
 
-#### UC04 - Add Profile Picture to Contact
-
-**MSS**
-
-1. User chooses to add a profile picture to a contact.
-2. BB requests the contact's gamertag.
-3. User enters the gamertag.
-4. BB requests the image to use as the profile picture.
-5. User provides the image.
-6. BB requests confirmation.
-7. User confirms.
-8. BB saves the profile picture and displays the updated contact profile.
-
-Use case ends.
-
-**Extensions**
-
-3a. BB detects that the gamertag is empty or contains invalid characters.
-
-- 3a1. BB displays an error and requests correct data.
-- 3a2. User enters new data.
-- Steps 3a1-3a2 are repeated until the data entered is correct.
-- Use case resumes from step 4.
-
-5a. BB detects that the provided image is invalid or cannot be accessed.
-
-- 5a1. BB displays an error and requests a valid image.
-- 5a2. User provides new image data.
-- Steps 5a1-5a2 are repeated until the data entered is correct.
-- Use case resumes from step 6.
-
-*a. At any time, User chooses to cancel.
-
-- *a1. BB discards all entered data.
-- Use case ends.
-
-#### UC05 - Add Note to Contact (Can be deleted)
-
-**MSS**
-
-1. User chooses to add a note to an existing contact.
-2. BB requests the gamertag of the target contact.
-3. User enters the gamertag.
-4. BB displays the contact's current details.
-5. User enters the note to be added.
-6. BB saves the note and displays the updated contact profile.
-
-Use case ends.
-
-**Extensions**
-
-3a. BB cannot find a contact matching the entered gamertag.
-
-- 3a1. BB displays an error and requests a valid gamertag.
-- 3a2. User enters a new gamertag.
-- Steps 3a1-3a2 are repeated until a match is found.
-- Use case resumes from step 4.
-
-5a. User enters a note that exceeds the maximum character limit.
-
-- 5a1. BB displays an error indicating the limit and requests a shorter note.
-- 5a2. User enters a new note.
-- Use case resumes from step 6.
-
-*a. At any time, User chooses to cancel.
-
-- *a1. BB discards all unsaved changes.
-- Use case ends.
-
-#### UC06 - Sort Gamer Contacts
+#### UC04 - Sort Gamer Contacts
 
 **MSS**
 
@@ -461,7 +392,7 @@ Use case ends.
 - 2a1. BB informs the user that there are no contacts to sort.
 - Use case ends.
 
-#### UC07 - Edit a Gamer Contact (Change of name from Update)
+#### UC05 - Edit a Gamer Contact (Change of name from Update)
 
 **MSS**
 
@@ -511,7 +442,7 @@ Use case ends.
 - *a1. BB discards all changes.
 - Use case ends.
 
-#### UC08 - Delete a Gamer Contact
+#### UC06 - Delete a Gamer Contact
 **Preconditions**
 - User knows the index of the contact they wish to delete (e.g. having previously executed UC02)
 - User has at least one contact saved in BlockBook.
@@ -526,7 +457,7 @@ Use case ends.
 - 1a1. BB displays an error message.
 - Use case ends.
 
-#### UC09 - View a Gamer Contact
+#### UC07 - View a Gamer Contact
 
 **Preconditions**
 - User has a list of gamer contacts displayed and knows the index of the contact to view (e.g. after UC02).
@@ -550,9 +481,9 @@ Use case ends.
 - 1b1. BB displays an error message.
 - Use case ends.
 
-#### UC10 - Find Gamer Contacts**
+#### UC08 - Find Gamer Contacts**
 
-#### UC11 - Clear all Gamer Contacts**
+#### UC09 - Clear all Gamer Contacts**
 **Preconditions**
 - User has at least one contact saved in BlockBook.
 
@@ -569,22 +500,22 @@ Use case ends.
 - 3a1. BB displays an error message and prompts the user for confirmation again.
 - Use case resumes from step 3.
 
-#### UC12 - Show Help
+#### UC10 - Show Help
 **MSS**
 1. User requests to view the help message.
 2. BB displays a help message that includes a summary of all available commands and their usage.
 
 Use case ends.
 
-#### UC13 - Create a Group (TBA)
+#### UC11 - Create a Group (TBA)
 
-#### UC14 - Add a Gamer to a Group (TBA)
+#### UC12 - Add a Gamer to a Group (TBA)
 
-#### UC15 - Remove a Gamer from a Group (TBA)
+#### UC13 - Remove a Gamer from a Group (TBA)
 
-#### UC16 - Delete a Group (TBA)
+#### UC14 - Delete a Group (TBA)
 
-#### UC17 - List Groups (TBA)
+#### UC15 - List Groups (TBA)
 
 ### Non-Functional Requirements
 
