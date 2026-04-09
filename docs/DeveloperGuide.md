@@ -849,10 +849,10 @@ testers are expected to do more *exploratory* testing.
       Expected: Only Steve is displayed in the list. A message indicates 1 gamer(s) found.
 
    1. Test case: `find alex steve`<br>
-      Expected: No gamer is displayed in the list. A message indicates no gamers were found.
+      Expected: A message indicates no gamers were found. The displayed list remains unchanged.
 
    1. Test case: `find Sean`<br>
-      Expected: No gamer is displayed in the list. A message indicates no gamers were found.
+      Expected: A message indicates no gamers were found. The displayed list remains unchanged.
 
 1. Finding gamers with specific prefixes
 
