@@ -14,7 +14,8 @@ The current content is based on the design decisions we have made so far, and ma
 
 --------------------------------------------------------------------------------------------------------------------
 ## **Acknowledgements**
-The UI mockup was generated with ChatGPT using the following [input](https://chatgpt.com/share/69a2747d-cb94-800c-bb01-49b78ced58b4).
+* BlockBook is based on the AB-3 codebase.
+* The UI mockup was generated with ChatGPT using the following [input](https://chatgpt.com/share/69a2747d-cb94-800c-bb01-49b78ced58b4).
 
 ## **Setting up and getting started**
 
@@ -70,7 +71,11 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/AY2
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `GamerListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts such as `CommandBox`, `ResultDisplay`, `GamerListPanel`,
+`GroupListPanel`, and `StatusBarFooter`. The `GamerListPanel` uses `GamerCard` to render each gamer contact, and the
+`GroupListPanel` uses `GroupCard` to render each group. The UI also includes pop-up windows like `HelpWindow`
+and `ViewWindow`, where `ViewWindow` displays a `GamerPopupCard`. All these, including the `MainWindow`, inherit
+from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/blockbook/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -552,6 +557,30 @@ Use case ends.
 
 #### UC10 - Find Gamer Contacts
 
+**MSS**
+
+1. User requests to find gamer contacts using search criteria.
+2. BB shows the matching gamer contacts and a message indicating the number found.
+
+Use case ends.
+
+**Extensions**
+
+1a. User enters empty input or mixes global keywords with prefixed arguments.
+
+- 1a1. BB displays an invalid command format message and the correct usage.
+- Use case ends.
+
+1b. User provides an invalid prefixed value (e.g., email/phone/group format is invalid).
+
+- 1b1. BB displays the relevant constraint message.
+- Use case ends.
+
+2a. BB finds no matching gamers.
+
+- 2a1. BB displays a “no gamers found” message and does not update the current list.
+- Use case ends.
+
 #### UC11 - Clear all Gamer Contacts
 **Preconditions**
 - User has at least one contact saved in BlockBook.
@@ -889,7 +918,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Finding a gamer contact
 
-1. Finding gamers with global keyword(s)
+1. Finding gamers with global keyword
 
    1. Prerequisites: There are three gamers in the list (Alex with gamertag `CraftyAlex`, email `alex@craft.net`,
       group `Explorers`, server `srv1.gamehub.net`, country `USA`, region `NA`, note `builder`,
@@ -930,10 +959,10 @@ testers are expected to do more *exploratory* testing.
       Expected: Only Steve is displayed in the list. A message indicates 1 gamer(s) found.
 
    1. Test case: `find alex steve`<br>
-      Expected: No gamer is displayed in the list. A message indicates no gamers were found.
+      Expected: A message indicates no gamers were found. The displayed list remains unchanged.
 
    1. Test case: `find Sean`<br>
-      Expected: No gamer is displayed in the list. A message indicates no gamers were found.
+      Expected: A message indicates no gamers were found. The displayed list remains unchanged.
 
 1. Finding gamers with specific prefixes
 
