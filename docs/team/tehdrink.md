@@ -3,9 +3,10 @@
   title: "Kester's Project Portfolio Page"
 ---
 
-### Project: BlockBook
+### Stuff that I worked on
 
-BlockBook is a desktop address book application based on AddressBook Level-3 ([AB3](https://se-education.org/addressbook-level3/)).
-
-Given below are my contributions to the project.
-(To be updated!)
+- Implemented the **find** command improvements (global vs. prefixed search, partial matching, clearer messages, and list behavior when no results are found).
+- Implemented the **view** command and its popup behavior, including index-based viewing and updates on edits/deletes.
+- Implemented **group commands** end-to-end: `groupcreate`, `groupedit`, `groupadd`, `groupremove`, `grouplist`, `groupview`, and `groupnuke` (with confirmation flow).
+- Proposed and implemented the **new group storage schema**, including initial storage changes to support `blockbookgroups` and per-gamer group indices.
+- Implemented new group UI elements.
