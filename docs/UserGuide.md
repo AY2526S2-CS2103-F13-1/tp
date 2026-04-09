@@ -287,11 +287,19 @@ Examples:
 * `d 2 1` deletes the 1st and 2nd gamer shown in the list.
 * `delete 1 2 2` deletes only the 1st and 2nd gamers shown in the list. The 2nd gamer is only deleted once.
 
-### Clearing all entries : `clear`
+### Clearing all entries : `clear [CONFIRMATION_CODE]`
 
 Clears all entries from BlockBook.
 
-Format: `clear`
+Format: `clear [CONFIRMATION_CODE]`
+
+* Running `clear` without a confirmation code will display a warning and a confirmation code.
+* To confirm, re-enter the command using the code shown (e.g., `clear abc123`).
+* If you enter the wrong code, BlockBook will show a new confirmation code.
+
+Examples:
+* `clear` shows a warning and a confirmation code (e.g., `clear abc123`).
+* `clear abc123` clears all entries.
 
 ### Creating a group : `groupcreate`
 
@@ -324,15 +332,16 @@ Examples:
 
 * ![result for 'groupedit 1 iloveAlex'](images/groupEditResult.png)
 
-### Deleting a group : `groupnuke`
+### Deleting a group : `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`
 
 Deletes a group from BlockBook and removes that group from all gamers associated to it.
 
-Format: `groupnuke BLOCKBOOK_GROUP_INDEX` or `gn BLOCKBOOK_GROUP_INDEX`
+Format: `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]` or `gn BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`
 
 * This is a **destructive** command and requires confirmation.
 * BB will show a warning message with a confirmation code and the affected gamertags.
 * Re-run the command with the confirmation code appended to proceed.
+* If you enter the wrong code, BB will show a new confirmation code.
 
 Example:
 * `groupnuke 1`  
@@ -446,18 +455,18 @@ _Details coming soon ..._
 | Action     | Format, Examples                                                                                                           |
 |------------|----------------------------------------------------------------------------------------------------------------------------|
 | **Add**    | `(a)dd (g)amertag/GAMERTAG [(n)ame/NAME]...` <br> e.g., `add g/JamieH n/James Ho`                                          |
-| **Clear**  | `clear`                                                                                                                    |
-| **Delete** | `(d)elete GAMER_INDEX [GAMER_INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                                                             |
-| **Edit**   | `(e)dit GAMER_INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME]...`<br> e.g., `edit 2 n/James Lee`                                       |
+| **Clear**  | `clear [CONFIRMATION_CODE]`                                                                                                |
+| **Delete** | `(d)elete GAMER_INDEX [GAMER_INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                                                 |
+| **Edit**   | `(e)dit GAMER_INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME]...`<br> e.g., `edit 2 n/James Lee`                                 |
 | **Find**   | `(f)ind KEYWORD`<br> e.g., `find James`<br> `find [(n)ame/NAME] [(g)amertag/GAMERTAG]...`<br> e.g., `find n/Steve g/Block` |
 | **View**   | `(v)iew GAMER_INDEX` <br> e.g., `view 2`                                                                                   |
 | **List**   | `(l)ist`                                                                                                                   |
 | **Sort**   | `(s)ort [(g)amertag/] [(n)ame/]...`<br> e.g., `sort`, `sort n/`, `sort p/ g/`                                              |
-| **Help**   | `help`, `?`                                                                                                                 |
-| **Group Create** | `groupcreate GROUP`, `gc GROUP`<br> e.g., `gc Raid Team`                                                             |
-| **Group Edit**   | `groupedit BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME`, `ge ...`<br> e.g., `ge 1 Arena Team`                               |
-| **Group Delete** | `groupnuke BLOCKBOOK_GROUP_INDEX`, `gn ...`<br> e.g., `gn 1 abc123`                                                   |
-| **Group Add**    | `groupadd GAMER_INDEX BLOCKBOOK_GROUP_INDEX`, `ga ...`<br> e.g., `ga 2 1`                                               |
-| **Group Remove** | `groupremove GAMER_INDEX GAMER_GROUP_INDEX`, `gr ...`<br> e.g., `gr 2 1`                                               |
-| **Group List**   | `grouplist`, `gl`                                                                                                       |
-| **Group View**   | `groupview BLOCKBOOK_GROUP_INDEX`, `gv ...`<br> e.g., `gv 1`                                                           |
+| **Help**   | `help`, `?`                                                                                                                |
+| **Group Create** | `groupcreate GROUP`, `gc GROUP`<br> e.g., `gc Raid Team`                                                                   |
+| **Group Edit**   | `groupedit BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME`, `ge ...`<br> e.g., `ge 1 Arena Team`                                     |
+| **Group Delete** | `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`, `gn ...`<br> e.g., `gn 1 abc123`                                    |
+| **Group Add**    | `groupadd GAMER_INDEX BLOCKBOOK_GROUP_INDEX`, `ga ...`<br> e.g., `ga 2 1`                                                  |
+| **Group Remove** | `groupremove GAMER_INDEX GAMER_GROUP_INDEX`, `gr ...`<br> e.g., `gr 2 1`                                                   |
+| **Group List**   | `grouplist`, `gl`                                                                                                          |
+| **Group View**   | `groupview BLOCKBOOK_GROUP_INDEX`, `gv ...`<br> e.g., `gv 1`                                                               |
