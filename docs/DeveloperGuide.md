@@ -513,7 +513,7 @@ Use case ends.
 
 #### UC10 - Find Gamer Contacts**
 
-**UC11 - Clear all Gamer Contacts**
+#### UC11 - Clear all Gamer Contacts**
 **Preconditions**
 - User has at least one contact saved in BlockBook.
 
