@@ -604,7 +604,7 @@ testers are expected to do more *exploratory* testing.
 
 2. Invalid inputs
 
-   i. Prerequisites: Launch the application. The contact list is visible. At least one gamer with gamertag `Steve123` already exists for duplicate-gamertag test cases.
+   i. Prerequisites: Launch the application. The contact list is visible.
 
    ii. Test case: `add n/Steve`  
    Expected: No gamer is added. An error message indicates invalid command format because the required `gamertag/` prefix is missing.
@@ -612,28 +612,28 @@ testers are expected to do more *exploratory* testing.
    iii. Test case: `add g/Bad Tag`  
    Expected: No gamer is added. An error message indicates that the gamertag is invalid.
 
-   iv. Test case: `add g/Steve123 e/not-an-email`  
+   iv. Test case: `add g/FreshUser1 e/not-an-email`  
    Expected: No gamer is added. An error message indicates that the email is invalid.
 
-   v. Test case: `add g/Steve123 p/abcde`  
+   v. Test case: `add g/FreshUser2 p/abcde`  
    Expected: No gamer is added. An error message indicates that the phone number is invalid.
 
-   vi. Test case: `add g/Steve123 c/Sing@pore`  
+   vi. Test case: `add g/FreshUser3 c/Sing@pore`  
    Expected: No gamer is added. An error message indicates that the country is invalid.
 
-   vii. Test case: `add g/Steve123 r/XYZ`  
+   vii. Test case: `add g/FreshUser4 r/XYZ`  
    Expected: No gamer is added. An error message indicates that the region is invalid.
 
-   viii. Test case: `add g/Steve123 s/server#1`  
+   viii. Test case: `add g/FreshUser5 s/server#1`  
    Expected: No gamer is added. An error message indicates that the server is invalid.
 
-   ix. Test case: `add g/Steve123 n/Steve n/Stephen`  
+   ix. Test case: `add g/FreshUser6 n/Steve n/Stephen`  
    Expected: No gamer is added. An error message indicates that duplicate prefixes are not allowed.
 
-   x. Test case: `add g/Steve123` followed by `add g/Steve123`  
-   Expected: The second command does not add a gamer. An error message indicates that the gamertag is already used by someone in BlockBook.
+   x. Test case: `add g/UniqueSteve123` followed by `add g/UniqueSteve123`  
+   Expected: The first command adds the gamer successfully. The second command does not add a gamer. An error message indicates that the gamertag is already used by someone in BlockBook.
 
-   xi. Test case: `add hello g/Steve123`  
+   xi. Test case: `add hello g/FreshUser7`  
    Expected: No gamer is added. An error message indicates invalid command format because extra preamble text is not allowed.
 
 ### Editing a gamer contact
