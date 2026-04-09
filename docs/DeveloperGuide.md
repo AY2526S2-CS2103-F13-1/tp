@@ -122,14 +122,14 @@ How the parsing works:
 
 The `Model` component,
 
-* stores contact data i.e., all `Gamer` objects (which are contained in a `UniqueGamerList` object).
-  * stores the currently 'selected' `Gamer` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Gamer>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores contact data i.e., all `Gamer` objects (which are contained in a `UniqueGamerList` object) and all `Group` objects (which are contained in a `UniqueGroupList` object).
+  * stores the currently 'selected' `Gamer` objects (e.g., results of a search query) as a separate _sorted_ and _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Gamer>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPrefs` object that represents the user's preferences. This is exposed to the outside as a `ReadOnlyUserPrefs` object.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
 <box type="info" seamless>
 
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `BlockBook`, which `Gamer` references. This allows `BlockBook` to only require one `Tag` object per unique tag, instead of each `Gamer` needing their own `Tag` objects.<br>
+**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Group` list in the `BlockBook`, which `Gamer` references. This allows `BlockBook` to only require one `Group` object per unique group, instead of each `Gamer` needing their own `Group` objects.<br>
 
 <puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
 

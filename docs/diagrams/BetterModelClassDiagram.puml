@@ -1,22 +1,26 @@
-﻿@startuml
+@startuml
 !include style.puml
 skinparam arrowThickness 1.1
 skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
 BlockBook *-right-> "1" UniqueGamerList
-BlockBook *-right-> "1" UniqueTagList
-UniqueTagList -[hidden]down- UniqueGamerList
-UniqueTagList -[hidden]down- UniqueGamerList
+BlockBook *-right-> "1" UniqueGroupList
+UniqueGroupList -[hidden]down- UniqueGamerList
+UniqueGroupList -[hidden]down- UniqueGamerList
 
-UniqueTagList -right-> "*" Tag
-UniqueGamerList -right-> Gamer
+UniqueGroupList -right-> "*" Group
+UniqueGamerList -right-> "*" Gamer
 
-Gamer -up-> "*" Tag
+Gamer -up-> "*" Group
 
-Gamer *--> Name
-Gamer *--> Phone
-Gamer *--> Email
-Gamer *--> Address
+Gamer *--> "0..1" Name
+Gamer *--> "1" GamerTag
+Gamer *--> "0..1" Phone
+Gamer *--> "0..1" Email
+Gamer *--> "0..1" Server
+Gamer *--> "0..1" Favourite
+Gamer *--> "0..1" Country
+Gamer *--> "0..1" Region
+Gamer *--> "0..1" Note
 @enduml
-
