@@ -986,15 +986,232 @@ testers are expected to do more *exploratory* testing.
    4. Test case: `clear` followed by `clear`<br>
       Expected: The confirmation code for the first `clear` command is different from the second `clear` command. No contacts are deleted.
 
-### Creating a group (TBA)
+### Creating a group
 
-### Editing a group (TBA)
+1. Creating a new group
 
-### Deleting a group (TBA)
+    1. Prerequisites: The group list does not contain a group named `i love steve group`.
 
-### Adding a gamer to a group (TBA)
+    1. Test case: `groupcreate i love steve group`<br>
+       Expected: A success message is shown: `Group: i love steve group added!`. The group list includes `i love steve group`.
 
-### Listing groups (TBA)
+    1. Test case: `gc i love steve group`<br>
+       Expected: Same result as `groupcreate i love steve group`.
+
+    1. Test case: `groupcreate i love steve group`<br>
+       Expected: A success message is shown and the group is stored as `i love steve group` (extra spaces are collapsed).
+
+1. Duplicate group (case-insensitive)
+
+    1. Prerequisites: The group list already contains `i love steve group`.
+
+    1. Test case: `groupcreate i love steve group`<br>
+       Expected: Error indicating the group already exists.
+
+1. Invalid group name / format
+
+    1. Prerequisites: None.
+
+    1. Test case: `groupcreate i_love_steve_group`<br>
+       Expected: Error indicating the group name must contain only letters, spaces, hyphens, and apostrophes,
+       and be at most 50 characters.
+
+    1. Test case: `groupcreate`<br>
+       Expected: Error indicating invalid command format for `group create`.
+
+### Editing a group's name
+
+1. Editing an existing group
+
+    1. Prerequisites: The group list contains `i love steve group` at index 1.
+
+    1. Test case: `groupedit 1 I love Alex group`<br>
+       Expected: A success message is shown, showing the old group name has been edited to the new group name of `I love Alex group`. The group list includes `I love Alex group` instead of `i love steve group`.
+
+    1. Test case: `ge 1 I love Alex group`<br>
+       Expected: Same result as `groupedit 1 I love Alex group`.
+
+1. Invalid index
+
+    1. Prerequisites: The group list has fewer than 99 groups.
+
+    1. Test case: `groupedit 99 I love Alex group`<br>
+       Expected: Error indicating index is out of range.
+
+1. Duplicate group (case-insensitive)
+
+    1. Prerequisites: The group list already contains `I love Alex`.
+
+    1. Test case: `groupedit 1 I love Alex`<br>
+       Expected: Error indicating the group already exists.
+
+1. Invalid group name / format
+
+    1. Prerequisites: None.
+
+    1. Test case: `groupedit 1 I_love_Alex`<br>
+       Expected: Error indicating the group name must contain only letters, spaces, hyphens, and apostrophes,
+       and be at most 50 characters.
+
+    1. Test case: `groupedit`<br>
+       Expected: Error indicating invalid command format for `groupedit`.
+
+### Deleting a group
+
+1. Deleting an existing group
+
+    1. Prerequisites: The group list contains `Explorers` at index 1, and at least one gamer belongs to `Explorers`. For this example we have 2 gamer contacts with gamertags `AlexTag` and `SteveTag` in `Explorers`.
+
+    1. Test case: `groupnuke 1`<br>
+       Expected: A warning message is shown with a confirmation code (e.g., `groupnuke 1 abc123`).
+
+    1. Test case: `groupnuke 1 abc123`<br>
+       Expected: A success message is shown, showing that the group `Explorers` is deleted and the gamertags of the gamers that belonged to `Explorers` (e.g., `AlexTag`, `SteveTag`) are no longer in that group. The group list no longer includes `Explorers`.
+
+    1. Test case: `gn 1`<br>
+       Expected: Same result as `groupnuke 1` (warning prompt).
+
+1. Invalid index
+
+    1. Prerequisites: The group list contains 1 group.
+
+    1. Test case: `groupnuke 2`<br>
+       Expected: Error indicating index is out of range.
+
+1. Invalid command format
+
+    1. Prerequisites: None.
+
+    1. Test case: `groupnuke`<br>
+       Expected: Error indicating invalid command format for `groupnuke`.
+
+    1. Test case: `groupnuke one`<br>
+       Expected: Error indicating invalid command format for `groupnuke`.
+
+### Adding a gamer to a group
+
+1. Adding a gamer to an existing group
+
+    1. Prerequisites: The gamer list contains `Alex` with gamertag `AlexTag` at index 1. The group list contains `Explorers` at index 1.
+       `Alex` is not already in `Explorers`.
+
+    1. Test case: `groupadd 1 1`<br>
+       Expected: A success message is shown, where it shows the gamertag of the gamer (e.g., `AlexTag`) is added to the group `Explorers`.
+       The gamer at index 1 now has `Explorers` in their group list and is considered to be in the group.
+
+    1. Test case: `ga 1 1`<br>
+       Expected: Same result as `groupadd 1 1`.
+
+1. Gamer already in group
+
+    1. Prerequisites: The gamer list contains `Alex` at index 1. The group list contains `Explorers` at index 1.
+       `Alex` is already in `Explorers`.
+
+    1. Test case: `groupadd 1 1`<br>
+       Expected: Error indicating the gamer contact is already in the group.
+
+1. Invalid index
+
+    1. Prerequisites: The gamer list contains 1 gamer and the group list contains 1 group.
+
+    1. Test case: `groupadd 2 1`<br>
+       Expected: Error indicating index is out of range.
+
+    1. Test case: `groupadd 1 2`<br>
+       Expected: Error indicating index is out of range.
+
+1. Invalid command format
+
+    1. Prerequisites: None.
+
+    1. Test case: `groupadd`<br>
+       Expected: Error indicating invalid command format for `groupadd`.
+
+    1. Test case: `groupadd one 1`<br>
+       Expected: Error indicating invalid command format for `groupadd`.
+
+### Removing a gamer from a group
+
+1. Removing a gamer from a group
+
+    1. Prerequisites: The gamer list contains `Alex` at index 1. `Alex` has groups listed, and the first group in
+       Alex's group list is `Explorers`.
+
+    1. Test case: `groupremove 1 1`<br>
+       Expected: A success message is shown, where it shows the gamertag of the gamer (e.g., `AlexTag`) is removed from the group `Explorers`. The gamer at index 1 no longer has `Explorers` in their group list and is no longer considered to be in the group.
+       The first group is removed from Alex's group list.
+
+    1. Test case: `gr 1 1`<br>
+       Expected: Same result as `groupremove 1 1`.
+
+1. Invalid index
+
+    1. Prerequisites: The gamer list contains 1 gamer, and the gamer at index 1 has 1 group.
+
+    1. Test case: `groupremove 2 1`<br>
+       Expected: Error indicating index is out of range.
+
+    1. Test case: `groupremove 1 2`<br>
+       Expected: Error indicating index is out of range.
+
+1. Invalid command format
+
+    1. Prerequisites: None.
+
+    1. Test case: `groupremove`<br>
+       Expected: Error indicating invalid command format for `groupremove`.
+
+    1. Test case: `groupremove one 1`<br>
+       Expected: Error indicating invalid command format for `groupremove`.
+
+### Listing all groups
+
+1. Listing all groups
+
+    1. Prerequisites: The group list contains `Explorers` and `Raid Team`.
+
+    1. Test case: `grouplist`<br>
+       Expected: The group list displays `Explorers` and `Raid Team`.
+
+    1. Test case: `gl`<br>
+       Expected: Same result as `grouplist`.
+
+### Viewing a group
+
+1. Viewing a group with no gamers
+
+    1. Prerequisites: The group list contains `Explorers` at index 1. No gamers belong to `Explorers`.
+       The gamer list is currently filtered (e.g., via `find name/Alex`).
+
+    1. Test case: `groupview 1`<br>
+       Expected: A message indicates there are no associated gamers, and the gamer contact list remains unchanged
+       (still showing the results of the previous command).
+
+1. Viewing an existing group
+
+    1. Prerequisites: The group list contains `Explorers` at index 1. The gamer list contains `Alex` with gamertag `AlexTag` and `Steve` with gamertag `SteveTag`. Both `Alex` and `Steve` are in the group `Explorers`.
+
+    1. Test case: `groupview 1`<br>
+       Expected: A success message is shown, showing the group name (e.g., `Explorers`) and the gamertags of the gamers in that group (e.g., `AlexTag`, `SteveTag`). The gamer contact list also updates and displays `Alex` and `Steve`.
+
+    1. Test case: `gv 1`<br>
+       Expected: Same result as `groupview 1`.
+
+1. Invalid index
+    1. Prerequisites: The group list contains 1 group.
+
+    1. Test case: `groupview 2`<br>
+       Expected: Error indicating index is out of range.
+
+1. Invalid command format
+
+    1. Prerequisites: None.
+
+    1. Test case: `groupview`<br>
+       Expected: Error indicating invalid command format for `groupview`.
+
+    1. Test case: `groupview one`<br>
+       Expected: Error indicating invalid command format for `groupview`.
 
 ### Dealing with data
 1. Saving data to `contacts.json`
