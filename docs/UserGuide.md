@@ -115,20 +115,20 @@ Examples:
 
 **Common errors you may encounter:**
 
-- **Duplicate gamertag**  
-  You cannot add two gamers with the same gamertag.  
+- **Duplicate gamertag**
+  You cannot add two gamers with the same gamertag.
   Gamertags are treated as **case-insensitive**, so `banana`, `Banana`, and `BaNaNa` are all treated as the same gamertag.
 
-- **Missing required gamertag**  
-  The `add` command requires a `gamertag/` or `g/` field.  
+- **Missing required gamertag**
+  The `add` command requires a `gamertag/` or `g/` field.
   Example: `add n/Steve`
 
-- **Repeated prefixes**  
-  Each single-value field can only be entered once in the same `add` command.  
+- **Repeated prefixes**
+  Each single-value field can only be entered once in the same `add` command.
   Example: `add g/Steve123 g/Alex456`
 
-- **Invalid gamertag format**  
-  Gamertags cannot contain spaces or special characters other than underscores.  
+- **Invalid gamertag format**
+  Gamertags cannot contain spaces or special characters other than underscores.
   Example: `g/steve boy`
 
 **Notes:**
@@ -185,23 +185,23 @@ Examples:
 
 **Common errors you may encounter:**
 
-- **Invalid index**  
-  The index must be a positive integer within the displayed list.  
+- **Invalid index**
+  The index must be a positive integer within the displayed list.
   Examples: `edit 0 n/Alex`, `edit -1 n/Alex`, `edit 999 n/Alex`
 
-- **No fields provided**  
-  At least one field must be specified after the index.  
+- **No fields provided**
+  At least one field must be specified after the index.
   Example: `edit 1`
 
-- **Repeated prefixes**  
-  Each single-value field can only be entered once in the same `edit` command.  
+- **Repeated prefixes**
+  Each single-value field can only be entered once in the same `edit` command.
   Example: `edit 1 n/Alex n/Bob`
 
-- **Duplicate gamertag**  
-  You cannot change a gamertag to one that already exists.  
+- **Duplicate gamertag**
+  You cannot change a gamertag to one that already exists.
   Example: `edit 1 g/amy_tag` (if another gamer already has `amy_tag`)
 
-- **Invalid field values**  
+- **Invalid field values**
   Input must follow the constraints above (e.g., invalid email, region, or server).
 
 **Notes:**
@@ -234,12 +234,12 @@ Examples:
 
 **Common errors you may encounter:**
 
-- **Invalid index**  
-  The index must be a positive integer within the displayed list.  
+- **Invalid index**
+  The index must be a positive integer within the displayed list.
   Examples: `favourite 0`, `unfavourite -1`, `favourite 999`
 
-- **Already favourite / already not favourite**  
-  The command will fail if the contact is already in the requested state.  
+- **Already favourite / already not favourite**
+  The command will fail if the contact is already in the requested state.
   Examples: `favourite 1` when the contact is already a favourite, `unfavourite 1` when the contact is not a favourite.
 
 **Notes:**
@@ -427,11 +427,11 @@ Format: `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]` or `gn BLOCKBOOK_G
 * If you enter the wrong code, BB will show a new confirmation code.
 
 Example:
-* `groupnuke 1`  
+* `groupnuke 1`
   BB will prompt you with a confirmation code.
 
 ![result for 'groupnuke 1'](images/groupNukeResult1.png)
-* `groupnuke 1 j5n0w3`  
+* `groupnuke 1 j5n0w3`
   Deletes the group and removes it from all gamers.
 
 ![result for 'groupnuke 1 j5n0w3'](images/groupNukeResult2.png)

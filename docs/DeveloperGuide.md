@@ -168,28 +168,28 @@ The sequence diagram below illustrates the main interactions that take place whe
 
 <puml src="diagrams/AddCommandSequenceDiagram.puml" width="550" />
 
-**User enters command:**  
+**User enters command:**
 The process begins when the user types an `add` command into the UI.
 
-**UI passes command to Logic:**  
+**UI passes command to Logic:**
 After receiving the command, the UI forwards it to the Logic component for processing.
 
-**Logic parses the command:**  
+**Logic parses the command:**
 Within the Logic component, the command is recognized as an `add` command. The input is then parsed internally, where the command arguments are validated and converted into the corresponding gamer attribute objects before an `AddCommand` is created.
 
-**Logic updates the Model:**  
+**Logic updates the Model:**
 The `AddCommand` is executed using the current Model. During this step, BlockBook checks whether a gamer with the same gamertag already exists. If no duplicate is found, the new gamer contact is added to the Model.
 
-**Logic saves the updated data:**  
+**Logic saves the updated data:**
 Once the gamer has been added successfully, the Logic component calls the Storage component to persist the updated BlockBook data.
 
-**Storage writes data to file:**  
+**Storage writes data to file:**
 The Storage component saves the updated data to file so that the newly added gamer contact is retained after the application closes.
 
-**Logic returns the result:**  
+**Logic returns the result:**
 After the save operation is completed, Logic produces a `CommandResult` describing the outcome of the operation.
 
-**UI shows the outcome:**  
+**UI shows the outcome:**
 Finally, the UI displays the result to the user, such as a success message when the gamer is added or an error message if the operation fails.
 
 
@@ -221,8 +221,8 @@ These are some enhancements that we plan to implement in the future.
 
 **Success**: "Profile picture updated to the image located at {IMAGESRC}"
 **Possible errors**:
-- Invalid file format 
-- Missing file 
+- Invalid file format
+- Missing file
 - Corrupted file
 
 #### Theme Customization
@@ -521,7 +521,7 @@ Use case ends.
 4. BB deletes all contacts and displays a success message.
 
 **Extensions**
-2a. User does not follow through with confirmation. 
+2a. User does not follow through with confirmation.
 - Use case ends
 3a. User used the wrong confirmation input.
 - 3a1. BB displays an error message and prompts the user for confirmation again.
@@ -728,53 +728,53 @@ testers are expected to do more *exploratory* testing.
 
    i. Prerequisites: Launch the application. The contact list is visible.
 
-   ii. Test case: `add g/Steve123`  
+   ii. Test case: `add g/Steve123`
    Expected: A new gamer with gamertag `Steve123` is added successfully.
 
-   iii. Test case: `add g/Alex99 n/Alex`  
+   iii. Test case: `add g/Alex99 n/Alex`
    Expected: A new gamer with gamertag `Alex99` and name `Alex` is added successfully.
 
-   iv. Test case: `add g/BuilderPro p/91234567 e/builder@example.com`  
+   iv. Test case: `add g/BuilderPro p/91234567 e/builder@example.com`
    Expected: A new gamer with gamertag `BuilderPro`, phone number `91234567`, and email `builder@example.com` is added successfully.
 
-   v. Test case: `add g/NetherKing s/mc.example.net c/Singapore r/ASIA note/Friendly player`  
+   v. Test case: `add g/NetherKing s/mc.example.net c/Singapore r/ASIA note/Friendly player`
    Expected: A new gamer is added successfully with the server, country, region, and note fields stored correctly.
 
-   vi. Test case: `add g/Herobrine n/Herobrine p/99999 e/brine@gmail.com s/127.0.0.1:8080 c/Singapore r/ASIA note/I hate steve`  
+   vi. Test case: `add g/Herobrine n/Herobrine p/99999 e/brine@gmail.com s/127.0.0.1:8080 c/Singapore r/ASIA note/I hate steve`
    Expected: A new gamer with all provided fields is added successfully.
 
 2. Invalid inputs
 
    i. Prerequisites: Launch the application. The contact list is visible.
 
-   ii. Test case: `add n/Steve`  
+   ii. Test case: `add n/Steve`
    Expected: No gamer is added. An error message indicates invalid command format because the required `gamertag/` prefix is missing.
 
-   iii. Test case: `add g/Bad Tag`  
+   iii. Test case: `add g/Bad Tag`
    Expected: No gamer is added. An error message indicates that the gamertag is invalid.
 
-   iv. Test case: `add g/FreshUser1 e/not-an-email`  
+   iv. Test case: `add g/FreshUser1 e/not-an-email`
    Expected: No gamer is added. An error message indicates that the email is invalid.
 
-   v. Test case: `add g/FreshUser2 p/abcde`  
+   v. Test case: `add g/FreshUser2 p/abcde`
    Expected: No gamer is added. An error message indicates that the phone number is invalid.
 
-   vi. Test case: `add g/FreshUser3 c/Sing@pore`  
+   vi. Test case: `add g/FreshUser3 c/Sing@pore`
    Expected: No gamer is added. An error message indicates that the country is invalid.
 
-   vii. Test case: `add g/FreshUser4 r/XYZ`  
+   vii. Test case: `add g/FreshUser4 r/XYZ`
    Expected: No gamer is added. An error message indicates that the region is invalid.
 
-   viii. Test case: `add g/FreshUser5 s/server#1`  
+   viii. Test case: `add g/FreshUser5 s/server#1`
    Expected: No gamer is added. An error message indicates that the server is invalid.
 
-   ix. Test case: `add g/FreshUser6 n/Steve n/Stephen`  
+   ix. Test case: `add g/FreshUser6 n/Steve n/Stephen`
    Expected: No gamer is added. An error message indicates that duplicate prefixes are not allowed.
 
-   x. Test case: `add g/UniqueSteve123` followed by `add g/UniqueSteve123`  
+   x. Test case: `add g/UniqueSteve123` followed by `add g/UniqueSteve123`
    Expected: The first command adds the gamer successfully. The second command does not add a gamer. An error message indicates that the gamertag is already used by someone in BlockBook.
 
-   xi. Test case: `add hello g/FreshUser7`  
+   xi. Test case: `add hello g/FreshUser7`
    Expected: No gamer is added. An error message indicates invalid command format because extra preamble text is not allowed.
 
 ### Editing a gamer contact
@@ -1301,14 +1301,14 @@ testers are expected to do more *exploratory* testing.
 
       1. Prerequisites: Edit `contacts.json` to an invalid JSON (e.g., remove a closing brace).
 
-      1. Expected: BlockBook starts with an empty list. The result will display that data could not be loaded from the file and that BlockBook will be starting with an empty Gamer Contact list instead. 
+      1. Expected: BlockBook starts with an empty list. The result will display that data could not be loaded from the file and that BlockBook will be starting with an empty Gamer Contact list instead.
          A new `contacts.json` file will be created to replace the corrupted `contacts.json` file after a command that invokes saving is executed or on app exit.
 
 --------------------------------------------------------------------------------------------------------------------
 
 ### Effort
-As a team, the most challenging part of adapting AB‑3 to BlockBook was reshaping the data model to fit our domain. 
+As a team, the most challenging part of adapting AB‑3 to BlockBook was reshaping the data model to fit our domain.
 Introducing new fields and a group structure required coordinated changes across storage, model, logic, UI, and tests, and affected many existing assumptions in the AB‑3 codebase.
 Implementing the group features was also demanding because it had to work within the existing architecture and indexing rules while keeping behavior consistent across commands.
-Smaller enhancements such as find, multi‑index delete, and sorting were comparatively straightforward, but a large portion of our effort went into writing and updating test cases, 
+Smaller enhancements such as find, multi‑index delete, and sorting were comparatively straightforward, but a large portion of our effort went into writing and updating test cases,
 diagnosing regressions, and fixing bugs that propagated across components after refactors.
