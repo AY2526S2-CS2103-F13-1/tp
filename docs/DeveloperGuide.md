@@ -550,7 +550,31 @@ Use case ends.
 - 1b1. BB displays an error message.
 - Use case ends.
 
-#### UC10 - Find Gamer Contacts**
+#### UC10 - Find Gamer Contacts
+
+**MSS**
+
+1. User requests to find gamer contacts using search criteria.
+2. BB shows the matching gamer contacts and a message indicating the number found.
+
+Use case ends.
+
+**Extensions**
+
+1a. User enters empty input or mixes global keywords with prefixed arguments.
+
+- 1a1. BB displays an invalid command format message and the correct usage.
+- Use case ends.
+
+1b. User provides an invalid prefixed value (e.g., email/phone/group format is invalid).
+
+- 1b1. BB displays the relevant constraint message.
+- Use case ends.
+
+2a. BB finds no matching gamers.
+
+- 2a1. BB displays a “no gamers found” message and does not update the current list.
+- Use case ends.
 
 #### UC11 - Clear all Gamer Contacts**
 **Preconditions**
@@ -778,7 +802,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Finding a gamer contact
 
-1. Finding gamers with global keyword(s)
+1. Finding gamers with global keyword
 
    1. Prerequisites: There are three gamers in the list (Alex with gamertag `CraftyAlex`, email `alex@craft.net`,
       group `Explorers`, server `srv1.gamehub.net`, country `USA`, region `NA`, note `builder`,
@@ -819,10 +843,10 @@ testers are expected to do more *exploratory* testing.
       Expected: Only Steve is displayed in the list. A message indicates 1 gamer(s) found.
 
    1. Test case: `find alex steve`<br>
-      Expected: No gamer is displayed in the list. A message indicates no gamers were found.
+      Expected: A message indicates no gamers were found. The displayed list remains unchanged.
 
    1. Test case: `find Sean`<br>
-      Expected: No gamer is displayed in the list. A message indicates no gamers were found.
+      Expected: A message indicates no gamers were found. The displayed list remains unchanged.
 
 1. Finding gamers with specific prefixes
 
