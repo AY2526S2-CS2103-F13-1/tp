@@ -552,7 +552,7 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: List all gamers using the `list` command. There is at least 1 gamer in the list.
 
    1. Test case: `view 1`<br>
-      Expected: The command result displays the full details of the first gamer in the currently displayed list. A pop-up window containing all the gamer's information is also shown.
+      Expected: The command result displays the full details of the first gamer in the currently displayed list. A pop-up window containing the gamer's information is shown. The list remains unchanged.
 
    1. Test case: `v 1`<br>
       Expected: Same result as `view 1`.
@@ -562,7 +562,7 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: Filter the list to a single gamer using `find name/Alex`.
 
    1. Test case: `view 1`<br>
-      Expected: The command result displays the full details of the filtered gamer given by the list index.
+      Expected: The command result displays the full details of the filtered gamer given by the list index. A pop-up window containing the gamer's full information is shown. The list remains filtered.
 
 1. Invalid index
 
