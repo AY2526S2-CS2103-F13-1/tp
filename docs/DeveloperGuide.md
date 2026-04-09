@@ -100,7 +100,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `BlockBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
+1. When `Logic` is called upon to execute a command, it is passed to a `BlockBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
 2. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
 3. The command can communicate with the `Model` when it is executed (e.g. to delete a gamer).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
@@ -198,9 +198,48 @@ Finally, the UI displays the result to the user, such as a success message when 
 * [Configuration guide](Configuration.md)
 * [DevOps guide](DevOps.md)
 
+## **Future Developments**
+In the future, we plan to implement the following features and enhancements to further improve the functionality and user experience of BlockBook.
+
+### Planned Enhancements
+These are some enhancements that we plan to implement in the future.
+
+#### Command History Log
+**Purpose**: Allows the user to view a history of previously sent commands
+**Outputs**: Commands are added to a log file
+
+#### Profile Picture Support
+**Purpose**: Allows the user to upload an image for each gamer contact card in the contacts via a button in GUI/(Or via CLI add?).
+**Acceptable values**: IMAGESRC → Compulsory, path to the image file source.
+**Error messages**:
+- Invalid file format: “BlockBook only supports a valid .png/.jpg file. Please choose another file. ”
+- Missing/Corrupted file: “Profile picture file cannot be found or is corrupted. Reverting to default image. ”
+  Outputs:
+
+**Success**: "Profile picture updated to the image located at {IMAGESRC}"
+**Possible errors**:
+- Invalid file format 
+- Missing file 
+- Corrupted file
+
+#### Theme Customization
+Allow the user to customize the theme of the app (e.g., light mode, dark mode, etc.) via a `theme` command in CLI or a button in GUI.
+The user can choose from predefined themes or create their own custom theme by specifying colors for different UI elements.
+**Purpose**: Allows the user to customize the theme of the app (e.g., light mode, dark mode, etc.)
+**Acceptable values**: THEME → Compulsory, the theme to set the app to. Possible values include "light", "dark", and "custom".
+
+#### Better `contact.json` Handling
+The current implementation that handles `contact.json` will render the entire file invalid once a single entry has an error.
+Improve the handling of the `contact.json` file to allow valid entries to be shown in BlockBook while ignoring invalid entries.
+
+### Known Bugs
+These are some known bugs that we have identified but have not yet fixed.
+
+**Validation of Invalid Prefixes**: For example, entering `edit 1 region/na er/asd` returns `invalid region` instead of `invalid command format`. Updating the parser implementation to handle this will solve the issue.
+
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Requirements**
+## **Requirements**
 
 ### Product scope
 
@@ -248,7 +287,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 (For all use cases below, the **System** is the `BlockBook (BB)` and the **Actor** is the `user`, unless specified otherwise)
 As these represent the expected behaviour of the final iteration, some use cases might not reflect the current functionality of the app.
 
-**UC01 - Add a Gamer Contact**
+#### UC01 - Add a Gamer Contact
 
 **MSS**
 
@@ -280,7 +319,7 @@ Use case ends.
 - 4c2. User re-enters the add command with a different gamertag.
 - Use case resumes at step 1.
 
-**UC02 - List All Gamer Contacts**
+#### UC02 - List All Gamer Contacts
 
 **MSS**
 
@@ -328,7 +367,7 @@ Use case ends.
 - 3b1. BB notifies the user that the contact is already not a favourite.
 - Use case ends.
 
-**UC04 - Add Profile Picture to Contact** (TBA)
+#### UC04 - Add Profile Picture to Contact
 
 **MSS**
 
@@ -364,7 +403,7 @@ Use case ends.
 - *a1. BB discards all entered data.
 - Use case ends.
 
-**UC05 - Add Note to Contact** (Can be deleted)
+#### UC05 - Add Note to Contact (Can be deleted)
 
 **MSS**
 
@@ -397,7 +436,7 @@ Use case ends.
 - *a1. BB discards all unsaved changes.
 - Use case ends.
 
-**UC06 - Sort Gamer Contacts**
+#### UC06 - Sort Gamer Contacts
 
 **MSS**
 
@@ -413,14 +452,14 @@ Use case ends.
 - 1a1. BB uses gamertag as the default sort attribute.
 - Use case resumes from step 2.
 
-1b. User specifies an invalid attribute.
+1b. User specifies one or more invalid attributes.
 
-- 1b1. BB shows an error message.
+- 1b1. BB displays an error message indicating that one or more sort attributes are invalid.
 - Use case ends.
 
 1c. User specifies duplicate attributes.
 
-- 1c1. BB shows an error message.
+- 1c1. BB displays an error message indicating that duplicate sort attributes are not allowed.
 - Use case ends.
 
 2a. There are no currently displayed contacts to sort.
@@ -469,47 +508,104 @@ Use case ends.
 - 1e2. User re-enters the edit command with corrected input.
 - Use case resumes at step 1.
 
-**UC08 - Delete a Gamer Contact**
+#### UC08 - Delete a Gamer Contact
+**Preconditions**
+- User knows the index of the contact they wish to delete (e.g. having previously executed UC02)
+- User has at least one contact saved in BlockBook.
 
-**UC09 - View a Gamer Contact**
+**MSS**
+1. User requests to delete one or more contacts.
+2. BB deletes the contacts specified and displays a confirmation message.
+Use case ends.
+
+**Extensions**
+1a. User enters an invalid index.
+- 1a1. BB displays an error message.
+- Use case ends.
+
+#### UC09 - View a Gamer Contact
 
 **Preconditions**
-- User knows the index of the contact they wish to view (e.g. having previously executed UC02)
+- User has a list of gamer contacts displayed and knows the index of the contact to view (e.g. after UC02).
 
 **MSS**
 
-1. User requests to view a contact with `view INDEX`.
-2. BB displays the contact's full profile details in the CLI and opens a pop-up window showing their full profile details.
+1. User requests to view a gamer contact by its index in the current list.
+2. BB displays the contact's full profile details.
 
 Use case ends.
 
 **Extensions**
 
-1a. User enters an invalid index (non-numeric).
+1a. User enters a non-numeric index.
 
 - 1a1. BB displays an error message.
 - Use case ends.
 
-1b. BB cannot find a contact matching the entered index (out of range).
+1b. Index is out of range.
 
 - 1b1. BB displays an error message.
 - Use case ends.
 
-**UC10 - Find Gamer Contacts**
+#### UC10 - Find Gamer Contacts
 
-**UC11 - Clear all Gamer Contacts**
+**MSS**
 
-**UC12 - Show Help**
+1. User requests to find gamer contacts using search criteria.
+2. BB shows the matching gamer contacts and a message indicating the number found.
 
-**UC13 - Create a Group (TBA)**
+Use case ends.
 
-**UC14 - Add a Gamer to a Group (TBA)**
+**Extensions**
 
-**UC15 - Remove a Gamer from a Group (TBA)**
+1a. User enters empty input or mixes global keywords with prefixed arguments.
 
-**UC16 - Delete a Group (TBA)**
+- 1a1. BB displays an invalid command format message and the correct usage.
+- Use case ends.
 
-**UC17 - List Groups (TBA)**
+1b. User provides an invalid prefixed value (e.g., email/phone/group format is invalid).
+
+- 1b1. BB displays the relevant constraint message.
+- Use case ends.
+
+2a. BB finds no matching gamers.
+
+- 2a1. BB displays a “no gamers found” message and does not update the current list.
+- Use case ends.
+
+#### UC11 - Clear all Gamer Contacts**
+**Preconditions**
+- User has at least one contact saved in BlockBook.
+
+**MSS**
+1. User requests to clear all contacts.
+2. BB prompts the user for confirmation.
+3. User confirms.
+4. BB deletes all contacts and displays a success message.
+
+**Extensions**
+2a. User does not follow through with confirmation. 
+- Use case ends
+3a. User used the wrong confirmation input.
+- 3a1. BB displays an error message and prompts the user for confirmation again.
+- Use case resumes from step 3.
+
+#### UC12 - Show Help
+**MSS**
+1. User requests to view the help message.
+2. BB displays a help message that includes a summary of all available commands and their usage.
+
+Use case ends.
+
+#### UC13 - Create a Group (TBA)
+
+#### UC14 - Add a Gamer to a Group (TBA)
+
+#### UC15 - Remove a Gamer from a Group (TBA)
+
+#### UC16 - Delete a Group (TBA)
+
+#### UC17 - List Groups (TBA)
 
 ### Non-Functional Requirements
 
@@ -530,8 +626,6 @@ Use case ends.
    - screen resolutions **1280 x 720 and higher**
    - screen scales **150%**
 
-*{More to be added}*
-
 ### Glossary
 - **Minecraft**: A sandbox game developed and published by Mojang Studios. See more [here](https://www.minecraft.net/en-us).
     - **Gamertag**: A Minecraft player's in-game username.
@@ -548,7 +642,7 @@ Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
+## **Instructions for manual testing**
 
 Given below are instructions to test the app manually.
 
@@ -577,6 +671,8 @@ testers are expected to do more *exploratory* testing.
 1. _{ more test cases ... }_
 
 ### Using the help command
+1. Typing `help` in the command box and pressing Enter should display a help message that includes a summary of all available commands and their usage.
+2. A new window should pop up showing the same help message.
 
 ### Adding a gamer contact
 
@@ -768,9 +864,49 @@ testers are expected to do more *exploratory* testing.
 
 ### Viewing a gamer contact
 
+1. Viewing a gamer by index
+
+   1. Prerequisites: List all gamers using the `list` command. There is at least 1 gamer in the list.
+
+   1. Test case: `view 1`<br>
+      Expected: The command result displays the full details of the first gamer in the currently displayed list. A pop-up window containing the gamer's information is shown. The list remains unchanged.
+
+   1. Test case: `v 1`<br>
+      Expected: Same result as `view 1`.
+
+1. Viewing from a filtered list
+
+   1. Prerequisites: Filter the list to a single gamer using `find name/Alex`.
+
+   1. Test case: `view 1`<br>
+      Expected: The command result displays the full details of the filtered gamer given by the list index. A pop-up window containing the gamer's full information is shown. The list remains filtered.
+
+1. Invalid index
+
+   1. Prerequisites: The list contains 1 gamer.
+
+   1. Test case: `view 2`<br>
+      Expected: Error indicating index is out of range.
+
+   1. Test case: `view 0`<br>
+      Expected: Error indicating index is out of range.
+
+   1. Test case: `view -1`<br>
+      Expected: Error indicating index is out of range.
+
+1. Invalid command format
+
+   1. Prerequisites: None.
+
+   1. Test case: `view`<br>
+      Expected: Error indicating invalid command format for `view`.
+
+   1. Test case: `view one`<br>
+      Expected: Error indicating invalid command format for `view`.
+
 ### Finding a gamer contact
 
-1. Finding gamers with global keyword(s)
+1. Finding gamers with global keyword
 
    1. Prerequisites: There are three gamers in the list (Alex with gamertag `CraftyAlex`, email `alex@craft.net`,
       group `Explorers`, server `srv1.gamehub.net`, country `USA`, region `NA`, note `builder`,
@@ -811,10 +947,10 @@ testers are expected to do more *exploratory* testing.
       Expected: Only Steve is displayed in the list. A message indicates 1 gamer(s) found.
 
    1. Test case: `find alex steve`<br>
-      Expected: No gamer is displayed in the list. A message indicates no gamers were found.
+      Expected: A message indicates no gamers were found. The displayed list remains unchanged.
 
    1. Test case: `find Sean`<br>
-      Expected: No gamer is displayed in the list. A message indicates no gamers were found.
+      Expected: A message indicates no gamers were found. The displayed list remains unchanged.
 
 1. Finding gamers with specific prefixes
 
@@ -918,31 +1054,31 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
 
    1. Test case: `sort`<br>
-      Expected: All contacts are sorted alphabetically by gamertag (case-insensitive). Status message shows "Sorted all contacts by gamertag (default)."
+      Expected: Displayed contacts are sorted alphabetically by gamertag (case-insensitive). Status message shows "Sorted all contacts by gamertag (default)."
 
 1. Sorting gamers by a single attribute
 
    1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list, some with missing optional fields.
 
    1. Test case: `sort name/`<br>
-      Expected: All contacts are sorted alphabetically by name (case-insensitive). Contacts with no name are placed at the end. Status message shows "Sorted all contacts by name."
+      Expected: Displayed contacts are sorted alphabetically by name (case-insensitive). Contacts with no name are placed at the end. Status message shows "Sorted all contacts by name."
 
    1. Test case: `sort favourite/`<br>
-      Expected: Favourite contacts appear before non-favourite contacts. Status message shows "Sorted all contacts by favourite."
+      Expected: Displayed contacts with favourite status appear before non-favourite contacts. Status message shows "Sorted all contacts by favourite."
 
 1. Sorting gamers by multiple attributes
 
    1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
 
    1. Test case: `sort country/ name/`<br>
-      Expected: Contacts are sorted by country first, then by name for contacts with the same country. Status message shows "Sorted all contacts by country, name."
+      Expected: Displayed contacts are sorted by country first, then by name for contacts with the same country. Status message shows "Sorted all contacts by country, name."
 
 1. Sorting gamers using attribute aliases
 
    1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
 
    1. Test case: `sort n/`<br>
-      Expected: Same result as `sort name/`. Contacts are sorted alphabetically by name.
+      Expected: Same result as `sort name/`. Displayed contacts are sorted alphabetically by name.
 
 1. Sorting gamers with invalid input
 
@@ -959,12 +1095,24 @@ testers are expected to do more *exploratory* testing.
 
 1. Sorting with no contacts displayed
 
-   1. Prerequisites: Use a `find` command that returns no results, so the displayed list is empty.
+   1. Prerequisites: There are no contacts in BlockBook (e.g., start with empty data or run `clear` with confirmation). Do not use a `find` command with no matches for this precondition, because `find` retains the current displayed list when no results are found.
 
    1. Test case: `sort`<br>
       Expected: No sorting occurs. Error message indicates there are no contacts to sort.
 
 ### Clearing all gamer contacts
+1. Clearing all contacts
+
+   1. Prerequisites: There is at least 1 contact in BlockBook.
+
+   1. Test case: `clear` followed by confirming the action<br>
+      Expected: All contacts are deleted. A success message is shown.
+   2. Test case: `clear` followed by not confirming the action (e.g. entering any other command)<br>
+      Expected: No contacts are deleted. The contact list remains unchanged. The next command entered executes as expected.
+   3. Test case: `clear` followed by invalid confirmation input (e.g., `clear 123` when the confirmation message is `clear 246`)<br>
+      Expected: No contacts are deleted. The confirmation code changes. The contact list remains unchanged.
+   4. Test case: `clear` followed by `clear`<br>
+      Expected: The confirmation code for the first `clear` command is different from the second `clear` command. No contacts are deleted.
 
 ### Creating a group (TBA)
 
@@ -979,8 +1127,21 @@ testers are expected to do more *exploratory* testing.
 ### Dealing with data
 1. Saving data to `contacts.json`
 
+   1. Test case: Add a gamer (e.g., `add gamertag/steve1`).<br>
+      Expected: `contacts.json` is updated with the new gamer entry.
+
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Missing data file
 
-1. _{ more test cases ... }_
+      1. Prerequisites: Delete or rename `contacts.json`.
+
+      1. Expected: BlockBook starts with an empty list. The result will display that no file was found and that BlockBook will be starting with an empty Gamer Contact list instead.
+       A new `contacts.json` file is created at the specified path after a command that invokes saving is executed or on app exit.
+
+   1. Corrupted data file
+
+      1. Prerequisites: Edit `contacts.json` to an invalid JSON (e.g., remove a closing brace).
+
+      1. Expected: BlockBook starts with an empty list. The result will display that data could not be loaded from the file and that BlockBook will be starting with an empty Gamer Contact list instead. 
+         A new `contacts.json` file will be created to replace the corrupted `contacts.json` file after a command that invokes saving is executed or on app exit.

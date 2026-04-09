@@ -24,7 +24,7 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the gamer contacts identified by the index numbers used in the displayed gamer list."
             + " Entering duplicate indexes will only delete the contact once.\n"
-            + "\nFormat: " + COMMAND_WORD_WITH_ALIAS + " INDEX [INDEX]..."
+            + "\nFormat: " + COMMAND_WORD_WITH_ALIAS + " GAMER_INDEX [GAMER_INDEX]..."
             + "\nExample 1: " + COMMAND_WORD + " 1"
             + "\nExample 2: " + COMMAND_ALIAS + " 1 2 3"
             + "\nExample 3: " + COMMAND_WORD + " 1 1 1 (Deletes the first contact only once)";
@@ -86,7 +86,7 @@ public class DeleteCommand extends Command {
         }
         for (Index index : targetIndexes) {
             if (index.getZeroBased() >= gamerList.size()) {
-                throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+                throw new CommandException(Messages.MESSAGE_MULTIPLE_INDEXES_INVALID);
             }
         }
     }
@@ -113,5 +113,4 @@ public class DeleteCommand extends Command {
                 .toString();
     }
 }
-
 

@@ -53,7 +53,7 @@ public class DeleteCommandTest {
         indexList.add(outOfBoundIndex);
         DeleteCommand deleteCommand = new DeleteCommand(indexList);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_MULTIPLE_INDEXES_INVALID);
     }
 
     @Test
@@ -87,7 +87,7 @@ public class DeleteCommandTest {
         indexList.add(outOfBoundIndex);
         DeleteCommand deleteCommand = new DeleteCommand(indexList);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_MULTIPLE_INDEXES_INVALID);
     }
 
     @Test
@@ -274,7 +274,7 @@ public class DeleteCommandTest {
         indexList.add(outOfBoundIndex);
         DeleteCommand deleteCommand = new DeleteCommand(indexList);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_MULTIPLE_INDEXES_INVALID);
     }
 }
 

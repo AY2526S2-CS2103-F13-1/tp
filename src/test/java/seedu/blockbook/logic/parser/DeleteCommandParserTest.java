@@ -1,6 +1,6 @@
 package seedu.blockbook.logic.parser;
 
-import static seedu.blockbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.blockbook.logic.Messages.MESSAGE_MULTIPLE_INDEXES_INVALID;
 import static seedu.blockbook.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.blockbook.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.blockbook.testutil.TypicalIndexes.INDEX_FIRST_GAMER;
@@ -20,6 +20,9 @@ import seedu.blockbook.logic.commands.DeleteCommand;
  * same path through the DeleteCommand, and therefore we test only one of them.
  * The path variation for those two cases occur inside the ParserUtil, and
  * therefore should be covered by the ParserUtilTest.
+ *
+ * Equivalence Partitions: [-INF...MIN_INT-1][MIN_INT...0][1...MAX_INT][MAX_INT+1...INF]
+ * Boundary Values: -INF, MIN_INT-1, MIN_INT, 0, 1, MAX_INT, MAX_INT+1, INF
  */
 public class DeleteCommandParserTest {
 
@@ -57,20 +60,35 @@ public class DeleteCommandParserTest {
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+    public void parse_invalidAlphanumeric_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_MULTIPLE_INDEXES_INVALID, DeleteCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void parse_invalidTokenAmongIndexes_throwsParseException() {
+    public void parse_invalidAlphanumericAmongIndexes_throwsParseException() {
         assertParseFailure(parser, "1 a 3",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_MULTIPLE_INDEXES_INVALID, DeleteCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_emptyArgs_throwsParseException() {
         assertParseFailure(parser, "   ",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_MULTIPLE_INDEXES_INVALID, DeleteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidIndex_throwsParseException() {
+        // EP: [-INF...MIN_INT-1]
+        assertParseFailure(parser, "-999999999999999999999999999999999999999999",
+                String.format(MESSAGE_MULTIPLE_INDEXES_INVALID, DeleteCommand.MESSAGE_USAGE));
+        // EP: [MIN_INT...0]
+        assertParseFailure(parser, "-100",
+                String.format(MESSAGE_MULTIPLE_INDEXES_INVALID, DeleteCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "0",
+                String.format(MESSAGE_MULTIPLE_INDEXES_INVALID, DeleteCommand.MESSAGE_USAGE));
+        // EP: [MAX_INT+1...INF]
+        assertParseFailure(parser, "999999999999999999999999999999999999999999",
+                String.format(MESSAGE_MULTIPLE_INDEXES_INVALID, DeleteCommand.MESSAGE_USAGE));
     }
 }
 
