@@ -165,6 +165,7 @@ Example:
 * `view 2`<br>
   Displays the full details of the 2nd gamer in the current list.
 
+  ![result for 'view 2'](images/viewResult.png)
 
 ### Sorting gamers : `sort`
 
