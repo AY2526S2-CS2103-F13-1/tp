@@ -936,6 +936,18 @@ testers are expected to do more *exploratory* testing.
       Expected: No sorting occurs. Error message indicates there are no contacts to sort.
 
 ### Clearing all gamer contacts
+1. Clearing all contacts
+
+   1. Prerequisites: There is at least 1 contact in BlockBook.
+
+   1. Test case: `clear` followed by confirming the action<br>
+      Expected: All contacts are deleted. A success message is shown.
+   2. Test case: `clear` followed by not confirming the action (e.g. entering any other command)<br>
+      Expected: No contacts are deleted. The contact list remains unchanged. The next command entered executes as expected.
+   3. Test case: `clear` followed by invalid confirmation input (e.g., `clear 123` when the confirmation message is `clear 246`)<br>
+      Expected: No contacts are deleted. The confirmation code changes. The contact list remains unchanged.
+   4. Test case: `clear` followed by `clear`<br>
+      Expected: The confirmation code for the first `clear` command is different from the second `clear` command. No contacts are deleted.
 
 ### Creating a group (TBA)
 
