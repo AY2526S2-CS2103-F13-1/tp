@@ -175,7 +175,7 @@ The process begins when the user types an `add` command into the UI.
 
 **UI passes command to Logic:**
 After receiving the command, the UI forwards it to the Logic component for processing.
-
+    
 **Logic parses the command:**
 Within the Logic component, the command is recognized as an `add` command. The input is then parsed internally, where the command arguments are validated and converted into the corresponding gamer attribute objects before an `AddCommand` is created.
 
