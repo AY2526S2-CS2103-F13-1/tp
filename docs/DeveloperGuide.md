@@ -1306,9 +1306,16 @@ testers are expected to do more *exploratory* testing.
 
 --------------------------------------------------------------------------------------------------------------------
 
-### Effort
+## Effort
 As a team, the most challenging part of adapting AB‑3 to BlockBook was reshaping the data model to fit our domain.
 Introducing new fields and a group structure required coordinated changes across storage, model, logic, UI, and tests, and affected many existing assumptions in the AB‑3 codebase.
 Implementing the group features was also demanding because it had to work within the existing architecture and indexing rules while keeping behavior consistent across commands.
 Smaller enhancements such as find, multi‑index delete, and sorting were comparatively straightforward, but a large portion of our effort went into writing and updating test cases,
 diagnosing regressions, and fixing bugs that propagated across components after refactors.
+
+For individual contributions, see each team member's Project Portfolio Page:
+* [Jihun]({{ baseUrl }}/team/hwangjihun.html)
+* [Kester]({{ baseUrl }}/team/tehdrink.html)
+* [Hxck Jian]({{ baseUrl }}/team/hxckjian.html)
+* [Ying Wen]({{ baseUrl }}/team/yingwen178.html)
+* [JJ]({{ baseUrl }}/team/jj910.html)
