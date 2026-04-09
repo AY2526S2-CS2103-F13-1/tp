@@ -13,6 +13,10 @@ Class HelpWindow
 Class ResultDisplay
 Class GamerListPanel
 Class GamerCard
+Class GroupListPanel
+Class GroupCard
+Class ViewWindow
+Class GamerPopupCard
 Class StatusBarFooter
 Class CommandBox
 }
@@ -33,10 +37,14 @@ UiManager -down-> "1" MainWindow
 MainWindow *-down->  "1" CommandBox
 MainWindow *-down-> "1" ResultDisplay
 MainWindow *-down-> "1" GamerListPanel
+MainWindow *-down-> "1" GroupListPanel
 MainWindow *-down-> "1" StatusBarFooter
 MainWindow --> "0..1" HelpWindow
+MainWindow --> "0..1" ViewWindow
 
 GamerListPanel -down-> "*" GamerCard
+GroupListPanel -down-> "*" GroupCard
+ViewWindow *-down-> "1" GamerPopupCard
 
 MainWindow -left-|> UiPart
 
@@ -44,10 +52,16 @@ ResultDisplay --|> UiPart
 CommandBox --|> UiPart
 GamerListPanel --|> UiPart
 GamerCard --|> UiPart
+GroupListPanel --|> UiPart
+GroupCard --|> UiPart
 StatusBarFooter --|> UiPart
 HelpWindow --|> UiPart
+ViewWindow --|> UiPart
+GamerPopupCard --|> UiPart
 
 GamerCard ..> Model
+GroupCard ..> Model
+GamerPopupCard ..> Model
 UiManager -right-> Logic
 MainWindow -left-> Logic
 
@@ -55,7 +69,8 @@ GamerListPanel -[hidden]left- HelpWindow
 HelpWindow -[hidden]left- CommandBox
 CommandBox -[hidden]left- ResultDisplay
 ResultDisplay -[hidden]left- StatusBarFooter
+GroupListPanel -[hidden]left- GamerListPanel
+ViewWindow -[hidden]left- HelpWindow
 
 MainWindow -[hidden]-|> UiPart
 @enduml
-

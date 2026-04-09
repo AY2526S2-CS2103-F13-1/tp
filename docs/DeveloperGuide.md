@@ -14,7 +14,8 @@ The current content is based on the design decisions we have made so far, and ma
 
 --------------------------------------------------------------------------------------------------------------------
 ## **Acknowledgements**
-The UI mockup was generated with ChatGPT using the following [input](https://chatgpt.com/share/69a2747d-cb94-800c-bb01-49b78ced58b4).
+* BlockBook is based on the AB-3 codebase.
+* The UI mockup was generated with ChatGPT using the following [input](https://chatgpt.com/share/69a2747d-cb94-800c-bb01-49b78ced58b4).
 
 ## **Setting up and getting started**
 
@@ -70,7 +71,11 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/AY2
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `GamerListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts such as `CommandBox`, `ResultDisplay`, `GamerListPanel`,
+`GroupListPanel`, and `StatusBarFooter`. The `GamerListPanel` uses `GamerCard` to render each gamer contact, and the
+`GroupListPanel` uses `GroupCard` to render each group. The UI also includes pop-up windows like `HelpWindow`
+and `ViewWindow`, where `ViewWindow` displays a `GamerPopupCard`. All these, including the `MainWindow`, inherit
+from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/blockbook/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -117,7 +122,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/blockbook/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="850" />
 
 
 The `Model` component,
@@ -131,7 +136,7 @@ The `Model` component,
 
 **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Group` list in the `BlockBook`, which `Gamer` references. This allows `BlockBook` to only require one `Group` object per unique group, instead of each `Gamer` needing their own `Group` objects.<br>
 
-<puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
+<puml src="diagrams/BetterModelClassDiagram.puml" width="700" />
 
 </box>
 
@@ -161,7 +166,7 @@ The Add feature allows users to create a new gamer contact in BlockBook by enter
 
 The sequence diagram below illustrates the main interactions that take place when an `add` command is executed.
 
-<puml src="diagrams/AddCommandSequenceDiagram.puml" width="300" />
+<puml src="diagrams/AddCommandSequenceDiagram.puml" width="550" />
 
 **User enters command:**  
 The process begins when the user types an `add` command into the UI.
@@ -359,8 +364,6 @@ Use case ends.
 - 4a1. BB notifies the user that the contact is already a favourite.
 - Use case ends.
 
-(An extension can be added for unfavourite here)
-
 #### UC04 - Sort Gamer Contacts
 
 **MSS**
@@ -481,9 +484,33 @@ Use case ends.
 - 1b1. BB displays an error message.
 - Use case ends.
 
-#### UC08 - Find Gamer Contacts**
+#### UC08 - Find Gamer Contacts
 
-#### UC09 - Clear all Gamer Contacts**
+**MSS**
+
+1. User requests to find gamer contacts using search criteria.
+2. BB shows the matching gamer contacts and a message indicating the number found.
+
+Use case ends.
+
+**Extensions**
+
+1a. User enters empty input or mixes global keywords with prefixed arguments.
+
+- 1a1. BB displays an invalid command format message and the correct usage.
+- Use case ends.
+
+1b. User provides an invalid prefixed value (e.g., email/phone/group format is invalid).
+
+- 1b1. BB displays the relevant constraint message.
+- Use case ends.
+
+2a. BB finds no matching gamers.
+
+- 2a1. BB displays a “no gamers found” message and does not update the current list.
+- Use case ends.
+
+#### UC09 - Clear all Gamer Contacts
 **Preconditions**
 - User has at least one contact saved in BlockBook.
 
@@ -507,15 +534,126 @@ Use case ends.
 
 Use case ends.
 
-#### UC11 - Create a Group (TBA)
+#### UC11 - Create a Group
 
-#### UC12 - Add a Gamer to a Group (TBA)
+**MSS**
+1. User requests to create a group with a group name.
+2. BB creates the group and displays a success message.
 
-#### UC13 - Remove a Gamer from a Group (TBA)
+Use case ends.
 
-#### UC14 - Delete a Group (TBA)
+**Extensions**
+1a. The group name is invalid.
+- 1a1. BB displays an error message.
+- Use case ends.
 
-#### UC15 - List Groups (TBA)
+1b. A group with the same name already exists.
+- 1b1. BB displays an error message.
+- Use case ends.
+
+#### UC12 - Edit a Group
+
+**MSS**
+1. User requests to edit a group by its index and provides a new group name.
+2. BB updates the group name and displays a success message.
+
+Use case ends.
+
+**Extensions**
+1a. User enters an invalid index.
+- 1a1. BB displays an error message.
+- Use case ends.
+
+1b. The group name is invalid.
+- 1b1. BB displays an error message.
+- Use case ends.
+
+1c. A group with the same name already exists.
+- 1c1. BB displays an error message.
+- Use case ends.
+
+#### UC13 - Delete a Group
+
+**MSS**
+1. User requests to delete a group by its index.
+2. BB prompts the user with a confirmation code and repeats the required delete format.
+3. User confirms by entering the group index and confirmation code.
+4. BB deletes the group and removes it from all associated gamers.
+5. BB displays a success message.
+
+Use case ends.
+
+**Extensions**
+1a. User enters an invalid index.
+- 1a1. BB displays an error message.
+- Use case ends.
+
+2a. User does not follow through with confirmation.
+- Use case ends.
+
+3a. User used the wrong confirmation input.
+- 3a1. BB displays an error message and prompts the user for confirmation again with a new code.
+- Use case resumes from step 3.
+
+#### UC14 - Add a Gamer to a Group
+
+**MSS**
+1. User requests to add a gamer to a group by providing the gamer index and group index.
+2. BB adds the gamer to the group and displays a success message.
+
+Use case ends.
+
+**Extensions**
+1a. User enters an invalid index.
+- 1a1. BB displays an error message.
+- Use case ends.
+
+1b. The gamer is already in the group.
+- 1b1. BB displays an error message.
+- Use case ends.
+
+#### UC15 - Remove a Gamer from a Group
+
+**MSS**
+1. User requests to remove a gamer from a group by providing the gamer index and the gamer's group index.
+2. BB removes the gamer from the group and displays a success message.
+
+Use case ends.
+
+**Extensions**
+1a. User enters an invalid index.
+- 1a1. BB displays an error message.
+- Use case ends.
+
+#### UC16 - List all Groups
+
+**MSS**
+1. User requests to list all groups.
+2. BB displays the list of groups.
+
+Use case ends.
+
+**Extensions**
+1a. The group list is empty.
+- 1a1. BB informs the user that no groups are currently stored.
+- Use case ends.
+
+#### UC17 - View a Group
+
+**MSS**
+1. User requests to view a group by its index.
+2. BB displays the gamers associated with that group.
+
+Use case ends.
+
+**Extensions**
+1a. User enters an invalid index.
+- 1a1. BB displays an error message.
+- Use case ends.
+
+2a. There are no gamers in the group.
+- 2a1. BB displays a message indicating there are no associated gamers and leaves the current list unchanged.
+- Use case ends.
 
 ### Non-Functional Requirements
 
@@ -709,7 +847,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Finding a gamer contact
 
-1. Finding gamers with global keyword(s)
+1. Finding gamers with global keyword
 
    1. Prerequisites: There are three gamers in the list (Alex with gamertag `CraftyAlex`, email `alex@craft.net`,
       group `Explorers`, server `srv1.gamehub.net`, country `USA`, region `NA`, note `builder`,
@@ -750,10 +888,10 @@ testers are expected to do more *exploratory* testing.
       Expected: Only Steve is displayed in the list. A message indicates 1 gamer(s) found.
 
    1. Test case: `find alex steve`<br>
-      Expected: No gamer is displayed in the list. A message indicates no gamers were found.
+      Expected: A message indicates no gamers were found. The displayed list remains unchanged.
 
    1. Test case: `find Sean`<br>
-      Expected: No gamer is displayed in the list. A message indicates no gamers were found.
+      Expected: A message indicates no gamers were found. The displayed list remains unchanged.
 
 1. Finding gamers with specific prefixes
 
