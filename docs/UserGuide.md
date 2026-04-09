@@ -534,7 +534,7 @@ Furthermore, certain edits can cause BlockBook to behave in unexpected ways (e.g
 | Action           | Format, Examples                                                                                                           |
 |------------------|----------------------------------------------------------------------------------------------------------------------------|
 | **Add**          | `(a)dd (g)amertag/GAMERTAG [(n)ame/NAME]...` <br> e.g., `add g/JamieH n/James Ho`                                          |
-| **Clear**        | `clear`                                                                                                                    |
+| **Clear**        | `clear [CONFIRMATION_CODE]`                                                                                                |
 | **Delete**       | `(d)elete GAMER_INDEX [GAMER_INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                                                 |
 | **Edit**         | `(e)dit GAMER_INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME]...`<br> e.g., `edit 2 n/James Lee`                                 |
 | **Find**         | `(f)ind KEYWORD`<br> e.g., `find James`<br> `find [(n)ame/NAME] [(g)amertag/GAMERTAG]...`<br> e.g., `find n/Steve g/Block` |
@@ -546,7 +546,7 @@ Furthermore, certain edits can cause BlockBook to behave in unexpected ways (e.g
 | **Help**         | `help`, `?`                                                                                                                |
 | **Group Create** | `groupcreate GROUP`, `gc GROUP`<br> e.g., `gc Raid Team`                                                                   |
 | **Group Edit**   | `groupedit BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME`, `ge ...`<br> e.g., `ge 1 Arena Team`                                     |
-| **Group Delete** | `groupnuke BLOCKBOOK_GROUP_INDEX`, `gn ...`<br> e.g., `gn 1 abc123`                                                        |
+| **Group Delete** | `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`, `gn ...`<br> e.g., `gn 1 abc123`                                                       |
 | **Group Add**    | `groupadd GAMER_INDEX BLOCKBOOK_GROUP_INDEX`, `ga ...`<br> e.g., `ga 2 1`                                                  |
 | **Group Remove** | `groupremove GAMER_INDEX GAMER_GROUP_INDEX`, `gr ...`<br> e.g., `gr 2 1`                                                   |
 | **Group List**   | `grouplist`, `gl`                                                                                                          |
