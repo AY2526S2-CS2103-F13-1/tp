@@ -1,6 +1,6 @@
 ---
   layout: default.md
-    title: "Logging guide"
+  title: "Logging guide"
 ---
 
 # Logging guide
