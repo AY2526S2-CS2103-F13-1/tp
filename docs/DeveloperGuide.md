@@ -149,6 +149,8 @@ The `Model` component,
 
 The `Storage` component,
 * can save both contact data and user preference data in JSON format, and read them back into corresponding objects.
+* stores contact data in a JSON file (default location: `BlockBook/contacts.json`) and user preferences in
+  `preferences.json` (as configured in `config.json`).
 * inherits from both `BlockBookStorage` and `UserPrefsStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
@@ -327,8 +329,7 @@ Use case ends.
 **MSS**
 
 1. User chooses to view all saved contacts.
-2. BB retrieves all entries.
-3. BB displays a list of all contacts with their basic details.
+2. BB displays a list of all contacts with their details in the default order.
 
 Use case ends.
 
@@ -339,29 +340,35 @@ Use case ends.
 - 2a1. BB informs the user that no contacts are currently stored.
 - Use case ends.
 
-#### UC03 - Favourite a Contact
+#### UC03 - Favourite/Unfavourite a Contact
 
 **MSS**
 
-1. User chooses to favourite a contact.
-2. BB requests the gamertag of the contact to favourite.
-3. User enters the gamertag.
-4. BB marks the contact as a favourite and confirms the update.
+1. User requests to favourite/unfavourite a contact by index.
+2. BB updates favourite status and displays confirmation.
 
 Use case ends.
 
 **Extensions**
 
-3a. BB cannot find a contact matching the entered gamertag.
+1a. User enters an invalid index (non-numeric).
 
-- 3a1. BB displays an error and requests a valid gamertag.
-- 3a2. User enters a new gamertag.
-- Steps 3a1-3a2 are repeated until a match is found.
-- Use case resumes from step 4.
+- 1a1. BB displays an error message.
+- Use case ends.
 
-4a. The contact is already marked as a favourite.
+1b. User enters an index that is out of range.
 
-- 4a1. BB notifies the user that the contact is already a favourite.
+- 1b1. BB displays an error message.
+- Use case ends.
+
+2a. The contact is already marked as a favourite.
+
+- 2a1. BB notifies the user that the contact is already a favourite.
+- Use case ends.
+
+2b. The contact is already not a favourite.
+
+- 2b1. BB notifies the user that the contact is already not a favourite.
 - Use case ends.
 
 #### UC04 - Sort Gamer Contacts
@@ -395,55 +402,46 @@ Use case ends.
 - 2a1. BB informs the user that there are no contacts to sort.
 - Use case ends.
 
-#### UC05 - Edit a Gamer Contact (Change of name from Update)
+#### UC05 - Edit a Gamer Contact
 
 **MSS**
 
-1. User chooses to update a contact's details.
-2. BB requests the current gamertag of the contact.
-3. User enters the current gamertag.
-4. BB displays the contact's current details and requests which attribute to change.
-5. User enters the attribute to change.
-6. BB requests the new value for the attribute.
-7. User enters the new value.
-8. BB requests confirmation.
-9. User confirms.
-10. BB updates the contact and displays the updated contact profile.
+1. User requests to edit a contact by specifying the contact index and one or more fields to update.
+2. BB updates the contact and displays a success message with the updated contact details.
 
 Use case ends.
 
 **Extensions**
 
-3a. BB cannot find a contact matching the entered gamertag.
+1a. User enters an invalid index (non-numeric).
 
-- 3a1. BB displays an error and requests a valid gamertag.
-- 3a2. User enters a new gamertag.
-- Steps 3a1-3a2 are repeated until a match is found.
-- Use case resumes from step 4.
+- 1a1. BB displays an error message.
+- 1a2. User re-enters the edit command with corrected input.
+- Use case resumes at step 1.
 
-5a. BB cannot identify the attribute to edit.
+1b. User enters an index that is out of range.
 
-- 5a1. BB displays an error and requests a valid attribute name.
-- 5a2. User enters a new attribute name.
-- Steps 5a1-5a2 are repeated until a valid attribute is entered.
-- Use case resumes from step 6.
+- 1b1. BB displays an error message.
+- 1b2. User re-enters the edit command with a valid index.
+- Use case resumes at step 1.
 
-7a. BB detects that the new gamertag is already in use by another contact.
+1c. User provides no fields to edit.
 
-- 7a1. BB warns the user of the conflict and requests a different gamertag.
-- 7a2. User enters a new gamertag.
-- Use case resumes from step 8.
+- 1c1. BB displays an error message.
+- 1c2. User re-enters the edit command with at least one field to edit.
+- Use case resumes at step 1.
 
-7b. BB detects that the entered value contains invalid characters.
+1d. The new gamertag is already in use by another contact.
 
-- 7b1. BB displays an error and requests a valid value.
-- 7b2. User enters a new value.
-- Use case resumes from step 8.
+- 1d1. BB displays an error message indicating that the gamertag is already in use.
+- 1d2. User re-enters the edit command with a different gamertag.
+- Use case resumes at step 1.
 
-*a. At any time, User chooses to cancel.
+1e. One or more entered values are invalid.
 
-- *a1. BB discards all changes.
-- Use case ends.
+- 1e1. BB displays an error message indicating that the input is invalid.
+- 1e2. User re-enters the edit command with corrected input.
+- Use case resumes at step 1.
 
 #### UC06 - Delete a Gamer Contact
 **Preconditions**
@@ -779,6 +777,60 @@ testers are expected to do more *exploratory* testing.
 
 ### Editing a gamer contact
 
+1. Valid inputs
+
+   i. Prerequisites: List all gamers using the `list` command. The contact list is visible.
+
+   ii. Test case: `edit 1 n/Herobrine`  
+   Expected: The first gamer's name is updated to `Herobrine`. Success message shown.
+
+   iii. Test case: `edit 1 p/98765432 r/ASIA`  
+   Expected: The first gamer's phone and region are updated. Success message shown.
+
+   iv. Test case: `edit 2 g/new_tag e/new@example.com s/mc.example.com:25565 c/Singapore note/Alt account`  
+   Expected: The second gamer's gamertag, email, server, country, and note are updated. Success message shown.
+
+   v. Test case: `edit 1 g/Herobrine n/Herobrine p/99999 e/brine@gmail.com s/127.0.0.1:8080 c/Singapore r/ASIA note/I hate steve`  
+   Expected: The first gamer is updated with all provided fields. Success message shown.
+
+2. Invalid inputs
+
+   i. Test case: `edit 0 name/Alex`  
+   Expected: No gamer is edited. Error message indicates the index is out of range.
+
+   ii. Test case: `edit -1 name/Alex`  
+   Expected: No gamer is edited. Error message indicates the index is out of range.
+
+   iii. Test case: `edit 1`  
+   Expected: No gamer is edited. Error message indicates at least one field must be provided.
+
+   iv. Test case: `edit 1 n/Alex n/Bob`  
+   Expected: No gamer is edited. Error message indicates duplicate prefixes are not allowed.
+
+   v. Test case: `edit 1 e/not-an-email`  
+   Expected: No gamer is edited. Error message indicates the email is invalid.
+
+   vi. Test case: `edit 1 p/abcde`  
+   Expected: No gamer is edited. Error message indicates the phone number is invalid.
+
+   vii. Test case: `edit 1 c/Sing@pore`  
+   Expected: No gamer is edited. Error message indicates the country is invalid.
+
+   viii. Test case: `edit 1 r/XYZ`  
+   Expected: No gamer is edited. Error message indicates the region is invalid.
+
+   ix. Test case: `edit 1 s/server#1`  
+   Expected: No gamer is edited. Error message indicates the server is invalid.
+
+   x. Test case: `edit 1 g/Bad Tag`  
+   Expected: No gamer is edited. Error message indicates the gamertag is invalid.
+
+   xi. Test case: `edit 1 g/amy_tag` (where another gamer already has gamertag `amy_tag`)  
+   Expected: No gamer is edited. Error message indicates the gamertag is already used by someone in BlockBook.
+
+   xii. Test case: `edit 1 extra n/Alex`  
+   Expected: No gamer is edited. Error message indicates invalid command format.
+
 ### Deleting a gamer contact
 
 1. Deleting a gamer while all gamers are being shown
@@ -801,7 +853,60 @@ testers are expected to do more *exploratory* testing.
 
 ### Setting a gamer contact as a favourite contact
 
+1. Mark as favourite
+
+   i. Prerequisites: List all gamers using the `list` command. The first gamer is not a favourite.
+
+   ii. Test case: `favourite 1`  
+   Expected: The first gamer is marked as favourite. Success message shown.
+
+2. Unfavourite
+
+   i. Prerequisites: The first gamer is already marked as favourite.
+
+   ii. Test case: `unfavourite 1`  
+   Expected: The first gamer is removed from favourites. Success message shown.
+
+3. Invalid inputs
+
+   i. Test case: `favourite 0`  
+   Expected: No gamer is updated. Error message indicates the index is out of range.
+
+   ii. Test case: `unfavourite 999` (where 999 is larger than the list size)  
+   Expected: No gamer is updated. Error message indicates the index is out of range.
+
+   iii. Test case: `favourite 1` when the first gamer is already a favourite  
+   Expected: Error message indicates the gamer is already a favourite.
+
 ### Listing gamer contacts
+
+1. Listing all gamers
+
+   i. Prerequisites: The contact list is visible.
+
+   ii. Test case: `list`  
+   Expected: All gamers are displayed. Any active sort is cleared and the list returns to insertion order.
+
+2. Listing after a filter
+
+   i. Prerequisites: Use a `find` command that shows a subset of gamers.
+
+   ii. Test case: `list`  
+   Expected: The full list of gamers is shown.
+
+3. Listing after a sort
+
+   i. Prerequisites: Use a `sort` command that shows a sorted list of gamers.
+
+   ii. Test case: `list`  
+   Expected: The full list of gamers in the original order is shown.
+
+4. Listing with no contacts
+
+   i. Prerequisites: Start with an empty data file or clear all contacts.
+
+   ii. Test case: `list`  
+   Expected: A message indicates that no contacts are stored.
 
 ### Viewing a gamer contact
 
