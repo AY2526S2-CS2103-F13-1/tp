@@ -69,7 +69,7 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 * Parameters can be in any order.<br>
   e.g. if the command specifies `name/NAME gamertag/GAMERTAG`, `gamertag/GAMERTAG name/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `grouplist`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -299,7 +299,7 @@ Format: `clear [CONFIRMATION_CODE]`
 
 Examples:
 * `clear` shows a warning and a confirmation code (e.g., `clear abc123`).
-* `clear abc123` clears all entries.
+* `clear abc123` clears all entries if the confirmation code is abc123.
 
 ### Creating a group : `groupcreate`
 
