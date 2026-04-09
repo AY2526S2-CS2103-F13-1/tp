@@ -122,7 +122,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/AY2526S2-CS2103-F13-1/tp/tree/master/src/main/java/seedu/blockbook/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="850" />
 
 
 The `Model` component,
@@ -136,7 +136,7 @@ The `Model` component,
 
 **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Group` list in the `BlockBook`, which `Gamer` references. This allows `BlockBook` to only require one `Group` object per unique group, instead of each `Gamer` needing their own `Group` objects.<br>
 
-<puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
+<puml src="diagrams/BetterModelClassDiagram.puml" width="700" />
 
 </box>
 
@@ -166,7 +166,7 @@ The Add feature allows users to create a new gamer contact in BlockBook by enter
 
 The sequence diagram below illustrates the main interactions that take place when an `add` command is executed.
 
-<puml src="diagrams/AddCommandSequenceDiagram.puml" width="300" />
+<puml src="diagrams/AddCommandSequenceDiagram.puml" width="550" />
 
 **User enters command:**  
 The process begins when the user types an `add` command into the UI.
