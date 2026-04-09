@@ -998,7 +998,7 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `gc i love steve group`<br>
        Expected: Same result as `groupcreate i love steve group`.
 
-    1. Test case: `groupcreate i love steve group`<br>
+    1. Test case: `groupcreate i love steve       group`<br>
        Expected: A success message is shown and the group is stored as `i love steve group` (extra spaces are collapsed).
 
 1. Duplicate group (case-insensitive)
@@ -1017,7 +1017,7 @@ testers are expected to do more *exploratory* testing.
        and be at most 50 characters.
 
     1. Test case: `groupcreate`<br>
-       Expected: Error indicating invalid command format for `group create`.
+       Expected: Error indicating invalid command format for `groupcreate`.
 
 ### Editing a group's name
 
