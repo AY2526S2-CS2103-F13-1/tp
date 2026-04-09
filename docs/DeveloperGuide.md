@@ -480,7 +480,29 @@ Use case ends.
 
 **UC09 - View a Gamer Contact**
 
-**UC10- Find Gamer Contacts**
+**Preconditions**
+- User knows the index of the contact they wish to view (e.g. having previously executed UC02)
+
+**MSS**
+
+1. User requests to view a contact with `view INDEX`.
+2. BB displays the contact's full profile details in the CLI and opens a pop-up window showing their full profile details.
+
+Use case ends.
+
+**Extensions**
+
+1a. User enters an invalid index (non-numeric).
+
+- 1a1. BB displays an error message.
+- Use case ends.
+
+1b. BB cannot find a contact matching the entered index (out of range).
+
+- 1b1. BB displays an error message.
+- Use case ends.
+
+**UC10 - Find Gamer Contacts**
 
 **UC11 - Clear all Gamer Contacts**
 
