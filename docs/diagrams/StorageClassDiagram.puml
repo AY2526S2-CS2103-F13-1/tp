@@ -19,7 +19,7 @@ Class "<<interface>>\nBlockBookStorage" as BlockBookStorage
 Class JsonBlockBookStorage
 Class JsonSerializableBlockBook
 Class JsonAdaptedGamer
-Class JsonAdaptedTag
+Class "String\n(blockbookgroups)" as JsonGroupName
 }
 
 }
@@ -38,7 +38,7 @@ JsonUserPrefsStorage .up.|> UserPrefsStorage
 JsonBlockBookStorage .up.|> BlockBookStorage
 JsonBlockBookStorage ..> JsonSerializableBlockBook
 JsonSerializableBlockBook --> "*" JsonAdaptedGamer
-JsonAdaptedGamer --> "*" JsonAdaptedTag
+JsonSerializableBlockBook --> "*" JsonGroupName
 
 @enduml
 

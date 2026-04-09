@@ -285,8 +285,7 @@ Use case ends.
 **MSS**
 
 1. User chooses to view all saved contacts.
-2. BB clears any active sorting and retrieves all entries.
-3. BB displays a list of all contacts with their basic details.
+2. BB displays a list of all contacts with their details in the default order.
 
 Use case ends.
 
@@ -301,33 +300,32 @@ Use case ends.
 
 **MSS**
 
-1. User chooses to favourite or unfavourite a contact.
-2. BB requests the index of the contact to favourite or unfavourite.
-3. User enters the index.
-4. BB marks or unmarks the contact as a favourite and confirms the update.
+1. User requests to favourite/unfavourite a contact by index.
+2. BB validates the provided index.
+3. BB updates favourite status.
 
 Use case ends.
 
 **Extensions**
 
-3a. User enters an invalid index (non-numeric).
+2a. User enters an invalid index (non-numeric).
 
-- 3a1. BB displays an error message.
+- 2a1. BB displays an error message.
 - Use case ends.
 
-3b. User enters an index that is out of range.
+2b. User enters an index that is out of range.
 
-- 3b1. BB displays an error message.
+- 2b1. BB displays an error message.
 - Use case ends.
 
-4a. The contact is already marked as a favourite.
+3a. The contact is already marked as a favourite.
 
-- 4a1. BB notifies the user that the contact is already a favourite.
+- 3a1. BB notifies the user that the contact is already a favourite.
 - Use case ends.
 
-4b. The contact is already not a favourite.
+3b. The contact is already not a favourite.
 
-- 4b1. BB notifies the user that the contact is already not a favourite.
+- 3b1. BB notifies the user that the contact is already not a favourite.
 - Use case ends.
 
 **UC04 - Add Profile Picture to Contact** (TBA)
@@ -434,45 +432,42 @@ Use case ends.
 
 **MSS**
 
-1. User chooses to update a contact's details.
-2. BB requests the index of the contact and at least one field to edit.
-3. User enters the index and the new values.
-4. BB validates the index and the new values.
-5. BB updates the contact and displays the updated contact profile.
+1. User requests to edit a contact by specifying the contact index and one or more fields to update.
+2. BB updates the contact and displays a success message with the updated contact details.
 
 Use case ends.
 
 **Extensions**
 
-3a. User enters an invalid index (non-numeric).
+1a. User enters an invalid index (non-numeric).
 
-- 3a1. BB displays an error message.
-- Use case ends.
+- 1a1. BB displays an error message.
+- 1a2. User re-enters the edit command with corrected input.
+- Use case resumes at step 1.
 
-3b. User enters an index that is out of range.
+1b. User enters an index that is out of range.
 
-- 3b1. BB displays an error message.
-- Use case ends.
+- 1b1. BB displays an error message.
+- 1b2. User re-enters the edit command with a valid index.
+- Use case resumes at step 1.
 
-3c. User provides no fields to edit.
+1c. User provides no fields to edit.
 
-- 3c1. BB displays an error message.
-- Use case ends.
+- 1c1. BB displays an error message.
+- 1c2. User re-enters the edit command with at least one field to edit.
+- Use case resumes at step 1.
 
-4a. BB detects that the new gamertag is already in use by another contact.
+1d. The new gamertag is already in use by another contact.
 
-- 4a1. BB warns the user of the conflict and requests a different gamertag.
-- Use case ends.
+- 1d1. BB displays an error message indicating that the gamertag is already in use.
+- 1d2. User re-enters the edit command with a different gamertag.
+- Use case resumes at step 1.
 
-4b. BB detects that one of the entered values is invalid.
+1e. One or more entered values are invalid.
 
-- 4b1. BB displays an error message.
-- Use case ends.
-
-*a. At any time, User chooses to cancel.
-
-- *a1. BB discards all changes.
-- Use case ends.
+- 1e1. BB displays an error message indicating that the input is invalid.
+- 1e2. User re-enters the edit command with corrected input.
+- Use case resumes at step 1.
 
 **UC08 - Delete a Gamer Contact**
 
@@ -757,7 +752,7 @@ testers are expected to do more *exploratory* testing.
    ii. Test case: `list`  
    Expected: The full list of gamers is shown.
 
-3. Listing after a filter
+3. Listing after a sort
 
    i. Prerequisites: Use a `sort` command that shows a sorted list of gamers.
 
