@@ -15,6 +15,9 @@
 * Follow the [**_Google developer documentation style guide_**](https://developers.google.com/style).
 * Also relevant is the [_se-edu/guides **Markdown coding standard**_](https://se-education.org/guides/conventions/markdown.html).
 
+**Diagrams:**
+
+* See the [_se-edu/guides **Using PlantUML**_](https://se-education.org/guides/tutorials/plantUml.html)
 
 **Converting to PDF**
 
