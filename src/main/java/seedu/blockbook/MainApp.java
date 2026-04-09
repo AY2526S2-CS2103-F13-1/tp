@@ -82,7 +82,7 @@ public class MainApp extends Application {
             blockBookOptional = storage.readBlockBook();
             if (!blockBookOptional.isPresent()) {
                 logger.info("Creating a new data file " + storage.getBlockBookFilePath()
-                        + " populated with a sample BlockBook.");
+                        + ".");
 
                 // Shows content on resultDisplay
                 CommandResult message = new CommandResult(
