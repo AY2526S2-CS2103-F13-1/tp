@@ -550,7 +550,7 @@ Use case ends.
 - 1b1. BB displays an error message.
 - Use case ends.
 
-#### UC10 - Find Gamer Contacts**
+#### UC10 - Find Gamer Contacts
 
 **MSS**
 
@@ -558,12 +558,6 @@ Use case ends.
 2. BB shows the matching gamer contacts and a message indicating the number found.
 
 Use case ends.
-
-**Notes**
-
-- BB performs case-insensitive substring matching for both global search and prefixed attributes.
-- Global search treats the entire input as a single keyword and does not include favourite.
-- The `favourite/` prefix is a flag (no value) and matches favourite gamers only.
 
 **Extensions**
 
