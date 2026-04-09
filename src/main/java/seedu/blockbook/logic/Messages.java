@@ -33,6 +33,8 @@ public class Messages {
     public static final String MESSAGE_NO_CONTACTS = "List loaded but empty.";
     public static final String MESSAGE_DISPLAY_CONTACTS_ERROR = "Error displaying contacts.";
     public static final String MESSAGE_INDEX_OUT_OF_RANGE = "Please provide a valid index. Index is out of range.";
+    public static final String MESSAGE_MULTIPLE_INDEXES_INVALID = "One or more index is invalid."
+            + " Please ensure all indexes are in range, positive integers.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
