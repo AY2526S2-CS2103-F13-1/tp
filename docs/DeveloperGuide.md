@@ -576,15 +576,126 @@ Use case ends.
 
 Use case ends.
 
-#### UC13 - Create a Group (TBA)
+#### UC13 - Create a Group
 
-#### UC14 - Add a Gamer to a Group (TBA)
+**MSS**
+1. User requests to create a group with a group name.
+2. BB creates the group and displays a success message.
 
-#### UC15 - Remove a Gamer from a Group (TBA)
+Use case ends.
 
-#### UC16 - Delete a Group (TBA)
+**Extensions**
+1a. The group name is invalid.
+- 1a1. BB displays an error message.
+- Use case ends.
 
-#### UC17 - List Groups (TBA)
+1b. A group with the same name already exists.
+- 1b1. BB displays an error message.
+- Use case ends.
+
+#### UC14 - Edit a Group
+
+**MSS**
+1. User requests to edit a group by its index and provides a new group name.
+2. BB updates the group name and displays a success message.
+
+Use case ends.
+
+**Extensions**
+1a. User enters an invalid index.
+- 1a1. BB displays an error message.
+- Use case ends.
+
+1b. The group name is invalid.
+- 1b1. BB displays an error message.
+- Use case ends.
+
+1c. A group with the same name already exists.
+- 1c1. BB displays an error message.
+- Use case ends.
+
+#### UC15 - Delete a Group
+
+**MSS**
+1. User requests to delete a group by its index.
+2. BB prompts the user with a confirmation code and repeats the required delete format.
+3. User confirms by entering the group index and confirmation code.
+4. BB deletes the group and removes it from all associated gamers.
+5. BB displays a success message.
+
+Use case ends.
+
+**Extensions**
+1a. User enters an invalid index.
+- 1a1. BB displays an error message.
+- Use case ends.
+
+2a. User does not follow through with confirmation.
+- Use case ends.
+
+3a. User used the wrong confirmation input.
+- 3a1. BB displays an error message and prompts the user for confirmation again with a new code.
+- Use case resumes from step 3.
+
+#### UC16 - Add a Gamer to a Group
+
+**MSS**
+1. User requests to add a gamer to a group by providing the gamer index and group index.
+2. BB adds the gamer to the group and displays a success message.
+
+Use case ends.
+
+**Extensions**
+1a. User enters an invalid index.
+- 1a1. BB displays an error message.
+- Use case ends.
+
+1b. The gamer is already in the group.
+- 1b1. BB displays an error message.
+- Use case ends.
+
+#### UC17 - Remove a Gamer from a Group
+
+**MSS**
+1. User requests to remove a gamer from a group by providing the gamer index and the gamer's group index.
+2. BB removes the gamer from the group and displays a success message.
+
+Use case ends.
+
+**Extensions**
+1a. User enters an invalid index.
+- 1a1. BB displays an error message.
+- Use case ends.
+
+#### UC18 - List all Groups
+
+**MSS**
+1. User requests to list all groups.
+2. BB displays the list of groups.
+
+Use case ends.
+
+**Extensions**
+1a. The group list is empty.
+- 1a1. BB informs the user that no groups are currently stored.
+- Use case ends.
+
+#### UC19 - View a Group
+
+**MSS**
+1. User requests to view a group by its index.
+2. BB displays the gamers associated with that group.
+
+Use case ends.
+
+**Extensions**
+1a. User enters an invalid index.
+- 1a1. BB displays an error message.
+- Use case ends.
+
+2a. There are no gamers in the group.
+- 2a1. BB displays a message indicating there are no associated gamers and leaves the current list unchanged.
+- Use case ends.
 
 ### Non-Functional Requirements
 
