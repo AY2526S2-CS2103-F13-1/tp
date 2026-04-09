@@ -181,6 +181,7 @@
     },
     {
       "src": "team/jj910.md",
+      "title": "Julian's Project Portfolio Page",
       "headings": {
         "stuff-that-i-worked-on": "Stuff that I worked on"
       },
@@ -198,7 +199,7 @@
       "src": "team/yingwen178.md",
       "title": "YingWen's Project Portfolio Page",
       "headings": {
-        "project-blockbook": "Project: BlockBook"
+        "stuff-that-i-worked-on": "Stuff that I worked on"
       },
       "headingKeywords": {}
     }
