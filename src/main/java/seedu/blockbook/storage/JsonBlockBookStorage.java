@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.commons.exceptions.DataLoadingException;
-import seedu.blockbook.commons.exceptions.IllegalValueException;
 import seedu.blockbook.commons.util.FileUtil;
 import seedu.blockbook.commons.util.JsonUtil;
 import seedu.blockbook.model.ReadOnlyBlockBook;
