@@ -29,10 +29,10 @@ public class FavouriteCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds a gamer to favourites using the displayed index.\n"
-            + "Format: " + COMMAND_WORD_WITH_ALIAS + " INDEX\n"
+            + "Format: " + COMMAND_WORD_WITH_ALIAS + " GAMER_INDEX\n"
             + "Example: " + COMMAND_WORD + " 2\n\n"
             + COMMAND_WORD_UNFAVOURITE + ": Removes a gamer from favourites using the displayed index.\n"
-            + "Format: " + COMMAND_WORD_UNFAVOURITE_WITH_ALIAS + " INDEX\n"
+            + "Format: " + COMMAND_WORD_UNFAVOURITE_WITH_ALIAS + " GAMER_INDEX\n"
             + "Example: " + COMMAND_WORD_UNFAVOURITE + " 2";
 
     public static final String MESSAGE_MARK_FAVOURITE_SUCCESS =

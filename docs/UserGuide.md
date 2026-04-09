@@ -64,7 +64,7 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
     * e.g `name/NAME [t/TAG]` can be used as `name/John Doe t/friend` or as `name/John Doe`.
 
 * Items with `…` after them can be used multiple times including zero times.
-    * e.g. `INDEX…` can be used as ` ` (i.e. left blank), `1`, `1 2 3` etc.
+    * e.g. `GAMER_INDEX…` can be used as ` ` (i.e. left blank), `1`, `1 2 3` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `name/NAME gamertag/GAMERTAG`, `gamertag/GAMERTAG name/NAME` is also acceptable.
@@ -147,9 +147,13 @@ Format: `(l)ist`
 
 ### Editing a gamer : `edit`
 
-Edits an existing gamer stored in BlockBook by specifying the index and at least one field to change.
+Edits an existing gamer stored in BlockBook.
 
-Format: `(e)dit INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`
+Format: `(e)dit GAMER_INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`
+
+* Edits the gamer at the specified `GAMER_INDEX`. The index refers to the index number shown in the displayed gamer list. The index **must be a positive integer** 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
 
 Examples:
 * `edit 1 p/91234567 e/johndoe@example.com`
@@ -204,9 +208,9 @@ Examples:
 
 Updates a gamer's favourite status via index.
 
-Format: `(fav)ourite INDEX` or `(unfav)ourite INDEX`
+Format: `(fav)ourite GAMER_INDEX` or `(unfav)ourite GAMER_INDEX`
 
-* Updates the favourite status of the gamer at the specified `INDEX`. The index refers to the index number shown in the current displayed list (after any `find`, `sort`, or `list`).
+* Updates the favourite status of the gamer at the specified `GAMER_INDEX`. The index refers to the index number shown in the current displayed list (after any `find`, `sort`, or `list`).
 
 Examples:
 *  `fav 1` Updates the favourite status of the first gamer to favourite.
@@ -235,12 +239,12 @@ Examples:
 
 Finds gamers using either general keyword search or specific attribute prefixes. Has 2 formats.
 
-Format 1: `(f)ind KEYWORD [MORE_KEYWORDS]`
+Format 1: `(f)ind KEYWORD`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case-insensitive and uses partial (substring) matching.
+* If you include spaces in `KEYWORD`, the full phrase is matched as a single substring.
 
-Format 2: `(f)ind [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(gr)oup/GROUP] [(s)erver/SERVER] [(f)avourite/FAVOURITE] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`
+Format 2: `(f)ind [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(gr)oup/GROUP] [(s)erver/SERVER] [(fav)avourite/] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`
 
 * Prefixes can be stacked in one command.
 * Prefixes use the same short-form notation, e.g. `(n)ame/` means `name/` or `n/`.
@@ -319,9 +323,9 @@ In the `after` screenshot, verify:
 
 Deletes the specified gamers from BlockBook.
 
-Format: `(d)elete INDEX [INDEX]...`
+Format: `(d)elete GAMER_INDEX [GAMER_INDEX]...`
 
-* Deletes the gamers at each specified `INDEX`.
+* Deletes the gamers at each specified `GAMER_INDEX`.
 * Trying to delete the same index multiple times will only cause that index to be deleted once.
 * The indexes refer to the index numbers shown in the displayed gamer list.
 * The indexes do not have to be in any particular order. e.g. `delete 2 1` is acceptable.
@@ -338,6 +342,113 @@ Examples:
 Clears all entries from BlockBook.
 
 Format: `clear`
+
+### Creating a group : `groupcreate`
+
+Creates a new group in BlockBook.
+
+Format: `groupcreate GROUP` or `gc GROUP`
+
+* Group names are **case-insensitive** and must be unique.
+* Group names can contain only letters, spaces, hyphens, and apostrophes, and must be at most 50 characters.
+
+Examples:
+* `groupcreate Raid Team`
+* `gc Arena Team`
+
+* ![result for 'groupcreate Raid Team'](images/groupCreateResult.png)
+
+### Editing a group's name : `groupedit`
+
+Renames an existing group by its index in the group list.
+
+Format: `groupedit BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME` or `ge BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME`
+
+* The `BLOCKBOOK_GROUP_INDEX` refers to the index shown in the group list.
+* The new group name follows the same constraints as group creation.
+* Renaming is case-insensitive for uniqueness (e.g., renaming `Raid Team` to `raid team` is allowed).
+
+Examples:
+* `groupedit 1 iloveAlex`
+* `ge 2 Arena Team`
+
+* ![result for 'groupedit 1 iloveAlex'](images/groupEditResult.png)
+
+### Deleting a group : `groupnuke`
+
+Deletes a group from BlockBook and removes that group from all gamers associated to it.
+
+Format: `groupnuke BLOCKBOOK_GROUP_INDEX` or `gn BLOCKBOOK_GROUP_INDEX`
+
+* This is a **destructive** command and requires confirmation.
+* BB will show a warning message with a confirmation code and the affected gamertags.
+* Re-run the command with the confirmation code appended to proceed.
+
+Example:
+* `groupnuke 1`  
+  BB will prompt you with a confirmation code.
+
+![result for 'groupnuke 1'](images/groupNukeResult1.png)
+* `groupnuke 1 j5n0w3`  
+  Deletes the group and removes it from all gamers.
+
+![result for 'groupnuke 1 j5n0w3'](images/groupNukeResult2.png)
+
+### Adding a gamer to a group : `groupadd`
+
+Adds a specific gamer to a specific group in a single command, by providing the gamer’s index in the current list and the group’s index in the group list.
+
+Format: `groupadd GAMER_INDEX BLOCKBOOK_GROUP_INDEX` or `ga GAMER_INDEX BLOCKBOOK_GROUP_INDEX`
+
+* `GAMER_INDEX` refers to the index shown in the current gamer list.
+* `BLOCKBOOK_GROUP_INDEX` refers to the index shown in the group list.
+
+Example:
+* `groupadd 2 1` adds the 2nd gamer in the current list to the 1st group in the group list.
+
+![result for 'groupadd 2 1'](images/groupAddResult.png)
+
+### Removing a gamer from a group : `groupremove`
+
+Removes a specific group from a specific gamer in a single command, by providing the gamer’s index in the current list and the group’s index in that gamer’s group list.
+
+Format: `groupremove GAMER_INDEX GAMER_GROUP_INDEX` or `gr GAMER_INDEX GAMER_GROUP_INDEX`
+
+* `GAMER_INDEX` refers to the index shown in the current gamer list.
+* `GAMER_GROUP_INDEX` refers to the index shown in that gamer’s group list (not the global group list).
+
+Example:
+* `groupremove 2 1` removes the 1st group from the 2nd gamer in the current list.
+
+![result for 'groupremove 2 1'](images/groupRemoveResult.png)
+
+### Listing all groups : `grouplist`
+
+Lists all groups stored in BlockBook.
+
+Format: `grouplist` or `gl`
+
+* If there are no groups, BB will indicate that no groups were found.
+
+Example:
+* `grouplist`
+
+![result for 'grouplist'](images/groupListResult.png)
+
+### Viewing a group : `groupview`
+
+Shows all gamers that belong to a specific group, and filters the list to those gamers.
+
+Format: `groupview BLOCKBOOK_GROUP_INDEX` or `gv BLOCKBOOK_GROUP_INDEX`
+
+* `BLOCKBOOK_GROUP_INDEX` refers to the index shown in the group list.
+* The displayed gamer list is filtered to show only members of the selected group.
+* If no gamers belong to the group, BB will show a message and keep the current list unchanged.
+
+Example:
+* `groupview 1` shows all gamers in the 1st group.
+
+![result for 'groupview 1'](images/groupViewResult.png)
 
 ### Exiting the program : `exit`
 
@@ -386,13 +497,19 @@ _Details coming soon ..._
 |------------|----------------------------------------------------------------------------------------------------------------------------|
 | **Add**    | `(a)dd (g)amertag/GAMERTAG [(n)ame/NAME]...` <br> e.g., `add g/JamieH n/James Ho`                                          |
 | **Clear**  | `clear`                                                                                                                    |
-| **Delete** | `(d)elete INDEX [INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                                                             |
-| **Edit**   | `(e)dit INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME]...`<br> e.g., `edit 2 n/James Lee`                                       |
+| **Delete** | `(d)elete GAMER_INDEX [GAMER_INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                                                             |
+| **Edit**   | `(e)dit GAMER_INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME]...`<br> e.g., `edit 2 n/James Lee`                                       |
 | **Find**   | `(f)ind KEYWORD`<br> e.g., `find James`<br> `find [(n)ame/NAME] [(g)amertag/GAMERTAG]...`<br> e.g., `find n/Steve g/Block` |
-| **View**   | `(v)iew (g)amertag/GAMERTAG` <br> e.g., `view g/SteveMaster99`                                                             |
+| **View**   | `(v)iew GAMER_INDEX` <br> e.g., `view 2`                                                                                   |
 | **List**   | `(l)ist`                                                                                                                   |
-| **Favourite** | `(fav)ourite INDEX`<br> e.g., `favourite 1`                                                                                |
-| **Unfavourite** | `(unfav)ourite INDEX`<br> e.g., `unfavourite 1`                                                                            |
+| **Favourite** | `(fav)ourite GAMER_INDEX`<br> e.g., `favourite 1`                                                                                |
+| **Unfavourite** | `(unfav)ourite GAMER_INDEX`<br> e.g., `unfavourite 1`                                                                            |
 | **Sort**   | `(s)ort [(g)amertag/] [(n)ame/]...`<br> e.g., `sort`, `sort n/`, `sort p/ g/`                                              |
-| **Help**   | `help`, `?`                                                                                                                |
-
+| **Help**   | `help`, `?`                                                                                                                 |
+| **Group Create** | `groupcreate GROUP`, `gc GROUP`<br> e.g., `gc Raid Team`                                                             |
+| **Group Edit**   | `groupedit BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME`, `ge ...`<br> e.g., `ge 1 Arena Team`                               |
+| **Group Delete** | `groupnuke BLOCKBOOK_GROUP_INDEX`, `gn ...`<br> e.g., `gn 1 abc123`                                                   |
+| **Group Add**    | `groupadd GAMER_INDEX BLOCKBOOK_GROUP_INDEX`, `ga ...`<br> e.g., `ga 2 1`                                               |
+| **Group Remove** | `groupremove GAMER_INDEX GAMER_GROUP_INDEX`, `gr ...`<br> e.g., `gr 2 1`                                               |
+| **Group List**   | `grouplist`, `gl`                                                                                                       |
+| **Group View**   | `groupview BLOCKBOOK_GROUP_INDEX`, `gv ...`<br> e.g., `gv 1`                                                           |
