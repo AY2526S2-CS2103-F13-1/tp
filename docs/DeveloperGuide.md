@@ -237,7 +237,7 @@ These are some known bugs that we have identified but have not yet fixed.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Requirements**
+## **Requirements**
 
 ### Product scope
 
@@ -605,8 +605,6 @@ Use case ends.
    - screen resolutions **1280 x 720 and higher**
    - screen scales **150%**
 
-*{More to be added}*
-
 ### Glossary
 - **Minecraft**: A sandbox game developed and published by Mojang Studios. See more [here](https://www.minecraft.net/en-us).
     - **Gamertag**: A Minecraft player's in-game username.
@@ -623,7 +621,7 @@ Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
+## **Instructions for manual testing**
 
 Given below are instructions to test the app manually.
 
