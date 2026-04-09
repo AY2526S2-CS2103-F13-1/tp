@@ -407,14 +407,14 @@ Use case ends.
 - 1a1. BB uses gamertag as the default sort attribute.
 - Use case resumes from step 2.
 
-1b. User specifies an invalid attribute.
+1b. User specifies one or more invalid attributes.
 
-- 1b1. BB shows an error message.
+- 1b1. BB displays an error message indicating that one or more sort attributes are invalid.
 - Use case ends.
 
 1c. User specifies duplicate attributes.
 
-- 1c1. BB shows an error message.
+- 1c1. BB displays an error message indicating that duplicate sort attributes are not allowed.
 - Use case ends.
 
 2a. There are no currently displayed contacts to sort.
