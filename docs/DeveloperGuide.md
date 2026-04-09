@@ -233,14 +233,16 @@ The user can choose from predefined themes or create their own custom theme by s
 **Purpose**: Allows the user to customize the theme of the app (e.g., light mode, dark mode, etc.)
 **Acceptable values**: THEME → Compulsory, the theme to set the app to. Possible values include "light", "dark", and "custom".
 
-#### Better `contact.json` Handling
-The current implementation that handles `contact.json` will render the entire file invalid once a single entry has an error.
-Improve the handling of the `contact.json` file to allow valid entries to be shown in BlockBook while ignoring invalid entries.
+#### Better `contacts.json` Handling
+The current implementation that handles `contacts.json` will render the entire file invalid once a single entry has an error.
+Improve the handling of the `contacts.json` file to allow valid entries to be shown in BlockBook while ignoring invalid entries.
 
 ### Known Bugs
 These are some known bugs that we have identified but have not yet fixed.
 
 **Validation of Invalid Prefixes**: For example, entering `edit 1 region/na er/asd` returns `invalid region` instead of `invalid command format`. Updating the parser implementation to handle this will solve the issue.
+**Not handling null values in the gamer's group array**: This can cause the app to crash when trying to access the group information of a gamer that has a null value for their group array. Adding null checks before accessing the group information will prevent this issue.
+**Not handling Whitespace-only values for the `country` and `name` attributes**: This can cause the app to crash when trying to access the attributes associated to the gamer. Implementing input validation to check for non-empty and non-whitespace-only values will address this issue.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -712,8 +714,6 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases ... }_
-
 ### Using the help command
 1. Typing `help` in the command box and pressing Enter should display a help message that includes a summary of all available commands and their usage.
 2. A new window should pop up showing the same help message.
@@ -846,8 +846,6 @@ testers are expected to do more *exploratory* testing.
 4
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
-
-1. _{ more test cases ... }_
 
 ### Setting a gamer contact as a favourite contact
 
