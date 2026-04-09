@@ -814,31 +814,31 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
 
    1. Test case: `sort`<br>
-      Expected: All contacts are sorted alphabetically by gamertag (case-insensitive). Status message shows "Sorted all contacts by gamertag (default)."
+      Expected: Displayed contacts are sorted alphabetically by gamertag (case-insensitive). Status message shows "Sorted all contacts by gamertag (default)."
 
 1. Sorting gamers by a single attribute
 
    1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list, some with missing optional fields.
 
    1. Test case: `sort name/`<br>
-      Expected: All contacts are sorted alphabetically by name (case-insensitive). Contacts with no name are placed at the end. Status message shows "Sorted all contacts by name."
+      Expected: Displayed contacts are sorted alphabetically by name (case-insensitive). Contacts with no name are placed at the end. Status message shows "Sorted all contacts by name."
 
    1. Test case: `sort favourite/`<br>
-      Expected: Favourite contacts appear before non-favourite contacts. Status message shows "Sorted all contacts by favourite."
+      Expected: Displayed contacts with favourite status appear before non-favourite contacts. Status message shows "Sorted all contacts by favourite."
 
 1. Sorting gamers by multiple attributes
 
    1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
 
    1. Test case: `sort country/ name/`<br>
-      Expected: Contacts are sorted by country first, then by name for contacts with the same country. Status message shows "Sorted all contacts by country, name."
+      Expected: Displayed contacts are sorted by country first, then by name for contacts with the same country. Status message shows "Sorted all contacts by country, name."
 
 1. Sorting gamers using attribute aliases
 
    1. Prerequisites: List all gamers using the `list` command. Multiple gamers in the list.
 
    1. Test case: `sort n/`<br>
-      Expected: Same result as `sort name/`. Contacts are sorted alphabetically by name.
+      Expected: Same result as `sort name/`. Displayed contacts are sorted alphabetically by name.
 
 1. Sorting gamers with invalid input
 
@@ -855,7 +855,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Sorting with no contacts displayed
 
-   1. Prerequisites: Use a `find` command that returns no results, so the displayed list is empty.
+   1. Prerequisites: There are no contacts in BlockBook (e.g., start with empty data or run `clear` with confirmation). Do not use a `find` command with no matches for this precondition, because `find` retains the current displayed list when no results are found.
 
    1. Test case: `sort`<br>
       Expected: No sorting occurs. Error message indicates there are no contacts to sort.
