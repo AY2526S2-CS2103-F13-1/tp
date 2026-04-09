@@ -438,32 +438,32 @@ Use case ends.
 
 **MSS**
 
-1. User chooses to find gamer contacts using either global keyword or specific attribute prefixes.
-2. BB parses and validates the find criteria.
-3. BB filters the gamer list based on the criteria.
-4. BB displays the filtered list and a message indicating the number of gamers found.
+1. User requests to find gamer contacts using search criteria.
+2. BB shows the matching gamer contacts and a message indicating the number found.
 
 Use case ends.
 
 **Notes**
 
-- BB performs case-insensitive partial (substring) matching for both global keyword and prefixed attributes.
+- BB performs case-insensitive substring matching for both global search and prefixed attributes.
+- Global search treats the entire input as a single keyword and does not include favourite.
+- The `favourite/` prefix is a flag (no value) and matches favourite gamers only.
 
 **Extensions**
 
-2a. User input is empty or mixes global keyword with prefixed arguments.
+1a. User enters empty input or mixes global keywords with prefixed arguments.
 
-- 2a1. BB displays an invalid command format message and the correct usage.
+- 1a1. BB displays an invalid command format message and the correct usage.
 - Use case ends.
 
-2b. BB detects that a prefixed keyword is invalid (e.g., invalid email/phone/group format).
+1b. User provides an invalid prefixed value (e.g., email/phone/group format is invalid).
 
-- 2b1. BB displays the relevant constraint message.
+- 1b1. BB displays the relevant constraint message.
 - Use case ends.
 
-3a. BB finds no matching gamers.
+2a. BB finds no matching gamers.
 
-- 3a1. BB displays a “no gamers found” message and does not update the current list.
+- 2a1. BB displays a “no gamers found” message and does not update the current list.
 - Use case ends.
 
 **UC11 - Clear all Gamer Contacts**
