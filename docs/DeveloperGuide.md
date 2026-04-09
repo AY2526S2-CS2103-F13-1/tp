@@ -512,11 +512,11 @@ Use case ends.
 4. BB deletes all contacts and displays a success message.
 
 **Extensions**
-2a. User does not follow through with confirmation.
-   Use case ends
+2a. User does not follow through with confirmation. 
+- Use case ends
 3a. User used the wrong confirmation input.
-   3a1. BB displays an error message and prompts the user for confirmation again.
-   Use case resumes from step 3.
+- 3a1. BB displays an error message and prompts the user for confirmation again.
+- Use case resumes from step 3.
 
 #### UC12 - Show Help
 **MSS**
