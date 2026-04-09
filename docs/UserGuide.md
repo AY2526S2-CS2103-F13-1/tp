@@ -69,7 +69,7 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 * Parameters can be in any order.<br>
   e.g. if the command specifies `name/NAME gamertag/GAMERTAG`, `gamertag/GAMERTAG name/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `grouplist`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -103,7 +103,7 @@ Examples:
 
 - `gamertag/`: letters, numbers, underscores only, max 50 chars.
 - `name/`: letters, spaces, hyphens, apostrophes only, max 50 chars.
-- `phone/`: optional leading `+`, digits/spaces/hyphens, at least 3 digits, at most 15 digits.
+- `phone/`: optional leading `+`, digits/spaces/hyphens, at least 3 digits, at most 15 digits, max 30 chars.
 - `email/`: must be a valid email in the format `local-part@domain`.
 - `server/`: letters, numbers, `.`, `-`, `:`, max 50 chars.
 - `country/`: letters, spaces, hyphens only, max 50 chars.
@@ -148,27 +148,92 @@ Format: `(l)ist`
 ### Editing a gamer : `edit`
 
 Edits an existing gamer stored in BlockBook.
-Format: `(e)dit GAMER_INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(gr)oup/GROUP] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`
+
+Format: `(e)dit GAMER_INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`
 
 * Edits the gamer at the specified `GAMER_INDEX`. The index refers to the index number shown in the displayed gamer list. The index **must be a positive integer** 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 
 Examples:
-*  `edit 1 p/91234567 email/johndoe@example.com` edits the phone number and email address of the 1st gamer.
-*  `e 2 n/Betsy Crower gr/Friends` edits the name and group of the 2nd gamer.
+* `edit 1 p/91234567 e/johndoe@example.com`
+* `e 2 n/Betsy Crower r/ASIA`
+* `edit 3 g/new_tag s/mc.example.com:25565 c/Singapore note/Alt account`
 
-### Editing a gamer’s favourite status : `favourite`, `unfavourite`
+<box type="tip" seamless>
 
-Updates a gamer’s favourite status via index
+**Tip:** The index refers to the number shown in the current displayed list (after any `find`, `sort` or `list`).
+</box>
+
+<box type="info" seamless>
+
+- `gamertag/`: letters, numbers, underscores only, max 50 chars.
+- `name/`: letters, spaces, hyphens, apostrophes only, max 50 chars.
+- `phone/`: optional leading `+`, digits/spaces/hyphens, at least 3 digits, at most 15 digits, max 30 chars.
+- `email/`: must be a valid email in the format `local-part@domain`.
+- `server/`: letters, numbers, `.`, `-`, `:`, max 50 chars.
+- `country/`: letters, spaces, hyphens only, max 50 chars.
+- `region/`: accepts `NA`, `SA`, `EU`, `AFRICA`, `ASIA`, `OCEANIA` or `ME`.
+- `note/`: letters, numbers, spaces, underscores, hyphens, apostrophes, max 50 chars.
+</box>
+
+**Common errors you may encounter:**
+
+- **Invalid index**  
+  The index must be a positive integer within the displayed list.  
+  Examples: `edit 0 n/Alex`, `edit -1 n/Alex`, `edit 999 n/Alex`
+
+- **No fields provided**  
+  At least one field must be specified after the index.  
+  Example: `edit 1`
+
+- **Repeated prefixes**  
+  Each single-value field can only be entered once in the same `edit` command.  
+  Example: `edit 1 n/Alex n/Bob`
+
+- **Duplicate gamertag**  
+  You cannot change a gamertag to one that already exists.  
+  Example: `edit 1 g/amy_tag` (if another gamer already has `amy_tag`)
+
+- **Invalid field values**  
+  Input must follow the constraints above (e.g., invalid email, region, or server).
+
+**Notes:**
+- Names and countries are automatically normalized by collapsing repeated spaces and standardizing capitalization.
+- Region input is case-insensitive, but will be stored and displayed in uppercase.
+- Notes are stored as entered (no auto-normalization).
+- Favourite status cannot be changed using `edit`. Use `favourite` or `unfavourite` instead.
+
+### Editing a gamer's favourite status : `favourite`, `unfavourite`
+
+Updates a gamer's favourite status via index.
 
 Format: `(fav)ourite GAMER_INDEX` or `(unfav)ourite GAMER_INDEX`
 
-* Updates the favourite status of the gamer at the specified `GAMER_INDEX`. The index refers to the index number shown in the displayed gamer list.
+* Updates the favourite status of the gamer at the specified `GAMER_INDEX`. The index refers to the index number shown in the current displayed list (after any `find`, `sort`, or `list`).
 
 Examples:
 *  `fav 1` Updates the favourite status of the first gamer to favourite.
-*  `unfavourite 1` Remove the first gamer from favourites.
+*  `unfavourite 1` Removes the first gamer from favourites.
+
+<box type="tip" seamless>
+
+**Tip:** Use `list` first if you are unsure of the current index values.
+</box>
+
+**Common errors you may encounter:**
+
+- **Invalid index**  
+  The index must be a positive integer within the displayed list.  
+  Examples: `favourite 0`, `unfavourite -1`, `favourite 999`
+
+- **Already favourite / already not favourite**  
+  The command will fail if the contact is already in the requested state.  
+  Examples: `favourite 1` when the contact is already a favourite, `unfavourite 1` when the contact is not a favourite.
+
+**Notes:**
+- This command only updates favourite status; it does not edit other fields.
+- Star icon is shown next to the gamer name if the gamer is favourite.
 
 ### Locating gamers: `find`
 
@@ -189,6 +254,21 @@ Examples:
 * `f n/steve g/stevemaster`
 * `find name/alex region/ASIA`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+
+### Viewing gamers full details: `view`
+
+Shows the full details of a gamer based on the index shown in the current list.
+
+Format: `(v)iew INDEX`
+
+* The `INDEX` refers to the index number shown in the currently displayed list.
+* The index must be a positive integer.
+
+Example:
+* `view 2`<br>
+  Displays the full details of the 2nd gamer in the current list.
+
+  ![result for 'view 2'](images/viewResult.png)
 
 ### Sorting gamers : `sort`
 
@@ -272,11 +352,19 @@ Examples:
 * `d 2 1` deletes the 1st and 2nd gamer shown in the list.
 * `delete 1 2 2` deletes only the 1st and 2nd gamers shown in the list. The 2nd gamer is only deleted once.
 
-### Clearing all entries : `clear`
+### Clearing all entries : `clear [CONFIRMATION_CODE]`
 
 Clears all entries from BlockBook.
 
-Format: `clear`
+Format: `clear [CONFIRMATION_CODE]`
+
+* Running `clear` without a confirmation code will display a warning and a confirmation code.
+* To confirm, re-enter the command using the code shown (e.g., `clear abc123`).
+* If you enter the wrong code, BlockBook will show a new confirmation code.
+
+Examples:
+* `clear` shows a warning and a confirmation code (e.g., `clear abc123`).
+* `clear abc123` clears all entries if the confirmation code is abc123.
 
 ### Creating a group : `groupcreate`
 
@@ -309,15 +397,16 @@ Examples:
 
 * ![result for 'groupedit 1 iloveAlex'](images/groupEditResult.png)
 
-### Deleting a group : `groupnuke`
+### Deleting a group : `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`
 
 Deletes a group from BlockBook and removes that group from all gamers associated to it.
 
-Format: `groupnuke BLOCKBOOK_GROUP_INDEX` or `gn BLOCKBOOK_GROUP_INDEX`
+Format: `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]` or `gn BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`
 
 * This is a **destructive** command and requires confirmation.
 * BB will show a warning message with a confirmation code and the affected gamertags.
 * Re-run the command with the confirmation code appended to proceed.
+* If you enter the wrong code, BB will show a new confirmation code.
 
 Example:
 * `groupnuke 1`  
@@ -431,18 +520,20 @@ _Details coming soon ..._
 | Action     | Format, Examples                                                                                                           |
 |------------|----------------------------------------------------------------------------------------------------------------------------|
 | **Add**    | `(a)dd (g)amertag/GAMERTAG [(n)ame/NAME]...` <br> e.g., `add g/JamieH n/James Ho`                                          |
-| **Clear**  | `clear`                                                                                                                    |
-| **Delete** | `(d)elete GAMER_INDEX [GAMER_INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                                                             |
-| **Edit**   | `(e)dit GAMER_INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME]...`<br> e.g., `edit 2 n/James Lee`                                       |
+| **Clear**  | `clear [CONFIRMATION_CODE]`                                                                                                |
+| **Delete** | `(d)elete GAMER_INDEX [GAMER_INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                                                 |
+| **Edit**   | `(e)dit GAMER_INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME]...`<br> e.g., `edit 2 n/James Lee`                                 |
 | **Find**   | `(f)ind KEYWORD`<br> e.g., `find James`<br> `find [(n)ame/NAME] [(g)amertag/GAMERTAG]...`<br> e.g., `find n/Steve g/Block` |
 | **View**   | `(v)iew GAMER_INDEX` <br> e.g., `view 2`                                                                                   |
 | **List**   | `(l)ist`                                                                                                                   |
+| **Favourite** | `(fav)ourite GAMER_INDEX`<br> e.g., `favourite 1`                                                                                |
+| **Unfavourite** | `(unfav)ourite GAMER_INDEX`<br> e.g., `unfavourite 1`                                                                            |
 | **Sort**   | `(s)ort [(g)amertag/] [(n)ame/]...`<br> e.g., `sort`, `sort n/`, `sort p/ g/`                                              |
-| **Help**   | `help`, `?`                                                                                                                 |
-| **Group Create** | `groupcreate GROUP`, `gc GROUP`<br> e.g., `gc Raid Team`                                                             |
-| **Group Edit**   | `groupedit BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME`, `ge ...`<br> e.g., `ge 1 Arena Team`                               |
-| **Group Delete** | `groupnuke BLOCKBOOK_GROUP_INDEX`, `gn ...`<br> e.g., `gn 1 abc123`                                                   |
-| **Group Add**    | `groupadd GAMER_INDEX BLOCKBOOK_GROUP_INDEX`, `ga ...`<br> e.g., `ga 2 1`                                               |
-| **Group Remove** | `groupremove GAMER_INDEX GAMER_GROUP_INDEX`, `gr ...`<br> e.g., `gr 2 1`                                               |
-| **Group List**   | `grouplist`, `gl`                                                                                                       |
-| **Group View**   | `groupview BLOCKBOOK_GROUP_INDEX`, `gv ...`<br> e.g., `gv 1`                                                           |
+| **Help**   | `help`, `?`                                                                                                                |
+| **Group Create** | `groupcreate GROUP`, `gc GROUP`<br> e.g., `gc Raid Team`                                                                   |
+| **Group Edit**   | `groupedit BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME`, `ge ...`<br> e.g., `ge 1 Arena Team`                                     |
+| **Group Delete** | `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`, `gn ...`<br> e.g., `gn 1 abc123`                                    |
+| **Group Add**    | `groupadd GAMER_INDEX BLOCKBOOK_GROUP_INDEX`, `ga ...`<br> e.g., `ga 2 1`                                                  |
+| **Group Remove** | `groupremove GAMER_INDEX GAMER_GROUP_INDEX`, `gr ...`<br> e.g., `gr 2 1`                                                   |
+| **Group List**   | `grouplist`, `gl`                                                                                                          |
+| **Group View**   | `groupview BLOCKBOOK_GROUP_INDEX`, `gv ...`<br> e.g., `gv 1`                                                               |
