@@ -550,9 +550,9 @@ Use case ends.
 - 1b1. BB displays an error message.
 - Use case ends.
 
-#### UC10 - Find Gamer Contacts**
+#### UC10 - Find Gamer Contacts
 
-#### UC11 - Clear all Gamer Contacts**
+#### UC11 - Clear all Gamer Contacts
 **Preconditions**
 - User has at least one contact saved in BlockBook.
 
