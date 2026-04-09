@@ -250,37 +250,33 @@ As these represent the expected behaviour of the final iteration, some use cases
 
 **MSS**
 
-1.  User chooses to add a new contact.
-2.  BB requests the contact's details (gamertag, server name, optional label).
-3.  User enters the requested details.
-4.  BB requests confirmation.
-5.   User confirms.
-6.    BB saves the new contact and displays the updated contact list.
+1.  User chooses to add a new gamer contact.
+2.  BB prompts for the contact details required to create the gamer contact.
+3.  User provides the required gamertag and any optional fields.
+4.  BB validates the provided details.
+5.  BB saves the new gamer contact and displays a success message with the updated contact list.
 
 Use case ends.
 
 **Extensions**
 
-3a. BB detects that the gamertag field is empty or contains invalid characters.
+4a. The required gamertag field is missing.
 
-- 3a1. BB displays an error and requests correct data.
+- 4a1. BB displays an error message showing the correct command format.
+- 4a2. User re-enters the add command with corrected input.
+- Use case resumes at step 1.
 
-- 3a2. User enters new data.
+4b. One or more specified fields contain invalid values.
 
-- Steps 3a1-3a2 are repeated until the data entered is correct.
+- 4b1. BB displays an error message indicating that the input is invalid.
+- 4b2. User re-enters the add command with corrected input.
+- Use case resumes at step 1.
 
-- Use case resumes from step 4.
+4c. A contact with the same gamertag already exists.
 
-3b. BB detects that a contact with the same gamertag already exists.
-
-- 3b1. BB warns the user of the duplicate entry and asks whether to proceed.
-- 3b2. User chooses to proceed or cancel.
-- If User cancels, use case ends. Otherwise, use case resumes from step 4.
-
-*a. At any time, User chooses to cancel adding the contact.
-
-- *a1. BB discards all entered data.
-- Use case ends.
+- 4c1. BB displays an error message indicating that the gamertag is already in use.
+- 4c2. User re-enters the add command with a different gamertag.
+- Use case resumes at step 1.
 
 **UC02 - List All Gamer Contacts**
 
@@ -586,6 +582,59 @@ testers are expected to do more *exploratory* testing.
 ### Using the help command
 
 ### Adding a gamer contact
+
+1. Valid inputs
+
+   i. Prerequisites: Launch the application. The contact list is visible.
+
+   ii. Test case: `add g/Steve123`  
+   Expected: A new gamer with gamertag `Steve123` is added successfully.
+
+   iii. Test case: `add g/Alex99 n/Alex`  
+   Expected: A new gamer with gamertag `Alex99` and name `Alex` is added successfully.
+
+   iv. Test case: `add g/BuilderPro p/91234567 e/builder@example.com`  
+   Expected: A new gamer with gamertag `BuilderPro`, phone number `91234567`, and email `builder@example.com` is added successfully.
+
+   v. Test case: `add g/NetherKing s/mc.example.net c/Singapore r/ASIA note/Friendly player`  
+   Expected: A new gamer is added successfully with the server, country, region, and note fields stored correctly.
+
+   vi. Test case: `add g/Herobrine n/Herobrine p/99999 e/brine@gmail.com s/127.0.0.1:8080 c/Singapore r/ASIA note/I hate steve`  
+   Expected: A new gamer with all provided fields is added successfully.
+
+2. Invalid inputs
+
+   i. Prerequisites: Launch the application. The contact list is visible. At least one gamer with gamertag `Steve123` already exists for duplicate-gamertag test cases.
+
+   ii. Test case: `add n/Steve`  
+   Expected: No gamer is added. An error message indicates invalid command format because the required `gamertag/` prefix is missing.
+
+   iii. Test case: `add g/Bad Tag`  
+   Expected: No gamer is added. An error message indicates that the gamertag is invalid.
+
+   iv. Test case: `add g/Steve123 e/not-an-email`  
+   Expected: No gamer is added. An error message indicates that the email is invalid.
+
+   v. Test case: `add g/Steve123 p/abcde`  
+   Expected: No gamer is added. An error message indicates that the phone number is invalid.
+
+   vi. Test case: `add g/Steve123 c/Sing@pore`  
+   Expected: No gamer is added. An error message indicates that the country is invalid.
+
+   vii. Test case: `add g/Steve123 r/XYZ`  
+   Expected: No gamer is added. An error message indicates that the region is invalid.
+
+   viii. Test case: `add g/Steve123 s/server#1`  
+   Expected: No gamer is added. An error message indicates that the server is invalid.
+
+   ix. Test case: `add g/Steve123 n/Steve n/Stephen`  
+   Expected: No gamer is added. An error message indicates that duplicate prefixes are not allowed.
+
+   x. Test case: `add g/Steve123` followed by `add g/Steve123`  
+   Expected: The second command does not add a gamer. An error message indicates that the gamertag is already used by someone in BlockBook.
+
+   xi. Test case: `add hello g/Steve123`  
+   Expected: No gamer is added. An error message indicates invalid command format because extra preamble text is not allowed.
 
 ### Editing a gamer contact
 
