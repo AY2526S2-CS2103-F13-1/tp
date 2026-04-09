@@ -147,28 +147,89 @@ Format: `(l)ist`
 
 ### Editing a gamer : `edit`
 
-Edits an existing gamer stored in BlockBook.
-Format: `(e)dit INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(gr)oup/GROUP] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`
+Edits an existing gamer stored in BlockBook by specifying the index and at least one field to change.
 
-* Edits the gamer at the specified `INDEX`. The index refers to the index number shown in the displayed gamer list. The index **must be a positive integer** 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
+Format: `(e)dit INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`
 
 Examples:
-*  `edit 1 p/91234567 email/johndoe@example.com` edits the phone number and email address of the 1st gamer.
-*  `e 2 n/Betsy Crower gr/Friends` edits the name and group of the 2nd gamer.
+* `edit 1 p/91234567 e/johndoe@example.com`
+* `e 2 n/Betsy Crower r/ASIA`
+* `edit 3 g/new_tag s/mc.example.com:25565 c/Singapore note/Alt account`
 
-### Editing a gamer’s favourite status : `favourite`, `unfavourite`
+<box type="tip" seamless>
 
-Updates a gamer’s favourite status via index
+**Tip:** The index refers to the number shown in the current displayed list (after any `find`, `sort` or `list`).
+</box>
+
+<box type="info" seamless>
+
+- `gamertag/`: letters, numbers, underscores only, max 50 chars.
+- `name/`: letters, spaces, hyphens, apostrophes only, max 50 chars.
+- `phone/`: digits, spaces, hyphens, plus signs (+), and parentheses; must contain at least one digit; max 30 chars.
+- `email/`: must be a valid email in the format `local-part@domain`.
+- `server/`: letters, numbers, `.`, `-`, `:`, max 50 chars.
+- `country/`: letters, spaces, hyphens only, max 50 chars.
+- `region/`: accepts `NA`, `SA`, `EU`, `AFRICA`, `ASIA`, `OCEANIA` or `ME`.
+- `note/`: letters, numbers, spaces, underscores, hyphens, apostrophes, max 50 chars.
+</box>
+
+**Common errors you may encounter:**
+
+- **Invalid index**  
+  The index must be a positive integer within the displayed list.  
+  Examples: `edit 0 n/Alex`, `edit -1 n/Alex`, `edit 999 n/Alex`
+
+- **No fields provided**  
+  At least one field must be specified after the index.  
+  Example: `edit 1`
+
+- **Repeated prefixes**  
+  Each single-value field can only be entered once in the same `edit` command.  
+  Example: `edit 1 n/Alex n/Bob`
+
+- **Duplicate gamertag**  
+  You cannot change a gamertag to one that already exists.  
+  Example: `edit 1 g/amy_tag` (if another gamer already has `amy_tag`)
+
+- **Invalid field values**  
+  Input must follow the constraints above (e.g., invalid email, region, or server).
+
+**Notes:**
+- Names and countries are automatically normalized by collapsing repeated spaces and standardizing capitalization.
+- Region input is case-insensitive, but will be stored and displayed in uppercase.
+- Notes are stored as entered (no auto-normalization).
+- Favourite status cannot be changed using `edit`. Use `favourite` or `unfavourite` instead.
+
+### Editing a gamer's favourite status : `favourite`, `unfavourite`
+
+Updates a gamer's favourite status via index.
 
 Format: `(fav)ourite INDEX` or `(unfav)ourite INDEX`
 
-* Updates the favourite status of the gamer at the specified `INDEX`. The index refers to the index number shown in the displayed gamer list.
+* Updates the favourite status of the gamer at the specified `INDEX`. The index refers to the index number shown in the current displayed list (after any `find`, `sort`, or `list`).
 
 Examples:
 *  `fav 1` Updates the favourite status of the first gamer to favourite.
-*  `unfavourite 1` Remove the first gamer from favourites.
+*  `unfavourite 1` Removes the first gamer from favourites.
+
+<box type="tip" seamless>
+
+**Tip:** Use `list` first if you are unsure of the current index values.
+</box>
+
+**Common errors you may encounter:**
+
+- **Invalid index**  
+  The index must be a positive integer within the displayed list.  
+  Examples: `favourite 0`, `unfavourite -1`, `favourite 999`
+
+- **Already favourite / already not favourite**  
+  The command will fail if the contact is already in the requested state.  
+  Examples: `favourite 1` when the contact is already a favourite, `unfavourite 1` when the contact is not a favourite.
+
+**Notes:**
+- This command only updates favourite status; it does not edit other fields.
+- Star icon is shown next to the gamer name if the gamer is favourite.
 
 ### Locating gamers: `find`
 
@@ -330,5 +391,8 @@ _Details coming soon ..._
 | **Find**   | `(f)ind KEYWORD`<br> e.g., `find James`<br> `find [(n)ame/NAME] [(g)amertag/GAMERTAG]...`<br> e.g., `find n/Steve g/Block` |
 | **View**   | `(v)iew (g)amertag/GAMERTAG` <br> e.g., `view g/SteveMaster99`                                                             |
 | **List**   | `(l)ist`                                                                                                                   |
+| **Favourite** | `(fav)ourite INDEX`<br> e.g., `favourite 1`                                                                                |
+| **Unfavourite** | `(unfav)ourite INDEX`<br> e.g., `unfavourite 1`                                                                            |
 | **Sort**   | `(s)ort [(g)amertag/] [(n)ame/]...`<br> e.g., `sort`, `sort n/`, `sort p/ g/`                                              |
-| **Help**   | `help`, `?`                                                                                                                 |
+| **Help**   | `help`, `?`                                                                                                                |
+
