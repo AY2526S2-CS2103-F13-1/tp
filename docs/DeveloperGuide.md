@@ -473,7 +473,19 @@ Use case ends.
 - Use case ends.
 
 #### UC08 - Delete a Gamer Contact
+**Preconditions**
+- User knows the index of the contact they wish to delete (e.g. having previously executed UC02)
+- User has at least one contact saved in BlockBook.
 
+**MSS**
+1. User requests to delete one or more contacts.
+2. BB deletes the contacts specified and displays a confirmation message.
+Use case ends.
+
+**Extensions**
+1a. User enters an invalid index.
+- 1a1. BB displays an error message.
+- Use case ends.
 
 #### UC09 - View a Gamer Contact
 
