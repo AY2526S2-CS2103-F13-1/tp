@@ -340,31 +340,30 @@ Use case ends.
 **MSS**
 
 1. User requests to favourite/unfavourite a contact by index.
-2. BB validates the provided index.
-3. BB updates favourite status.
+2. BB updates favourite status and displays confirmation.
 
 Use case ends.
 
 **Extensions**
 
-2a. User enters an invalid index (non-numeric).
+1a. User enters an invalid index (non-numeric).
 
-- 2a1. BB displays an error message.
+- 1a1. BB displays an error message.
 - Use case ends.
 
-2b. User enters an index that is out of range.
+1b. User enters an index that is out of range.
 
-- 2b1. BB displays an error message.
+- 1b1. BB displays an error message.
 - Use case ends.
 
-3a. The contact is already marked as a favourite.
+2a. The contact is already marked as a favourite.
 
-- 3a1. BB notifies the user that the contact is already a favourite.
+- 2a1. BB notifies the user that the contact is already a favourite.
 - Use case ends.
 
-3b. The contact is already not a favourite.
+2b. The contact is already not a favourite.
 
-- 3b1. BB notifies the user that the contact is already not a favourite.
+- 2b1. BB notifies the user that the contact is already not a favourite.
 - Use case ends.
 
 #### UC04 - Add Profile Picture to Contact
