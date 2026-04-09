@@ -415,7 +415,7 @@ Examples:
 
 ![result for 'groupedit 1 iloveAlex'](images/groupEditResult.png)
 
-### Deleting a group : `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`
+### Deleting a group : `groupnuke`
 
 Deletes a group from BlockBook and removes that group from all gamers associated to it.
 
@@ -513,10 +513,6 @@ If your changes to the data file makes its format invalid, BlockBook will discar
 Furthermore, certain edits can cause BlockBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 
 </box>
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
