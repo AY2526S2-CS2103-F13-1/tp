@@ -100,7 +100,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `BlockBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
+1. When `Logic` is called upon to execute a command, it is passed to a `BlockBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
 2. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
 3. The command can communicate with the `Model` when it is executed (e.g. to delete a gamer).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
@@ -196,9 +196,48 @@ Finally, the UI displays the result to the user, such as a success message when 
 * [Configuration guide](Configuration.md)
 * [DevOps guide](DevOps.md)
 
+## **Future Developments**
+In the future, we plan to implement the following features and enhancements to further improve the functionality and user experience of BlockBook.
+
+### Planned Enhancements
+These are some enhancements that we plan to implement in the future.
+
+#### Command History Log
+**Purpose**: Allows the user to view a history of previously sent commands
+**Outputs**: Commands are added to a log file
+
+#### Profile Picture Support
+**Purpose**: Allows the user to upload an image for each gamer contact card in the contacts via a button in GUI/(Or via CLI add?).
+**Acceptable values**: IMAGESRC → Compulsory, path to the image file source.
+**Error messages**:
+- Invalid file format: “BlockBook only supports a valid .png/.jpg file. Please choose another file. ”
+- Missing/Corrupted file: “Profile picture file cannot be found or is corrupted. Reverting to default image. ”
+  Outputs:
+
+**Success**: "Profile picture updated to the image located at {IMAGESRC}"
+**Possible errors**:
+- Invalid file format 
+- Missing file 
+- Corrupted file
+
+#### Theme Customization
+Allow the user to customize the theme of the app (e.g., light mode, dark mode, etc.) via a `theme` command in CLI or a button in GUI.
+The user can choose from predefined themes or create their own custom theme by specifying colors for different UI elements.
+**Purpose**: Allows the user to customize the theme of the app (e.g., light mode, dark mode, etc.)
+**Acceptable values**: THEME → Compulsory, the theme to set the app to. Possible values include "light", "dark", and "custom".
+
+#### Better `contact.json` Handling
+The current implementation that handles `contact.json` will render the entire file invalid once a single entry has an error.
+Improve the handling of the `contact.json` file to allow valid entries to be shown in BlockBook while ignoring invalid entries.
+
+### Known Bugs
+These are some known bugs that we have identified but have not yet fixed.
+
+**Validation of Invalid Prefixes**: For example, entering `edit 1 region/na er/asd` returns `invalid region` instead of `invalid command format`. Updating the parser implementation to handle this will solve the issue.
+
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Requirements**
+## **Requirements**
 
 ### Product scope
 
@@ -246,7 +285,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 (For all use cases below, the **System** is the `BlockBook (BB)` and the **Actor** is the `user`, unless specified otherwise)
 As these represent the expected behaviour of the final iteration, some use cases might not reflect the current functionality of the app.
 
-**UC01 - Add a Gamer Contact**
+#### UC01 - Add a Gamer Contact
 
 **MSS**
 
@@ -278,7 +317,7 @@ Use case ends.
 - 4c2. User re-enters the add command with a different gamertag.
 - Use case resumes at step 1.
 
-**UC02 - List All Gamer Contacts**
+#### UC02 - List All Gamer Contacts
 
 **MSS**
 
@@ -295,7 +334,7 @@ Use case ends.
 - 2a1. BB informs the user that no contacts are currently stored.
 - Use case ends.
 
-**UC03 - Favourite a Contact**
+#### UC03 - Favourite a Contact
 
 **MSS**
 
@@ -322,7 +361,7 @@ Use case ends.
 
 (An extension can be added for unfavourite here)
 
-**UC04 - Add Profile Picture to Contact** (TBA)
+#### UC04 - Add Profile Picture to Contact
 
 **MSS**
 
@@ -358,7 +397,7 @@ Use case ends.
 - *a1. BB discards all entered data.
 - Use case ends.
 
-**UC05 - Add Note to Contact** (Can be deleted)
+#### UC05 - Add Note to Contact (Can be deleted)
 
 **MSS**
 
@@ -391,7 +430,7 @@ Use case ends.
 - *a1. BB discards all unsaved changes.
 - Use case ends.
 
-**UC06 - Sort Gamer Contacts**
+#### UC06 - Sort Gamer Contacts
 
 **MSS**
 
@@ -422,7 +461,7 @@ Use case ends.
 - 2a1. BB informs the user that there are no contacts to sort.
 - Use case ends.
 
-**UC07 - Edit a Gamer Contact** (Change of name from Update)
+#### UC07 - Edit a Gamer Contact (Change of name from Update)
 
 **MSS**
 
@@ -472,9 +511,22 @@ Use case ends.
 - *a1. BB discards all changes.
 - Use case ends.
 
-**UC08 - Delete a Gamer Contact**
+#### UC08 - Delete a Gamer Contact
+**Preconditions**
+- User knows the index of the contact they wish to delete (e.g. having previously executed UC02)
+- User has at least one contact saved in BlockBook.
 
-**UC09 - View a Gamer Contact**
+**MSS**
+1. User requests to delete one or more contacts.
+2. BB deletes the contacts specified and displays a confirmation message.
+Use case ends.
+
+**Extensions**
+1a. User enters an invalid index.
+- 1a1. BB displays an error message.
+- Use case ends.
+
+#### UC09 - View a Gamer Contact
 
 **Preconditions**
 - User has a list of gamer contacts displayed and knows the index of the contact to view (e.g. after UC02).
@@ -498,21 +550,41 @@ Use case ends.
 - 1b1. BB displays an error message.
 - Use case ends.
 
-**UC10 - Find Gamer Contacts**
+#### UC10 - Find Gamer Contacts**
 
-**UC11 - Clear all Gamer Contacts**
+#### UC11 - Clear all Gamer Contacts**
+**Preconditions**
+- User has at least one contact saved in BlockBook.
 
-**UC12 - Show Help**
+**MSS**
+1. User requests to clear all contacts.
+2. BB prompts the user for confirmation.
+3. User confirms.
+4. BB deletes all contacts and displays a success message.
 
-**UC13 - Create a Group (TBA)**
+**Extensions**
+2a. User does not follow through with confirmation. 
+- Use case ends
+3a. User used the wrong confirmation input.
+- 3a1. BB displays an error message and prompts the user for confirmation again.
+- Use case resumes from step 3.
 
-**UC14 - Add a Gamer to a Group (TBA)**
+#### UC12 - Show Help
+**MSS**
+1. User requests to view the help message.
+2. BB displays a help message that includes a summary of all available commands and their usage.
 
-**UC15 - Remove a Gamer from a Group (TBA)**
+Use case ends.
 
-**UC16 - Delete a Group (TBA)**
+#### UC13 - Create a Group (TBA)
 
-**UC17 - List Groups (TBA)**
+#### UC14 - Add a Gamer to a Group (TBA)
+
+#### UC15 - Remove a Gamer from a Group (TBA)
+
+#### UC16 - Delete a Group (TBA)
+
+#### UC17 - List Groups (TBA)
 
 ### Non-Functional Requirements
 
@@ -533,8 +605,6 @@ Use case ends.
    - screen resolutions **1280 x 720 and higher**
    - screen scales **150%**
 
-*{More to be added}*
-
 ### Glossary
 - **Minecraft**: A sandbox game developed and published by Mojang Studios. See more [here](https://www.minecraft.net/en-us).
     - **Gamertag**: A Minecraft player's in-game username.
@@ -551,7 +621,7 @@ Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
+## **Instructions for manual testing**
 
 Given below are instructions to test the app manually.
 
@@ -580,6 +650,8 @@ testers are expected to do more *exploratory* testing.
 1. _{ more test cases ... }_
 
 ### Using the help command
+1. Typing `help` in the command box and pressing Enter should display a help message that includes a summary of all available commands and their usage.
+2. A new window should pop up showing the same help message.
 
 ### Adding a gamer contact
 
@@ -901,6 +973,18 @@ testers are expected to do more *exploratory* testing.
       Expected: No sorting occurs. Error message indicates there are no contacts to sort.
 
 ### Clearing all gamer contacts
+1. Clearing all contacts
+
+   1. Prerequisites: There is at least 1 contact in BlockBook.
+
+   1. Test case: `clear` followed by confirming the action<br>
+      Expected: All contacts are deleted. A success message is shown.
+   2. Test case: `clear` followed by not confirming the action (e.g. entering any other command)<br>
+      Expected: No contacts are deleted. The contact list remains unchanged. The next command entered executes as expected.
+   3. Test case: `clear` followed by invalid confirmation input (e.g., `clear 123` when the confirmation message is `clear 246`)<br>
+      Expected: No contacts are deleted. The confirmation code changes. The contact list remains unchanged.
+   4. Test case: `clear` followed by `clear`<br>
+      Expected: The confirmation code for the first `clear` command is different from the second `clear` command. No contacts are deleted.
 
 ### Creating a group (TBA)
 
