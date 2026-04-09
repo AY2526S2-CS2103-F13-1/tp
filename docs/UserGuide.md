@@ -291,6 +291,8 @@ Examples:
 * `groupcreate Raid Team`
 * `gc Arena Team`
 
+* ![result for 'groupcreate Raid Team'](images/groupCreateResult.png)
+
 ### Editing a group's name : `groupedit`
 
 Renames an existing group by its index in the group list.
@@ -305,6 +307,8 @@ Examples:
 * `groupedit 1 iloveAlex`
 * `ge 2 Arena Team`
 
+* ![result for 'groupedit 1 iloveAlex'](images/groupEditResult.png)
+
 ### Deleting a group : `groupnuke`
 
 Deletes a group from BlockBook and removes that group from all gamers associated to it.
@@ -318,8 +322,12 @@ Format: `groupnuke BLOCKBOOK_GROUP_INDEX` or `gn BLOCKBOOK_GROUP_INDEX`
 Example:
 * `groupnuke 1`  
   BB will prompt you with a confirmation code.
-* `groupnuke 1 rq660k`  
+
+![result for 'groupnuke 1'](images/groupNukeResult1.png)
+* `groupnuke 1 j5n0w3`  
   Deletes the group and removes it from all gamers.
+
+![result for 'groupnuke 1 j5n0w3'](images/groupNukeResult2.png)
 
 ### Adding a gamer to a group : `groupadd`
 
@@ -333,6 +341,8 @@ Format: `groupadd GAMER_INDEX BLOCKBOOK_GROUP_INDEX` or `ga GAMER_INDEX BLOCKBOO
 Example:
 * `groupadd 2 1` adds the 2nd gamer in the current list to the 1st group in the group list.
 
+![result for 'groupadd 2 1'](images/groupAddResult.png)
+
 ### Removing a gamer from a group : `groupremove`
 
 Removes a specific group from a specific gamer in a single command, by providing the gamer’s index in the current list and the group’s index in that gamer’s group list.
@@ -345,6 +355,8 @@ Format: `groupremove GAMER_INDEX GAMER_GROUP_INDEX` or `gr GAMER_INDEX GAMER_GRO
 Example:
 * `groupremove 2 1` removes the 1st group from the 2nd gamer in the current list.
 
+![result for 'groupremove 2 1'](images/groupRemoveResult.png)
+
 ### Listing all groups : `grouplist`
 
 Lists all groups stored in BlockBook.
@@ -355,6 +367,8 @@ Format: `grouplist` or `gl`
 
 Example:
 * `grouplist`
+
+![result for 'grouplist'](images/groupListResult.png)
 
 ### Viewing a group : `groupview`
 
@@ -368,6 +382,8 @@ Format: `groupview BLOCKBOOK_GROUP_INDEX` or `gv BLOCKBOOK_GROUP_INDEX`
 
 Example:
 * `groupview 1` shows all gamers in the 1st group.
+
+![result for 'groupview 1'](images/groupViewResult.png)
 
 ### Exiting the program : `exit`
 
