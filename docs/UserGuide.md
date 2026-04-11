@@ -422,13 +422,13 @@ Deletes a group from BlockBook and removes that group from all gamers associated
 Format: `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]` or `gn BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`
 
 * This is a **destructive** command and requires confirmation.
-* BB will show a warning message with a confirmation code and the affected gamertags.
+* BlockBook will show a warning message with a confirmation code and the affected gamertags.
 * Re-run the command with the confirmation code appended to proceed.
-* If you enter the wrong code, BB will show a new confirmation code.
+* If you enter the wrong code, BlockBook will show a new confirmation code.
 
 Example:
 * `groupnuke 1`
-  BB will prompt you with a confirmation code.
+  BlockBook will prompt you with a confirmation code.
 
 ![result for 'groupnuke 1'](images/groupNukeResult1.png)
 * `groupnuke 1 j5n0w3`
@@ -470,7 +470,7 @@ Lists all groups stored in BlockBook.
 
 Format: `grouplist` or `gl`
 
-* If there are no groups, BB will indicate that no groups were found.
+* If there are no groups, BlockBook will indicate that no groups were found.
 
 Example:
 * `grouplist`
@@ -485,7 +485,7 @@ Format: `groupview BLOCKBOOK_GROUP_INDEX` or `gv BLOCKBOOK_GROUP_INDEX`
 
 * `BLOCKBOOK_GROUP_INDEX` refers to the index shown in the group list.
 * The displayed gamer list is filtered to show only members of the selected group.
-* If no gamers belong to the group, BB will show a message and keep the current list unchanged.
+* If no gamers belong to the group, BlockBook will show a message and keep the current list unchanged.
 
 Example:
 * `groupview 1` shows all gamers in the 1st group.
