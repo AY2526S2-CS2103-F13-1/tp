@@ -626,7 +626,7 @@ Use case ends.
 
 **MSS**
 1. User requests to list all groups.
-2. BB displays the list of groups.
+2. BB displays the list of groups with their indexes.
 
 Use case ends.
 
@@ -1341,7 +1341,7 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisites: The group list contains `Explorers` and `Raid Team`.
 
     1. Test case: `grouplist`<br>
-       Expected: The group list displays `Explorers` and `Raid Team`.
+       Expected: The group list displays numbered groups (e.g., `1. Explorers, 2. Raid Team`).
 
     1. Test case: `gl`<br>
        Expected: Same result as `grouplist`.
