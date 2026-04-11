@@ -73,7 +73,7 @@ public class GroupAddCommandTest {
         Index groupIndex = Index.fromOneBased(1);
 
         GroupAddCommand command = new GroupAddCommand(outOfBoundGamer, groupIndex);
-        assertCommandFailure(command, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        assertCommandFailure(command, model, Messages.MESSAGE_GAMER_INDEX_OUT_OF_RANGE);
     }
 
     @Test
@@ -82,6 +82,17 @@ public class GroupAddCommandTest {
         Index outOfBoundGroup = Index.fromOneBased(model.getGroupList().size() + 1);
 
         GroupAddCommand command = new GroupAddCommand(INDEX_FIRST_GAMER, outOfBoundGroup);
-        assertCommandFailure(command, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        assertCommandFailure(command, model, Messages.MESSAGE_BLOCKBOOK_GROUP_INDEX_OUT_OF_RANGE);
+    }
+
+    @Test
+    public void execute_invalidGamerAndGroupIndexes_throwsCommandException() {
+        Model model = new ModelManager(getTypicalBlockBook(), new UserPrefs());
+        Index outOfBoundGamer = Index.fromOneBased(model.getFilteredGamerList().size() + 1);
+        Index outOfBoundGroup = Index.fromOneBased(model.getGroupList().size() + 1);
+
+        GroupAddCommand command = new GroupAddCommand(outOfBoundGamer, outOfBoundGroup);
+        assertCommandFailure(command, model, Messages.MESSAGE_GAMER_INDEX_OUT_OF_RANGE + "\n"
+                + Messages.MESSAGE_BLOCKBOOK_GROUP_INDEX_OUT_OF_RANGE);
     }
 }

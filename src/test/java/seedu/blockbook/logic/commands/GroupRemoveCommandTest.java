@@ -62,7 +62,7 @@ public class GroupRemoveCommandTest {
         Index groupIndex = Index.fromOneBased(1);
 
         GroupRemoveCommand command = new GroupRemoveCommand(outOfBoundGamer, groupIndex);
-        assertCommandFailure(command, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        assertCommandFailure(command, model, Messages.MESSAGE_GAMER_INDEX_OUT_OF_RANGE);
     }
 
     @Test
@@ -72,6 +72,6 @@ public class GroupRemoveCommandTest {
                 model.getFilteredGamerList().get(INDEX_FIRST_GAMER.getZeroBased()).getGroups().size() + 1);
 
         GroupRemoveCommand command = new GroupRemoveCommand(INDEX_FIRST_GAMER, outOfBoundGroup);
-        assertCommandFailure(command, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        assertCommandFailure(command, model, Messages.MESSAGE_GAMER_GROUP_INDEX_OUT_OF_RANGE);
     }
 }
