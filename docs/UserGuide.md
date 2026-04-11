@@ -444,6 +444,9 @@ Format: `groupadd GAMER_INDEX BLOCKBOOK_GROUP_INDEX` or `ga GAMER_INDEX BLOCKBOO
 
 * `GAMER_INDEX` refers to the index shown in the current gamer list.
 * `BLOCKBOOK_GROUP_INDEX` refers to the index shown in the group list.
+* If the gamer index is invalid, BlockBook will indicate the gamer index is out of bounds.
+* If the group index is invalid, BlockBook will indicate the group index is out of bounds.
+* If both indexes are non-positive (e.g., `0 0`), BlockBook will report both as invalid.
 
 Example:
 * `groupadd 2 1` adds the 2nd gamer in the current list to the 1st group in the group list.
@@ -458,6 +461,9 @@ Format: `groupremove GAMER_INDEX GAMER_GROUP_INDEX` or `gr GAMER_INDEX GAMER_GRO
 
 * `GAMER_INDEX` refers to the index shown in the current gamer list.
 * `GAMER_GROUP_INDEX` refers to the index shown in that gamer’s group list (not the global group list).
+* If the gamer index is invalid, BlockBook will indicate the gamer index is out of bounds and will not validate the gamer’s group index.
+* If the gamer’s group index is invalid, BlockBook will indicate the gamer’s group index is out of bounds.
+* If both indexes are non-positive (e.g., `0 0`), BlockBook will report both as invalid.
 
 Example:
 * `groupremove 2 1` removes the 1st group from the 2nd gamer in the current list.

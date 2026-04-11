@@ -595,18 +595,26 @@ Use case ends.
 #### UC14 - Add a Gamer to a Group
 
 **MSS**
-1. User requests to add a gamer to a group by providing the gamer index and group index.
+1. User requests to add a gamer to a group by providing the gamer index and the BlockBook group index.
 2. BB adds the gamer to the group and displays a success message.
 
 Use case ends.
 
 **Extensions**
-1a. User enters an invalid index.
+1a. User enters an invalid gamer index.
 - 1a1. BB displays an error message.
 - Use case ends.
 
-1b. The gamer is already in the group.
+1b. User enters an invalid BlockBook group index.
 - 1b1. BB displays an error message.
+- Use case ends.
+
+1c. User enters invalid values for both indexes.
+- 1c1. BB displays an error message indicating both indexes are invalid.
+- Use case ends.
+
+1d. The gamer is already in the group.
+- 1d1. BB displays an error message.
 - Use case ends.
 
 #### UC15 - Remove a Gamer from a Group
@@ -618,8 +626,16 @@ Use case ends.
 Use case ends.
 
 **Extensions**
-1a. User enters an invalid index.
+1a. User enters an invalid gamer index.
 - 1a1. BB displays an error message.
+- Use case ends.
+
+1b. User enters a valid gamer index but an invalid gamer’s group index.
+- 1b1. BB displays an error message.
+- Use case ends.
+
+1c. User enters invalid values for both indexes.
+- 1c1. BB displays an error message indicating both indexes are invalid.
 - Use case ends.
 
 #### UC16 - List all Groups
@@ -1285,10 +1301,13 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisites: The gamer list contains 1 gamer and the group list contains 1 group.
 
     1. Test case: `groupadd 2 1`<br>
-       Expected: Error indicating index is out of range.
+       Expected: Error indicating the gamer index is out of range.
 
     1. Test case: `groupadd 1 2`<br>
-       Expected: Error indicating index is out of range.
+       Expected: Error indicating the group index is out of bounds.
+
+    1. Test case: `groupadd 0 0`<br>
+       Expected: Error indicating both the gamer index and group index are invalid.
 
 1. Invalid command format
 
@@ -1319,10 +1338,13 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisites: The gamer list contains 1 gamer, and the gamer at index 1 has 1 group.
 
     1. Test case: `groupremove 2 1`<br>
-       Expected: Error indicating index is out of range.
+       Expected: Error indicating the gamer index is out of range.
 
     1. Test case: `groupremove 1 2`<br>
-       Expected: Error indicating index is out of range.
+       Expected: Error indicating the gamer’s group index is out of bounds.
+
+    1. Test case: `groupremove 0 0`<br>
+       Expected: Error indicating both the gamer index and gamer’s group index are invalid.
 
 1. Invalid command format
 
