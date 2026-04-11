@@ -255,11 +255,13 @@ Format 1: `(f)ind KEYWORD`
 * The search is case-insensitive and uses partial (substring) matching.
 * If you include spaces in `KEYWORD`, the full phrase is matched as a single substring.
 * Each `find` replaces the current filter (it does not stack with previous `find` results).
+* A match is found if the keyword appears in any attribute (except favourite).
 
 Format 2: `(f)ind [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(gr)oup/GROUP] [(s)erver/SERVER] [(fav)avourite/] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`
 
 * Prefixes can be stacked in one command.
 * Prefixes use the same short-form notation, e.g. `(n)ame/` means `name/` or `n/`.
+* When multiple prefixes are provided, a gamer must match all specified prefixes (AND).
 * Each `find` replaces the current filter (it does not stack with previous `find` results).
 
 Examples:
