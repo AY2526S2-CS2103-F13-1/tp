@@ -52,7 +52,8 @@
             <Label fx:id="email" styleClass="card_meta_value" text="$email" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
 
             <Label styleClass="card_meta_key" text="Group" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <ScrollPane fx:id="groupScrollPane" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            <ScrollPane fx:id="groupScrollPane" fitToWidth="true" fitToHeight="true"
+                        hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
                         prefViewportHeight="60" minHeight="60" styleClass="popup-group-scroll"
                         GridPane.columnIndex="1" GridPane.rowIndex="1">
                 <content>
