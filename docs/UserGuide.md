@@ -411,7 +411,9 @@ Format: `groupedit BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME` or `ge BLOCKBOOK_GROUP_
 
 * The `BLOCKBOOK_GROUP_INDEX` refers to the index shown in the group list.
 * The new group name follows the same constraints as group creation.
-* Renaming is case-insensitive for uniqueness (e.g., renaming `Raid Team` to `raid team` is allowed).
+* Group names are unique case-insensitively across different groups, so only one instance of a group name can exist
+* (e.g. if a group named `Raid Team` exists, another group cannot be named `raid team`).
+* Changing the letter casing of the same group name (e.g., `Raid Team` → `raid team`) is allowed which is an exception to the rule above.
 
 Examples:
 * `groupedit 1 iloveAlex`
