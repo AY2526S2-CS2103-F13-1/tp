@@ -1,5 +1,8 @@
 package seedu.blockbook.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
@@ -116,5 +119,34 @@ public class GroupAddCommandTest {
         GroupAddCommand command = new GroupAddCommand(outOfBoundGamer, outOfBoundGroup);
         assertCommandFailure(command, model, Messages.MESSAGE_GAMER_INDEX_OUT_OF_RANGE + "\n"
                 + Messages.MESSAGE_BLOCKBOOK_GROUP_INDEX_OUT_OF_RANGE);
+    }
+
+    @Test
+    public void equals() {
+        Index gamerIndexOne = Index.fromOneBased(1);
+        Index gamerIndexTwo = Index.fromOneBased(2);
+        Index groupIndexOne = Index.fromOneBased(1);
+        Index groupIndexTwo = Index.fromOneBased(2);
+
+        GroupAddCommand addFirstCommand = new GroupAddCommand(gamerIndexOne, groupIndexOne);
+        GroupAddCommand addSecondCommand = new GroupAddCommand(gamerIndexTwo, groupIndexTwo);
+
+        assertTrue(addFirstCommand.equals(addFirstCommand));
+        GroupAddCommand addFirstCommandCopy = new GroupAddCommand(gamerIndexOne, groupIndexOne);
+        assertTrue(addFirstCommand.equals(addFirstCommandCopy));
+        assertFalse(addFirstCommand.equals(1));
+        assertFalse(addFirstCommand.equals(null));
+        assertFalse(addFirstCommand.equals(addSecondCommand));
+    }
+
+    @Test
+    public void toStringMethod() {
+        Index gamerIndex = Index.fromOneBased(1);
+        Index groupIndex = Index.fromOneBased(2);
+        GroupAddCommand groupAddCommand = new GroupAddCommand(gamerIndex, groupIndex);
+
+        String expected = GroupAddCommand.class.getCanonicalName()
+                + "{gamerIndex=" + gamerIndex + ", groupIndex=" + groupIndex + "}";
+        assertEquals(expected, groupAddCommand.toString());
     }
 }
