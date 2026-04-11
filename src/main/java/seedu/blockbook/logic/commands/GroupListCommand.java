@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import seedu.blockbook.commons.core.LogsCenter;
 import seedu.blockbook.commons.util.ToStringBuilder;
@@ -38,8 +39,8 @@ public class GroupListCommand extends Command {
             return new CommandResult(MESSAGE_NO_GROUPS);
         }
 
-        String groupList = groups.stream()
-                .map(Group::toString)
+        String groupList = IntStream.range(0, groups.size())
+                .mapToObj(i -> (i + 1) + ". " + groups.get(i))
                 .collect(Collectors.joining(", "));
         logger.info("Listed " + groups.size() + " group(s).");
         return new CommandResult(String.format(MESSAGE_SUCCESS, groupList));
