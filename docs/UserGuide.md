@@ -537,23 +537,23 @@ Furthermore, certain edits can cause BlockBook to behave in unexpected ways (e.g
 
 ## Command summary
 
-| Action           | Format, Examples                                                                                                           |
-|------------------|----------------------------------------------------------------------------------------------------------------------------|
-| **Add**          | `(a)dd (g)amertag/GAMERTAG [(n)ame/NAME]...` <br> e.g., `add g/JamieH n/James Ho`                                          |
-| **Clear**        | `clear [CONFIRMATION_CODE]`                                                                                                |
-| **Delete**       | `(d)elete GAMER_INDEX [GAMER_INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                                                 |
-| **Edit**         | `(e)dit GAMER_INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME]...`<br> e.g., `edit 2 n/James Lee`                                 |
-| **Find**         | `(f)ind KEYWORD`<br> e.g., `find James`<br> `find [(n)ame/NAME] [(g)amertag/GAMERTAG]...`<br> e.g., `find n/Steve g/Block` |
-| **View**         | `(v)iew GAMER_INDEX` <br> e.g., `view 2`                                                                                   |
-| **List**         | `(l)ist`                                                                                                                   |
-| **Favourite**    | `(fav)ourite GAMER_INDEX`<br> e.g., `favourite 1`                                                                          |
-| **Unfavourite**  | `(unfav)ourite GAMER_INDEX`<br> e.g., `unfavourite 1`                                                                      |
-| **Sort**         | `(s)ort [(g)amertag/] [(n)ame/]...`<br> e.g., `sort`, `sort n/`, `sort p/ g/`                                              |
-| **Help**         | `help`, `?`                                                                                                                |
-| **Group Create** | `groupcreate GROUP`, `gc GROUP`<br> e.g., `gc Raid Team`                                                                   |
-| **Group Edit**   | `groupedit BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME`, `ge ...`<br> e.g., `ge 1 Arena Team`                                     |
-| **Group Delete** | `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`, `gn ...`<br> e.g., `gn 1 abc123`                                                       |
-| **Group Add**    | `groupadd GAMER_INDEX BLOCKBOOK_GROUP_INDEX`, `ga ...`<br> e.g., `ga 2 1`                                                  |
-| **Group Remove** | `groupremove GAMER_INDEX GAMER_GROUP_INDEX`, `gr ...`<br> e.g., `gr 2 1`                                                   |
-| **Group List**   | `grouplist`, `gl`                                                                                                          |
-| **Group View**   | `groupview BLOCKBOOK_GROUP_INDEX`, `gv ...`<br> e.g., `gv 1`                                                               |
+| Action           | Format, Examples                                                                                                                                                                                                                                               |
+|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**          | `(a)dd (g)amertag/GAMERTAG [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`<br> e.g., `add g/JamieH n/James Ho`                                                                              |
+| **Edit**         | `(e)dit GAMER_INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`<br> e.g., `edit 2 n/James Lee`                                                                    |
+| **Find**         | `(f)ind KEYWORD`<br> e.g., `find James`<br> `(f)ind [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(gr)oup/GROUP] [(s)erver/SERVER] [(fav)avourite/] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`<br> e.g., `find n/Steve g/Block` |
+| **View**         | `(v)iew GAMER_INDEX` <br> e.g., `view 2`                                                                                                                                                                                                                       |
+| **List**         | `(l)ist`<br> e.g., `list`                                                                                                                                                                                                                                      |
+| **Favourite**    | `(fav)ourite GAMER_INDEX`<br> e.g., `favourite 1`                                                                                                                                                                                                              |
+| **Unfavourite**  | `(unfav)ourite GAMER_INDEX`<br> e.g., `unfavourite 1`                                                                                                                                                                                                          |
+| **Sort**         | `(s)ort [(g)amertag/] [(n)ame/] [(p)hone/] [(e)mail/] [(gr)oup/] [(s)erver/] [(fav)ourite/] [(c)ountry/] [(r)egion/] [note/]`<br> e.g., `sort`, `sort n/`, `sort p/ g/`                                                                                        |
+| **Help**         | `help`, `?`<br> e.g., `help`                                                                                                                                                                                                                                   |
+| **Group Create** | `groupcreate GROUP`, `gc GROUP`<br> e.g., `gc Raid Team`                                                                                                                                                                                                       |
+| **Group Edit**   | `groupedit BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME`, `ge BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME`<br> e.g., `ge 1 Arena Team`                                                                                                                                        |
+| **Group Add**    | `groupadd GAMER_INDEX BLOCKBOOK_GROUP_INDEX`, `ga GAMER_INDEX BLOCKBOOK_GROUP_INDEX`<br> e.g., `ga 2 1`                                                                                                                                                        |
+| **Group List**   | `grouplist`, `gl`<br> e.g., `grouplist`                                                                                                                                                                                                                        |
+| **Group View**   | `groupview BLOCKBOOK_GROUP_INDEX`, `gv BLOCKBOOK_GROUP_INDEX`<br> e.g., `gv 1`                                                                                                                                                                                 |
+| **Group Delete** | `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`, `gn BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`<br> e.g., `gn 1 abc123`                                                                                                                                  |
+| **Group Remove** | `groupremove GAMER_INDEX GAMER_GROUP_INDEX`, `gr GAMER_INDEX GAMER_GROUP_INDEX`<br> e.g., `gr 2 1`                                                                                                                                                             |
+| **Delete**       | `(d)elete GAMER_INDEX [GAMER_INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                                                                                                                                                                                     |
+| **Clear**        | `clear [CONFIRMATION_CODE]`<br> e.g., `clear`, `clear 2v8wua`                                                                                                                                                                                                  |
