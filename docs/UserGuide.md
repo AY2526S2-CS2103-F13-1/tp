@@ -263,6 +263,7 @@ Format 2: `(f)ind [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/E
 * Prefixes use the same short-form notation, e.g. `(n)ame/` means `name/` or `n/`.
 * When multiple prefixes are provided, a gamer must match all specified prefixes (AND).
 * Each `find` replaces the current filter (it does not stack with previous `find` results).
+* `region/` must use a full region value (e.g., `ASIA`), not a partial substring. This is case-insensitive.
 
 Examples:
 * `find steve`
