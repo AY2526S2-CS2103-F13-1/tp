@@ -12,11 +12,13 @@ import org.junit.jupiter.api.Test;
 
 import seedu.blockbook.commons.core.index.Index;
 import seedu.blockbook.logic.Messages;
+import seedu.blockbook.model.BlockBook;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.ModelManager;
 import seedu.blockbook.model.UserPrefs;
 import seedu.blockbook.model.gamer.Gamer;
 import seedu.blockbook.model.gamer.Group;
+import seedu.blockbook.testutil.GamerBuilder;
 
 public class GroupAddCommandTest {
 
@@ -64,6 +66,26 @@ public class GroupAddCommandTest {
 
         GroupAddCommand command = new GroupAddCommand(gamerIndex, groupIndex);
         assertCommandFailure(command, model, GroupAddCommand.MESSAGE_ALREADY_IN_GROUP);
+    }
+
+    @Test
+    public void execute_emptyGamerList_throwsCommandException() {
+        Model model = new ModelManager(new BlockBook(), new UserPrefs());
+        GroupAddCommand command = new GroupAddCommand(INDEX_FIRST_GAMER, Index.fromOneBased(1));
+
+        assertCommandFailure(command, model, Messages.MESSAGE_EMPTY_CONTACT_LIST);
+    }
+
+    @Test
+    public void execute_emptyGroupList_throwsCommandException() {
+        BlockBook blockBook = new BlockBook();
+        Gamer gamer = new GamerBuilder().withGroups().build();
+        blockBook.addGamer(gamer);
+
+        Model model = new ModelManager(blockBook, new UserPrefs());
+        GroupAddCommand command = new GroupAddCommand(INDEX_FIRST_GAMER, Index.fromOneBased(1));
+
+        assertCommandFailure(command, model, Messages.MESSAGE_BLOCKBOOK_GROUP_INDEX_OUT_OF_RANGE);
     }
 
     @Test

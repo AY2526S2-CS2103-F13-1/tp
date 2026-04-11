@@ -12,11 +12,13 @@ import org.junit.jupiter.api.Test;
 
 import seedu.blockbook.commons.core.index.Index;
 import seedu.blockbook.logic.Messages;
+import seedu.blockbook.model.BlockBook;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.ModelManager;
 import seedu.blockbook.model.UserPrefs;
 import seedu.blockbook.model.gamer.Gamer;
 import seedu.blockbook.model.gamer.Group;
+import seedu.blockbook.testutil.GamerBuilder;
 
 public class GroupRemoveCommandTest {
 
@@ -53,6 +55,26 @@ public class GroupRemoveCommandTest {
                 gamerToEdit.getGamerTag(), groupToRemove);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_emptyGamerList_throwsCommandException() {
+        Model model = new ModelManager(new BlockBook(), new UserPrefs());
+        GroupRemoveCommand command = new GroupRemoveCommand(INDEX_FIRST_GAMER, Index.fromOneBased(1));
+
+        assertCommandFailure(command, model, Messages.MESSAGE_EMPTY_CONTACT_LIST);
+    }
+
+    @Test
+    public void execute_gamerWithNoGroups_throwsCommandException() {
+        BlockBook blockBook = new BlockBook();
+        Gamer gamer = new GamerBuilder().withGroups().build();
+        blockBook.addGamer(gamer);
+
+        Model model = new ModelManager(blockBook, new UserPrefs());
+        GroupRemoveCommand command = new GroupRemoveCommand(INDEX_FIRST_GAMER, Index.fromOneBased(1));
+
+        assertCommandFailure(command, model, Messages.MESSAGE_GAMER_GROUP_INDEX_OUT_OF_RANGE);
     }
 
     @Test
