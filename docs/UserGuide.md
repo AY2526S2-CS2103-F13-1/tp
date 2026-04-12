@@ -106,7 +106,7 @@ Examples:
 - `gamertag/`: letters, numbers, underscores only, max 50 characters.
 - `name/`: letters, spaces, hyphens, apostrophes only, max 50 characters.
 - `phone/`: optional leading `+`, digits/spaces/hyphens, at least 3 digits, at most 15 digits, max 30 characters.
-- `email/`: must be a valid email in the format `local-part@domain`.
+- `email/`: must be a valid email in the format `local-part@domain`, where the domain contains at least **two labels** separated by periods (e.g. `example.com`).
 - `server/`: letters, numbers, `.`, `-`, `:`, max 50 characters.
 - `country/`: letters, spaces, hyphens only, max 50 characters.
 - `region/`: accepts `NA`, `SA`, `EU`, `AFRICA`, `ASIA`, `OCEANIA` or `ME`.
@@ -176,7 +176,7 @@ Examples:
 - `gamertag/`: letters, numbers, underscores only, max 50 characters.
 - `name/`: letters, spaces, hyphens, apostrophes only, max 50 characters.
 - `phone/`: optional leading `+`, digits/spaces/hyphens, at least 3 digits, at most 15 digits, max 30 characters.
-- `email/`: must be a valid email in the format `local-part@domain`.
+- `email/`: must be a valid email in the format `local-part@domain`, where the domain contains at least **two labels** separated by periods (e.g. `example.com`).
 - `server/`: letters, numbers, `.`, `-`, `:`, max 50 characters.
 - `country/`: letters, spaces, hyphens only, max 50 characters.
 - `region/`: accepts `NA`, `SA`, `EU`, `AFRICA`, `ASIA`, `OCEANIA` or `ME`.
