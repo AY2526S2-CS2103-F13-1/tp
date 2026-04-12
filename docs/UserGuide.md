@@ -97,7 +97,7 @@ For prefixed values, BlockBook may normalize user input before validation.
 
     * Whitespace-only inputs such as `n/`  are invalid.
     * Validation and any resulting error messages refer to the **normalized value**.
-    * For example, `p/ -` is trimmed to , so it is treated as starting with a hyphen.
+    * For example, `p/ -` is trimmed to `p/-`, so it is treated as starting with a hyphen.
 </box>
 
 ### Viewing help : `help`
