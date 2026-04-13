@@ -102,7 +102,7 @@ For prefixed values, BlockBook may normalize user input before validation.
 
 ### Viewing help : `help`
 
-Opens this User Guide in a browser window.
+Opens a new window listing all available commands.
 
 Format: `help` or `?`
 
