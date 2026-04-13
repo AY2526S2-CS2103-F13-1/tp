@@ -210,9 +210,18 @@ In the future, we plan to implement the following features and enhancements to f
 ### Planned Enhancements
 These are some enhancements that we plan to implement in the future.
 
+#### Validation of Invalid Prefixes
+Current parser limitation: for commands with multiple prefixes, malformed extra prefixes can trigger field-level
+validation errors instead of `invalid command format`.
+For example, entering `edit 1 region/na er/asd` returns `invalid region` instead of `invalid command format`.
+
 #### Command History Log
 **Purpose**: Allows the user to view a history of previously sent commands
 **Outputs**: Commands are added to a log file
+
+#### Favourites List
+**Purpose**: Allows the user to add contacts to a favourites list.
+**Value**: Lets users access their favourite contacts more easily.
 
 #### Profile Picture Support
 **Purpose**: Allows the user to upload an image for each gamer contact card in the contacts via a button in GUI/(Or via CLI add?).
@@ -238,10 +247,6 @@ The user can choose from predefined themes or create their own custom theme by s
 The current implementation that handles `contacts.json` will render the entire file invalid once a single entry has an error.
 Improve the handling of the `contacts.json` file to allow valid entries to be shown in BlockBook while ignoring invalid entries.
 
-### Known Bugs
-These are some known bugs that we have identified but have not yet fixed.
-
-**Validation of Invalid Prefixes**: For example, entering `edit 1 region/na er/asd` returns `invalid region` instead of `invalid command format`. Updating the parser implementation to handle this will solve the issue.
 
 --------------------------------------------------------------------------------------------------------------------
 
