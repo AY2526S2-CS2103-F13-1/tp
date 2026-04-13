@@ -18,6 +18,7 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 ## Quick start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
+   You can check what Java version you have by opening a command terminal in the same location you put BlockBook in, and then running the command `java -version`.
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103-F13-1/tp/releases).
