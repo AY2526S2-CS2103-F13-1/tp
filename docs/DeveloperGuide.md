@@ -374,6 +374,10 @@ Use case ends.
 - 1b1. BlockBook displays an error message.
 - Use case ends.
 
+1c. The contact list is empty.
+- 1c1. BlockBook informs the user that there are no contacts to update.
+- Use case ends.
+
 2a. The contact is already marked as a favourite.
 
 - 2a1. BlockBook notifies the user that the contact is already a favourite.
@@ -471,6 +475,10 @@ Use case ends.
 - 1a1. BlockBook displays an error message.
 - Use case ends.
 
+1b. The contact list is empty.
+- 1b1. BlockBook informs the user that there are no contacts to delete.
+- Use case ends.
+
 #### UC07 - View a Gamer Contact
 
 **Preconditions**
@@ -522,8 +530,6 @@ Use case ends.
 - Use case ends.
 
 #### UC09 - Clear all Gamer Contacts
-**Preconditions**
-- User has at least one contact saved in BlockBook.
 
 **MSS**
 1. User requests to clear all contacts.
@@ -599,6 +605,10 @@ Use case ends.
 - 1a1. BlockBook displays an error message.
 - Use case ends.
 
+1b. The group list is empty.
+- 1b1. BlockBook informs the user that no groups are currently stored.
+- Use case ends.
+
 2a. User does not follow through with confirmation.
 - Use case ends.
 
@@ -615,12 +625,20 @@ Use case ends.
 Use case ends.
 
 **Extensions**
-1a. User enters an invalid index.
-- 1a1. BlockBook displays an error message.
+1a. User enters an invalid gamer index.
+- 1a1. BlockBook displays an error message indicating gamer index is invalid.
 - Use case ends.
 
-1b. The gamer is already in the group.
-- 1b1. BlockBook displays an error message.
+1b. User enters a valid gamer index but an invalid group index.
+- 1b1. BlockBook displays an error message indicating group index is invalid.
+- Use case ends.
+
+1c. User enters invalid values for both indexes.
+- 1c1. BlockBook displays an error message indicating both indexes are invalid.
+- Use case ends.
+
+1d. The gamer is already in the group.
+- 1d1. BlockBook displays an error message.
 - Use case ends.
 
 #### UC15 - Remove a Gamer from a Group
@@ -632,8 +650,16 @@ Use case ends.
 Use case ends.
 
 **Extensions**
-1a. User enters an invalid index.
-- 1a1. BlockBook displays an error message.
+1a. User enters an invalid gamer index.
+- 1a1. BlockBook displays an error message indicating gamer index is invalid.
+- Use case ends.
+
+1b. User enters a valid gamer index but an invalid gamer’s group index.
+- 1b1. BlockBook displays an error message indicating gamer group index is invalid.
+- Use case ends.
+
+1c. User enters invalid values for both indexes.
+- 1c1. BlockBook displays an error message indicating both indexes are invalid.
 - Use case ends.
 
 #### UC16 - List all Groups
