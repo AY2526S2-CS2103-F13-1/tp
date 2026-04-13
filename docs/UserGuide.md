@@ -503,6 +503,7 @@ Lists all groups stored in BlockBook.
 
 Format: `grouplist` or `gl`
 
+* Groups are shown with their index (e.g., `1. Explorers, 2. Raid Team`).
 * If there are no groups, BlockBook will indicate that no groups were found.
 
 Example:

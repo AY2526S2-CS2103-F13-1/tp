@@ -31,7 +31,7 @@ public class GroupListCommandTest {
 
         CommandResult commandResult = new GroupListCommand().execute(model);
 
-        String expectedGroupList = "Raid Team, Alpha";
+        String expectedGroupList = "1. Raid Team, 2. Alpha";
         String expectedMessage = String.format(GroupListCommand.MESSAGE_SUCCESS, expectedGroupList);
         assertEquals(expectedMessage, commandResult.getFeedbackToUser());
     }
