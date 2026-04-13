@@ -150,8 +150,8 @@ The `Model` component,
 
 The `Storage` component,
 * can save both contact data and user preference data in JSON format, and read them back into corresponding objects.
-* stores contact data in a JSON file (default location: `BlockBook/contacts.json`) and user preferences in
-  `preferences.json` (as configured in `config.json`).
+* stores contact data in a JSON file (default location: `[JAR file location]/BlockBook/contacts.json`) and user preferences in
+  `[JAR file location]/BlockBook/preferences.json` (as configured in `[JAR file location]/BlockBook/config.json`).
 * inherits from both `BlockBookStorage` and `UserPrefsStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
@@ -176,7 +176,7 @@ The process begins when the user types an `add` command into the UI.
 
 **UI passes command to Logic:**
 After receiving the command, the UI forwards it to the Logic component for processing.
-    
+
 **Logic parses the command:**
 Within the Logic component, the command is recognized as an `add` command. The input is then parsed internally, where the command arguments are validated and converted into the corresponding gamer attribute objects before an `AddCommand` is created.
 
@@ -210,6 +210,11 @@ In the future, we plan to implement the following features and enhancements to f
 ### Planned Enhancements
 These are some enhancements that we plan to implement in the future.
 
+#### Validation of Invalid Prefixes
+Current parser limitation: for commands with multiple prefixes, malformed extra prefixes can trigger field-level
+validation errors instead of `invalid command format`.
+For example, entering `edit 1 region/na er/asd` returns `invalid region` instead of `invalid command format`.
+
 #### Clearing Optional Fields
 Current parser and validation limitation: once optional fields (e.g., phone, email, etc.) are set using `add` or
 `edit`, there is no way for the user to clear them. Editing a field with an empty value (e.g., `n/`) is rejected by
@@ -218,6 +223,14 @@ validation, while omitting the prefix keeps the existing value unchanged.
 #### Command History Log
 **Purpose**: Allows the user to view a history of previously sent commands
 **Outputs**: Commands are added to a log file
+
+#### Sorting Contacts by Added Date
+**Purpose** Allows the user to sort contacts by added date.
+**Value** Lets user access their most recent added contacts more easily.
+
+#### Favourites List
+**Purpose**: Allows the user to add contacts to a favourites list.
+**Value**: Lets users access their favourite contacts more easily.
 
 #### Profile Picture Support
 **Purpose**: Allows the user to upload an image for each gamer contact card in the contacts via a button in GUI/(Or via CLI add?).
@@ -243,10 +256,6 @@ The user can choose from predefined themes or create their own custom theme by s
 The current implementation that handles `contacts.json` will render the entire file invalid once a single entry has an error.
 Improve the handling of the `contacts.json` file to allow valid entries to be shown in BlockBook while ignoring invalid entries.
 
-### Known Bugs
-These are some known bugs that we have identified but have not yet fixed.
-
-**Validation of Invalid Prefixes**: For example, entering `edit 1 region/na er/asd` returns `invalid region` instead of `invalid command format`. Updating the parser implementation to handle this will solve the issue.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -270,28 +279,28 @@ These are some known bugs that we have identified but have not yet fixed.
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a ...                     | I want to ...                                            | So that I can...                                                       |
-|----------|-----------------------------|---------------------------------------------------------|-----------------------------------------------------------------------|
-| `* * *`  | general user                | add a new contact                                       | link multiple contact methods to a gamer                              |
-| `* * *`  | general user                | delete a gamer                                         | remove contact entries that I no longer need                          |
-| `* * *`  | general user                | list out my contacts                                    | see my contacts that I saved previously                               |
-| `* * *`  | general user                | view a contact’s profile with their full details        | access comprehensive details when needed                              |
+| Priority | As a ...                    | I want to ...                                          | So that I can...                                                      |
+|----------|-----------------------------|--------------------------------------------------------|-----------------------------------------------------------------------|
+| `* * *`  | general user                | add a new gamer                                        | link multiple contact methods to a gamer                              |
+| `* * *`  | general user                | delete a gamer                                         | remove gamers that I no longer need                                   |
+| `* * *`  | general user                | list out my saved gamers                               | see the gamers that I saved previously                                |
+| `* * *`  | general user                | view a gamer’s profile with their full details         | access comprehensive details when needed                              |
 | `* *`    | general user                | find a gamer by name                                   | locate details of gamers without having to go through the entire list |
-| `* *`    | new user                    | see usage instructions                                  | figure out how to use the app easily                                  |
-| `* *`    | general user                | update contact details                                  | keep track of my contacts' latest information                         |
-| `* *`    | general user                | avoid adding duplicate contacts                         | not store the same contact twice by accident                          |
-| `* *`    | general user                | sort the contacts alphabetically                        | access my contacts easier                                             |
-| `* *`    | general user                | sort the contacts by added date                         | find my contacts I recently added                                     |
-| `* *`    | minecraft gamer / pro typer | delete contacts in bulk                                 | delete more contacts at one go                                        |
-| `* *`    | general user                | see clear error messages when I enter invalid commands  | correct my mistakes quickly                                           |
-| `* *`    | general user                | add contacts to a favourites list                       | access my favourite contacts easier                                   |
-| `* *`    | general user                | list out my favourite contacts                          | find my favourite contacts                                            |
-| `* *`    | general user                | add a personal note to a contact's profile              | preserve context information about a contact                          |
-| `* *`    | general user                | create a social group                                   | create groups with contacts with a context                            |
-| `* *`    | general user                | add contact to social group                             | find the contacts I want to play with based on context                |
-| `*`      | general user                | use autocomplete when typing in CLI                     | type faster and easier when I forget the command                      |
-| `*`      | general user                | add profile picture to contact                          | recognise contacts more easily via visual                             |
-| `*`      | minecraft gamer             | see quality sprite styles that align with minecraft     | have a good interface experience                                      |
+| `* *`    | new user                    | see usage instructions                                 | figure out how to use the app easily                                  |
+| `* *`    | general user                | update gamer details                                   | keep track of my gamers' latest information                           |
+| `* *`    | general user                | avoid adding duplicate gamers                          | not store the same gamer twice by accident                            |
+| `* *`    | general user                | sort the gamers alphabetically                         | access my gamer contacts easier                                       |
+| `* *`    | general user                | sort the gamers by added date                          | find the gamers I recently added                                      |
+| `* *`    | Minecraft gamer / pro typer | delete gamers in bulk                                  | delete more gamers at one go                                          |
+| `* *`    | general user                | see clear error messages when I enter invalid commands | correct my mistakes quickly                                           |
+| `* *`    | general user                | add gamers to a favourites list                        | access my favourite gamers easier                                     |
+| `* *`    | general user                | list out my favourite gamers                           | find my favourite gamers                                              |
+| `* *`    | general user                | add a personal note to a gamer's profile               | preserve context information about a gamer                            |
+| `* *`    | general user                | create a social group                                  | create groups with contacts with a gamer                              |
+| `* *`    | general user                | add gamers to social groups                            | find the gamers I want to play with based on context                  |
+| `*`      | general user                | use autocomplete when typing in CLI                    | type faster and easier when I forget the command                      |
+| `*`      | general user                | add a profile picture to a gamer                       | recognise gamers more easily via visuals                              |
+| `*`      | Minecraft gamer             | see quality sprite styles that align with Minecraft    | have a good interface experience                                      |
 
 ### Use cases
 
@@ -363,6 +372,10 @@ Use case ends.
 1b. User enters an index that is out of range.
 
 - 1b1. BlockBook displays an error message.
+- Use case ends.
+
+1c. The contact list is empty.
+- 1c1. BlockBook informs the user that there are no contacts to update.
 - Use case ends.
 
 2a. The contact is already marked as a favourite.
@@ -462,6 +475,10 @@ Use case ends.
 - 1a1. BlockBook displays an error message.
 - Use case ends.
 
+1b. The contact list is empty.
+- 1b1. BlockBook informs the user that there are no contacts to delete.
+- Use case ends.
+
 #### UC07 - View a Gamer Contact
 
 **Preconditions**
@@ -513,8 +530,6 @@ Use case ends.
 - Use case ends.
 
 #### UC09 - Clear all Gamer Contacts
-**Preconditions**
-- User has at least one contact saved in BlockBook.
 
 **MSS**
 1. User requests to clear all contacts.
@@ -590,6 +605,10 @@ Use case ends.
 - 1a1. BlockBook displays an error message.
 - Use case ends.
 
+1b. The group list is empty.
+- 1b1. BlockBook informs the user that no groups are currently stored.
+- Use case ends.
+
 2a. User does not follow through with confirmation.
 - Use case ends.
 
@@ -607,11 +626,19 @@ Use case ends.
 
 **Extensions**
 1a. User enters an invalid gamer index.
-- 1a1. BlockBook displays an error message.
+- 1a1. BlockBook displays an error message indicating gamer index is invalid.
 - Use case ends.
 
-1b. User enters an invalid BlockBook group index.
-- 1b1. BlockBook displays an error message.
+1b. User enters a valid gamer index but an invalid group index.
+- 1b1. BlockBook displays an error message indicating group index is invalid.
+- Use case ends.
+
+1c. User enters invalid values for both indexes.
+- 1c1. BlockBook displays an error message indicating both indexes are invalid.
+- Use case ends.
+
+1d. The gamer is already in the group.
+- 1d1. BlockBook displays an error message.
 - Use case ends.
 
 1c. User enters invalid values for both indexes.
@@ -631,8 +658,16 @@ Use case ends.
 Use case ends.
 
 **Extensions**
-1a. User enters an invalid index.
-- 1a1. BlockBook displays an error message.
+1a. User enters an invalid gamer index.
+- 1a1. BlockBook displays an error message indicating gamer index is invalid.
+- Use case ends.
+
+1b. User enters a valid gamer index but an invalid gamer’s group index.
+- 1b1. BlockBook displays an error message indicating gamer group index is invalid.
+- Use case ends.
+
+1c. User enters invalid values for both indexes.
+- 1c1. BlockBook displays an error message indicating both indexes are invalid.
 - Use case ends.
 
 1b. User enters a valid gamer index but an invalid gamer’s group index.
@@ -800,54 +835,54 @@ testers are expected to do more *exploratory* testing.
 
    i. Prerequisites: List all gamers using the `list` command. The contact list is visible.
 
-   ii. Test case: `edit 1 n/Herobrine`  
+   ii. Test case: `edit 1 n/Herobrine`
    Expected: The first gamer's name is updated to `Herobrine`. Success message shown.
 
-   iii. Test case: `edit 1 p/98765432 r/ASIA`  
+   iii. Test case: `edit 1 p/98765432 r/ASIA`
    Expected: The first gamer's phone and region are updated. Success message shown.
 
-   iv. Test case: `edit 2 g/new_tag e/new@example.com s/mc.example.com:25565 c/Singapore note/Alt account`  
+   iv. Test case: `edit 2 g/new_tag e/new@example.com s/mc.example.com:25565 c/Singapore note/Alt account`
    Expected: The second gamer's gamertag, email, server, country, and note are updated. Success message shown.
 
-   v. Test case: `edit 1 g/Herobrine n/Herobrine p/99999 e/brine@gmail.com s/127.0.0.1:8080 c/Singapore r/ASIA note/I hate steve`  
+   v. Test case: `edit 1 g/Herobrine n/Herobrine p/99999 e/brine@gmail.com s/127.0.0.1:8080 c/Singapore r/ASIA note/I hate steve`
    Expected: The first gamer is updated with all provided fields. Success message shown.
 
 2. Invalid inputs
 
-   i. Test case: `edit 0 name/Alex`  
+   i. Test case: `edit 0 name/Alex`
    Expected: No gamer is edited. Error message indicates the index is out of range.
 
-   ii. Test case: `edit -1 name/Alex`  
+   ii. Test case: `edit -1 name/Alex`
    Expected: No gamer is edited. Error message indicates the index is out of range.
 
-   iii. Test case: `edit 1`  
+   iii. Test case: `edit 1`
    Expected: No gamer is edited. Error message indicates at least one field must be provided.
 
-   iv. Test case: `edit 1 n/Alex n/Bob`  
+   iv. Test case: `edit 1 n/Alex n/Bob`
    Expected: No gamer is edited. Error message indicates duplicate prefixes are not allowed.
 
-   v. Test case: `edit 1 e/not-an-email`  
+   v. Test case: `edit 1 e/not-an-email`
    Expected: No gamer is edited. Error message indicates the email is invalid.
 
-   vi. Test case: `edit 1 p/abcde`  
+   vi. Test case: `edit 1 p/abcde`
    Expected: No gamer is edited. Error message indicates the phone number is invalid.
 
-   vii. Test case: `edit 1 c/Sing@pore`  
+   vii. Test case: `edit 1 c/Sing@pore`
    Expected: No gamer is edited. Error message indicates the country is invalid.
 
-   viii. Test case: `edit 1 r/XYZ`  
+   viii. Test case: `edit 1 r/XYZ`
    Expected: No gamer is edited. Error message indicates the region is invalid.
 
-   ix. Test case: `edit 1 s/server#1`  
+   ix. Test case: `edit 1 s/server#1`
    Expected: No gamer is edited. Error message indicates the server is invalid.
 
-   x. Test case: `edit 1 g/Bad Tag`  
+   x. Test case: `edit 1 g/Bad Tag`
    Expected: No gamer is edited. Error message indicates the gamertag is invalid.
 
-   xi. Test case: `edit 1 g/amy_tag` (where another gamer already has gamertag `amy_tag`)  
+   xi. Test case: `edit 1 g/amy_tag` (where another gamer already has gamertag `amy_tag`)
    Expected: No gamer is edited. Error message indicates the gamertag is already used by someone in BlockBook.
 
-   xii. Test case: `edit 1 extra n/Alex`  
+   xii. Test case: `edit 1 extra n/Alex`
    Expected: No gamer is edited. Error message indicates invalid command format.
 
 ### Deleting a gamer contact
@@ -874,25 +909,25 @@ testers are expected to do more *exploratory* testing.
 
    i. Prerequisites: List all gamers using the `list` command. The first gamer is not a favourite.
 
-   ii. Test case: `favourite 1`  
+   ii. Test case: `favourite 1`
    Expected: The first gamer is marked as favourite. Success message shown.
 
 2. Unfavourite
 
    i. Prerequisites: The first gamer is already marked as favourite.
 
-   ii. Test case: `unfavourite 1`  
+   ii. Test case: `unfavourite 1`
    Expected: The first gamer is removed from favourites. Success message shown.
 
 3. Invalid inputs
 
-   i. Test case: `favourite 0`  
+   i. Test case: `favourite 0`
    Expected: No gamer is updated. Error message indicates the index is out of range.
 
-   ii. Test case: `unfavourite 999` (where 999 is larger than the list size)  
+   ii. Test case: `unfavourite 999` (where 999 is larger than the list size)
    Expected: No gamer is updated. Error message indicates the index is out of range.
 
-   iii. Test case: `favourite 1` when the first gamer is already a favourite  
+   iii. Test case: `favourite 1` when the first gamer is already a favourite
    Expected: Error message indicates the gamer is already a favourite.
 
 ### Listing gamer contacts
@@ -901,28 +936,28 @@ testers are expected to do more *exploratory* testing.
 
    i. Prerequisites: The contact list is visible.
 
-   ii. Test case: `list`  
+   ii. Test case: `list`
    Expected: All gamers are displayed. Any active sort is cleared and the list returns to insertion order.
 
 2. Listing after a filter
 
    i. Prerequisites: Use a `find` command that shows a subset of gamers.
 
-   ii. Test case: `list`  
+   ii. Test case: `list`
    Expected: The full list of gamers is shown.
 
 3. Listing after a sort
 
    i. Prerequisites: Use a `sort` command that shows a sorted list of gamers.
 
-   ii. Test case: `list`  
+   ii. Test case: `list`
    Expected: The full list of gamers in the original order is shown.
 
 4. Listing with no contacts
 
    i. Prerequisites: Start with an empty data file or clear all contacts.
 
-   ii. Test case: `list`  
+   ii. Test case: `list`
    Expected: A message indicates that no contacts are stored.
 
 ### Viewing a gamer contact
@@ -1163,19 +1198,19 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `sort`<br>
       Expected: No sorting occurs. Error message indicates there are no contacts to sort.
 
-### Clearing all gamer contacts
-1. Clearing all contacts
+### Clearing all contacts and groups
+1. Clearing all data
 
    1. Prerequisites: There is at least 1 contact in BlockBook.
 
    1. Test case: `clear` followed by confirming the action<br>
-      Expected: All contacts are deleted. A success message is shown.
+      Expected: All contacts and groups are deleted. A success message is shown.
    2. Test case: `clear` followed by not confirming the action (e.g. entering any other command)<br>
-      Expected: No contacts are deleted. The contact list remains unchanged. The next command entered executes as expected.
+      Expected: Nothing is deleted. The contact list remains unchanged. The next command entered executes as expected.
    3. Test case: `clear` followed by invalid confirmation input (e.g., `clear 123` when the confirmation message is `clear 246`)<br>
-      Expected: No contacts are deleted. The confirmation code changes. The contact list remains unchanged.
+      Expected: Nothing is deleted. The confirmation code changes. The contact list remains unchanged.
    4. Test case: `clear` followed by `clear`<br>
-      Expected: The confirmation code for the first `clear` command is different from the second `clear` command. No contacts are deleted.
+      Expected: The confirmation code for the first `clear` command is different from the second `clear` command. Nothing is deleted.
 
 ### Creating a group
 
@@ -1447,5 +1482,3 @@ For individual contributions, see each team member's Project Portfolio Page:
 * [Hxck Jian]({{ baseUrl }}/team/hxckjian.html)
 * [Ying Wen]({{ baseUrl }}/team/yingwen178.html)
 * [JJ]({{ baseUrl }}/team/jj910.html)
-
-

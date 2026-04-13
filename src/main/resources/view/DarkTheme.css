@@ -279,12 +279,16 @@
 }
 
 .popup-group-list {
-    -fx-padding: 4 6 4 6;
+    -fx-padding: 0;
+    -fx-alignment: CENTER_LEFT;
+    -fx-fill-height: true;
 }
 
 .popup-group-item {
-    -fx-text-fill: -fx-mc-text-main;
+    -fx-font-family: "Lucida Console", "Courier New", "Monospaced";
     -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f4faef;
 }
 
 .cell_index_label {
