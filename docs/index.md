@@ -6,7 +6,7 @@
 # BlockBook
 
 [![Java CI](https://github.com/AY2526S2-CS2103-F13-1/tp/actions/workflows/gradle.yml/badge.svg)](https://github.com/AY2526S2-CS2103-F13-1/tp/actions/workflows/gradle.yml)
-[![codecov Status](https://codecov.io/github/AY2526S2-CS2103-F13-1/team/graph/badge.svg?token=I5SOGGMD2T)](https://codecov.io/github/AY2526S2-CS2103-F13-1/team)
+[![codecov Status](https://codecov.io/github/AY2526S2-CS2103-F13-1/tp/graph/badge.svg?token=I5SOGGMD2T)](https://codecov.io/github/AY2526S2-CS2103-F13-1/tp)
 
 ![Ui](images/Ui.png)
 
