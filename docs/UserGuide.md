@@ -75,6 +75,31 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
+<box type="warning" seamless>
+
+**Input normalization rules**<br>
+
+For prefixed values, BlockBook may normalize user input before validation.
+
+* General rules for prefixed values:
+
+    * **Leading and trailing spaces** are ignored.
+    * If a prefix is provided, it must contain a non-empty value after trimming. Values that become empty after trimming are **invalid**.
+
+* Additional normalization for stored field values in commands such as `add` and `edit`:
+
+    * Length constraints are applied to the normalized value, not the raw text typed by the user.
+    * For `name/`, `phone/`, `country/`, and `group/`, repeated **internal spaces** are collapsed into a single space before validation and storage.
+    * For `name/` and `country/`, capitalization is also standardized before storage.
+    * For `note/`, leading and trailing spaces are ignored, but internal spaces are **not** collapsed in the same way.
+
+* As a result:
+
+    * Whitespace-only inputs such as `n/`  are invalid.
+    * Validation and any resulting error messages refer to the **normalized value**.
+    * For example, `p/ -` is trimmed to `p/-`, so it is treated as starting with a hyphen.
+</box>
+
 ### Viewing help : `help`
 
 Opens this User Guide in a browser window.
