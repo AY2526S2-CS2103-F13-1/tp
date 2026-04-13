@@ -320,8 +320,8 @@ Format: `(s)ort [(g)amertag/] [(n)ame/] [(p)hone/] [(e)mail/] [(gr)oup/] [(s)erv
 * `favourite/` places favourited gamers before non-favourited gamers.
 * `group/` sorts by a gamer's full group set (group names are alphabetically ordered before comparison).
 * If a filter is active (e.g., after `find`), the filtered results are shown in the active sort order.
-* Sorting is session-based and is not persisted to storage.
-* `list` resets sorting and returns to insertion order.
+* Sorting is session-based and is not persisted to storage. A session lasts from when BlockBook is opened until it is closed. Closing the application (either via the `exit` command or by closing the window) ends the session and discards the current sort order. When BlockBook is reopened, gamers are displayed in their original insertion order.
+* `list` resets sorting within the current session and returns to insertion order.
 
 Examples:
 * `sort` sorts gamers by gamertag (default).
