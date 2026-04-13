@@ -210,6 +210,11 @@ In the future, we plan to implement the following features and enhancements to f
 ### Planned Enhancements
 These are some enhancements that we plan to implement in the future.
 
+#### Validation of Invalid Prefixes
+Current parser limitation: for commands with multiple prefixes, malformed extra prefixes can trigger field-level
+validation errors instead of `invalid command format`.
+For example, entering `edit 1 region/na er/asd` returns `invalid region` instead of `invalid command format`.
+
 #### Clearing Optional Fields
 Current parser and validation limitation: once optional fields (e.g., phone, email, etc.) are set using `add` or
 `edit`, there is no way for the user to clear them. Editing a field with an empty value (e.g., `n/`) is rejected by
@@ -218,6 +223,14 @@ validation, while omitting the prefix keeps the existing value unchanged.
 #### Command History Log
 **Purpose**: Allows the user to view a history of previously sent commands
 **Outputs**: Commands are added to a log file
+
+#### Sorting Contacts by Added Date
+**Purpose** Allows the user to sort contacts by added date.
+**Value** Lets user access their most recent added contacts more easily.
+
+#### Favourites List
+**Purpose**: Allows the user to add contacts to a favourites list.
+**Value**: Lets users access their favourite contacts more easily.
 
 #### Profile Picture Support
 **Purpose**: Allows the user to upload an image for each gamer contact card in the contacts via a button in GUI/(Or via CLI add?).
@@ -243,10 +256,6 @@ The user can choose from predefined themes or create their own custom theme by s
 The current implementation that handles `contacts.json` will render the entire file invalid once a single entry has an error.
 Improve the handling of the `contacts.json` file to allow valid entries to be shown in BlockBook while ignoring invalid entries.
 
-### Known Bugs
-These are some known bugs that we have identified but have not yet fixed.
-
-**Validation of Invalid Prefixes**: For example, entering `edit 1 region/na er/asd` returns `invalid region` instead of `invalid command format`. Updating the parser implementation to handle this will solve the issue.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -1425,5 +1434,3 @@ For individual contributions, see each team member's Project Portfolio Page:
 * [Hxck Jian]({{ baseUrl }}/team/hxckjian.html)
 * [Ying Wen]({{ baseUrl }}/team/yingwen178.html)
 * [JJ]({{ baseUrl }}/team/jj910.html)
-
-
