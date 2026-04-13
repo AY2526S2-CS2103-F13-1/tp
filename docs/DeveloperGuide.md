@@ -151,7 +151,7 @@ The `Model` component,
 The `Storage` component,
 * handles persistence for both BlockBook data and user preference data, saving and loading them in JSON format.
 
-* stores BlockBook contact data in `contacts.json` (default: `BlockBook/contacts.json`) and user preferences in `preferences.json` (default: `BlockBook/preferences.json`). The user preferences file path is configurable via `config.json` (default: `BlockBook/config.json`), while the contacts file path is managed through `UserPrefs`.
+* stores BlockBook contact data in `contacts.json` (default: `[JAR file location]/BlockBook/contacts.json`) and user preferences in `preferences.json` (default: `[JAR file location]/BlockBook/preferences.json`). The user preferences file path is configurable via `config.json` (default: `[JAR file location]/BlockBook/config.json`), while the contacts file path is managed through `UserPrefs`.
 
 * `Storage` extends both `BlockBookStorage` and `UserPrefsStorage`, so it can be used through either interface when only
 one set of storage operations is needed. It also depends on Model-layer classes because it persists and reconstructs
