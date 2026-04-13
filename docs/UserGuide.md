@@ -6,7 +6,7 @@ pageNav: 3
 
 # BlockBook User Guide
 
-BlockBook is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, BlockBook can get your contact management tasks done faster than traditional GUI apps.
+BlockBook is a **desktop app built for Minecraft players to manage Minecraft gamer contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, BlockBook can get your contact management tasks done faster than traditional GUI apps.
 
 BlockBook makes it easy to manage the contacts of other gamers you meet on servers, allowing you to manage contacts through not just names, but other gaming attributes too.
 
@@ -75,6 +75,31 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
+<box type="warning" seamless>
+
+**Input normalization rules**<br>
+
+For prefixed values, BlockBook may normalize user input before validation.
+
+* General rules for prefixed values:
+
+    * **Leading and trailing spaces** are ignored.
+    * If a prefix is provided, it must contain a non-empty value after trimming. Values that become empty after trimming are **invalid**.
+
+* Additional normalization for stored field values in commands such as `add` and `edit`:
+
+    * Length constraints are applied to the normalized value, not the raw text typed by the user.
+    * For `name/`, `phone/`, `country/`, and `group/`, repeated **internal spaces** are collapsed into a single space before validation and storage.
+    * For `name/` and `country/`, capitalization is also standardized before storage.
+    * For `note/`, leading and trailing spaces are ignored, but internal spaces are **not** collapsed in the same way.
+
+* As a result:
+
+    * Whitespace-only inputs such as `n/`  are invalid.
+    * Validation and any resulting error messages refer to the **normalized value**.
+    * For example, `p/ -` is trimmed to `p/-`, so it is treated as starting with a hyphen.
+</box>
+
 ### Viewing help : `help`
 
 Opens this User Guide in a browser window.
@@ -106,7 +131,7 @@ Examples:
 - `gamertag/`: letters, numbers, underscores only, max 50 characters.
 - `name/`: letters, spaces, hyphens, apostrophes only, max 50 characters.
 - `phone/`: optional leading `+`, digits/spaces/hyphens, at least 3 digits, at most 15 digits, max 30 characters.
-- `email/`: must be a valid email in the format `local-part@domain`.
+- `email/`: must be a valid email in the format `local-part@domain`, where the domain contains at least **two labels** separated by periods (e.g. `example.com`).
 - `server/`: letters, numbers, `.`, `-`, `:`, max 50 characters.
 - `country/`: letters, spaces, hyphens only, max 50 characters.
 - `region/`: accepts `NA`, `SA`, `EU`, `AFRICA`, `ASIA`, `OCEANIA` or `ME`.
@@ -176,7 +201,7 @@ Examples:
 - `gamertag/`: letters, numbers, underscores only, max 50 characters.
 - `name/`: letters, spaces, hyphens, apostrophes only, max 50 characters.
 - `phone/`: optional leading `+`, digits/spaces/hyphens, at least 3 digits, at most 15 digits, max 30 characters.
-- `email/`: must be a valid email in the format `local-part@domain`.
+- `email/`: must be a valid email in the format `local-part@domain`, where the domain contains at least **two labels** separated by periods (e.g. `example.com`).
 - `server/`: letters, numbers, `.`, `-`, `:`, max 50 characters.
 - `country/`: letters, spaces, hyphens only, max 50 characters.
 - `region/`: accepts `NA`, `SA`, `EU`, `AFRICA`, `ASIA`, `OCEANIA` or `ME`.
@@ -254,11 +279,16 @@ Format 1: `(f)ind KEYWORD`
 
 * The search is case-insensitive and uses partial (substring) matching.
 * If you include spaces in `KEYWORD`, the full phrase is matched as a single substring.
+* Each `find` replaces the current filter (it does not stack with previous `find` results).
+* A match is found if the keyword appears in any attribute (except favourite).
 
 Format 2: `(f)ind [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(gr)oup/GROUP] [(s)erver/SERVER] [(fav)avourite/] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`
 
 * Prefixes can be stacked in one command.
 * Prefixes use the same short-form notation, e.g. `(n)ame/` means `name/` or `n/`.
+* When multiple prefixes are provided, a gamer must match all specified prefixes (AND).
+* Each `find` replaces the current filter (it does not stack with previous `find` results).
+* `region/` must use a full region value (e.g., `ASIA`), not a partial substring. This is case-insensitive.
 
 Examples:
 * `find steve`
@@ -295,8 +325,8 @@ Format: `(s)ort [(g)amertag/] [(n)ame/] [(p)hone/] [(e)mail/] [(gr)oup/] [(s)erv
 * `favourite/` places favourited gamers before non-favourited gamers.
 * `group/` sorts by a gamer's full group set (group names are alphabetically ordered before comparison).
 * If a filter is active (e.g., after `find`), the filtered results are shown in the active sort order.
-* Sorting is session-based and is not persisted to storage.
-* `list` resets sorting and returns to insertion order.
+* Sorting is session-based and is not persisted to storage. A session lasts from when BlockBook is opened until it is closed. Closing the application (either via the `exit` command or by closing the window) ends the session and discards the current sort order. When BlockBook is reopened, gamers are displayed in their original insertion order.
+* `list` resets sorting within the current session and returns to insertion order.
 
 Examples:
 * `sort` sorts gamers by gamertag (default).
@@ -407,7 +437,9 @@ Format: `groupedit BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME` or `ge BLOCKBOOK_GROUP_
 
 * The `BLOCKBOOK_GROUP_INDEX` refers to the index shown in the group list.
 * The new group name follows the same constraints as group creation.
-* Renaming is case-insensitive for uniqueness (e.g., renaming `Raid Team` to `raid team` is allowed).
+* Group names are unique case-insensitively across different groups, so only one instance of a group name can exist
+* (e.g. if a group named `Raid Team` exists, another group cannot be named `raid team`).
+* Changing the letter casing of the same group name (e.g., `Raid Team` → `raid team`) is allowed which is an exception to the rule above.
 
 Examples:
 * `groupedit 1 iloveAlex`
@@ -422,13 +454,13 @@ Deletes a group from BlockBook and removes that group from all gamers associated
 Format: `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]` or `gn BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`
 
 * This is a **destructive** command and requires confirmation.
-* BB will show a warning message with a confirmation code and the affected gamertags.
+* BlockBook will show a warning message with a confirmation code and the affected gamertags.
 * Re-run the command with the confirmation code appended to proceed.
-* If you enter the wrong code, BB will show a new confirmation code.
+* If you enter the wrong code, BlockBook will show a new confirmation code.
 
 Example:
 * `groupnuke 1`
-  BB will prompt you with a confirmation code.
+  BlockBook will prompt you with a confirmation code.
 
 ![result for 'groupnuke 1'](images/groupNukeResult1.png)
 * `groupnuke 1 j5n0w3`
@@ -471,7 +503,7 @@ Lists all groups stored in BlockBook.
 Format: `grouplist` or `gl`
 
 * Groups are shown with their index (e.g., `1. Explorers, 2. Raid Team`).
-* If there are no groups, BB will indicate that no groups were found.
+* If there are no groups, BlockBook will indicate that no groups were found.
 
 Example:
 * `grouplist`
@@ -486,7 +518,7 @@ Format: `groupview BLOCKBOOK_GROUP_INDEX` or `gv BLOCKBOOK_GROUP_INDEX`
 
 * `BLOCKBOOK_GROUP_INDEX` refers to the index shown in the group list.
 * The displayed gamer list is filtered to show only members of the selected group.
-* If no gamers belong to the group, BB will show a message and keep the current list unchanged.
+* If no gamers belong to the group, BlockBook will show a message and keep the current list unchanged.
 
 Example:
 * `groupview 1` shows all gamers in the 1st group.
@@ -532,23 +564,23 @@ Furthermore, certain edits can cause BlockBook to behave in unexpected ways (e.g
 
 ## Command summary
 
-| Action           | Format, Examples                                                                                                           |
-|------------------|----------------------------------------------------------------------------------------------------------------------------|
-| **Add**          | `(a)dd (g)amertag/GAMERTAG [(n)ame/NAME]...` <br> e.g., `add g/JamieH n/James Ho`                                          |
-| **Clear**        | `clear [CONFIRMATION_CODE]`                                                                                                |
-| **Delete**       | `(d)elete GAMER_INDEX [GAMER_INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                                                 |
-| **Edit**         | `(e)dit GAMER_INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME]...`<br> e.g., `edit 2 n/James Lee`                                 |
-| **Find**         | `(f)ind KEYWORD`<br> e.g., `find James`<br> `find [(n)ame/NAME] [(g)amertag/GAMERTAG]...`<br> e.g., `find n/Steve g/Block` |
-| **View**         | `(v)iew GAMER_INDEX` <br> e.g., `view 2`                                                                                   |
-| **List**         | `(l)ist`                                                                                                                   |
-| **Favourite**    | `(fav)ourite GAMER_INDEX`<br> e.g., `favourite 1`                                                                          |
-| **Unfavourite**  | `(unfav)ourite GAMER_INDEX`<br> e.g., `unfavourite 1`                                                                      |
-| **Sort**         | `(s)ort [(g)amertag/] [(n)ame/]...`<br> e.g., `sort`, `sort n/`, `sort p/ g/`                                              |
-| **Help**         | `help`, `?`                                                                                                                |
-| **Group Create** | `groupcreate GROUP`, `gc GROUP`<br> e.g., `gc Raid Team`                                                                   |
-| **Group Edit**   | `groupedit BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME`, `ge ...`<br> e.g., `ge 1 Arena Team`                                     |
-| **Group Delete** | `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`, `gn ...`<br> e.g., `gn 1 abc123`                                                       |
-| **Group Add**    | `groupadd GAMER_INDEX BLOCKBOOK_GROUP_INDEX`, `ga ...`<br> e.g., `ga 2 1`                                                  |
-| **Group Remove** | `groupremove GAMER_INDEX GAMER_GROUP_INDEX`, `gr ...`<br> e.g., `gr 2 1`                                                   |
-| **Group List**   | `grouplist`, `gl`                                                                                                          |
-| **Group View**   | `groupview BLOCKBOOK_GROUP_INDEX`, `gv ...`<br> e.g., `gv 1`                                                               |
+| Action           | Format, Examples                                                                                                                                                                                                                                               |
+|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**          | `(a)dd (g)amertag/GAMERTAG [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`<br> e.g., `add g/JamieH n/James Ho`                                                                              |
+| **Edit**         | `(e)dit GAMER_INDEX [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(s)erver/SERVER] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`<br> e.g., `edit 2 n/James Lee`                                                                    |
+| **Find**         | `(f)ind KEYWORD`<br> e.g., `find James`<br> `(f)ind [(g)amertag/GAMERTAG] [(n)ame/NAME] [(p)hone/PHONE] [(e)mail/EMAIL] [(gr)oup/GROUP] [(s)erver/SERVER] [(fav)avourite/] [(c)ountry/COUNTRY] [(r)egion/REGION] [note/NOTE]`<br> e.g., `find n/Steve g/Block` |
+| **View**         | `(v)iew GAMER_INDEX` <br> e.g., `view 2`                                                                                                                                                                                                                       |
+| **List**         | `(l)ist`<br> e.g., `list`                                                                                                                                                                                                                                      |
+| **Favourite**    | `(fav)ourite GAMER_INDEX`<br> e.g., `favourite 1`                                                                                                                                                                                                              |
+| **Unfavourite**  | `(unfav)ourite GAMER_INDEX`<br> e.g., `unfavourite 1`                                                                                                                                                                                                          |
+| **Sort**         | `(s)ort [(g)amertag/] [(n)ame/] [(p)hone/] [(e)mail/] [(gr)oup/] [(s)erver/] [(fav)ourite/] [(c)ountry/] [(r)egion/] [note/]`<br> e.g., `sort`, `sort n/`, `sort p/ g/`                                                                                        |
+| **Help**         | `help`, `?`<br> e.g., `help`                                                                                                                                                                                                                                   |
+| **Group Create** | `groupcreate GROUP`, `gc GROUP`<br> e.g., `gc Raid Team`                                                                                                                                                                                                       |
+| **Group Edit**   | `groupedit BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME`, `ge BLOCKBOOK_GROUP_INDEX NEW_GROUP_NAME`<br> e.g., `ge 1 Arena Team`                                                                                                                                        |
+| **Group Add**    | `groupadd GAMER_INDEX BLOCKBOOK_GROUP_INDEX`, `ga GAMER_INDEX BLOCKBOOK_GROUP_INDEX`<br> e.g., `ga 2 1`                                                                                                                                                        |
+| **Group List**   | `grouplist`, `gl`<br> e.g., `grouplist`                                                                                                                                                                                                                        |
+| **Group View**   | `groupview BLOCKBOOK_GROUP_INDEX`, `gv BLOCKBOOK_GROUP_INDEX`<br> e.g., `gv 1`                                                                                                                                                                                 |
+| **Group Delete** | `groupnuke BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`, `gn BLOCKBOOK_GROUP_INDEX [CONFIRMATION_CODE]`<br> e.g., `gn 1 abc123`                                                                                                                                  |
+| **Group Remove** | `groupremove GAMER_INDEX GAMER_GROUP_INDEX`, `gr GAMER_INDEX GAMER_GROUP_INDEX`<br> e.g., `gr 2 1`                                                                                                                                                             |
+| **Delete**       | `(d)elete GAMER_INDEX [GAMER_INDEX]...`<br> e.g., `delete 3`, `delete 2 5`                                                                                                                                                                                     |
+| **Clear**        | `clear [CONFIRMATION_CODE]`<br> e.g., `clear`, `clear 2v8wua`                                                                                                                                                                                                  |

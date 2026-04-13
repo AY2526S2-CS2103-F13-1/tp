@@ -27,6 +27,7 @@ public class CountryTest {
         assertFalse(Country.isValidCountry("United_States"));
         assertFalse(Country.isValidCountry("Singapore!"));
         assertFalse(Country.isValidCountry("A".repeat(51)));
+        assertFalse(Country.isValidCountry("Sin/gapore"));
 
         assertTrue(Country.isValidCountry("Singapore"));
         assertTrue(Country.isValidCountry("New Zealand"));
