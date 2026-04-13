@@ -210,6 +210,11 @@ In the future, we plan to implement the following features and enhancements to f
 ### Planned Enhancements
 These are some enhancements that we plan to implement in the future.
 
+#### Clearing Optional Fields
+Current parser and validation limitation: once optional fields (e.g., phone, email, etc.) are set using `add` or
+`edit`, there is no way for the user to clear them. Editing a field with an empty value (e.g., `n/`) is rejected by
+validation, while omitting the prefix keeps the existing value unchanged.
+
 #### Command History Log
 **Purpose**: Allows the user to view a history of previously sent commands
 **Outputs**: Commands are added to a log file
@@ -299,7 +304,7 @@ As these represent the expected behaviour of the final iteration, some use cases
 
 1.  User chooses to add a new gamer contact.
 2.  User provides the required gamertag and any optional fields.
-3.  BB saves the new gamer contact and displays a success message with the updated contact list.
+3.  BlockBook saves the new gamer contact and displays a success message with the updated contact list.
 
 Use case ends.
 
@@ -307,19 +312,19 @@ Use case ends.
 
 2a. The required gamertag field is missing.
 
-- 2a1. BB displays an error message showing the correct command format.
+- 2a1. BlockBook displays an error message showing the correct command format.
 - 2a2. User re-enters the add command with corrected input.
 - Use case resumes at step 1.
 
 2b. One or more specified fields contain invalid values.
 
-- 2b1. BB displays an error message indicating that the input is invalid.
+- 2b1. BlockBook displays an error message indicating that the input is invalid.
 - 2b2. User re-enters the add command with corrected input.
 - Use case resumes at step 1.
 
 2c. A contact with the same gamertag already exists.
 
-- 2c1. BB displays an error message indicating that the gamertag is already in use.
+- 2c1. BlockBook displays an error message indicating that the gamertag is already in use.
 - 2c2. User re-enters the add command with a different gamertag.
 - Use case resumes at step 1.
 
@@ -328,7 +333,7 @@ Use case ends.
 **MSS**
 
 1. User chooses to view all saved contacts.
-2. BB displays a list of all contacts with their details in the default order.
+2. BlockBook displays a list of all contacts with their details in the default order.
 
 Use case ends.
 
@@ -336,7 +341,7 @@ Use case ends.
 
 2a. The contact list is empty.
 
-- 2a1. BB informs the user that no contacts are currently stored.
+- 2a1. BlockBook informs the user that no contacts are currently stored.
 - Use case ends.
 
 #### UC03 - Favourite/Unfavourite a Contact
@@ -344,7 +349,7 @@ Use case ends.
 **MSS**
 
 1. User requests to favourite/unfavourite a contact by index.
-2. BB updates favourite status and displays confirmation.
+2. BlockBook updates favourite status and displays confirmation.
 
 Use case ends.
 
@@ -352,22 +357,22 @@ Use case ends.
 
 1a. User enters an invalid index (non-numeric).
 
-- 1a1. BB displays an error message.
+- 1a1. BlockBook displays an error message.
 - Use case ends.
 
 1b. User enters an index that is out of range.
 
-- 1b1. BB displays an error message.
+- 1b1. BlockBook displays an error message.
 - Use case ends.
 
 2a. The contact is already marked as a favourite.
 
-- 2a1. BB notifies the user that the contact is already a favourite.
+- 2a1. BlockBook notifies the user that the contact is already a favourite.
 - Use case ends.
 
 2b. The contact is already not a favourite.
 
-- 2b1. BB notifies the user that the contact is already not a favourite.
+- 2b1. BlockBook notifies the user that the contact is already not a favourite.
 - Use case ends.
 
 #### UC04 - Sort Gamer Contacts
@@ -375,7 +380,7 @@ Use case ends.
 **MSS**
 
 1. User requests to sort contacts by one or more attributes.
-2. BB sorts and displays the currently displayed contacts by the specified attributes in priority order.
+2. BlockBook sorts and displays the currently displayed contacts by the specified attributes in priority order.
 
 Use case ends.
 
@@ -383,22 +388,22 @@ Use case ends.
 
 1a. User does not specify any attributes.
 
-- 1a1. BB uses gamertag as the default sort attribute.
+- 1a1. BlockBook uses gamertag as the default sort attribute.
 - Use case resumes from step 2.
 
 1b. User specifies one or more invalid attributes.
 
-- 1b1. BB displays an error message indicating that one or more sort attributes are invalid.
+- 1b1. BlockBook displays an error message indicating that one or more sort attributes are invalid.
 - Use case ends.
 
 1c. User specifies duplicate attributes.
 
-- 1c1. BB displays an error message indicating that duplicate sort attributes are not allowed.
+- 1c1. BlockBook displays an error message indicating that duplicate sort attributes are not allowed.
 - Use case ends.
 
 2a. There are no currently displayed contacts to sort.
 
-- 2a1. BB informs the user that there are no contacts to sort.
+- 2a1. BlockBook informs the user that there are no contacts to sort.
 - Use case ends.
 
 #### UC05 - Edit a Gamer Contact
@@ -406,7 +411,7 @@ Use case ends.
 **MSS**
 
 1. User requests to edit a contact by specifying the contact index and one or more fields to update.
-2. BB updates the contact and displays a success message with the updated contact details.
+2. BlockBook updates the contact and displays a success message with the updated contact details.
 
 Use case ends.
 
@@ -414,31 +419,31 @@ Use case ends.
 
 1a. User enters an invalid index (non-numeric).
 
-- 1a1. BB displays an error message.
+- 1a1. BlockBook displays an error message.
 - 1a2. User re-enters the edit command with corrected input.
 - Use case resumes at step 1.
 
 1b. User enters an index that is out of range.
 
-- 1b1. BB displays an error message.
+- 1b1. BlockBook displays an error message.
 - 1b2. User re-enters the edit command with a valid index.
 - Use case resumes at step 1.
 
 1c. User provides no fields to edit.
 
-- 1c1. BB displays an error message.
+- 1c1. BlockBook displays an error message.
 - 1c2. User re-enters the edit command with at least one field to edit.
 - Use case resumes at step 1.
 
 1d. The new gamertag is already in use by another contact.
 
-- 1d1. BB displays an error message indicating that the gamertag is already in use.
+- 1d1. BlockBook displays an error message indicating that the gamertag is already in use.
 - 1d2. User re-enters the edit command with a different gamertag.
 - Use case resumes at step 1.
 
 1e. One or more entered values are invalid.
 
-- 1e1. BB displays an error message indicating that the input is invalid.
+- 1e1. BlockBook displays an error message indicating that the input is invalid.
 - 1e2. User re-enters the edit command with corrected input.
 - Use case resumes at step 1.
 
@@ -449,12 +454,12 @@ Use case ends.
 
 **MSS**
 1. User requests to delete one or more contacts.
-2. BB deletes the contacts specified and displays a confirmation message.
+2. BlockBook deletes the contacts specified and displays a confirmation message.
 Use case ends.
 
 **Extensions**
 1a. User enters an invalid index.
-- 1a1. BB displays an error message.
+- 1a1. BlockBook displays an error message.
 - Use case ends.
 
 #### UC07 - View a Gamer Contact
@@ -465,7 +470,7 @@ Use case ends.
 **MSS**
 
 1. User requests to view a gamer contact by its index in the current list.
-2. BB displays the contact's full profile details.
+2. BlockBook displays the contact's full profile details.
 
 Use case ends.
 
@@ -473,12 +478,12 @@ Use case ends.
 
 1a. User enters a non-numeric index.
 
-- 1a1. BB displays an error message.
+- 1a1. BlockBook displays an error message.
 - Use case ends.
 
 1b. Index is out of range.
 
-- 1b1. BB displays an error message.
+- 1b1. BlockBook displays an error message.
 - Use case ends.
 
 #### UC08 - Find Gamer Contacts
@@ -486,7 +491,7 @@ Use case ends.
 **MSS**
 
 1. User requests to find gamer contacts using search criteria.
-2. BB shows the matching gamer contacts and a message indicating the number found.
+2. BlockBook shows the matching gamer contacts and a message indicating the number found.
 
 Use case ends.
 
@@ -494,17 +499,17 @@ Use case ends.
 
 1a. User enters empty input or mixes global keywords with prefixed arguments.
 
-- 1a1. BB displays an invalid command format message and the correct usage.
+- 1a1. BlockBook displays an invalid command format message and the correct usage.
 - Use case ends.
 
 1b. User provides an invalid prefixed value (e.g., email/phone/group format is invalid).
 
-- 1b1. BB displays the relevant constraint message.
+- 1b1. BlockBook displays the relevant constraint message.
 - Use case ends.
 
-2a. BB finds no matching gamers.
+2a. BlockBook finds no matching gamers.
 
-- 2a1. BB displays a “no gamers found” message and does not update the current list.
+- 2a1. BlockBook displays a “no gamers found” message and does not update the current list.
 - Use case ends.
 
 #### UC09 - Clear all Gamer Contacts
@@ -513,21 +518,21 @@ Use case ends.
 
 **MSS**
 1. User requests to clear all contacts.
-2. BB prompts the user for confirmation.
+2. BlockBook prompts the user for confirmation.
 3. User confirms.
-4. BB deletes all contacts and displays a success message.
+4. BlockBook deletes all contacts and displays a success message.
 
 **Extensions**
 2a. User does not follow through with confirmation.
 - Use case ends
 3a. User used the wrong confirmation input.
-- 3a1. BB displays an error message and prompts the user for confirmation again.
+- 3a1. BlockBook displays an error message and prompts the user for confirmation again.
 - Use case resumes from step 3.
 
 #### UC10 - Show Help
 **MSS**
 1. User requests to view the help message.
-2. BB displays a help message that includes a summary of all available commands and their usage.
+2. BlockBook displays a help message that includes a summary of all available commands and their usage.
 
 Use case ends.
 
@@ -535,121 +540,121 @@ Use case ends.
 
 **MSS**
 1. User requests to create a group with a group name.
-2. BB creates the group and displays a success message.
+2. BlockBook creates the group and displays a success message.
 
 Use case ends.
 
 **Extensions**
 1a. The group name is invalid.
-- 1a1. BB displays an error message.
+- 1a1. BlockBook displays an error message.
 - Use case ends.
 
 1b. A group with the same name already exists.
-- 1b1. BB displays an error message.
+- 1b1. BlockBook displays an error message.
 - Use case ends.
 
 #### UC12 - Edit a Group
 
 **MSS**
 1. User requests to edit a group by its index and provides a new group name.
-2. BB updates the group name and displays a success message.
+2. BlockBook updates the group name and displays a success message.
 
 Use case ends.
 
 **Extensions**
 1a. User enters an invalid index.
-- 1a1. BB displays an error message.
+- 1a1. BlockBook displays an error message.
 - Use case ends.
 
 1b. The group name is invalid.
-- 1b1. BB displays an error message.
+- 1b1. BlockBook displays an error message.
 - Use case ends.
 
 1c. A group with the same name already exists.
-- 1c1. BB displays an error message.
+- 1c1. BlockBook displays an error message.
 - Use case ends.
 
 #### UC13 - Delete a Group
 
 **MSS**
 1. User requests to delete a group by its index.
-2. BB prompts the user with a confirmation code and repeats the required delete format.
+2. BlockBook prompts the user with a confirmation code and repeats the required delete format.
 3. User confirms by entering the group index and confirmation code.
-4. BB deletes the group and removes it from all associated gamers.
-5. BB displays a success message.
+4. BlockBook deletes the group and removes it from all associated gamers.
+5. BlockBook displays a success message.
 
 Use case ends.
 
 **Extensions**
 1a. User enters an invalid index.
-- 1a1. BB displays an error message.
+- 1a1. BlockBook displays an error message.
 - Use case ends.
 
 2a. User does not follow through with confirmation.
 - Use case ends.
 
 3a. User used the wrong confirmation input.
-- 3a1. BB displays an error message and prompts the user for confirmation again with a new code.
+- 3a1. BlockBook displays an error message and prompts the user for confirmation again with a new code.
 - Use case resumes from step 3.
 
 #### UC14 - Add a Gamer to a Group
 
 **MSS**
 1. User requests to add a gamer to a group by providing the gamer index and group index.
-2. BB adds the gamer to the group and displays a success message.
+2. BlockBook adds the gamer to the group and displays a success message.
 
 Use case ends.
 
 **Extensions**
 1a. User enters an invalid index.
-- 1a1. BB displays an error message.
+- 1a1. BlockBook displays an error message.
 - Use case ends.
 
 1b. The gamer is already in the group.
-- 1b1. BB displays an error message.
+- 1b1. BlockBook displays an error message.
 - Use case ends.
 
 #### UC15 - Remove a Gamer from a Group
 
 **MSS**
 1. User requests to remove a gamer from a group by providing the gamer index and the gamer's group index.
-2. BB removes the gamer from the group and displays a success message.
+2. BlockBook removes the gamer from the group and displays a success message.
 
 Use case ends.
 
 **Extensions**
 1a. User enters an invalid index.
-- 1a1. BB displays an error message.
+- 1a1. BlockBook displays an error message.
 - Use case ends.
 
 #### UC16 - List all Groups
 
 **MSS**
 1. User requests to list all groups.
-2. BB displays the list of groups.
+2. BlockBook displays the list of groups.
 
 Use case ends.
 
 **Extensions**
 1a. The group list is empty.
-- 1a1. BB informs the user that no groups are currently stored.
+- 1a1. BlockBook informs the user that no groups are currently stored.
 - Use case ends.
 
 #### UC17 - View a Group
 
 **MSS**
 1. User requests to view a group by its index.
-2. BB displays the gamers associated with that group.
+2. BlockBook displays the gamers associated with that group.
 
 Use case ends.
 
 **Extensions**
 1a. User enters an invalid index.
-- 1a1. BB displays an error message.
+- 1a1. BlockBook displays an error message.
 - Use case ends.
 
 2a. There are no gamers in the group.
-- 2a1. BB displays a message indicating there are no associated gamers and leaves the current list unchanged.
+- 2a1. BlockBook displays a message indicating there are no associated gamers and leaves the current list unchanged.
 - Use case ends.
 
 ### Non-Functional Requirements
@@ -1420,3 +1425,5 @@ For individual contributions, see each team member's Project Portfolio Page:
 * [Hxck Jian]({{ baseUrl }}/team/hxckjian.html)
 * [Ying Wen]({{ baseUrl }}/team/yingwen178.html)
 * [JJ]({{ baseUrl }}/team/jj910.html)
+
+
