@@ -222,7 +222,7 @@ Current parser and validation limitation: once optional fields (e.g., phone, ema
 `edit`, there is no way for the user to clear them. Editing a field with an empty value (e.g., `n/`) is rejected by
 validation, while omitting the prefix keeps the existing value unchanged.
 
-#### Prefix-like Text in `note/` Field
+#### Handle prefix-like Text in `note/` Field
 Current parser limitation: Although `note/NOTE` does not allow `/`, if it contains prefix-like
 substrings (e.g., ` p/` or ` r/`), it will be tokenized as new command arguments. This
 trigger validation errors for unrelated fields. 
