@@ -37,6 +37,7 @@
   * [Setting Up]({{ baseUrl }}/DeveloperGuide.html#setting-up-and-getting-started)
   * [Design]({{ baseUrl }}/DeveloperGuide.html#design)
   * [Implementation]({{ baseUrl }}/DeveloperGuide.html#implementation)
+  * [Future Developments]({{ baseUrl }}/DeveloperGuide.html#future-developments)
   * [Documentation, logging, testing, configuration, dev-ops]({{ baseUrl }}/DeveloperGuide.html#documentation-logging-testing-configuration-dev-ops)
   * [Appendix: Requirements]({{ baseUrl }}/DeveloperGuide.html#requirements)
   * [Appendix: Instructions for manual testing]({{ baseUrl }}/DeveloperGuide.html#instructions-for-manual-testing)

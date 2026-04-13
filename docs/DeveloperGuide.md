@@ -149,11 +149,13 @@ The `Model` component,
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
-* can save both contact data and user preference data in JSON format, and read them back into corresponding objects.
-* stores contact data in a JSON file (default location: `[JAR file location]/BlockBook/contacts.json`) and user preferences in
-  `[JAR file location]/BlockBook/preferences.json` (as configured in `[JAR file location]/BlockBook/config.json`).
-* inherits from both `BlockBookStorage` and `UserPrefsStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
-* depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
+* handles persistence for both BlockBook data and user preference data, saving and loading them in JSON format.
+
+* stores BlockBook contact data in `contacts.json` (default: `BlockBook/contacts.json`) and user preferences in `preferences.json` (default: `BlockBook/preferences.json`). The user preferences file path is configurable via `config.json` (default: `BlockBook/config.json`), while the contacts file path is managed through `UserPrefs`.
+
+* `Storage` extends both `BlockBookStorage` and `UserPrefsStorage`, so it can be used through either interface when only
+one set of storage operations is needed. It also depends on Model-layer classes because it persists and reconstructs
+model objects (e.g., `ReadOnlyBlockBook`, `ReadOnlyUserPrefs`, `UserPrefs`).
 
 ### Common classes
 
@@ -219,6 +221,11 @@ For example, entering `edit 1 region/na er/asd` returns `invalid region` instead
 Current parser and validation limitation: once optional fields (e.g., phone, email, etc.) are set using `add` or
 `edit`, there is no way for the user to clear them. Editing a field with an empty value (e.g., `n/`) is rejected by
 validation, while omitting the prefix keeps the existing value unchanged.
+
+#### Prefix-like Text in `note/` Field
+Current parser limitation: Although `note/NOTE` does not allow `/`, if it contains prefix-like
+substrings (e.g., ` p/` or ` r/`), it will be tokenized as new command arguments. This
+trigger validation errors for unrelated fields. 
 
 #### Command History Log
 **Purpose**: Allows the user to view a history of previously sent commands
@@ -471,6 +478,7 @@ Use case ends.
 Use case ends.
 
 **Extensions**
+
 1a. User enters an invalid index.
 - 1a1. BlockBook displays an error message.
 - Use case ends.
