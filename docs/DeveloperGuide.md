@@ -279,28 +279,28 @@ Improve the handling of the `contacts.json` file to allow valid entries to be sh
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a ...                     | I want to ...                                            | So that I can...                                                       |
-|----------|-----------------------------|---------------------------------------------------------|-----------------------------------------------------------------------|
-| `* * *`  | general user                | add a new contact                                       | link multiple contact methods to a gamer                              |
-| `* * *`  | general user                | delete a gamer                                         | remove contact entries that I no longer need                          |
-| `* * *`  | general user                | list out my contacts                                    | see my contacts that I saved previously                               |
-| `* * *`  | general user                | view a contact’s profile with their full details        | access comprehensive details when needed                              |
+| Priority | As a ...                    | I want to ...                                          | So that I can...                                                      |
+|----------|-----------------------------|--------------------------------------------------------|-----------------------------------------------------------------------|
+| `* * *`  | general user                | add a new gamer                                        | link multiple contact methods to a gamer                              |
+| `* * *`  | general user                | delete a gamer                                         | remove gamers that I no longer need                                   |
+| `* * *`  | general user                | list out my saved gamers                               | see the gamers that I saved previously                                |
+| `* * *`  | general user                | view a gamer’s profile with their full details         | access comprehensive details when needed                              |
 | `* *`    | general user                | find a gamer by name                                   | locate details of gamers without having to go through the entire list |
-| `* *`    | new user                    | see usage instructions                                  | figure out how to use the app easily                                  |
-| `* *`    | general user                | update contact details                                  | keep track of my contacts' latest information                         |
-| `* *`    | general user                | avoid adding duplicate contacts                         | not store the same contact twice by accident                          |
-| `* *`    | general user                | sort the contacts alphabetically                        | access my contacts easier                                             |
-| `* *`    | general user                | sort the contacts by added date                         | find my contacts I recently added                                     |
-| `* *`    | minecraft gamer / pro typer | delete contacts in bulk                                 | delete more contacts at one go                                        |
-| `* *`    | general user                | see clear error messages when I enter invalid commands  | correct my mistakes quickly                                           |
-| `* *`    | general user                | add contacts to a favourites list                       | access my favourite contacts easier                                   |
-| `* *`    | general user                | list out my favourite contacts                          | find my favourite contacts                                            |
-| `* *`    | general user                | add a personal note to a contact's profile              | preserve context information about a contact                          |
-| `* *`    | general user                | create a social group                                   | create groups with contacts with a context                            |
-| `* *`    | general user                | add contact to social group                             | find the contacts I want to play with based on context                |
-| `*`      | general user                | use autocomplete when typing in CLI                     | type faster and easier when I forget the command                      |
-| `*`      | general user                | add profile picture to contact                          | recognise contacts more easily via visual                             |
-| `*`      | minecraft gamer             | see quality sprite styles that align with minecraft     | have a good interface experience                                      |
+| `* *`    | new user                    | see usage instructions                                 | figure out how to use the app easily                                  |
+| `* *`    | general user                | update gamer details                                   | keep track of my gamers' latest information                           |
+| `* *`    | general user                | avoid adding duplicate gamers                          | not store the same gamer twice by accident                            |
+| `* *`    | general user                | sort the gamers alphabetically                         | access my gamer contacts easier                                       |
+| `* *`    | general user                | sort the gamers by added date                          | find the gamers I recently added                                      |
+| `* *`    | Minecraft gamer / pro typer | delete gamers in bulk                                  | delete more gamers at one go                                          |
+| `* *`    | general user                | see clear error messages when I enter invalid commands | correct my mistakes quickly                                           |
+| `* *`    | general user                | add gamers to a favourites list                        | access my favourite gamers easier                                     |
+| `* *`    | general user                | list out my favourite gamers                           | find my favourite gamers                                              |
+| `* *`    | general user                | add a personal note to a gamer's profile               | preserve context information about a gamer                            |
+| `* *`    | general user                | create a social group                                  | create groups with contacts with a gamer                              |
+| `* *`    | general user                | add gamers to social groups                            | find the gamers I want to play with based on context                  |
+| `*`      | general user                | use autocomplete when typing in CLI                    | type faster and easier when I forget the command                      |
+| `*`      | general user                | add a profile picture to a gamer                       | recognise gamers more easily via visuals                              |
+| `*`      | Minecraft gamer             | see quality sprite styles that align with Minecraft    | have a good interface experience                                      |
 
 ### Use cases
 
