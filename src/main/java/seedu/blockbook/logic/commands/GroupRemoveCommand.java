@@ -62,7 +62,7 @@ public class GroupRemoveCommand extends Command {
         if (groupIndex.getZeroBased() >= updatedGroups.size()) {
             logger.warning("Remove group failed: group index out of range for gamer "
                     + gamerToEdit.getGamerTag());
-            throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+            throw new CommandException(Messages.MESSAGE_GAMER_GROUP_INDEX_OUT_OF_RANGE);
         }
 
         Group groupToRemove = updatedGroups.remove(groupIndex.getZeroBased());
@@ -80,7 +80,7 @@ public class GroupRemoveCommand extends Command {
             throw new CommandException(Messages.MESSAGE_EMPTY_CONTACT_LIST);
         }
         if (gamerIndex.getZeroBased() >= gamerList.size()) {
-            throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+            throw new CommandException(Messages.MESSAGE_GAMER_INDEX_OUT_OF_RANGE);
         }
     }
 

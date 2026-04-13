@@ -1,5 +1,8 @@
 package seedu.blockbook.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.blockbook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.blockbook.testutil.TypicalGamers.getTypicalBlockBook;
@@ -12,11 +15,13 @@ import org.junit.jupiter.api.Test;
 
 import seedu.blockbook.commons.core.index.Index;
 import seedu.blockbook.logic.Messages;
+import seedu.blockbook.model.BlockBook;
 import seedu.blockbook.model.Model;
 import seedu.blockbook.model.ModelManager;
 import seedu.blockbook.model.UserPrefs;
 import seedu.blockbook.model.gamer.Gamer;
 import seedu.blockbook.model.gamer.Group;
+import seedu.blockbook.testutil.GamerBuilder;
 
 public class GroupAddCommandTest {
 
@@ -67,13 +72,33 @@ public class GroupAddCommandTest {
     }
 
     @Test
+    public void execute_emptyGamerList_throwsCommandException() {
+        Model model = new ModelManager(new BlockBook(), new UserPrefs());
+        GroupAddCommand command = new GroupAddCommand(INDEX_FIRST_GAMER, Index.fromOneBased(1));
+
+        assertCommandFailure(command, model, Messages.MESSAGE_EMPTY_CONTACT_LIST);
+    }
+
+    @Test
+    public void execute_emptyGroupList_throwsCommandException() {
+        BlockBook blockBook = new BlockBook();
+        Gamer gamer = new GamerBuilder().withGroups().build();
+        blockBook.addGamer(gamer);
+
+        Model model = new ModelManager(blockBook, new UserPrefs());
+        GroupAddCommand command = new GroupAddCommand(INDEX_FIRST_GAMER, Index.fromOneBased(1));
+
+        assertCommandFailure(command, model, Messages.MESSAGE_BLOCKBOOK_GROUP_INDEX_OUT_OF_RANGE);
+    }
+
+    @Test
     public void execute_invalidGamerIndex_throwsCommandException() {
         Model model = new ModelManager(getTypicalBlockBook(), new UserPrefs());
         Index outOfBoundGamer = Index.fromOneBased(model.getFilteredGamerList().size() + 1);
         Index groupIndex = Index.fromOneBased(1);
 
         GroupAddCommand command = new GroupAddCommand(outOfBoundGamer, groupIndex);
-        assertCommandFailure(command, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        assertCommandFailure(command, model, Messages.MESSAGE_GAMER_INDEX_OUT_OF_RANGE);
     }
 
     @Test
@@ -82,6 +107,46 @@ public class GroupAddCommandTest {
         Index outOfBoundGroup = Index.fromOneBased(model.getGroupList().size() + 1);
 
         GroupAddCommand command = new GroupAddCommand(INDEX_FIRST_GAMER, outOfBoundGroup);
-        assertCommandFailure(command, model, Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        assertCommandFailure(command, model, Messages.MESSAGE_BLOCKBOOK_GROUP_INDEX_OUT_OF_RANGE);
+    }
+
+    @Test
+    public void execute_invalidGamerAndGroupIndexes_throwsCommandException() {
+        Model model = new ModelManager(getTypicalBlockBook(), new UserPrefs());
+        Index outOfBoundGamer = Index.fromOneBased(model.getFilteredGamerList().size() + 1);
+        Index outOfBoundGroup = Index.fromOneBased(model.getGroupList().size() + 1);
+
+        GroupAddCommand command = new GroupAddCommand(outOfBoundGamer, outOfBoundGroup);
+        assertCommandFailure(command, model, Messages.MESSAGE_GAMER_INDEX_OUT_OF_RANGE + "\n"
+                + Messages.MESSAGE_BLOCKBOOK_GROUP_INDEX_OUT_OF_RANGE);
+    }
+
+    @Test
+    public void equals() {
+        Index gamerIndexOne = Index.fromOneBased(1);
+        Index gamerIndexTwo = Index.fromOneBased(2);
+        Index groupIndexOne = Index.fromOneBased(1);
+        Index groupIndexTwo = Index.fromOneBased(2);
+
+        GroupAddCommand addFirstCommand = new GroupAddCommand(gamerIndexOne, groupIndexOne);
+        GroupAddCommand addSecondCommand = new GroupAddCommand(gamerIndexTwo, groupIndexTwo);
+
+        assertTrue(addFirstCommand.equals(addFirstCommand));
+        GroupAddCommand addFirstCommandCopy = new GroupAddCommand(gamerIndexOne, groupIndexOne);
+        assertTrue(addFirstCommand.equals(addFirstCommandCopy));
+        assertFalse(addFirstCommand.equals(1));
+        assertFalse(addFirstCommand.equals(null));
+        assertFalse(addFirstCommand.equals(addSecondCommand));
+    }
+
+    @Test
+    public void toStringMethod() {
+        Index gamerIndex = Index.fromOneBased(1);
+        Index groupIndex = Index.fromOneBased(2);
+        GroupAddCommand groupAddCommand = new GroupAddCommand(gamerIndex, groupIndex);
+
+        String expected = GroupAddCommand.class.getCanonicalName()
+                + "{gamerIndex=" + gamerIndex + ", groupIndex=" + groupIndex + "}";
+        assertEquals(expected, groupAddCommand.toString());
     }
 }

@@ -35,12 +35,23 @@ public class GroupRemoveCommandParser implements Parser<GroupRemoveCommand> {
         int groupIndexValue;
         try {
             gamerIndexValue = Integer.parseInt(parts[0]);
+        } catch (NumberFormatException nfe) {
+            throw new ParseException(Messages.MESSAGE_GAMER_INDEX_OUT_OF_RANGE);
+        }
+        try {
             groupIndexValue = Integer.parseInt(parts[1]);
         } catch (NumberFormatException nfe) {
-            throw new ParseException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+            throw new ParseException(Messages.MESSAGE_GAMER_GROUP_INDEX_OUT_OF_RANGE);
         }
-        if (gamerIndexValue <= 0 || groupIndexValue <= 0) {
-            throw new ParseException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        if (gamerIndexValue <= 0 && groupIndexValue <= 0) {
+            throw new ParseException(Messages.MESSAGE_GAMER_INDEX_OUT_OF_RANGE + "\n"
+                    + Messages.MESSAGE_GAMER_GROUP_INDEX_OUT_OF_RANGE);
+        }
+        if (gamerIndexValue <= 0) {
+            throw new ParseException(Messages.MESSAGE_GAMER_INDEX_OUT_OF_RANGE);
+        }
+        if (groupIndexValue <= 0) {
+            throw new ParseException(Messages.MESSAGE_GAMER_GROUP_INDEX_OUT_OF_RANGE);
         }
 
         Index gamerIndex = Index.fromOneBased(gamerIndexValue);

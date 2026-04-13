@@ -81,11 +81,17 @@ public class GroupAddCommand extends Command {
         if (gamerList.isEmpty()) {
             throw new CommandException(Messages.MESSAGE_EMPTY_CONTACT_LIST);
         }
-        if (gamerIndex.getZeroBased() >= gamerList.size()) {
-            throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        boolean gamerOutOfRange = gamerIndex.getZeroBased() >= gamerList.size();
+        boolean groupOutOfRange = groupList.isEmpty() || groupIndex.getZeroBased() >= groupList.size();
+        if (gamerOutOfRange && groupOutOfRange) {
+            throw new CommandException(Messages.MESSAGE_GAMER_INDEX_OUT_OF_RANGE + "\n"
+                    + Messages.MESSAGE_BLOCKBOOK_GROUP_INDEX_OUT_OF_RANGE);
         }
-        if (groupList.isEmpty() || groupIndex.getZeroBased() >= groupList.size()) {
-            throw new CommandException(Messages.MESSAGE_INDEX_OUT_OF_RANGE);
+        if (gamerOutOfRange) {
+            throw new CommandException(Messages.MESSAGE_GAMER_INDEX_OUT_OF_RANGE);
+        }
+        if (groupOutOfRange) {
+            throw new CommandException(Messages.MESSAGE_BLOCKBOOK_GROUP_INDEX_OUT_OF_RANGE);
         }
     }
 
