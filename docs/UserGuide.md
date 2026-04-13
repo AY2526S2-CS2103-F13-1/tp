@@ -21,11 +21,11 @@ BlockBook makes it easy to manage the contacts of other gamers you meet on serve
    You can check what Java version you have by opening a command terminal in the same location you put BlockBook in, and then running the command `java -version`.
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103-F13-1/tp/releases).
+1. Download the latest `blockbook.jar` file from [here](https://github.com/AY2526S2-CS2103-F13-1/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for BlockBook.
 
-1. Double click `.jar` file to open BlockBook. Alternatively, open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar blockbook.jar` command to run the application.<br>
+1. Double click `blockbook.jar` file to open BlockBook. Alternatively, open a command terminal in the same location you put BlockBook in, and use the `java -jar blockbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds.<br>
    ![Ui](images/Ui.png)
 
