@@ -176,7 +176,7 @@ The process begins when the user types an `add` command into the UI.
 
 **UI passes command to Logic:**
 After receiving the command, the UI forwards it to the Logic component for processing.
-    
+
 **Logic parses the command:**
 Within the Logic component, the command is recognized as an `add` command. The input is then parsed internally, where the command arguments are validated and converted into the corresponding gamer attribute objects before an `AddCommand` is created.
 
@@ -784,54 +784,54 @@ testers are expected to do more *exploratory* testing.
 
    i. Prerequisites: List all gamers using the `list` command. The contact list is visible.
 
-   ii. Test case: `edit 1 n/Herobrine`  
+   ii. Test case: `edit 1 n/Herobrine`
    Expected: The first gamer's name is updated to `Herobrine`. Success message shown.
 
-   iii. Test case: `edit 1 p/98765432 r/ASIA`  
+   iii. Test case: `edit 1 p/98765432 r/ASIA`
    Expected: The first gamer's phone and region are updated. Success message shown.
 
-   iv. Test case: `edit 2 g/new_tag e/new@example.com s/mc.example.com:25565 c/Singapore note/Alt account`  
+   iv. Test case: `edit 2 g/new_tag e/new@example.com s/mc.example.com:25565 c/Singapore note/Alt account`
    Expected: The second gamer's gamertag, email, server, country, and note are updated. Success message shown.
 
-   v. Test case: `edit 1 g/Herobrine n/Herobrine p/99999 e/brine@gmail.com s/127.0.0.1:8080 c/Singapore r/ASIA note/I hate steve`  
+   v. Test case: `edit 1 g/Herobrine n/Herobrine p/99999 e/brine@gmail.com s/127.0.0.1:8080 c/Singapore r/ASIA note/I hate steve`
    Expected: The first gamer is updated with all provided fields. Success message shown.
 
 2. Invalid inputs
 
-   i. Test case: `edit 0 name/Alex`  
+   i. Test case: `edit 0 name/Alex`
    Expected: No gamer is edited. Error message indicates the index is out of range.
 
-   ii. Test case: `edit -1 name/Alex`  
+   ii. Test case: `edit -1 name/Alex`
    Expected: No gamer is edited. Error message indicates the index is out of range.
 
-   iii. Test case: `edit 1`  
+   iii. Test case: `edit 1`
    Expected: No gamer is edited. Error message indicates at least one field must be provided.
 
-   iv. Test case: `edit 1 n/Alex n/Bob`  
+   iv. Test case: `edit 1 n/Alex n/Bob`
    Expected: No gamer is edited. Error message indicates duplicate prefixes are not allowed.
 
-   v. Test case: `edit 1 e/not-an-email`  
+   v. Test case: `edit 1 e/not-an-email`
    Expected: No gamer is edited. Error message indicates the email is invalid.
 
-   vi. Test case: `edit 1 p/abcde`  
+   vi. Test case: `edit 1 p/abcde`
    Expected: No gamer is edited. Error message indicates the phone number is invalid.
 
-   vii. Test case: `edit 1 c/Sing@pore`  
+   vii. Test case: `edit 1 c/Sing@pore`
    Expected: No gamer is edited. Error message indicates the country is invalid.
 
-   viii. Test case: `edit 1 r/XYZ`  
+   viii. Test case: `edit 1 r/XYZ`
    Expected: No gamer is edited. Error message indicates the region is invalid.
 
-   ix. Test case: `edit 1 s/server#1`  
+   ix. Test case: `edit 1 s/server#1`
    Expected: No gamer is edited. Error message indicates the server is invalid.
 
-   x. Test case: `edit 1 g/Bad Tag`  
+   x. Test case: `edit 1 g/Bad Tag`
    Expected: No gamer is edited. Error message indicates the gamertag is invalid.
 
-   xi. Test case: `edit 1 g/amy_tag` (where another gamer already has gamertag `amy_tag`)  
+   xi. Test case: `edit 1 g/amy_tag` (where another gamer already has gamertag `amy_tag`)
    Expected: No gamer is edited. Error message indicates the gamertag is already used by someone in BlockBook.
 
-   xii. Test case: `edit 1 extra n/Alex`  
+   xii. Test case: `edit 1 extra n/Alex`
    Expected: No gamer is edited. Error message indicates invalid command format.
 
 ### Deleting a gamer contact
@@ -858,25 +858,25 @@ testers are expected to do more *exploratory* testing.
 
    i. Prerequisites: List all gamers using the `list` command. The first gamer is not a favourite.
 
-   ii. Test case: `favourite 1`  
+   ii. Test case: `favourite 1`
    Expected: The first gamer is marked as favourite. Success message shown.
 
 2. Unfavourite
 
    i. Prerequisites: The first gamer is already marked as favourite.
 
-   ii. Test case: `unfavourite 1`  
+   ii. Test case: `unfavourite 1`
    Expected: The first gamer is removed from favourites. Success message shown.
 
 3. Invalid inputs
 
-   i. Test case: `favourite 0`  
+   i. Test case: `favourite 0`
    Expected: No gamer is updated. Error message indicates the index is out of range.
 
-   ii. Test case: `unfavourite 999` (where 999 is larger than the list size)  
+   ii. Test case: `unfavourite 999` (where 999 is larger than the list size)
    Expected: No gamer is updated. Error message indicates the index is out of range.
 
-   iii. Test case: `favourite 1` when the first gamer is already a favourite  
+   iii. Test case: `favourite 1` when the first gamer is already a favourite
    Expected: Error message indicates the gamer is already a favourite.
 
 ### Listing gamer contacts
@@ -885,28 +885,28 @@ testers are expected to do more *exploratory* testing.
 
    i. Prerequisites: The contact list is visible.
 
-   ii. Test case: `list`  
+   ii. Test case: `list`
    Expected: All gamers are displayed. Any active sort is cleared and the list returns to insertion order.
 
 2. Listing after a filter
 
    i. Prerequisites: Use a `find` command that shows a subset of gamers.
 
-   ii. Test case: `list`  
+   ii. Test case: `list`
    Expected: The full list of gamers is shown.
 
 3. Listing after a sort
 
    i. Prerequisites: Use a `sort` command that shows a sorted list of gamers.
 
-   ii. Test case: `list`  
+   ii. Test case: `list`
    Expected: The full list of gamers in the original order is shown.
 
 4. Listing with no contacts
 
    i. Prerequisites: Start with an empty data file or clear all contacts.
 
-   ii. Test case: `list`  
+   ii. Test case: `list`
    Expected: A message indicates that no contacts are stored.
 
 ### Viewing a gamer contact

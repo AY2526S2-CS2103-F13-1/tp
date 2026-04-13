@@ -7,9 +7,9 @@
 
 #### Difficulty Level
 
-I would consider this contribution to be of moderate-high difficulty. 
+I would consider this contribution to be of moderate-high difficulty.
 
-One major difficulty of implementing the `add` feature was that it was tightly coupled with many other components of the application. 
+One major difficulty of implementing the `add` feature was that it was tightly coupled with many other components of the application.
 
 #### Stuff that I worked on
 
