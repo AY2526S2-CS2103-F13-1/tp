@@ -14,7 +14,7 @@ public class Country {
             "Country should only contain letters, spaces, and hyphens, "
                     + "and be at most 50 characters.";
 
-    public static final String VALIDATION_REGEX = "^[a-zA-Z \\\\-]{1,50}$";
+    public static final String VALIDATION_REGEX = "^[a-zA-Z -]{1,50}$";
     public final String fullCountry;
 
     /**
