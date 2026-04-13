@@ -536,7 +536,7 @@ BlockBook data is saved to primary storage automatically after any command that 
 
 ### Editing the data file
 
-BlockBook data is saved automatically as a JSON file `[JAR file location]/data/contacts.json`. Advanced users are welcome to update data directly by editing that data file.
+BlockBook data is saved automatically as a JSON file `[JAR file location]/BlockBook/contacts.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 

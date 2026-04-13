@@ -150,8 +150,8 @@ The `Model` component,
 
 The `Storage` component,
 * can save both contact data and user preference data in JSON format, and read them back into corresponding objects.
-* stores contact data in a JSON file (default location: `BlockBook/contacts.json`) and user preferences in
-  `preferences.json` (as configured in `config.json`).
+* stores contact data in a JSON file (default location: `[JAR file location]/BlockBook/contacts.json`) and user preferences in
+  `[JAR file location]/BlockBook/preferences.json` (as configured in `[JAR file location]/BlockBook/config.json`).
 * inherits from both `BlockBookStorage` and `UserPrefsStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
