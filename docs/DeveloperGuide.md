@@ -631,7 +631,7 @@ Use case ends.
 
 **MSS**
 1. User requests to list all groups.
-2. BB displays the list of groups with their indexes.
+2. BlockBook displays the list of groups with their indexes.
 
 Use case ends.
 
